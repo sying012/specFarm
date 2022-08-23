@@ -4,5 +4,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudyController {
-	// 012 test22
+	// 012 test222
 }

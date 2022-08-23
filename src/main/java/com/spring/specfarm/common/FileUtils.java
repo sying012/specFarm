@@ -1,6 +1,7 @@
 package com.spring.specfarm.common;
 
 //실제 서버에 파일 업로드 처리를 해주는 클래스
+//박지은 커밋 테스트
 public class FileUtils {
 	/*
 	 * public List<ItemFile> parseFileInfo(int itemNo, HttpServletRequest request,

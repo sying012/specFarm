@@ -1,0 +1,22 @@
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: rgb(187, 205, 110);
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.header > p {
+    display: inline;
+}
+
+.whitelogo1 {
+    width: 260px;
+    height: 50px;
+}

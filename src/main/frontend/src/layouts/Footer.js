@@ -1,9 +1,13 @@
 import "../styles/layouts/Footer.css";
+import whitelogo1 from "../images/logo_white1.png";
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <h2 style={{ marginTop: "0" }}>푸터</h2>
+      <div className="innerfooter">
+        <img className="footlogo" src={whitelogo1} alt="" />
+        <p>© Designed by Spec Farm 2022</p>
+      </div>
     </footer>
   );
 };

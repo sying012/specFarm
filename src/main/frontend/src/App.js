@@ -1,7 +1,21 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { BrowseRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./layouts/Layout";
+import { Home } from "@mui/icons-material";
+import Login from "./pages/Login";
+import Join from "./pages/Join";
+import FindUser from "./pages/FindUser";
+import CertMain from "./pages/CertMain";
+import SeminarMain from "./pages/SeminarMain";
+import CommunityMain from "./pages/CommunityMain";
+import Study from "./pages/Study";
+import Ask from "./pages/Ask";
+import Share from "./pages/Share";
+import NoticeMain from "./pages/NoticeMain";
+import FAQ from "./pages/FAQ";
+import Lost from "./pages/Lost";
+import MypageMain from "./pages/MypageMain";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (

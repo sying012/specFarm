@@ -6,7 +6,6 @@
 
 .main {
     flex: 1;
-    height: fit-content;
     width: 1200px;
     margin: 0 auto;
     /* background-color: aquamarine; */

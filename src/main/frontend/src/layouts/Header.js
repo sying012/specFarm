@@ -1,7 +1,6 @@
 import "../styles/layouts/Header.css";
 import whitelogo1 from "../images/logo_white1.png";
 import React, { useState, useRef } from "react";
-import Dropbox from "../components/Header/Dropbox";
 
 const Header = () => {
   const commRef = useRef();
@@ -15,7 +14,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="innerheader">
-        <img className="whitelogo1" src={whitelogo1} alt="" />
+        <a href="/">
+          <img className="whitelogo1" src={whitelogo1} alt="" />
+        </a>
         <nav className="catwrap">
           <div></div>
           <div

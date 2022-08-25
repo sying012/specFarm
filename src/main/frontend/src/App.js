@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./layouts/Layout";
-import { Home } from "@mui/icons-material";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
 import FindUser from "./pages/FindUser";

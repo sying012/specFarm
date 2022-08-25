@@ -1,0 +1,9 @@
+.mypageMain {
+  display: flex;
+  /* flex-wrap: wrap; */
+  /* align-content: space-between; */
+}
+
+.mypageFrame {
+  margin: 0 0 0 100px;
+}

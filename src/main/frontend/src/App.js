@@ -32,7 +32,7 @@ function App() {
 
         <Route path="/community" element={<CommunityMain />}></Route>
         <Route path="/community/study" element={<Study />}></Route>
-        <Route path="/community/ask" element={<Ask />}></Route>
+        <Route path="/community/ask/*" element={<Ask />}></Route>
         <Route path="/community/share" element={<Share />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>

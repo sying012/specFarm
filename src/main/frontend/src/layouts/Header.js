@@ -1,72 +1,111 @@
 import "../styles/layouts/Header.css";
 import whitelogo1 from "../images/logo_white1.png";
-
-import { makeStyles } from "@material-ui/core";
-
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-
-const useStyles = makeStyles({
-  home: {
-    backgroundColor: "black",
-    color: "white",
-  },
-});
+import React, { useState, useRef } from "react";
+import Dropbox from "../components/Header/Dropbox";
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const commRef = useRef();
+  const noticeRef = useRef();
 
-  const classes = useStyles();
+  const [commHover, setcommHover] = useState(0);
+  const [commName, setCommName] = useState("커뮤니티");
+  const [noticeHover, setnoticeHover] = useState(0);
+  const [noticeName, setNoticeName] = useState("공지사항");
 
   return (
     <header className="header">
       <div className="innerheader">
         <img className="whitelogo1" src={whitelogo1} alt="" />
         <nav className="catwrap">
-          <div>
+          <div></div>
+          <div
+            onMouseOver={() => {
+              setcommHover(0);
+              setnoticeHover(0);
+              setCommName("커뮤니티");
+              setNoticeName("공지사항");
+            }}
+          >
             <a href="/cert">자격증 찾기</a>
           </div>
-          <div style={{ marginLeft: "10px" }}>
+
+          <div
+            style={{ marginLeft: "10px" }}
+            onMouseOver={() => {
+              setcommHover(0);
+              setnoticeHover(0);
+              setCommName("커뮤니티");
+              setNoticeName("공지사항");
+            }}
+          >
             <a href="/seminar">세미나</a>
           </div>
-          <div>
-            <a href="/community">마을회관</a>
-          </div>
-          <div>
-            <a href="/notice">공지사항</a>
-          </div>
-          <Button
-            id="basic-button"
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            Dashboard
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
+          <div
+            onMouseOver={() => {
+              setcommHover(1);
+              setnoticeHover(0);
+              setCommName("마을회관");
+              setNoticeName("공지사항");
             }}
-            className={classes.home}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </Menu>
+            <a href="/community" ref={commRef}>
+              {commName}
+            </a>
+            {commHover ? (
+              <div
+                className="communityMenu"
+                onMouseOut={() => {
+                  setcommHover(0);
+                  setCommName("마을소식");
+                }}
+              >
+                <div className="commCat">
+                  <a href="/community/study">품앗이</a>
+                  <a href="/community/ask">물어방</a>
+                  <a href="/community/share">나눔장터</a>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div
+            onMouseOver={() => {
+              setcommHover(0);
+              setnoticeHover(1);
+              setCommName("커뮤니티");
+              setNoticeName("마을소식");
+            }}
+          >
+            <a href="/notice" ref={noticeRef}>
+              {noticeName}
+            </a>
+            {noticeHover ? (
+              <div
+                className="noticeMenu"
+                onMouseOut={() => {
+                  setnoticeHover(0);
+                  setCommName("커뮤니티");
+                }}
+              >
+                <div className="noticeCat">
+                  <a href="/notice">이장님 말씀</a>
+                  <a href="/notice/faq">FAQ</a>
+                  <a href="/notice/lost">분실물센터</a>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div
+            onMouseOver={() => {
+              setcommHover(0);
+              setnoticeHover(0);
+              setCommName("커뮤니티");
+              setNoticeName("공지사항");
+            }}
+          ></div>
         </nav>
         <div className="tailwrap">
           <div>

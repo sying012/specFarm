@@ -36,8 +36,8 @@ function App() {
         <Route path="/community/share" element={<Share />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>
-        <Route path="/faq" element={<FAQ />}></Route>
-        <Route path="/lost" element={<Lost />}></Route>
+        <Route path="/notice/faq" element={<FAQ />}></Route>
+        <Route path="/notice/lost" element={<Lost />}></Route>
 
         <Route path="/mypage" element={<MypageMain />}></Route>
       </Route>

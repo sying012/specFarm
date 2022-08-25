@@ -16,6 +16,7 @@ import FAQ from "./pages/FAQ";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
+import ShareMain from "./pages/ShareMain";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/community/study" element={<Study />}></Route>
         <Route path="/community/ask" element={<Ask />}></Route>
         <Route path="/community/share" element={<Share />}></Route>
+        <Route path="/community/shareMain" element={<ShareMain />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>
         <Route path="/faq" element={<FAQ />}></Route>

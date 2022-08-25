@@ -1,9 +1,9 @@
 .mdfContainer {
   width: 900px;
-  height: 600px;
+  height: 700px;
   margin: 100px auto;
   border-radius: 15px;
-  box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
+  box-shadow: 5px 6px 22px lightgray;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,22 +12,34 @@
 .mdfTitle {
   color: rgb(107, 83, 67);
   font-size: 2.5rem;
+  margin: 40px 0;
 }
 
 .profilePicMdfBtns {
-  margin-top: 20px;
-  width: 200px;
+  margin-top: 30px;
+  width: 230px;
   display: flex;
   justify-content: space-between;
 }
 
+.profilePicDeleteBtn {
+  width: 90px;
+}
+
 .nickname {
-  margin-top: 40px;
-  margin-bottom: 7px;
+  margin-top: 30px;
+  width: 360px;
 }
 
 .nicknameTitle {
-  margin: 0;
+  margin: 20px 0;
+  font-size: 1.7em;
+}
+
+.nicknameContent {
+  border: 1px solid gray;
+  border-radius: 5px;
+  display: flex;
 }
 
 input[type="text"] {
@@ -35,11 +47,18 @@ input[type="text"] {
   height: 40px;
   font-size: 20px;
   padding: 0 10px;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
 }
 
+/* .nicknameCleanBtn {
+    position: absolute;
+    right: 30px;
+} */
+
 .profileMdfBtns {
-  margin: 60px 0;
-  width: 280px;
+  margin: 70px 0;
+  width: 300px;
   display: flex;
   justify-content: space-between;
 }
@@ -47,8 +66,8 @@ input[type="text"] {
 .profileCancelBtn,
 .profileApplyBtn {
   width: 135px;
+  height: 42px;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  box-shadow: none !important;
 }
-
-/* .profileApplyBtn {
-  color: white;
-} */

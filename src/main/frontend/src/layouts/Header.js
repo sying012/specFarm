@@ -56,13 +56,19 @@ const Header = () => {
                 className="communityMenu"
                 onMouseOut={() => {
                   setcommHover(0);
-                  setCommName("마을소식");
+                  setCommName("커뮤니티");
                 }}
               >
                 <div className="commCat">
-                  <a href="/community/study">품앗이</a>
-                  <a href="/community/ask">물어방</a>
-                  <a href="/community/share">나눔장터</a>
+                  <a className="commItem" href="/community/study">
+                    지식 품앗이
+                  </a>
+                  <a className="commItem" href="/community/ask">
+                    물어방
+                  </a>
+                  <a className="commItem" href="/community/share">
+                    나눔장터
+                  </a>
                 </div>
               </div>
             ) : (
@@ -86,12 +92,19 @@ const Header = () => {
                 onMouseOut={() => {
                   setnoticeHover(0);
                   setCommName("커뮤니티");
+                  setNoticeName("공지사항");
                 }}
               >
                 <div className="noticeCat">
-                  <a href="/notice">이장님 말씀</a>
-                  <a href="/notice/faq">FAQ</a>
-                  <a href="/notice/lost">분실물센터</a>
+                  <a className="noticeItem" href="/notice">
+                    이장님 말씀
+                  </a>
+                  <a className="noticeItem" href="/notice/faq">
+                    FAQ
+                  </a>
+                  <a className="noticeItem" href="/notice/lost">
+                    분실물센터
+                  </a>
                 </div>
               </div>
             ) : (

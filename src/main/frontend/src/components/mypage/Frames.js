@@ -58,21 +58,21 @@ function Frames() {
           <div>
             <div className="writtenTab">
               <li>
-                <input type="radio" name="tab" id="ask" checked />
-                <label className="tabs" for="ask">
+                <input type="radio" name="tab" id="ask" defaultChecked />
+                <label className="tabs" htmlFor="ask">
                   무물방
                 </label>
               </li>
               <li>
                 <input type="radio" name="tab" id="share" />
-                <label className="tabs" for="share">
+                <label className="tabs" htmlFor="share">
                   나눔
                 </label>
               </li>
             </div>
           </div>
           <div className="writtenContent">
-            <h1>TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle</h1>
+            <h1 className="writtenTitle">TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle</h1>
             <p>
               내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글
               내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글

@@ -7,7 +7,36 @@
 .main {
     flex: 1;
     height: fit-content;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    /* background-color: aquamarine; */
+}
+
+.titleContainer {
+    width: 100%;
+    max-width: 1200px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    margin-bottom: 70px;
+    align-items: flex-end;
+}
+
+.titlewrap {
+    font-size: 3rem;
+    margin-top: 30px;
+    color: rgb(107, 83, 67);
+}
+
+.subtitlewrap {
+    font-size: 1.5rem;
+    margin-top: 0px;
+    margin-left: 25px;
+    display: flex;
+    align-items: flex-end;
+    color: rgba(107, 83, 67, 0.8);
+    border-left: 2px solid rgba(107, 83, 67, 0.8);
+    padding-bottom: 4px;
+    padding-left: 7px;
+    
 }

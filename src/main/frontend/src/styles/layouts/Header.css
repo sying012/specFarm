@@ -42,7 +42,7 @@
 .catwrap > div > a:hover {
     font-weight: bold;
     font-size: 19px;
-    /* text-shadow: 1px 1px 1px grey; */
+    transition-duration: 0.3s;
 }
 
 .tailwrap {
@@ -69,14 +69,24 @@
 
 .communityMenu {
     width: fit-content;
-    height: 50px;
-    /* background-color: aquamarine; */
-    border: solid rgba(187, 205, 110, 0.9);
+    height: 40px;
     border-width: 0px 2px 2px 2px;
     position: absolute;
     top: 70px;
     display: flex;
     align-items: center;
+    background: rgba(187, 205, 110, 0.3);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.commItem {
+    color: grey;
+}
+
+.commItem:hover {
+    color: black;
+    transition-duration: 0.5s;
 }
 
 .commCat {
@@ -90,14 +100,24 @@
 
 .noticeMenu {
     width: fit-content;
-    height: 50px;
-    /* background-color: darkkhaki; */
-    border: solid rgba(187, 205, 110, 0.9);
+    height: 40px;
     border-width: 0px 2px 2px 2px;
     position: absolute;
     top: 70px;
     display: flex;
     align-items: center;
+    background: rgba(187, 205, 110, 0.3);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.noticeItem {
+    color: grey;
+}
+
+.noticeItem:hover {
+    color: black;
+    transition-duration: 0.5s;
 }
 
 .noticeCat {

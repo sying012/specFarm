@@ -8,6 +8,8 @@
 }
 
 .innerfooter {
+  width: 64%;
+    max-width: 1200px;
   align-items: center;
   justify-content: center;
   display: flex;

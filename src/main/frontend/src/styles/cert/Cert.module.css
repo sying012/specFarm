@@ -1,9 +1,9 @@
-.title {
+.certtitle {
     text-align: center;
     margin-top: 10%;
 }
 
-input {
+.certinput {
     width: 450px;
     height: 40px;
     margin-left: 30%;

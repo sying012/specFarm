@@ -17,8 +17,12 @@ import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
 import ShareMain from "./pages/ShareMain";
+import { useState } from "react";
 
 function App() {
+  const [title, setTitle] = useState("타이틀");
+  const [subTitle, setSubTitle] = useState("서브타이틀");
+
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>
@@ -26,20 +30,23 @@ function App() {
       <Route path="/join" element={<Join />}></Route>
       <Route path="/finduser" element={<FindUser />}></Route>
 
-      <Route element={<Layout />}>
+      <Route element={<Layout title={title} subTitle={subTitle} />}>
         <Route path="/cert" element={<CertMain />}></Route>
 
         <Route path="/seminar" element={<SeminarMain />}></Route>
 
         <Route path="/community" element={<CommunityMain />}></Route>
         <Route path="/community/study" element={<Study />}></Route>
-        <Route path="/community/ask" element={<Ask />}></Route>
+        <Route
+          path="/community/ask/*"
+          element={<Ask setTitle={setTitle} setSubTitle={setSubTitle} />}
+        ></Route>
         <Route path="/community/share" element={<Share />}></Route>
         <Route path="/community/shareMain" element={<ShareMain />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>
-        <Route path="/faq" element={<FAQ />}></Route>
-        <Route path="/lost" element={<Lost />}></Route>
+        <Route path="/notice/faq" element={<FAQ />}></Route>
+        <Route path="/notice/lost" element={<Lost />}></Route>
 
         <Route path="/mypage" element={<MypageMain />}></Route>
       </Route>

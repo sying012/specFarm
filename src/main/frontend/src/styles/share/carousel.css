@@ -1,0 +1,10 @@
+.shareCarousel {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.carousel {
+  width: 100%;
+  display: inline-flex;
+}

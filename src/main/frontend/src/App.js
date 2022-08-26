@@ -13,7 +13,6 @@ import Ask from "./pages/Ask";
 import Share from "./pages/Share";
 import NoticeMain from "./pages/NoticeMain";
 import FAQ from "./pages/FAQ";
-import ProfileMdf from "./pages/ProfileMdf";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
@@ -48,7 +47,6 @@ function App() {
         <Route path="/notice/lost" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
-        <Route path="/mypage/modify" element={<ProfileMdf />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

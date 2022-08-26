@@ -1,6 +1,6 @@
 .mypageInnerContainer {
   width: 730px;
-  height: 600px;
+  min-height: 600px;
   border-radius: 15px;
   box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
 }
@@ -29,7 +29,6 @@
 }
 
 .innerContainer {
-  background-color: aquamarine;
   width: auto;
   min-height: 500px;
 }

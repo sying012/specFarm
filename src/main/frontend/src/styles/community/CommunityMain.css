@@ -1,0 +1,39 @@
+.commSubtitle {
+    width: 100%;
+    height: 80px;
+    /* background-color: aqua; */
+    display: flex;
+    align-items: center;
+}
+
+.commSubtitle > p {
+    font-size: x-large;
+    color: rgb(107, 83, 67);
+}
+
+.popStudyContainer {
+    width: 100%;
+    min-width: 1200px;
+    height: fit-content;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.popAskContainer {
+    width: 100%;
+    min-width: 1200px;
+    height: fit-content;
+    margin-bottom: 40px;
+    display: flex;
+    background-color:blueviolet;
+}
+
+.popShareContainer {
+    width: 100%;
+    min-width: 1200px;
+    height: fit-content;
+    margin-bottom: 40px;
+    display: flex;
+    
+}

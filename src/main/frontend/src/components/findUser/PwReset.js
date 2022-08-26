@@ -1,5 +1,6 @@
 import { Button, createTheme, Grid, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import styles from "../../styles/findUser/findUser.module.css";
 
 const theme = createTheme({
   status: {
@@ -145,7 +146,7 @@ const PwReset = () => {
 
   let PwResetPage = (
     <form onSubmit={PwResetSubmit}>
-      <Grid container spacing={3} className="padding">
+      <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <TextField
             name="userId"
@@ -153,8 +154,6 @@ const PwReset = () => {
             id="userId"
             label="아이디"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={idCheck}
             error={IdError}
             helperText={IdErrorText}
@@ -168,8 +167,6 @@ const PwReset = () => {
             label="이름"
             //   size="small"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={NameCheck}
             error={NameError}
             helperText={NameErrorText}
@@ -182,8 +179,6 @@ const PwReset = () => {
             id="pwReset_userTel"
             label="휴대폰 번호"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             error={TelError}
             helperText={TelErrorText}
           />
@@ -193,11 +188,7 @@ const PwReset = () => {
             variant="contained"
             theme={theme}
             color="brown"
-            style={{
-              fontSize: "14px",
-              lineHeight: "18px",
-              padding: "14px 10px",
-            }}
+            className={styles.buttonSmall}
             onClick={TelAuth}
           >
             인증번호 받기
@@ -210,8 +201,6 @@ const PwReset = () => {
             id="userTelAuthNumber"
             label="인증번호"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={TelAuthNumberCheck}
             error={TelAuthNumberError}
             helperText={TelAuthNumberErrorText}
@@ -239,8 +228,8 @@ const PwReset = () => {
   );
 
   let PwResetResultPage = (
-    <form className="pwResetResultDiv">
-      <Grid container spacing={3} className="padding">
+    <form className={styles.pwResetResultDiv}>
+      <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <TextField
             name="userPw"
@@ -249,8 +238,6 @@ const PwReset = () => {
             id="userPw"
             label="비밀번호"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={PwValidationCheck}
             error={PwValidationError}
             helperText={PwValidationErrorText}
@@ -264,8 +251,6 @@ const PwReset = () => {
             id="userPwCheck"
             label="비밀번호 확인"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={PwCheck}
             error={PwError}
             helperText={PwErrorText}
@@ -277,12 +262,7 @@ const PwReset = () => {
             type="submit"
             theme={theme}
             color="green"
-            style={{
-              fontSize: "15px",
-              lineHeight: "18px",
-              padding: "14px 16px",
-              marginBottom: "20px",
-            }}
+            className={styles.buttonMiddle}
           >
             비밀번호 재설정
           </Button>
@@ -290,11 +270,12 @@ const PwReset = () => {
       </Grid>
     </form>
   );
+
   let content = PwResetPage;
 
   return (
     <div>
-      <p className="title">비밀번호 재설정</p>
+      <p className={styles.title}>비밀번호 재설정</p>
       <div>{PwResetResultPage}</div>
     </div>
   );

@@ -22,14 +22,18 @@
 
 .popAskContainer {
     width: 100%;
+    min-width: 1200px;
     height: fit-content;
     margin-bottom: 40px;
+    display: flex;
     background-color:blueviolet;
 }
 
 .popShareContainer {
     width: 100%;
+    min-width: 1200px;
     height: fit-content;
     margin-bottom: 40px;
-    background-color:violet;
+    display: flex;
+    
 }

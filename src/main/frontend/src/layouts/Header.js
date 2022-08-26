@@ -122,10 +122,10 @@ const Header = () => {
           ></div>
         </nav>
         <div className="tailwrap">
-          <div>
+          <div className="loginbtn">
             <a href="/login">로그인</a>
           </div>
-          <div>
+          <div className="joinbtn">
             <a href="/join">회원가입</a>
           </div>
         </div>

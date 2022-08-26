@@ -1,4 +1,5 @@
 import React from "react";
+import ShareContainer from "../components/community/share/ShareContainer";
 import StudyContainer from "../components/community/study/StudyContainer";
 import "../styles/community/CommunityMain.css";
 
@@ -25,8 +26,12 @@ const CommunityMain = () => {
       <div className="commSubtitle">
         <p>나눔장터 인기글🧚‍♀️</p>
       </div>
-      <div className="popShareContainer"></div>
-      <div className="commSubtitle"></div>
+      <div className="popShareContainer">
+        <ShareContainer></ShareContainer>
+        <ShareContainer></ShareContainer>
+        <ShareContainer></ShareContainer>
+        <ShareContainer></ShareContainer>
+      </div>
     </div>
   );
 };

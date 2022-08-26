@@ -47,7 +47,7 @@ function App() {
         <Route path="/notice/faq" element={<FAQ />}></Route>
         <Route path="/notice/lost" element={<Lost />}></Route>
 
-        <Route path="/mypage" element={<MypageMain />}></Route>
+        <Route path="/mypage/*" element={<MypageMain />}></Route>
         <Route path="/mypage/modify" element={<ProfileMdf />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>

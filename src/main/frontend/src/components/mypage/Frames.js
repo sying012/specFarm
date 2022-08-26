@@ -1,7 +1,13 @@
-import { ArrowForwardIos, Close, Person, PhoneIphone } from "@mui/icons-material";
+import {
+  ArrowForwardIos,
+  Close,
+  Person,
+  PhoneIphone,
+} from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
-import "../../styles/mypage/Frame.css";
+import styles from "../../styles/mypage/Frames.module.css";
 
 function Frames() {
   function deleteHandler() {
@@ -10,36 +16,44 @@ function Frames() {
 
   return (
     <div>
-      <div className="singleContainer">
-        <div className="frameTitle">
+      <div className={styles.mypageInnerContainer}>
+        <div className={styles.frameTitle}>
           <h2>나의 텃밭</h2>
-          <IconButton aria-label="details">
-            <ArrowForwardIos className="detals" />
-          </IconButton>
+          <Link to="/mypage/userinfo">
+            <IconButton aria-label="details">
+              <ArrowForwardIos className={styles.details} />
+            </IconButton>
+          </Link>
         </div>
-        <div className="frameContent">
-          <div className="userInfo">
+        <div className={styles.frameContent}>
+          <div className={styles.userInfo}>
             <h5>회원정보</h5>
-            <div className="userContent">
+            <div className={styles.userContent}>
               <Person color="action" inheritViewBox />
-              <p className="userDetail">조유미</p>
+              <p className={styles.userDetail}>조유미</p>
             </div>
-            <div className="userContent">
+            <div className={styles.userContent}>
               <PhoneIphone color="action" inheritViewBox />
-              <p className="userDetail">010-2***-1***</p>
+              <p className={styles.userDetail}>010-2***-1***</p>
             </div>
           </div>
-          <div className="earned">
+          <div className={styles.earned}>
             <h5>취득한 자격증</h5>
-            <div className="earnedContent">
-              <p className="earnedCertName">정보처리기사</p>
-              <p className="earnedCertDate">
+            <div className={styles.earnedContent}>
+              <p className={styles.earnedCertName}>정보처리기사</p>
+              <p className={styles.earnedCertDate}>
                 취득일: <span>2022.08.01</span>
               </p>
             </div>
-            <div className="earnedContent">
-              <p className="earnedCertName">전기어쩌구</p>
-              <p className="earnedCertDate">
+            <div className={styles.earnedContent}>
+              <p className={styles.earnedCertName}>전기어쩌구</p>
+              <p className={styles.earnedCertDate}>
+                취득일: <span>2022.08.01</span>
+              </p>
+            </div>
+            <div className={styles.earnedContent}>
+              <p className={styles.earnedCertName}>전기어쩌구</p>
+              <p className={styles.earnedCertDate}>
                 취득일: <span>2022.08.01</span>
               </p>
             </div>
@@ -47,74 +61,99 @@ function Frames() {
         </div>
       </div>
 
-      <div className="singleContainer">
-        <div className="frameTitle">
+      <div className={styles.mypageInnerContainer}>
+        <div className={styles.frameTitle}>
           <h2>내가 쓴 글</h2>
-          <IconButton aria-label="details">
-            <ArrowForwardIos className="detals" />
-          </IconButton>
+          <Link to="/mypage/written">
+            <IconButton aria-label="details">
+              <ArrowForwardIos className={styles.details} />
+            </IconButton>
+          </Link>
         </div>
-        <div className="frameContent">
+        <div className={styles.frameContent}>
           <div>
-            <div className="writtenTab">
+            <div className={styles.writtenTab}>
               <li>
-                <input type="radio" name="tab" id="ask" defaultChecked />
-                <label className="tabs" htmlFor="ask">
+                <input type="radio" name="tab" id="ask" defaultChecked hidden />
+                <label className={styles.tabs} htmlFor="ask">
                   무물방
                 </label>
               </li>
               <li>
-                <input type="radio" name="tab" id="share" />
-                <label className="tabs" htmlFor="share">
+                <input type="radio" name="tab" id="share" hidden />
+                <label className={styles.tabs} htmlFor="share">
                   나눔
                 </label>
               </li>
             </div>
           </div>
-          <div className="writtenContent">
-            <h1 className="writtenTitle">TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle</h1>
+          <div className={styles.writtenContent}>
+            <h1 className={styles.writtenTitle}>
+              TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle
+            </h1>
             <p>
               내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글
-              내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글
+              내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글 내가 썼던 글
+              내가 썼던 글 내가 썼던 글 내가 썼던 글
             </p>
           </div>
         </div>
       </div>
 
-      <div className="singleContainer">
-        <div className="frameTitle">
+      <div className={styles.mypageInnerContainer}>
+        <div className={styles.frameTitle}>
           <h2>관심 자격증</h2>
         </div>
-        <div className="frameContent">
-          <div className="attactive">
-            <div className="attractiveCert">
+        <div className={styles.frameContent}>
+          <div className={styles.attactive}>
+            <div className={styles.attractiveCert}>
               <h1>어쩌구자격증</h1>
-              <IconButton aria-label="delete" className="deleteBtn" onClick={deleteHandler}>
-                <Close fontSize="small" className="deleteBtn" />
+              <IconButton
+                aria-label="delete"
+                className="deleteBtn"
+                onClick={deleteHandler}
+              >
+                <Close fontSize="small" className={styles.deleteBtn} />
               </IconButton>
             </div>
-            <div className="attractiveCert">
-              <h1>어쩌구자격증증증증증</h1>
-              <IconButton aria-label="delete" className="deleteBtn">
-                <Close fontSize="small" className="deleteBtn" />
+            <div className={styles.attractiveCert}>
+              <h1>어쩌구저쩌구어쩌구저쩌구자격증</h1>
+              <IconButton
+                aria-label="delete"
+                className="deleteBtn"
+                onClick={deleteHandler}
+              >
+                <Close fontSize="small" className={styles.deleteBtn} />
               </IconButton>
             </div>
-            <div className="attractiveCert">
+            <div className={styles.attractiveCert}>
+              <h1>어쩌구저쩌구자격증</h1>
+              <IconButton
+                aria-label="delete"
+                className="deleteBtn"
+                onClick={deleteHandler}
+              >
+                <Close fontSize="small" className={styles.deleteBtn} />
+              </IconButton>
+            </div>
+            <div className={styles.attractiveCert}>
+              <h1>어쩌구저쩌구자격증</h1>
+              <IconButton
+                aria-label="delete"
+                className="deleteBtn"
+                onClick={deleteHandler}
+              >
+                <Close fontSize="small" className={styles.deleteBtn} />
+              </IconButton>
+            </div>
+            <div className={styles.attractiveCert}>
               <h1>어쩌구자격증</h1>
-              <IconButton aria-label="delete" className="deleteBtn">
-                <Close fontSize="small" className="deleteBtn" />
-              </IconButton>
-            </div>
-            <div className="attractiveCert">
-              <h1>어쩌구자격증wmdwmdwmddddddddddddd</h1>
-              <IconButton aria-label="delete" className="deleteBtn">
-                <Close fontSize="small" className="deleteBtn" />
-              </IconButton>
-            </div>
-            <div className="attractiveCert">
-              <h1>어쩌구자격증</h1>
-              <IconButton aria-label="delete" className="deleteBtn">
-                <Close fontSize="small" className="deleteBtn" />
+              <IconButton
+                aria-label="delete"
+                className="deleteBtn"
+                onClick={deleteHandler}
+              >
+                <Close fontSize="small" className={styles.deleteBtn} />
               </IconButton>
             </div>
           </div>

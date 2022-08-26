@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import "../styles/mypage/ProfileMdf.css";
+import styles from "../styles/mypage/ProfileMdf.module.css";
 
 function ProfileMdf() {
   const theme = createTheme({
@@ -26,7 +26,8 @@ function ProfileMdf() {
 
   const [imageSrc, setImageSrc] = useState("");
 
-  const encodeFileToBade64 = (file) => {
+  const encodeFileToBase64 = (e, file) => {
+    e.target.value = "";
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
@@ -37,19 +38,34 @@ function ProfileMdf() {
     });
   };
 
+  function profilePicDeleteHandler() {
+    setImageSrc(null);
+  }
+
+  const [nicknameValue, setNicknameValue] = useState("공부하자");
+
+  function resetNicknameHandler() {
+    setNicknameValue("");
+  }
+  const onChangeNickname = (e) => {
+    setNicknameValue(e.target.value);
+  };
+
   return (
     <div>
-      <div className="mdfContainer">
-        <h1 className="mdfTitle">프로필 수정</h1>
-        {imageSrc && (
-          <img
-            alt="profile"
-            src={imageSrc}
-            //   sx={{ width: 160, height: 160 }}
-            className="avatar"
-          />
-        )}
-        <div className="profilePicMdfBtns">
+      <div className={styles.mdfContainer}>
+        <h1 className={styles.mdfTitle}>프로필 수정</h1>
+        <Avatar
+          alt="profile"
+          src={
+            imageSrc ||
+            "https://as1.ftcdn.net/v2/jpg/03/58/90/78/1000_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg"
+          }
+          sx={{ width: 160, height: 160 }}
+          className={styles.avatar}
+        />
+
+        <div className={styles.profilePicMdfBtns}>
           <ThemeProvider theme={theme}>
             <Button
               variant="outlined"
@@ -63,7 +79,7 @@ function ProfileMdf() {
                 accept="image/*"
                 type="file"
                 onChange={(e) => {
-                  encodeFileToBade64(e.tartget.files[0]);
+                  encodeFileToBase64(e, e.target.files[0]);
                 }}
               />
             </Button>
@@ -72,42 +88,58 @@ function ProfileMdf() {
             <Button
               variant="outlined"
               color="secondary"
-              className="profilePicDeleteBtn"
+              className={styles.profilePicDeleteBtn}
+              onClick={profilePicDeleteHandler}
             >
               삭제
             </Button>
           </ThemeProvider>
         </div>
-        <div className="nickname">
-          <h2 className="nicknameTitle">닉네임</h2>
+
+        <div className={styles.nickname}>
+          <h2 className={styles.nicknameTitle}>닉네임</h2>
         </div>
-        <div className="nicknameContent">
-          <input type="text" defaultValue="공부하자" />
-          <IconButton aria-label="delete" className="nicknameCleanBtn">
+        <div className={styles.nicknameContent}>
+          <input
+            type="text"
+            id="nickname"
+            value={nicknameValue}
+            onChange={onChangeNickname}
+            required
+            placeholder="닉네임을 입력해주세요."
+          />
+          <IconButton
+            aria-label="delete"
+            className={styles.nicknameCleanBtn}
+            onClick={resetNicknameHandler}
+          >
             <Close fontSize="small" />
           </IconButton>
         </div>
-        <div className="profileMdfBtns">
+
+        <div className={styles.profileMdfBtns}>
           <Link to="/mypage">
             <ThemeProvider theme={theme}>
               <Button
                 variant="outlined"
                 color="secondary"
-                className="profileCancelBtn"
+                className={styles.profileCancelBtn}
               >
                 취소
               </Button>
             </ThemeProvider>
           </Link>
-          <ThemeProvider theme={theme}>
-            <Button
-              color="primary"
-              variant="contained"
-              className="profileApplyBtn"
-            >
-              적용
-            </Button>
-          </ThemeProvider>
+          <Link to="/mypage">
+            <ThemeProvider theme={theme}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={styles.profileApplyBtn}
+              >
+                적용
+              </Button>
+            </ThemeProvider>
+          </Link>
         </div>
       </div>
     </div>

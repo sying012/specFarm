@@ -1,5 +1,5 @@
-.singleContainer {
-  width: 700px;
+.mypageInnerContainer {
+  width: 730px;
   border-radius: 15px;
   box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
 }
@@ -17,22 +17,20 @@
 .frameTitle h2 {
   color: white;
   padding-left: 25px;
-  margin: 0;
   font-size: 1.5em;
 }
 
-.detals {
+.details {
   color: white;
   margin-right: 7px;
 }
 
 .frameContent {
   padding: 15px 30px;
-  width: auto;
 }
 
 .frameContent > div > h5 {
-  margin: 0 0 10px;
+  margin-bottom: 10px;
   font-size: 1.2em;
   color: rgb(107, 83, 67);
   font-weight: 600;
@@ -55,7 +53,6 @@
 .earnedCertDate {
   display: inline;
   color: rgb(95, 95, 95);
-  margin: 0;
 }
 
 .userDetail {
@@ -63,7 +60,7 @@
 }
 
 .earned {
-  height: 70px;
+  min-height: 70px;
   padding-top: 10px;
 }
 
@@ -99,12 +96,6 @@
   color: rgb(107, 83, 67);
 }
 
-input[type="radio"] {
-  position: absolute;
-  width: 0;
-  margin: 10px auto;
-}
-
 input[type="radio"]:checked + label {
   font-weight: bold;
 }
@@ -125,8 +116,8 @@ input[type="radio"]:checked + .tabs {
   padding: 20px;
 }
 
-.writtenContent h1, .writtenContent p {
-  margin: 0;
+.writtenContent h1,
+.writtenContent p {
   margin-bottom: 20px;
   color: #444;
   /* 긴 텍스트 줄임말 처리 */
@@ -149,7 +140,6 @@ input[type="radio"]:checked + .tabs {
 
 .attactive {
   width: auto;
-  padding: 0;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -168,7 +158,6 @@ input[type="radio"]:checked + .tabs {
 }
 
 .attractiveCert h1 {
-  margin: 0;
   display: inline;
   font-size: 1.3rem;
   font-weight: 500;
@@ -176,6 +165,6 @@ input[type="radio"]:checked + .tabs {
 }
 
 .deleteBtn {
-  padding: 0 0 0 3px !important;
+  padding-bottom: 3px !important;
   color: white;
 }

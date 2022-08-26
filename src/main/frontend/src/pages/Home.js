@@ -1,16 +1,16 @@
 import React, { useRef, useState } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import "../styles/join/Join.scss";
 import CertMain from "./CertMain";
 import HomeHeader from "../components/home/HomeHeader";
 import Main from "../components/home/Main";
+import style from "../styles/home/home.module.css";
 
 const Home = () => {
   const body = useRef();
   const ssss = <div style={{ background: "green", height: "739px" }}></div>;
   const [page, setPage] = useState(
-    <div className="home-div" ref={body} id="scroll">
+    <div className={style.homeDiv} ref={body} id="scroll">
       <HomeHeader />
       {ssss}
       <Footer />

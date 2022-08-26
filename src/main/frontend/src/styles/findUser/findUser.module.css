@@ -1,0 +1,55 @@
+.form {
+  width: 600px;
+  margin: 30px auto;
+  border-radius: 15px;
+  box-shadow: 5px 6px 22px 0 lightgray;
+}
+
+.padding {
+  padding: 0 70px;
+}
+
+.logo {
+  width: 480px;
+  height: 82px;
+  padding: 20px 60px 10px 60px;
+}
+
+.title {
+  color: rgb(107, 83, 67);
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0 70px;
+  margin-top: 11px;
+  margin-bottom: 24px;
+}
+
+.findIdResultDiv {
+  padding: 30px 70px;
+  height: 217px;
+}
+
+.findIdSubTitle {
+  font-size: 18px;
+}
+
+.pwResetResultDiv {
+  height: 375px;
+}
+.underline {
+  text-decoration: underline;
+}
+
+.buttonSmall {
+  float: right;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 14px 10px;
+}
+
+.buttonMiddle {
+  float: right;
+  font-size: 15px;
+  line-height: 18px;
+  padding: 14px 16px;
+}

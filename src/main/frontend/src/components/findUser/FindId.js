@@ -1,5 +1,6 @@
 import { createTheme, Grid, TextField, Button, Link } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import styles from "../../styles/findUser/findUser.module.css";
 
 const theme = createTheme({
   status: {
@@ -97,7 +98,7 @@ const FindId = () => {
 
   let findIdPage = (
     <form onSubmit={findIdSubmit}>
-      <Grid container spacing={3} className="padding">
+      <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <TextField
             name="userName"
@@ -105,8 +106,6 @@ const FindId = () => {
             id="userName"
             label="이름"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             onBlur={NameCheck}
             error={NameError}
             helperText={NameErrorText}
@@ -119,8 +118,6 @@ const FindId = () => {
             id="findId_userTel"
             label="휴대폰 번호"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             error={TelError}
             helperText={TelErrorText}
           />
@@ -130,11 +127,7 @@ const FindId = () => {
             variant="contained"
             theme={theme}
             color="brown"
-            style={{
-              fontSize: "14px",
-              lineHeight: "18px",
-              padding: "14px 10px",
-            }}
+            className={styles.buttonSmall}
             onClick={TelAuth}
           >
             인증번호 받기
@@ -147,8 +140,6 @@ const FindId = () => {
             id="userTelAuthNumber"
             label="인증번호"
             fullWidth
-            InputProps={{ style: { fontSize: 14 } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
             error={TelAuthNumberError}
             helperText={TelAuthNumberErrorText}
             disabled={TelAuthNumberDisabled}
@@ -160,11 +151,7 @@ const FindId = () => {
             type="submit"
             theme={theme}
             color="green"
-            style={{
-              fontSize: "15px",
-              lineHeight: "18px",
-              padding: "14px 16px",
-            }}
+            className={styles.buttonMiddle}
           >
             아이디 찾기
           </Button>
@@ -174,8 +161,8 @@ const FindId = () => {
   );
 
   let findIdResultPage = (
-    <div className="findIdResultDiv">
-      <p className="findIdSubTitle">''님의 아이디는 {findId}입니다.</p>
+    <div className={styles.findIdResultDiv}>
+      <p className={styles.findIdSubTitle}>''님의 아이디는 {findId}입니다.</p>
       <br />
       <Link color="inherit" underline="hover" href="/login">
         &nbsp;&nbsp;로그인하러 가기 ▶
@@ -192,7 +179,7 @@ const FindId = () => {
 
   return (
     <div>
-      <p className="title">아이디 찾기</p>
+      <p className={styles.title}>아이디 찾기</p>
       <div>{content}</div>
     </div>
   );

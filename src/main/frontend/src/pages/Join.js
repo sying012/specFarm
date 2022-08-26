@@ -12,7 +12,7 @@ import {
   Link,
   MenuItem,
 } from "@mui/material";
-import "../styles/join/Join.scss";
+import styles from "../styles/join/join.module.css";
 import { ArrowForwardIos } from "@mui/icons-material";
 // import axios from "axios";
 
@@ -226,11 +226,13 @@ const Join = () => {
   };
 
   return (
-    <div className="joinForm">
+    <div className={styles.form}>
       <form onSubmit={joinSubmit}>
-        <img src={logo} className="logo" alt="specfarm-logo" />
-        <p className="title">회원가입</p>
-        <Grid container spacing={3} className="padding">
+        <a href="/">
+          <img src={logo} className={styles.logo} alt="specfarm-logo" />
+        </a>
+        <p className={styles.title}>회원가입</p>
+        <Grid container spacing={3} className={styles.padding}>
           <Grid item xs={12}>
             <TextField
               name="userId"
@@ -238,8 +240,6 @@ const Join = () => {
               id="userId"
               label="아이디"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={idCheck}
               error={IdError}
               helperText={IdErrorText}
@@ -253,8 +253,6 @@ const Join = () => {
               id="userPw"
               label="비밀번호"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={PwValidationCheck}
               error={PwValidationError}
               helperText={PwValidationErrorText}
@@ -268,8 +266,6 @@ const Join = () => {
               id="userPwCheck"
               label="비밀번호 확인"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={PwCheck}
               error={PwError}
               helperText={PwErrorText}
@@ -283,8 +279,6 @@ const Join = () => {
               label="이름"
               //   size="small"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={NameCheck}
               error={NameError}
               helperText={NameErrorText}
@@ -297,8 +291,6 @@ const Join = () => {
               id="userTel"
               label="휴대폰 번호"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               error={TelError}
               helperText={TelErrorText}
             />
@@ -308,11 +300,8 @@ const Join = () => {
               variant="contained"
               theme={theme}
               color="brown"
-              style={{
-                fontSize: "14px",
-                lineHeight: "18px",
-                padding: "14px 10px",
-              }}
+              style={{}}
+              className={styles.buttonSmall}
               onClick={TelAuth}
             >
               인증번호 받기
@@ -325,8 +314,6 @@ const Join = () => {
               id="userTelAuthNumber"
               label="인증번호"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={TelAuthNumberCheck}
               error={TelAuthNumberError}
               helperText={TelAuthNumberErrorText}
@@ -340,29 +327,24 @@ const Join = () => {
               id="userEmail"
               label="이메일(선택)"
               fullWidth
-              InputProps={{ style: { fontSize: 14 } }}
-              InputLabelProps={{ style: { fontSize: 14 } }}
               onBlur={EmailCheck}
               error={EmailError}
               helperText={EmailErrorText}
             />
           </Grid>
-          <Grid item xs={5.5}>
+          <Grid item xs={5.8}>
             <FormControl
               sx={{ minWidth: 120 }}
               fullWidth
               style={{ fontSize: "14px" }}
             >
-              <InputLabel id="demo-select-small" style={{ fontSize: "14px" }}>
-                관심분야(대분류)
-              </InputLabel>
+              <InputLabel id="demo-select-small">관심분야(대분류)</InputLabel>
               <Select
                 labelId="demo-select-small"
                 id="certLCat"
                 // value={age}
                 label="관심분야(대분류)"
                 // onBlur={handleChange}
-                style={{ fontSize: "14px" }}
                 name="certLCat"
               >
                 <MenuItem value="" style={{ fontSize: "14px" }}>
@@ -392,23 +374,20 @@ const Join = () => {
           >
             <ArrowForwardIos color="action" />
           </Grid>
-          <Grid item xs={5.5} style={{ paddingLeft: "0px" }}>
+          <Grid item xs={5.2} style={{ paddingLeft: "0px" }}>
             <FormControl
               sx={{ minWidth: 120 }}
               //   size="small"
               fullWidth
               style={{ fontSize: "14px" }}
             >
-              <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
-                관심분야(중분류)
-              </InputLabel>
+              <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
               <Select
                 labelId="certMCat"
                 id="demo-select-small"
                 // value={age}
                 label="관심분야(중분류)"
                 // onBlur={handleChange}
-                style={{ fontSize: "14px" }}
                 name="certMCat"
               >
                 <MenuItem value="" style={{ fontSize: "14px" }}>
@@ -420,12 +399,11 @@ const Join = () => {
               </Select>
             </FormControl>
           </Grid>
-
           <Grid item xs={1.3}>
             <Checkbox size="small" style={{ padding: "0px" }} />
           </Grid>
           <Grid item xs={10.7} style={{ paddingLeft: "2px" }}>
-            <Link className="font14" color="inherit" underline="hover">
+            <Link className={styles.font14} color="inherit" underline="hover">
               [필수] 개인정보 수집 및 이용동의
             </Link>
           </Grid>
@@ -433,7 +411,7 @@ const Join = () => {
             <Checkbox size="small" style={{ padding: "0px" }} />
           </Grid>
           <Grid item xs={10.7} style={{ padding: "2px" }}>
-            <Link className="font14" color="inherit" underline="hover">
+            <Link className={styles.font14} color="inherit" underline="hover">
               [선택] 새로운 기능 출시안내를 받아보세요. 언제든 취소 할 수
               있어요. (광고 마케팅 수신동의)
             </Link>
@@ -452,11 +430,7 @@ const Join = () => {
               type="submit"
               theme={theme}
               color="green"
-              style={{
-                fontSize: "15px",
-                lineHeight: "18px",
-                padding: "14px 16px",
-              }}
+              className={styles.buttonMiddle}
             >
               계정 만들기
             </Button>

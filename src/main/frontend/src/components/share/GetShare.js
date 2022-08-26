@@ -1,4 +1,3 @@
-import { Carousel } from "bootstrap";
 import React from "react";
 
 const GetShare = () => {
@@ -7,9 +6,6 @@ const GetShare = () => {
       <div className="titleContainer">
         <div className="titlewrap">마을회관</div>
         <div className="subtitlewrap">나눔 장터🤝</div>
-        <div>
-          <Carousel></Carousel>
-        </div>
       </div>
     </div>
   );

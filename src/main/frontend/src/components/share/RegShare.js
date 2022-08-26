@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/share/shareText.css";
-import Carousel from "../components/share/Carousels";
 import ShareText from "../components/share/ShareText";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -15,9 +14,7 @@ const RegShare = () => {
         <div className="subtitlewrap">나눔 장터🤝</div>
       </div>
       <div className="shareBox">
-        <div className="carousel">
-          <Carousel></Carousel>
-        </div>
+        <div className="carousel"></div>
         <div className="uploadBtn">
           <Stack direction="row" alignItems="center" spacing={2}>
             <IconButton

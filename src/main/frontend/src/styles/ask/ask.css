@@ -1,5 +1,5 @@
 div#content{
-    margin: 0 auto;
+    margin: 0 auto 50px;
     width: 100%;
     max-width: 1200px;
 }
@@ -12,7 +12,7 @@ div#content{
     max-width: 1000px;
 }
 
-#container input[type="text"]{
+#container #searchBar input[type="text"]{
     box-sizing: border-box;
     border: 1px solid rgb(178, 178, 178);
     border-radius: 3px;
@@ -182,39 +182,57 @@ form#certSearchBar input#searchCert{
 }
 
 #certContainer{
-    margin-top: 55px;
+    margin-top: 10px;
     border: 1px solid gray;
     border-radius: 50px;
-    min-height: 400px;
     max-width: 400px;
     width: 40%;
+    height: fit-content;
+}
+
+#certContainer #certResultContainer{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 30px 40px 40px;
+  align-content: flex-start;
+  justify-content: center;
+
+}
+
+#certResultContainer .certItem{
+    display: flex;
+    white-space: nowrap;
+    padding: 10px;
+    background: gray;
+    border-radius: 8px;
+    height: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 #writeContaner{
-    margin-top: 55px;
+    margin-top: 10px;
     max-width: 600px;
     min-height: 400px;
     width: 60%;    
 }
 
-#writeTop{
-    width: 600px;
-    height: 84px;
-    background-image: url('../../images/askWriteTop.png');
-    background-size: 600px;
-    
-}
 #writeContent{
-    width: 600px;
-    height: 6000px;
+    max-width: 600px;
+    width:100%;
     background-image: url('../../images/askWriteContent.png');
-    background-size: 600px;
-    
+    background-size: 100%;
 }
-#writeBottom{
-    height:0;
-    width: 600px;
-    background-image: url('../../images/askWriteBottom.png');
-    background-size: 600px;
-    
+
+#regAskForm{
+    margin: 0 auto;
+    max-width: 400px;
+    width: 70%;
+}
+
+#RegContainer #searchCertForm{
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }

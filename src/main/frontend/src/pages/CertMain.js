@@ -1,7 +1,5 @@
 import React from "react";
-import "../styles/Cert.css";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,62 +7,80 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import styles from "../styles/cert/Cert.module.css";
+import Grid from "@mui/system/Unstable_Grid";
 
 const CertMain = () => {
-  const [cert, setCert] = useState("");
-  const [cert1, setCert1] = useState("");
-
-  const handleChange = (e) => {
-    setCert(e.target.value);
-    setCert1(e.target.value);
-  };
-
   return (
     <div>
-      <h2 className="title">재배할 자격증을 찾아보세요. 🌱</h2>
-      <input placeholder="검색"></input>
+      <h2 className={styles.certtitle}>재배할 자격증을 찾아보세요. 🌱</h2>
+      <input className={styles.certinput} placeholder="검색"></input>
       <SearchIcon
         fontSize="large"
         sx={{ marginLeft: "-3%", marginBottom: "-1%" }}
       />
-      <Box sx={{ Width: "20%" }}>
-        <FormControl
-          sx={{ m: 1, width: 200, marginLeft: "30%", marginTop: "50px" }}
-          size="medium"
-        >
-          <InputLabel id="demo-simple-select-label">대분류</InputLabel>
+      <Grid item xs={5.5} style={{ paddingLeft: "380px", paddingTop: "30px" }}>
+        <FormControl sx={{ minWidth: 120 }} Width style={{ fontSize: "14px" }}>
+          <InputLabel id="demo-select-small" style={{ fontSize: "14px" }}>
+            대분류
+          </InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={cert}
-            label="Cert"
-            onChange={handleChange}
+            labelId="demo-select-small"
+            id="certLCat"
+            // value={age}
+            label="관심분야(대분류)"
+            // onBlur={handleChange}
+            style={{ fontSize: "14px" }}
+            name="certLCat"
           >
-            <MenuItem value={10}>건설</MenuItem>
-            <MenuItem value={20}>기계</MenuItem>
-            <MenuItem value={30}>전기</MenuItem>
+            <MenuItem value="" style={{ fontSize: "14px" }}>
+              대분류
+            </MenuItem>
+            <MenuItem value={10} style={{ fontSize: "14px" }}>
+              사업관리
+            </MenuItem>
+            <MenuItem value={20} style={{ fontSize: "14px" }}>
+              경영.회계.세무
+            </MenuItem>
+            <MenuItem value={30} style={{ fontSize: "14px" }}>
+              금융.보험
+            </MenuItem>
           </Select>
         </FormControl>
-      </Box>
-      <Box sx={{ Width: "20%" }}>
-        <FormControl
-          sx={{ m: 1, width: 200, marginLeft: "50%", marginTop: "-65px" }}
-          size="medium"
-        >
-          <InputLabel id="demo-simple-select-label">중분류</InputLabel>
+      </Grid>
+      {/* <Grid
+        item
+        xs={1}
+        style={{
+          paddingLeft: "0px",
+          paddingTop: "10px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      ></Grid> */}
+      <Grid item xs={5.5} style={{ paddingLeft: "0px" }}>
+        <FormControl sx={{ minWidth: 120 }} Width style={{ fontSize: "14px" }}>
+          <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
+            중분류
+          </InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={cert1}
-            label="Cert1"
-            onChange={handleChange}
+            labelId="certMCat"
+            id="demo-select-small"
+            // value={age}
+            label="관심분야(중분류)"
+            // onBlur={handleChange}
+            style={{ fontSize: "14px" }}
+            name="certMCat"
           >
-            <MenuItem value={10}>건축</MenuItem>
-            <MenuItem value={20}>철도</MenuItem>
-            <MenuItem value={30}>자동차</MenuItem>
+            <MenuItem value="" style={{ fontSize: "14px" }}>
+              관심분야(중분류)
+            </MenuItem>
+            <MenuItem value={10} style={{ fontSize: "14px" }}>
+              사업관리
+            </MenuItem>
           </Select>
         </FormControl>
-      </Box>
+      </Grid>
       <Box
         sx={{
           width: 800,
@@ -75,7 +91,7 @@ const CertMain = () => {
           borderRadius: "18px",
         }}
       />
-      <div className="smallcert">
+      <div className={styles.smallcert}>
         <Stack spacing={2} direction="row">
           <Button variant="text" sx={{ color: "#6b5343" }}>
             거푸집기능사

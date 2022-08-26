@@ -17,6 +17,7 @@ import ProfileMdf from "./pages/ProfileMdf";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
+import ShareMain from "./pages/ShareMain";
 import { useState } from "react";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           element={<Ask setTitle={setTitle} setSubTitle={setSubTitle} />}
         ></Route>
         <Route path="/community/share" element={<Share />}></Route>
+        <Route path="/community/shareMain" element={<ShareMain />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>
         <Route path="/notice/faq" element={<FAQ />}></Route>

@@ -8,7 +8,7 @@ const AskListItem = ({ ask }) => {
         <img
           id="profileImg"
           src={ask.userProfileName || defaultProfile}
-          alt="기본 프로필사진"
+          alt="프로필사진"
         />
       </div>
       <div id="contentBox">

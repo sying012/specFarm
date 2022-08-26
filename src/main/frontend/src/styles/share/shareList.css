@@ -6,7 +6,7 @@
 }
 
 .shareSearchBar {
-  width: 40%;
+  height: 50px;
   display: flex;
   justify-items: flex-start;
   border: 2px solid;
@@ -26,30 +26,32 @@
 
 .shareRgBtn {
   width: 60px;
+  height: 40px;
   border-radius: 5px;
   margin-right: 10px;
 }
 
-.shareCard-body {
-  width: 297px;
-  height: 350px;
-}
-
-.shareCard-img {
-  height: 250px;
-}
-
-.shareWriter {
-  margin: 0 0 auto;
-}
-
-.shareCard-bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .shareCardList {
   display: grid;
+  gap: 25px;
+  margin: 2.5% 10px 20px 10px;
   grid-template-columns: 0.5fr 0.5fr 0.5fr;
+}
+
+@media screen and (min-width: 1200px) {
+  .shareCardList {
+    grid-template-columns: repeat(4, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (max-width: 1099px) {
+  .shareCardList {
+    grid-template-columns: repeat(3, minmax(230px, 1fr));
+  }
+}
+
+@media screen and (max-width: 819px) {
+  .shareCardList {
+    grid-template-columns: repeat(2, minmax(230px, 1fr));
+  }
 }

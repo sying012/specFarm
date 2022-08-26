@@ -1,0 +1,48 @@
+.shareContainer {
+    width: 280px;
+    height: 330px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    margin: 0px 10px 0px 10px;
+    padding-top: 3px;
+    display: flex;
+    box-sizing: border-box;
+    
+    flex-direction: column;
+}
+
+.shareImg {
+    width: 270px;
+    height: 250px;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+.shareTitle {
+    width: 270px;
+    margin-left: 15px;
+    margin-top: 15px;
+    height: 20px;
+    font-size: larger;
+    color: rgb(107, 83, 67);;
+}
+
+.shareInfo {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    padding-left: 15px;
+}
+
+.shareState {
+    width: 40px;
+    height: 20px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.shareUser {
+    margin-left: auto;
+    margin-right: 15px;
+}

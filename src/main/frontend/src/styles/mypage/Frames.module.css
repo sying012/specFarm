@@ -1,0 +1,170 @@
+.mypageInnerContainer {
+  width: 730px;
+  border-radius: 15px;
+  box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
+}
+
+.frameTitle {
+  height: 45px;
+  background-color: rgba(187, 205, 110, 0.88);
+  border-radius: 15px 15px 0 0;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.frameTitle h2 {
+  color: white;
+  padding-left: 25px;
+  font-size: 1.5em;
+}
+
+.details {
+  color: white;
+  margin-right: 7px;
+}
+
+.frameContent {
+  padding: 15px 30px;
+}
+
+.frameContent > div > h5 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: rgb(107, 83, 67);
+  font-weight: 600;
+}
+
+.userInfo {
+  height: 80px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgb(135, 135, 135);
+}
+
+.userContent {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.userDetail,
+.earnedCertName,
+.earnedCertDate {
+  display: inline;
+  color: rgb(95, 95, 95);
+}
+
+.userDetail {
+  margin-left: 8px;
+}
+
+.earned {
+  min-height: 70px;
+  padding-top: 10px;
+}
+
+.earnedContent {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.earnedCertName {
+  min-width: 150px;
+}
+
+.earnedCertDate {
+  margin-left: 20px;
+}
+
+.writtenTab {
+  display: flex;
+}
+
+.writtenTab li {
+  list-style-type: none;
+}
+
+.tabs {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  margin-bottom: -2px;
+  background-color: rgb(215, 215, 215);
+  color: rgb(107, 83, 67);
+}
+
+input[type="radio"]:checked + label {
+  font-weight: bold;
+}
+
+input[type="radio"]:checked + .tabs {
+  background-color: rgb(187, 205, 110);
+  border-bottom: none;
+  width: 70px;
+  height: 18px;
+  color: white;
+}
+
+.writtenContent {
+  width: auto;
+  height: 90px;
+  border: 2px solid rgb(191, 191, 191);
+  border-radius: 0 5px 5px;
+  padding: 20px;
+}
+
+.writtenContent h1,
+.writtenContent p {
+  margin-bottom: 20px;
+  color: #444;
+  /* 긴 텍스트 줄임말 처리 */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.writtenContent p {
+  font-size: 1.2em;
+  font-weight: 400;
+  /* 긴 텍스트 줄임말 처리 */
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.attactive {
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.attractiveCert {
+  background-color: rgb(107, 83, 67);
+  height: 40px;
+  padding: 5px 10px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 140px;
+  margin: 10px 10px;
+}
+
+.attractiveCert h1 {
+  display: inline;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+}
+
+.deleteBtn {
+  padding-bottom: 3px !important;
+  color: white;
+}

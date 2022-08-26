@@ -1,0 +1,12 @@
+.userinfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 450px;
+}

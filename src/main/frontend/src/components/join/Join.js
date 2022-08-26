@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import logo from "../images/logo_green1.png";
+import logo from "../../images/logo_green1.png";
 import {
   TextField,
   Grid,
@@ -12,7 +12,7 @@ import {
   Link,
   MenuItem,
 } from "@mui/material";
-import "../styles/join/Join.scss";
+import "../../styles/Join.scss";
 import { ArrowForwardIos } from "@mui/icons-material";
 // import axios from "axios";
 
@@ -240,7 +240,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={idCheck}
+              onChange={idCheck}
               error={IdError}
               helperText={IdErrorText}
             />
@@ -255,7 +255,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={PwValidationCheck}
+              onChange={PwValidationCheck}
               error={PwValidationError}
               helperText={PwValidationErrorText}
             />
@@ -270,7 +270,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={PwCheck}
+              onChange={PwCheck}
               error={PwError}
               helperText={PwErrorText}
             />
@@ -285,7 +285,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={NameCheck}
+              onChange={NameCheck}
               error={NameError}
               helperText={NameErrorText}
             />
@@ -327,7 +327,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={TelAuthNumberCheck}
+              onChange={TelAuthNumberCheck}
               error={TelAuthNumberError}
               helperText={TelAuthNumberErrorText}
               disabled={TelAuthNumberDisabled}
@@ -342,7 +342,7 @@ const Join = () => {
               fullWidth
               InputProps={{ style: { fontSize: 14 } }}
               InputLabelProps={{ style: { fontSize: 14 } }}
-              onBlur={EmailCheck}
+              onChange={EmailCheck}
               error={EmailError}
               helperText={EmailErrorText}
             />
@@ -361,7 +361,7 @@ const Join = () => {
                 id="certLCat"
                 // value={age}
                 label="관심분야(대분류)"
-                // onBlur={handleChange}
+                // onChange={handleChange}
                 style={{ fontSize: "14px" }}
                 name="certLCat"
               >
@@ -407,7 +407,7 @@ const Join = () => {
                 id="demo-select-small"
                 // value={age}
                 label="관심분야(중분류)"
-                // onBlur={handleChange}
+                // onChange={handleChange}
                 style={{ fontSize: "14px" }}
                 name="certMCat"
               >

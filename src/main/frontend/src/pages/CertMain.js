@@ -7,6 +7,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 
 const CertMain = () => {
   const [cert, setCert] = useState("");
@@ -73,6 +75,28 @@ const CertMain = () => {
           borderRadius: "18px",
         }}
       />
+      <div className="smallcert">
+        <Stack spacing={2} direction="row">
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            거푸집기능사
+          </Button>
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            건축구조기술사
+          </Button>
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            건축기사
+          </Button>
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            건축기사
+          </Button>
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            건축기사
+          </Button>
+          <Button variant="text" sx={{ color: "#6b5343" }}>
+            qqqqqqqqqqqq
+          </Button>
+        </Stack>
+      </div>
     </div>
   );
 };

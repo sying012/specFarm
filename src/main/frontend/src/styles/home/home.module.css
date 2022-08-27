@@ -1,0 +1,78 @@
+.homeBackground {
+  /* background-image: url("../../images/apples-1004886_960_720.jpg"); */
+  background-color: rgba(255, 255, 255, 0.2);
+  background-blend-mode: lighten;
+  background-size: cover;
+  height: 100vh;
+}
+
+.homeLogo {
+  max-width: 325px;
+  margin-top: 30px;
+}
+
+.homeDiv {
+  position: relative;
+  z-index: 0;
+  bottom: 70px;
+  padding: 0;
+}
+
+#scroll {
+  scroll-snap-align: center;
+}
+
+.tailwrap {
+  width: 135px;
+  height: 15px;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.tailwrap > div {
+  width: 60px;
+}
+
+.tailwrap > div > a {
+  width: 20px;
+  color: white;
+  font-size: small;
+  text-decoration: none;
+}
+
+.tailwrap > div > a:hover {
+  font-weight: bold;
+}
+
+/* html {
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+} */
+
+.subTitle {
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 44px;
+  color: rgb(50, 50, 50);
+}
+
+.homeContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 70px;
+}
+
+.certPlan {
+  width: 500px;
+  height: 400px;
+  border: 1px solid black;
+}

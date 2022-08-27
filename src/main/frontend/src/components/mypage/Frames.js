@@ -74,13 +74,13 @@ function Frames() {
           <div>
             <div className={styles.writtenTab}>
               <li>
-                <input type="radio" name="tab" id="ask" defaultChecked hidden />
+                <input className={styles.radioBtn} type="radio" name="tab" id="ask" defaultChecked hidden />
                 <label className={styles.tabs} htmlFor="ask">
                   무물방
                 </label>
               </li>
               <li>
-                <input type="radio" name="tab" id="share" hidden />
+                <input className={styles.radioBtn} type="radio" name="tab" id="share" hidden />
                 <label className={styles.tabs} htmlFor="share">
                   나눔
                 </label>

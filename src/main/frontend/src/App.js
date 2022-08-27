@@ -13,11 +13,9 @@ import Ask from "./pages/Ask";
 import Share from "./pages/Share";
 import NoticeMain from "./pages/NoticeMain";
 import FAQ from "./pages/FAQ";
-import ProfileMdf from "./pages/ProfileMdf";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
-import ShareMain from "./pages/ShareMain";
 import { useState } from "react";
 
 function App() {
@@ -43,14 +41,12 @@ function App() {
           element={<Ask setTitle={setTitle} setSubTitle={setSubTitle} />}
         ></Route>
         <Route path="/community/share" element={<Share />}></Route>
-        <Route path="/community/shareMain" element={<ShareMain />}></Route>
 
         <Route path="/notice" element={<NoticeMain />}></Route>
         <Route path="/notice/faq" element={<FAQ />}></Route>
         <Route path="/notice/lost" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
-        <Route path="/mypage/modify" element={<ProfileMdf />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

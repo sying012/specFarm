@@ -1,6 +1,6 @@
 import React from "react";
-import "../../../styles/community/study/StudyContainer.css";
-import sampleimg from "../../../images/apples-1004886_960_720.jpg";
+import "../../styles/study/StudyContainer.css";
+import sampleimg from "../../images/apples-1004886_960_720.jpg";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 const StudyContainer = () => {

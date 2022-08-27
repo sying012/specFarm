@@ -96,11 +96,11 @@
   color: rgb(107, 83, 67);
 }
 
-input[type="radio"]:checked + label {
+.radioBtn:checked + .tabs {
   font-weight: bold;
 }
 
-input[type="radio"]:checked + .tabs {
+.radioBtn:checked + .tabs {
   background-color: rgb(187, 205, 110);
   border-bottom: none;
   width: 70px;

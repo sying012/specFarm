@@ -1,5 +1,5 @@
 .homeBackground {
-  background-image: url("../../images/apples-1004886_960_720.jpg");
+  /* background-image: url("../../images/apples-1004886_960_720.jpg"); */
   background-color: rgba(255, 255, 255, 0.2);
   background-blend-mode: lighten;
   background-size: cover;
@@ -60,5 +60,19 @@ body {
 .subTitle {
   font-size: 34px;
   font-weight: bold;
-  color: #fff;
+  line-height: 44px;
+  color: rgb(50, 50, 50);
+}
+
+.homeContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 70px;
+}
+
+.certPlan {
+  width: 500px;
+  height: 400px;
+  border: 1px solid black;
 }

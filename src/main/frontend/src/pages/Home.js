@@ -35,7 +35,7 @@ const Home = () => {
   return (
     <>
       {homepage}
-      {page}
+      <div style={{ height: "100%" }}>{page}</div>
     </>
   );
 };

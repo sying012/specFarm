@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import AskListItem from "../components/ask/AskListItem";
 import ShareCard from "../components/share/ShareCard";
 import StudyContainer from "../components/study/StudyContainer";
+import StudyContainerList from "../components/study/StudyContainerList";
 import "../styles/community/CommunityMain.css";
 
 const CommunityMain = () => {
+  const [studyList, setStudyList] = useState([
+    {
+      studyId: 1,
+      studyTitle: "스터디 제목1",
+      studyContent: "어쩌고 저쩌고1",
+      studyMemCnt: 7,
+      studyImg:
+        "https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png",
+      studyState: 0,
+    },
+    {
+      studyId: 2,
+      studyTitle: "스터디 제목2",
+      studyContent: "어쩌고 저쩌고2",
+      studyMemCnt: 1,
+      studyImg: "http://www.ujeil.com/news/photo/201807/200913_68933_1052.png",
+      studyState: 1,
+    },
+    {
+      studyId: 3,
+      studyTitle: "스터디 제목3",
+      studyContent: "어쩌고 저쩌고3",
+      studyMemCnt: 5,
+      studyImg:
+        "https://i0.wp.com/wowtale.net/wp-content/uploads/2019/08/%E1%84%80%E1%85%AE%E1%84%85%E1%85%AE%E1%84%86%E1%85%B5%E1%84%8F%E1%85%A2%E1%86%B7%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%84%83%E1%85%B5-%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%AD%E1%86%BC-%E1%84%8C%E1%85%A1%E1%86%BC%E1%84%86%E1%85%A7%E1%86%AB.png?w=1920&ssl=1",
+      studyState: 0,
+    },
+  ]);
+
   return (
     <div>
       <div className="titleContainer">
@@ -15,10 +45,7 @@ const CommunityMain = () => {
         <p>인기 품앗이👨‍👨‍👧‍👧</p>
       </div>
       <div className="popStudyContainer">
-        <StudyContainer></StudyContainer>
-        <StudyContainer></StudyContainer>
-        <StudyContainer></StudyContainer>
-        <StudyContainer></StudyContainer>
+        <StudyContainerList studyList={studyList} />
       </div>
       <div className="commSubtitle">
         <p>물어방 인기글🙋‍♀️</p>

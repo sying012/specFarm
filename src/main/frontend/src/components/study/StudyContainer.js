@@ -1,17 +1,57 @@
 import React from "react";
 import "../../styles/study/StudyContainer.css";
-import sampleimg from "../../images/apples-1004886_960_720.jpg";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 
-const StudyContainer = () => {
+const StudyContainer = ({ studyItem }) => {
+  const { studyImg, studyTitle, studyMemCnt, studyState, id } = studyItem;
+
   return (
     <div className="studyContainer">
-      <img className="studyImg" src={sampleimg} alt="sampleimg"></img>
-      <div className="studyTitle">스터디 제목 입니다</div>
-      <div className="studyMemberCnt">
-        <PeopleAltIcon />
-        <div className="memberNum">5/10</div>
-      </div>
+      <Card className="studyContainerBody" sx={{ maxWidth: 345 }}>
+        <CardActionArea>
+          <CardMedia
+            className="studyImage"
+            component="img"
+            height="140"
+            image={studyImg}
+            alt="스터디 이미지"
+          />
+          <CardContent>
+            <Typography
+              className="studyTitle"
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
+              {studyTitle}
+            </Typography>
+            <div className="studyContainerBottom">
+              <div
+                className="studyState"
+                style={{
+                  color: "white",
+                  background: studyState
+                    ? "rgba(187, 205, 110, 0.8)"
+                    : "rgba(107, 83, 67, 0.8)",
+                }}
+              >
+                {studyState ? "모집" : "완료"}
+              </div>
+              <div className="studyMemberCnt">
+                <PeopleAltIcon />
+                <div className="memberNum">{studyMemCnt}/10</div>
+              </div>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </div>
   );
 };

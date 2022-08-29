@@ -1,0 +1,126 @@
+.studyContent {
+    width: 100%;
+    height: 1000px;
+    
+}
+
+.contentTop {
+    display: flex;
+    /* background-color:blanchedalmond; */
+}
+
+.studyBanner {
+    width: 300px;
+    height: 300px;
+}
+
+.titleWrapper {
+    /* background-color: aquamarine; */
+    width: 540px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+}
+
+.studyTitle {
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.titleNdate {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.studyState {
+    width: 70px;
+    height: 35px;
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 130px;
+}
+
+.btnWrapper {
+    margin-left: auto;
+}
+
+.btnWrapper > button {
+    width: 100px;
+    height: 50px;
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.contentBottom {
+    margin-top: 50px;
+    display: flex;
+}
+
+.contentWrapper {
+    /* background-color: aqua; */
+    width: 600px;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.joinListWrapper {
+    background-color: rgba(107, 83, 67, 0.2);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 250px;
+}
+
+.listName {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid;
+    flex-direction: column;
+}
+
+.memberCnt {
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.joinList {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  
+}
+
+.participant {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.partImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-right: 17px;
+}
+
+.partId {
+    font-size: 18px;
+}
+
+.byebtn {
+    margin-left: auto;
+    margin-right: 15px;
+}

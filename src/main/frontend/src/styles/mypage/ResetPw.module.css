@@ -1,0 +1,25 @@
+.editInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+    min-height: 430px;
+    padding: 20px 60px;
+    margin: 0 auto;
+  }
+
+  .userInfoBtns {
+    margin: 70px auto 0;
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profileCancelBtn,
+  .profileApplyBtn {
+    width: 150px;
+    height: 42px;
+    font-size: 1.1em !important;
+    font-weight: bold !important;
+    box-shadow: none !important;
+  }

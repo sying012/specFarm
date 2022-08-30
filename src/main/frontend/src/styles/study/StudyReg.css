@@ -1,0 +1,47 @@
+.studyRegContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+}
+
+.leftContainer {
+    /* background-color: aquamarine; */
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.studyImgPreview {
+    width: 350px;
+    height: 350px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.selectorWrapper {
+    margin-right: 230px;
+
+}
+
+.rightContainer{
+    /* background-color: antiquewhite; */
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.submitBtnWrapper {
+    margin-left: auto;
+    margin-right: 45px;
+}
+
+.submitBtnWrapper > button {
+    width: 80px;
+    height: 40px;
+    margin-left: 10px;
+    font-size: 17px;
+}

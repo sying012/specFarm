@@ -1,40 +1,48 @@
 import React from "react";
-import "../../styles/share/shareList.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import styles from "../../styles/share/list.module.css";
 
-const ShareCard = () => {
+const ShareCard = ({ shareItem }) => {
+  const { id, shareTitle, userId, content, itemImg, shareState, regDate } =
+    shareItem;
+
   return (
-    <article>
-      <Card className="shareCard-body" sx={{ maxWidth: 345 }}>
+    <div className={styles.shareCardList}>
+      <Card className={styles.cardbody} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
-            className="shareCard-img"
+            className={styles.img}
             component="img"
             height="140"
-            image="https://www.next-t.co.kr/public/uploads/7b7f7e2138e29e598cd0cdf2c85ea08d.jpg"
-            alt="green iguana"
+            image={itemImg}
+            alt="itemImg"
           />
-          <CardContent>
-            <Typography
-              className="shareCard-title"
-              gutterBottom
-              variant="h6"
-              component="div"
-            >
-              shareCard-title
+          <CardContent style={{ paddingTop: 10 }}>
+            <Typography gutterBottom variant="h6" component="div">
+              {shareTitle}
             </Typography>
-            <div className="shareCard-bottom">
-              <button className="stateBtn">완료</button>
-              <p className="shareWriter">작성자</p>
+            <div className={styles.bottom}>
+              <div
+                className={styles.state}
+                style={{
+                  color: "white",
+                  background: shareState
+                    ? "rgba(187, 205, 110, 0.8)"
+                    : "rgba(107, 83, 67, 0.8)",
+                }}
+              >
+                {shareState ? "나눔" : "완료"}
+              </div>
+              <p className={styles.writer}>{userId}</p>
             </div>
           </CardContent>
         </CardActionArea>
       </Card>
-    </article>
+    </div>
   );
 };
 

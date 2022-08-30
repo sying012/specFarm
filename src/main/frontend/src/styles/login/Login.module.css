@@ -1,0 +1,77 @@
+.center {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  max-width: 600px;
+  margin: 30px auto;
+  border-radius: 15px;
+  box-shadow: 5px 6px 22px 0 lightgray;
+}
+
+.padding {
+  padding: 0 70px;
+}
+
+.logo {
+  width: 480px;
+  height: 82px;
+  padding: 20px 60px 10px 60px;
+}
+
+.title {
+  color: rgb(107, 83, 67);
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0 70px;
+  margin-top: 11px;
+  margin-bottom: 24px;
+}
+
+.aTagDiv > a {
+  color: #666;
+  font-size: 16px;
+}
+.snsLogin {
+  text-align: center;
+  padding: 50px 0 10px 0;
+}
+
+.snsLogin > p {
+  color: #999;
+  font-size: 15px;
+}
+
+.snsLoginIcon {
+  display: flex;
+  justify-content: center;
+  padding: 30px 50px;
+}
+
+.snsLoginIcon > div {
+  width: 48px;
+  height: 48px;
+  border-radius: 90px;
+  margin: 0 20px;
+}
+
+/* media screen */
+@media screen and (max-width: 768px) {
+  .padding {
+    padding: 0 55px;
+  }
+  .title {
+    padding: 0 55px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .padding {
+    padding: 0 40px;
+  }
+  .title {
+    padding: 0 40px;
+  }
+}

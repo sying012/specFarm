@@ -1,0 +1,17 @@
+.aa {
+  display: flex;
+  justify-content: space-between;
+}
+
+.imgBox {
+  width: 50%;
+}
+
+.uploadBtn {
+  display: flex;
+}
+
+.itemImg {
+  width: 100%;
+  height: 400px;
+}

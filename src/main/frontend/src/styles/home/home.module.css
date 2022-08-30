@@ -1,14 +1,13 @@
 .homeBackground {
-  /* background-image: url("../../images/apples-1004886_960_720.jpg"); */
-  background-color: rgba(255, 255, 255, 0.2);
+  background-image: url("../../images/sprout.jpg");
+  background-color: rgba(255, 255, 255, 0.05);
   background-blend-mode: lighten;
   background-size: cover;
   height: 100vh;
 }
 
 .homeLogo {
-  max-width: 325px;
-  margin-top: 30px;
+  max-height: 50px;
 }
 
 .homeDiv {
@@ -18,8 +17,34 @@
   padding: 0;
 }
 
-#scroll {
+/* #scroll {
   scroll-snap-align: center;
+} */
+
+/* .outer {
+  height: 100vh;
+  overflow-y: auto;
+} */
+
+/* body::-webkit-scrollbar {
+  display: none;
+} */
+
+/* HomeHeader CSS */
+
+.header {
+  width: 100%;
+  height: 70px;
+}
+
+.innerheader {
+  /* width: 64%; */
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .tailwrap {
@@ -34,6 +59,7 @@
 
 .tailwrap > div {
   width: 60px;
+  text-align: end;
 }
 
 .tailwrap > div > a {
@@ -60,19 +86,80 @@ body {
 .subTitle {
   font-size: 34px;
   font-weight: bold;
-  line-height: 44px;
-  color: rgb(50, 50, 50);
+  line-height: 150%;
+  color: #fff;
+  margin-top: 70px;
+}
+
+.contentText {
+  font-size: 22px;
+  line-height: 150%;
+  color: #fff;
+  margin-top: 22px;
 }
 
 .homeContent {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-top: 70px;
+  padding-top: 150px;
 }
 
 .certPlan {
   width: 500px;
   height: 400px;
   border: 1px solid black;
+}
+
+.homeHeader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 10px 0;
+}
+
+.homeHeaderDiv {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 수확일정 */
+.certPlan {
+  width: 500px;
+  height: 400px;
+  margin-top: 50px;
+  border: none;
+  color: white;
+}
+
+.certPlanTitle {
+  margin: 15px;
+  font-size: 22px;
+}
+
+.certPlanDiv {
+  width: 95%;
+  height: fit-content;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+.certPlanDiv:hover {
+  background-color: rgba(187, 205, 110, 0.5);
+}
+
+.fontSize16 {
+  font-size: 16px;
+}
+
+.fontSize15 {
+  font-size: 15px;
 }

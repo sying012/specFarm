@@ -37,6 +37,10 @@ form#keywordSearchBar{
     width: 300px;
 }
 
+#container #searchBar input[type="text"]:focus-visible{
+    outline: 2px solid rgb(187, 205, 110);
+}
+
 form#keywordSearchBar button[type="submit"]{
     width: 45px;
     height: 40px;
@@ -52,7 +56,9 @@ form#certSearchBar{
 }
 
 form#certSearchBar input#searchCert{
-    width:200px
+    width:200px;
+    font-size: 1.1rem;
+    padding-left: 10px;
 }
 
 #selectCert{
@@ -82,11 +88,24 @@ form#certSearchBar input#searchCert{
     cursor: pointer;
 }
 
+#boardTop button.askRegButton{
+    color: rgb(187, 205, 110);
+    border-color: rgb(187, 205, 110);
+    font-weight: 600;
+}
+
+#boardTop button.askRegButton:hover{
+  background: rgb(187, 205, 110);
+  color: white;
+}
+
+/*Pagenation*/
+
 #pagenation{
     position: absolute;
     display: flex;
     right: -45px;
-    top:300px;
+    top:30%;
     flex-direction: column;
 
 }
@@ -106,8 +125,9 @@ form#certSearchBar input#searchCert{
 }
 
 #pagenation .active{
-  border: none;
-   background-color: rgb(92, 252, 148);
+   border: none;
+   color: white;
+   background-color: rgb(187, 205, 110);
 
 
 }
@@ -149,12 +169,22 @@ form#certSearchBar input#searchCert{
     display: flex;
     align-items: center;
     height: 40px;
+    overflow: hidden;
+    max-width: 650px;
+   
 }
+
+#askListItem span{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 650px;
+}
+
 
 #askListItem #writer{
     display: flex;
     height: 30px;
-
     font-size: 0.8rem;
     color: gray;
 }
@@ -235,4 +265,112 @@ form#certSearchBar input#searchCert{
     display: flex;
     width: 100%;
     justify-content: center;
+}
+
+/*askDetail*/
+#askDetailContainer{
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#askDetailContainer #detailContentBox{
+    background: rgb(250, 250, 250);
+    padding: 20px;
+    max-width: 400px;
+    width: 40%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    height: fit-content;
+}
+
+#askDetailContainer #detailReply{
+    max-width: 500px;
+    width: 55%;
+}
+
+
+#askDetailContainer #detailContentBox .detailWrite{
+    display: flex;
+    align-items: center;
+    height: 40px;
+    font-size: 0.8rem;
+    color: rgb(100, 100, 100);
+}
+
+#askDetailContainer #detailContentBox .detailWrite #profileImg{
+    height: 40px;
+    margin-right: 10px;
+}
+
+#askDetailContainer #detailContentBox .detailTitle{
+    margin-top: 20px;
+}
+
+#askDetailContainer #detailContentBox .detailContent{
+    margin-top: 15px;
+    color: rgb(70, 70, 70);
+    font-size: 0.9rem;
+}
+
+#askDetailContainer #detailContentBox .detailRegDate{
+    display: flex;
+    justify-content: end;
+    margin-top: 15px;
+    color: rgb(100, 100, 100);
+    font-size: 0.7rem;
+}
+
+#askDetailContainer #detailContentBox .detailLink a{
+    color: rgb(100, 100, 100);
+    font-size: 0.7rem;
+    margin-right: 5px;
+}
+
+/*AskDetailReply*/
+#askDetailContainer #detailReply .askReplyBox{
+    background: rgb(230, 230, 230);
+    min-height: 60px;
+    padding: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    max-width: 460px;
+    width: 100%;
+}
+#askDetailContainer #detailReply .askReplyBox #profileImg{
+   width: 60px;
+}
+
+#askDetailContainer #detailReply #askReplyRegBox #replyRegForm{
+    margin-left: 20px;
+    width: 100%;
+}
+
+#askDetailContainer #detailReply #replyBox{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 100%;
+}
+
+#askReplyBox #replyBox .askReplyContent{
+    white-space: normal;
+    margin-top: 10px;
+    color: rgb(60, 60, 60);
+    padding-bottom: 10px;
+    word-break: break-all;
+}
+
+.rereplyOpen{
+    display: flex;
+    align-self: flex-end;
+    justify-self: end;
+}
+
+.rereplyOpen p{
+    display: flex;
+    font-size: 0.7rem;
+    margin-right: 5px;
 }

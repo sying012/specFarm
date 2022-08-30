@@ -33,21 +33,26 @@ const theme = createTheme({
 });
 
 const Join = () => {
-  const [IdError, setIdError] = useState(false);
-  const [IdErrorText, setIdErrorText] = useState("");
-  const [PwValidationError, setPwValidationError] = useState(false);
-  const [PwValidationErrorText, setPwValidationErrorText] = useState("");
-  const [PwError, setPwError] = useState(false);
-  const [PwErrorText, setPwErrorText] = useState("");
-  const [NameError, setNameError] = useState(false);
-  const [NameErrorText, setNameErrorText] = useState("");
-  const [TelError, setTelError] = useState(false);
-  const [TelErrorText, setTelErrorText] = useState("");
-  const [TelAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [TelAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
-  const [TelAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
-  const [EmailError, setEmailError] = useState(false);
-  const [EmailErrorText, setEmailErrorText] = useState("");
+  const [idError, setIdError] = useState(false);
+  const [idErrorText, setIdErrorText] = useState("");
+  const [pwValidationError, setPwValidationError] = useState(false);
+  const [pwValidationErrorText, setPwValidationErrorText] = useState("");
+  const [pwError, setPwError] = useState(false);
+  const [pwErrorText, setPwErrorText] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorText, setNameErrorText] = useState("");
+  const [telError, setTelError] = useState(false);
+  const [telErrorText, setTelErrorText] = useState("");
+  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
+  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorText, setEmailErrorText] = useState("");
+  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certL, setCertL] = useState("");
+  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certM, setCertM] = useState("");
+  const [checked, setChecked] = useState(false);
 
   // Id Check
   const idCheck = useCallback((e) => {
@@ -75,7 +80,7 @@ const Join = () => {
   }, []);
 
   // Password Validation Check
-  const PwValidationCheck = useCallback((e) => {
+  const pwValidationCheck = useCallback((e) => {
     const userPw = e.target.value;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/;
 
@@ -94,7 +99,7 @@ const Join = () => {
   }, []);
 
   // Password Check
-  const PwCheck = useCallback((e) => {
+  const pwCheck = useCallback((e) => {
     const userPw = document.getElementById("userPw").value;
     const userPwCheck = e.target.value;
 
@@ -111,7 +116,7 @@ const Join = () => {
   }, []);
 
   // UserName Null Check
-  const NameCheck = useCallback((e) => {
+  const nameCheck = useCallback((e) => {
     const userName = e.target.value;
     if (userName === null || userName === "") {
       setNameError(true);
@@ -123,7 +128,7 @@ const Join = () => {
   }, []);
 
   // Phone number authentication
-  const TelAuth = useCallback((e) => {
+  const telAuth = useCallback((e) => {
     const userTel = document.getElementById("userTel").value;
     // remove Hyphen
     const newUserTel = userTel.replace(/-/g, "");
@@ -145,7 +150,7 @@ const Join = () => {
   }, []);
 
   // Phone number authentication Number Check
-  const TelAuthNumberCheck = useCallback((e) => {
+  const telAuthNumberCheck = useCallback((e) => {
     const userTelAuthNumber = e.target.value;
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
       setTelAuthNumberError(true);
@@ -158,17 +163,37 @@ const Join = () => {
   }, []);
 
   // Email Validation Check
-  const EmailCheck = useCallback((e) => {
+  const emailCheck = useCallback((e) => {
     const userEmail = e.target.value;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!emailRegex.test(userEmail)) {
+    if (userEmail === null || userEmail === "") {
+      setEmailError(false);
+      setEmailErrorText("");
+    } else if (!emailRegex.test(userEmail)) {
       setEmailError(true);
       setEmailErrorText("이메일 주소를 다시 확인해주세요.");
     } else {
       setEmailError(false);
       setEmailErrorText("");
     }
+  }, []);
+
+  // Cert Large Category
+  const certLCatChange = (e) => {
+    console.log(e.target.value);
+    setCertL(e.target.value);
+  };
+
+  // Cert Middle Category
+  const certMCatChange = (e) => {
+    console.log(e.target.value);
+    setCertM(e.target.value);
+  };
+
+  // checked
+  const checkedCheck = useCallback((e) => {
+    setChecked(e.target.checked);
   }, []);
 
   // join submit
@@ -181,7 +206,7 @@ const Join = () => {
     const userName = data.get("userName");
     const userTel = data.get("userTel");
     const userTelAuthNumber = data.get("userTelAuthNumber");
-
+    console.log(checked);
     if (userId === null || userId === "") {
       setIdError(true);
       setIdErrorText("필수 정보입니다.");
@@ -212,231 +237,275 @@ const Join = () => {
       setTelAuthNumberErrorText("인증이 필요합니다.");
     }
 
+    if (!checked) {
+      document.getElementById("checkedAlert").hidden = false;
+    } else {
+      document.getElementById("checkedAlert").hidden = true;
+    }
+
     if (
-      !IdError &&
-      !PwValidationError &&
-      !PwError &&
-      !NameError &&
-      !TelError &&
-      !TelAuthNumberError &&
-      !EmailError
+      !idError &&
+      userId !== "" &&
+      !pwValidationError &&
+      userPw !== "" &&
+      !pwError &&
+      userPwCheck !== "" &&
+      !nameError &&
+      userName !== "" &&
+      !telError &&
+      userTel !== "" &&
+      !telAuthNumberError &&
+      userTelAuthNumber !== "" &&
+      !emailError &&
+      checked
     ) {
       console.log("join success!!");
+      window.location.replace("/");
     }
   };
 
   return (
-    <div className={styles.form}>
-      <form onSubmit={joinSubmit}>
-        <a href="/">
-          <img src={logo} className={styles.logo} alt="specfarm-logo" />
-        </a>
-        <p className={styles.title}>회원가입</p>
-        <Grid container spacing={3} className={styles.padding}>
-          <Grid item xs={12}>
-            <TextField
-              name="userId"
-              variant="outlined"
-              id="userId"
-              label="아이디"
-              fullWidth
-              onBlur={idCheck}
-              error={IdError}
-              helperText={IdErrorText}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="userPw"
-              type="password"
-              variant="outlined"
-              id="userPw"
-              label="비밀번호"
-              fullWidth
-              onBlur={PwValidationCheck}
-              error={PwValidationError}
-              helperText={PwValidationErrorText}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="userPwCheck"
-              type="password"
-              variant="outlined"
-              id="userPwCheck"
-              label="비밀번호 확인"
-              fullWidth
-              onBlur={PwCheck}
-              error={PwError}
-              helperText={PwErrorText}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="userName"
-              variant="outlined"
-              id="userName"
-              label="이름"
-              //   size="small"
-              fullWidth
-              onBlur={NameCheck}
-              error={NameError}
-              helperText={NameErrorText}
-            />
-          </Grid>
-          <Grid item xs={9}>
-            <TextField
-              name="userTel"
-              variant="outlined"
-              id="userTel"
-              label="휴대폰 번호"
-              fullWidth
-              error={TelError}
-              helperText={TelErrorText}
-            />
-          </Grid>
-          <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
-            <Button
-              variant="contained"
-              theme={theme}
-              color="brown"
-              style={{}}
-              className={styles.buttonSmall}
-              onClick={TelAuth}
+    <div className={styles.margin15}>
+      <div className={styles.form}>
+        <form onSubmit={joinSubmit}>
+          <a href="/">
+            <img src={logo} className={styles.logo} alt="specfarm-logo" />
+          </a>
+          <p className={styles.title}>회원가입</p>
+          <Grid container spacing={3} className={styles.padding}>
+            <Grid item xs={12}>
+              <TextField
+                name="userId"
+                variant="outlined"
+                id="userId"
+                label="아이디"
+                fullWidth
+                onBlur={idCheck}
+                error={idError}
+                helperText={idErrorText}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="userPw"
+                type="password"
+                variant="outlined"
+                id="userPw"
+                label="비밀번호"
+                fullWidth
+                onBlur={pwValidationCheck}
+                error={pwValidationError}
+                helperText={pwValidationErrorText}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="userPwCheck"
+                type="password"
+                variant="outlined"
+                id="userPwCheck"
+                label="비밀번호 확인"
+                fullWidth
+                onBlur={pwCheck}
+                error={pwError}
+                helperText={pwErrorText}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="userName"
+                variant="outlined"
+                id="userName"
+                label="이름"
+                fullWidth
+                onBlur={nameCheck}
+                error={nameError}
+                helperText={nameErrorText}
+              />
+            </Grid>
+            <Grid item xs={9}>
+              <TextField
+                name="userTel"
+                variant="outlined"
+                id="userTel"
+                label="휴대폰 번호"
+                fullWidth
+                error={telError}
+                helperText={telErrorText}
+              />
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              style={{ paddingLeft: "10px", paddingTop: "28px" }}
             >
-              인증번호 받기
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="userTelAuthNumber"
-              variant="outlined"
-              id="userTelAuthNumber"
-              label="인증번호"
-              fullWidth
-              onBlur={TelAuthNumberCheck}
-              error={TelAuthNumberError}
-              helperText={TelAuthNumberErrorText}
-              disabled={TelAuthNumberDisabled}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="userEmail"
-              variant="outlined"
-              id="userEmail"
-              label="이메일(선택)"
-              fullWidth
-              onBlur={EmailCheck}
-              error={EmailError}
-              helperText={EmailErrorText}
-            />
-          </Grid>
-          <Grid item xs={5.8}>
-            <FormControl
-              sx={{ minWidth: 120 }}
-              fullWidth
-              style={{ fontSize: "14px" }}
-            >
-              <InputLabel id="demo-select-small">관심분야(대분류)</InputLabel>
-              <Select
-                labelId="demo-select-small"
-                id="certLCat"
-                // value={age}
-                label="관심분야(대분류)"
-                // onBlur={handleChange}
-                name="certLCat"
+              <Button
+                variant="contained"
+                theme={theme}
+                color="brown"
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "18px",
+                  padding: "14px 10px",
+                }}
+                // className={styles.buttonSmall}
+                onClick={telAuth}
               >
-                <MenuItem value="" style={{ fontSize: "14px" }}>
-                  대분류
-                </MenuItem>
-                <MenuItem value={10} style={{ fontSize: "14px" }}>
-                  사업관리
-                </MenuItem>
-                <MenuItem value={20} style={{ fontSize: "14px" }}>
-                  경영.회계.세무
-                </MenuItem>
-                <MenuItem value={30} style={{ fontSize: "14px" }}>
-                  금융.보험
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid
-            item
-            xs={1}
-            style={{
-              paddingLeft: "0px",
-              paddingTop: "35px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <ArrowForwardIos color="action" />
-          </Grid>
-          <Grid item xs={5.2} style={{ paddingLeft: "0px" }}>
-            <FormControl
-              sx={{ minWidth: 120 }}
-              //   size="small"
-              fullWidth
-              style={{ fontSize: "14px" }}
-            >
-              <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
-              <Select
-                labelId="certMCat"
-                id="demo-select-small"
-                // value={age}
-                label="관심분야(중분류)"
-                // onBlur={handleChange}
-                name="certMCat"
+                인증번호 받기
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="userTelAuthNumber"
+                variant="outlined"
+                id="userTelAuthNumber"
+                label="인증번호"
+                fullWidth
+                onBlur={telAuthNumberCheck}
+                error={telAuthNumberError}
+                helperText={telAuthNumberErrorText}
+                disabled={telAuthNumberDisabled}
+                sx={{
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    backgroundColor: "#F5F5F5",
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="userEmail"
+                variant="outlined"
+                id="userEmail"
+                label="이메일(선택)"
+                fullWidth
+                onBlur={emailCheck}
+                error={emailError}
+                helperText={emailErrorText}
+              />
+            </Grid>
+            <Grid item xs={5.8}>
+              <FormControl
+                sx={{ minWidth: 120 }}
+                fullWidth
+                style={{ fontSize: "14px" }}
               >
-                <MenuItem value="" style={{ fontSize: "14px" }}>
-                  관심분야(중분류)
-                </MenuItem>
-                <MenuItem value={10} style={{ fontSize: "14px" }}>
-                  사업관리
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={1.3}>
-            <Checkbox size="small" style={{ padding: "0px" }} />
-          </Grid>
-          <Grid item xs={10.7} style={{ paddingLeft: "2px" }}>
-            <Link className={styles.font14} color="inherit" underline="hover">
-              [필수] 개인정보 수집 및 이용동의
-            </Link>
-          </Grid>
-          <Grid item xs={1.3} style={{ paddingTop: "3px" }}>
-            <Checkbox size="small" style={{ padding: "0px" }} />
-          </Grid>
-          <Grid item xs={10.7} style={{ padding: "2px" }}>
-            <Link className={styles.font14} color="inherit" underline="hover">
-              [선택] 새로운 기능 출시안내를 받아보세요. 언제든 취소 할 수
-              있어요. (광고 마케팅 수신동의)
-            </Link>
-          </Grid>
-          <Grid item xs={8} style={{ paddingBottom: "15px" }}>
-            <p>
-              이미 계정이 있으신가요?&nbsp;&nbsp;
-              <Link href="/login" color="inherit" underline="hover">
-                로그인
+                <InputLabel id="certLCat">관심분야(대분류)</InputLabel>
+                <Select
+                  labelId="certLCat"
+                  id="certLCatSelect"
+                  value={certL}
+                  label="관심분야(대분류)"
+                  onChange={certLCatChange}
+                  name="certLCat"
+                >
+                  {certLCat.map((certL) => (
+                    <MenuItem key={certL.id} value={certL.name}>
+                      {certL.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid
+              item
+              xs={1}
+              style={{
+                paddingLeft: "0px",
+                paddingTop: "35px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <ArrowForwardIos color="action" />
+            </Grid>
+            <Grid item xs={5.2} style={{ paddingLeft: "0px" }}>
+              <FormControl
+                sx={{ minWidth: 120 }}
+                //   size="small"
+                fullWidth
+                style={{ fontSize: "14px" }}
+              >
+                <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
+                <Select
+                  labelId="certMCat"
+                  id="certMCatSelect"
+                  value={certM}
+                  label="관심분야(중분류)"
+                  onChange={certMCatChange}
+                  name="certMCat"
+                >
+                  {certMCat.map((certM) => (
+                    <MenuItem key={certM.id} value={certM.name}>
+                      {certM.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={1.3}>
+              <Checkbox
+                size="small"
+                style={{ padding: "0px" }}
+                onChange={checkedCheck}
+              />
+            </Grid>
+            <Grid item xs={10.7} style={{ paddingLeft: "2px" }}>
+              <Link className={styles.font14} color="inherit" underline="hover">
+                [필수] 개인정보 수집 및 이용동의
               </Link>
-            </p>
+            </Grid>
+            <Grid item xs={1.3} style={{ paddingTop: "3px" }}>
+              <Checkbox size="small" style={{ padding: "0px" }} />
+            </Grid>
+            <Grid item xs={10.7} style={{ padding: "2px" }}>
+              <Link className={styles.font14} color="inherit" underline="hover">
+                [선택] 새로운 기능 출시안내를 받아보세요. 언제든 취소할 수
+                있어요. (광고 마케팅 수신동의)
+              </Link>
+            </Grid>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <p
+                className={styles.font15}
+                style={{
+                  color: "#e53e3e",
+                  // border: "1px solid #e53e3e",
+                  background: "rgba(229, 62, 62, 0.1)",
+                  padding: "10px",
+                }}
+                id="checkedAlert"
+                hidden
+              >
+                개인정보 수집 및 이용에 대한 안내를 동의해주세요.
+              </p>
+            </Grid>
+            <Grid item xs={7.5} style={{ paddingBottom: "30px" }}>
+              <p>
+                이미 계정이 있으신가요?&nbsp;&nbsp;
+                <Link href="/login" color="inherit" underline="hover">
+                  로그인
+                </Link>
+              </p>
+            </Grid>
+            <Grid item xs={4.5} style={{ paddingBottom: "30px" }}>
+              <Button
+                variant="contained"
+                type="submit"
+                theme={theme}
+                color="green"
+                className={styles.buttonMiddle}
+                style={{
+                  fontSize: "15px",
+                  lineHeight: "18px",
+                  padding: "14px 16px",
+                }}
+              >
+                계정 만들기
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={4} style={{ paddingBottom: "15px" }}>
-            <Button
-              variant="contained"
-              type="submit"
-              theme={theme}
-              color="green"
-              className={styles.buttonMiddle}
-            >
-              계정 만들기
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

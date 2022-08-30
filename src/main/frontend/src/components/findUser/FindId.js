@@ -19,14 +19,15 @@ const theme = createTheme({
 });
 
 const FindId = () => {
+  const [userName, setUserName] = useState("");
   const [findId, setFindId] = useState("");
-  const [NameError, setNameError] = useState(false);
-  const [NameErrorText, setNameErrorText] = useState("");
-  const [TelError, setTelError] = useState(false);
-  const [TelErrorText, setTelErrorText] = useState("");
-  const [TelAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [TelAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
-  const [TelAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorText, setNameErrorText] = useState("");
+  const [telError, setTelError] = useState(false);
+  const [telErrorText, setTelErrorText] = useState("");
+  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
+  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
 
   //   const callAxios = () => {
   //     axios({}).then((response) => {
@@ -35,7 +36,7 @@ const FindId = () => {
   //   };
 
   // UserName Null Check
-  const NameCheck = useCallback((e) => {
+  const nameCheck = useCallback((e) => {
     const userName = e.target.value;
     if (userName === null || userName === "") {
       setNameError(true);
@@ -46,7 +47,7 @@ const FindId = () => {
     }
   }, []);
   // Phone number authentication
-  const TelAuth = useCallback((e) => {
+  const telAuth = useCallback((e) => {
     const userTel = document.getElementById("findId_userTel").value;
 
     // remove Hyphen
@@ -68,7 +69,22 @@ const FindId = () => {
     }
   }, []);
 
-  // find id submit
+  // Phone number authentication Number Check
+  const telAuthNumberCheck = useCallback((e) => {
+    const userTelAuthNumber = e.target.value;
+
+    if (userTelAuthNumber === null || userTelAuthNumber === "") {
+      setTelAuthNumberError(true);
+      setTelAuthNumberErrorText("인증이 필요합니다.");
+    } else {
+      setTelAuthNumberError(false);
+      setTelAuthNumberErrorText("");
+    }
+    // 인증번호 비교 후 인증 성공 실패 관련
+  }, []);
+
+  // find id identify check
+  const findIdIdentifyCheck = false;
   const findIdSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -91,8 +107,19 @@ const FindId = () => {
       setTelAuthNumberErrorText("인증이 필요합니다.");
     }
 
-    if (!NameError && !TelError && !TelAuthNumberError) {
-      setFindId("ABCDEFG");
+    if (
+      !nameError &&
+      userName !== "" &&
+      !telError &&
+      userTel !== "" &&
+      !telAuthNumberError &&
+      userTelAuthNumber !== ""
+    ) {
+      setUserName(userName);
+      setFindId("user1234");
+      const id = "user1234";
+      const newid = id.replace(/.$/, "*");
+      console.log(newid);
     }
   };
 
@@ -103,12 +130,12 @@ const FindId = () => {
           <TextField
             name="userName"
             variant="outlined"
-            id="userName"
+            id="findId_userName"
             label="이름"
             fullWidth
-            onBlur={NameCheck}
-            error={NameError}
-            helperText={NameErrorText}
+            onBlur={nameCheck}
+            error={nameError}
+            helperText={nameErrorText}
           />
         </Grid>
         <Grid item xs={9}>
@@ -118,8 +145,8 @@ const FindId = () => {
             id="findId_userTel"
             label="휴대폰 번호"
             fullWidth
-            error={TelError}
-            helperText={TelErrorText}
+            error={telError}
+            helperText={telErrorText}
           />
         </Grid>
         <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
@@ -127,8 +154,12 @@ const FindId = () => {
             variant="contained"
             theme={theme}
             color="brown"
-            className={styles.buttonSmall}
-            onClick={TelAuth}
+            style={{
+              fontSize: "14px",
+              lineHeight: "18px",
+              padding: "14px 10px",
+            }}
+            onClick={telAuth}
           >
             인증번호 받기
           </Button>
@@ -137,12 +168,18 @@ const FindId = () => {
           <TextField
             name="userTelAuthNumber"
             variant="outlined"
-            id="userTelAuthNumber"
+            id="findId_userTelAuthNumber"
             label="인증번호"
             fullWidth
-            error={TelAuthNumberError}
-            helperText={TelAuthNumberErrorText}
-            disabled={TelAuthNumberDisabled}
+            onBlur={telAuthNumberCheck}
+            error={telAuthNumberError}
+            helperText={telAuthNumberErrorText}
+            disabled={telAuthNumberDisabled}
+            sx={{
+              "& .MuiInputBase-input.Mui-disabled": {
+                backgroundColor: "#F5F5F5",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -152,6 +189,11 @@ const FindId = () => {
             theme={theme}
             color="green"
             className={styles.buttonMiddle}
+            style={{
+              fontSize: "15px",
+              lineHeight: "18px",
+              padding: "14px 16px",
+            }}
           >
             아이디 찾기
           </Button>
@@ -162,7 +204,9 @@ const FindId = () => {
 
   let findIdResultPage = (
     <div className={styles.findIdResultDiv}>
-      <p className={styles.findIdSubTitle}>''님의 아이디는 {findId}입니다.</p>
+      <p className={styles.findIdSubTitle}>
+        '{userName}'님의 아이디는 {findId}입니다.
+      </p>
       <br />
       <Link color="inherit" underline="hover" href="/login">
         &nbsp;&nbsp;로그인하러 가기 ▶

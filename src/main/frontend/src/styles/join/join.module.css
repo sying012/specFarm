@@ -1,5 +1,9 @@
+.margin15 {
+  margin: 15px;
+}
+
 .form {
-  width: 600px;
+  max-width: 600px;
   margin: 30px auto;
   border-radius: 15px;
   box-shadow: 5px 6px 22px 0 lightgray;
@@ -41,4 +45,23 @@
   font-size: 15px;
   line-height: 18px;
   padding: 14px 16px;
+}
+
+/* media screen */
+@media screen and (max-width: 768px) {
+  .padding {
+    padding: 0 55px;
+  }
+  .title {
+    padding: 0 55px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .padding {
+    padding: 0 40px;
+  }
+  .title {
+    padding: 0 40px;
+  }
 }

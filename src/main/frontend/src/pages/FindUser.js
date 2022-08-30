@@ -6,10 +6,14 @@ import styles from "../styles/findUser/findUser.module.css";
 
 const FindUser = () => {
   return (
-    <div className={styles.form}>
-      <img src={logo} className={styles.logo} alt="specfarm-logo" />
-      <FindId />
-      <PwReset />
+    <div className={styles.margin15}>
+      <div className={styles.form}>
+        <a href="/">
+          <img src={logo} className={styles.logo} alt="specfarm-logo" />
+        </a>
+        <FindId />
+        <PwReset />
+      </div>
     </div>
   );
 };

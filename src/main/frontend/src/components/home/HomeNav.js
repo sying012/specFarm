@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
+import whitelogo1 from "../../images/logo_white1.png";
 
-const HomeHeader = () => {
+const HomeNav = () => {
   const commRef = useRef();
   const noticeRef = useRef();
 
@@ -10,9 +11,16 @@ const HomeHeader = () => {
   const [noticeName, setNoticeName] = useState("공지사항");
 
   return (
-    <header className="header">
+    <header className="header" style={{ background: "none" }}>
       <div className="innerheader">
-        <div style={{ width: "270px" }} />
+        <a href="/">
+          <img
+            className="whitelogo1"
+            src={whitelogo1}
+            alt="logo"
+            style={{ visibility: "hidden" }}
+          />
+        </a>
         <nav className="catwrap">
           <div></div>
           <div
@@ -117,10 +125,17 @@ const HomeHeader = () => {
             }}
           ></div>
         </nav>
-        <div className="tailwrap" />
+        <div className="tailwrap" style={{ visibility: "hidden" }}>
+          <div className="loginbtn">
+            <a href="/login">로그인</a>
+          </div>
+          <div className="joinbtn">
+            <a href="/join">회원가입</a>
+          </div>
+        </div>
       </div>
     </header>
   );
 };
 
-export default HomeHeader;
+export default HomeNav;

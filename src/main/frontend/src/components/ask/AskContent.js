@@ -2,6 +2,9 @@ import React from "react";
 import AskListItem from "./AskListItem";
 import searchIcon from "../../images/loupe.png";
 import { useRef } from "react";
+import { NavLink } from "react-router-dom";
+import Pagenation from "./Pagenation";
+import { Button } from "@mui/material";
 
 const AskContent = ({ asks }) => {
   const certList = useRef();
@@ -14,7 +17,11 @@ const AskContent = ({ asks }) => {
       <div id="boardTop">
         <div id="searchBar">
           <form id="keywordSearchBar" action="">
-            <input type="text" name="searchKeyword" />
+            <input
+              type="text"
+              name="searchKeyword"
+              style={{ fontSize: "1.1rem", paddingLeft: "10px" }}
+            />
             <button id="search" type="submit">
               <img src={searchIcon} alt="" style={{ width: "100%" }} />
             </button>
@@ -27,6 +34,7 @@ const AskContent = ({ asks }) => {
               onFocus={showCertList}
               onBlur={() => (certList.current.style.display = "none")}
               autoComplete="off"
+              placeholder="자격증 검색"
             />
             <div id="selectCert" ref={certList}>
               <ul>
@@ -38,35 +46,22 @@ const AskContent = ({ asks }) => {
             </div>
           </form>
         </div>
-        <button type="button" onClick={() => (window.location = "./ask/write")}>
+        <Button
+          className="askRegButton"
+          variant="outlined"
+          onClick={() => (window.location = "./ask/write")}
+        >
           글쓰기
-        </button>
+        </Button>
       </div>
       <div id="askList" style={{ marginTop: "20px" }}>
         {asks.map((ask) => (
-          <AskListItem key={ask.id} ask={ask}></AskListItem>
+          <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
+            <AskListItem ask={ask}></AskListItem>
+          </NavLink>
         ))}
       </div>
-      <div id="pagenation">
-        <button type="button" className="page">
-          ↑
-        </button>
-        <button type="button" className="page active">
-          1
-        </button>
-        <button type="button" className="page">
-          2
-        </button>
-        <button type="button" className="page">
-          3
-        </button>
-        <button type="button" className="page">
-          4
-        </button>
-        <button type="button" className="page">
-          ↓
-        </button>
-      </div>
+      <Pagenation></Pagenation>
     </div>
   );
 };

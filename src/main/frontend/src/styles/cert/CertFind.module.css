@@ -1,0 +1,7 @@
+.certContainer {
+    width: 300px;
+    height: 88vh;
+    box-shadow: 15px 10px 15px 2px rgb(190, 190, 190);
+    display: flex;
+  }
+  

@@ -1,0 +1,38 @@
+.mdfContainer {
+  width: 700px;
+  min-height: 500px;
+  margin: 100px auto 0;
+  border-radius: 15px;
+  box-shadow: 5px 6px 22px lightgray;
+  padding: 40px 80px;
+}
+
+.mdfTitle {
+  color: rgb(107, 83, 67);
+  font-size: 2rem;
+}
+
+.deactivateSub {
+  margin: 20px 0;
+}
+
+.passwordCheck {
+  width: 400px;
+  margin: 130px auto;
+}
+
+.deactivateBtns {
+  margin: 100px auto 30px;
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileCancelBtn,
+.profileApplyBtn {
+  width: 150px;
+  height: 42px;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  box-shadow: none !important;
+}

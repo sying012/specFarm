@@ -1,5 +1,5 @@
 .mypageInnerContainer {
-  width: 730px;
+  width: 760px;
   min-height: 600px;
   border-radius: 15px;
   box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
@@ -25,7 +25,7 @@
 }
 
 .frameContent {
-  padding: 20px 50px;
+  padding: 20px 40px;
 }
 
 .innerContainer {

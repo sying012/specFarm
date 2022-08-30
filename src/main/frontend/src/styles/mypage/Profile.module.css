@@ -1,6 +1,6 @@
 .profileContainer {
-  width: 400px;
-  height: 88vh;
+  width: 360px;
+  min-height: calc(100vh - 130px);
   box-shadow: 15px 10px 15px 2px rgb(190, 190, 190);
   display: flex;
 }
@@ -12,10 +12,13 @@
 
 .innerContainer {
   margin: 100px auto 0;
+  display: flex;
+  flex-direction: column;
+
 }
 
 .avatar {
-  margin: 0 auto;
+  margin: 0 auto; 
 }
 
 .nickname {
@@ -33,7 +36,7 @@
 .badgeLabel {
   position: absolute;
   border-radius: 30px;
-  border: 3px solid rgb(51, 51, 51);
+  border: 2px solid rgb(51, 51, 51);
   background-color: white;
   width: 70px;
   height: 25px;
@@ -50,7 +53,7 @@
 .badges {
   margin-top: 65px;
   border-radius: 15px;
-  border: 3px solid rgb(51, 51, 51);
+  border: 2px solid rgb(51, 51, 51);
   min-height: 120px;
   width: 230px;
   padding: 20px 15px;

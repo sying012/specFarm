@@ -17,6 +17,9 @@ import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
+import Deactivate from "./components/mypage/Deactivate";
+import ProfileMdf from "./components/mypage/ProfileMdf";
+import CheckPw from "./components/mypage/CheckPw";
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
         <Route path="/notice/lost" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
+        <Route path="/mypage/deactivate" element={<Deactivate />}></Route>
+        <Route path="/mypage/pwcheck" element={<CheckPw />}></Route>
+        <Route path="/mypage/modify" element={<ProfileMdf />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

@@ -1,0 +1,51 @@
+.search {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table {
+  width: 100%;
+  height: max-content;
+  border-collapse: collapse;
+  border-top: 2px solid #bdbdbd;
+  border-bottom: 2px solid #bdbdbd;
+}
+
+.table > thead > tr > th {
+  background-color: #eeeeee;
+  border-top: 1px solid #bdbdbd;
+  padding: 15px 5px;
+  text-align: center;
+}
+
+.table > tbody > tr > td {
+  margin-left: 100px;
+  border-top: 1px solid #bdbdbd;
+  padding: 15px 5px;
+}
+
+.brchName {
+  text-align: center;
+  width: 150px;
+}
+
+.lostLoc {
+  text-align: center;
+  width: 300px;
+}
+
+.lostDate {
+  text-align: center;
+  width: 150px;
+}
+
+/*page Nation*/
+
+.pageNation {
+  margin-top: 60px;
+}
+
+.pageNation > div {
+  align-items: center;
+}

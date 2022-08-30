@@ -1,5 +1,7 @@
-.margin15 {
-  margin: 15px;
+.center {
+  height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .form {
@@ -28,34 +30,31 @@
   margin-bottom: 24px;
 }
 
-.findIdResultDiv {
-  padding: 30px 70px;
-  height: 217px;
+.aTagDiv > a {
+  color: #666;
+  font-size: 16px;
+}
+.snsLogin {
+  text-align: center;
+  padding: 50px 0 10px 0;
 }
 
-.findIdSubTitle {
-  font-size: 18px;
-}
-
-.pwResetResultDiv {
-  height: 375px;
-}
-.underline {
-  text-decoration: underline;
-}
-
-.buttonSmall {
-  float: right;
-  font-size: 14px;
-  line-height: 18px;
-  padding: 14px 10px;
-}
-
-.buttonMiddle {
-  float: right;
+.snsLogin > p {
+  color: #999;
   font-size: 15px;
-  line-height: 18px;
-  padding: 14px 16px;
+}
+
+.snsLoginIcon {
+  display: flex;
+  justify-content: center;
+  padding: 30px 50px;
+}
+
+.snsLoginIcon > div {
+  width: 48px;
+  height: 48px;
+  border-radius: 90px;
+  margin: 0 20px;
 }
 
 /* media screen */

@@ -13,7 +13,9 @@ const AskListItem = ({ ask }) => {
       </div>
       <div id="contentBox">
         <div id="title">
-          [{ask.certIdx}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
+          <span>
+            [{ask.certIdx}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
+          </span>
         </div>
         <div id="writer"> {ask.userId} </div>
       </div>

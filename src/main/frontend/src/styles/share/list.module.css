@@ -1,26 +1,6 @@
-/* ShareList */
-.top {
-  background-color: brown;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 50px 0;
-}
-
-.search {
-  background-color: blueviolet;
-  display: flex;
-  position: relative;
-}
-
 /* 버튼 색상 
 "rgba(107, 83, 67, 0.8)"
 "rgba(187, 205, 110, 0.8)" */
-
-.searchBtn {
-  width: 60px;
-  border: none;
-}
 
 .newshareBtn {
   width: 60px;
@@ -34,14 +14,10 @@
   background-color: rgba(187, 205, 110, 0.8);
 }
 
-.shareSearchBar {
+.search {
   display: flex;
   width: 100%;
   justify-content: space-between;
-}
-
-.aaaaa:focus-visible {
-  outline: none;
 }
 
 /* ShareCard */

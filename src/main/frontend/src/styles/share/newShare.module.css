@@ -1,17 +1,24 @@
-.aa {
+.regBox {
+  width: 950px;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+}
+.imgBox {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
 
-.imgBox {
-  width: 50%;
+.itemImg {
+  display: flex;
+  width: 450px;
+  height: 365px;
+  border-radius: 10px;
+  box-shadow: 5px 6px 22px lightgray;
 }
 
 .uploadBtn {
   display: flex;
-}
-
-.itemImg {
-  width: 100%;
-  height: 400px;
+  justify-content: flex-end;
 }

@@ -1,32 +1,45 @@
 .shareBody {
   width: 50%;
-  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  float: right;
+}
+
+.shareForm {
+  width: 450px;
+  height: 400px;
   display: flex;
   flex-direction: column;
 }
 
 .title {
-  width: 85%;
-  height: 40px;
+  width: 100%;
+  height: 45px;
   border-radius: 5px;
+  box-shadow: 5px 6px 22px lightgray;
+  border: none;
 }
 
 .content {
-  width: 85%;
+  width: 100%;
   height: 320px;
   margin-top: 23px;
   border-radius: 5px;
+  border: none;
+  box-shadow: 5px 6px 22px lightgray;
   font-size: large;
 }
 
 .shareBtn {
   display: flex;
+  float: right;
+  justify-content: flex-end;
 }
 
 .cancelBtn {
   color: white;
   width: 60px;
-  height: 30px;
+  height: 35px;
   border-radius: 4px;
   border-style: none;
   background-color: rgba(107, 83, 67, 0.8);
@@ -36,7 +49,7 @@
   margin-left: 10px;
   color: white;
   width: 60px;
-  height: 30px;
+  height: 35px;
   border-radius: 4px;
   border-style: none;
   background-color: rgba(187, 205, 110, 0.8);

@@ -13,23 +13,21 @@ import Grid from "@mui/system/Unstable_Grid";
 const CertMain = () => {
   return (
     <div>
-      <h2 className={styles.certtitle}>재배할 자격증을 찾아보세요. 🌱</h2>
+      <h1 className={styles.certtitle}>재배할 자격증을 찾아보세요. 🌱</h1>
       <input className={styles.certinput} placeholder="검색"></input>
       <SearchIcon
         fontSize="large"
         sx={{ marginLeft: "-3%", marginBottom: "-1%" }}
       />
-      <Grid item xs={5.5} style={{ paddingLeft: "380px", paddingTop: "30px" }}>
-        <FormControl sx={{ minWidth: 120 }} Width style={{ fontSize: "14px" }}>
+      <Grid item xs={6} style={{ paddingLeft: "380px", paddingTop: "30px" }}>
+        <FormControl sx={{ minWidth: 150 }} Width style={{ fontSize: "14px" }}>
           <InputLabel id="demo-select-small" style={{ fontSize: "14px" }}>
             대분류
           </InputLabel>
           <Select
             labelId="demo-select-small"
             id="certLCat"
-            // value={age}
             label="관심분야(대분류)"
-            // onBlur={handleChange}
             style={{ fontSize: "14px" }}
             name="certLCat"
           >
@@ -48,27 +46,35 @@ const CertMain = () => {
           </Select>
         </FormControl>
       </Grid>
-      {/* <Grid
+      {
+        <Grid
+          item
+          xs={1}
+          style={{
+            paddingLeft: "0px",
+            paddingTop: "10px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        ></Grid>
+      }
+      <Grid
         item
-        xs={1}
+        xs={6}
         style={{
-          paddingLeft: "0px",
-          paddingTop: "10px",
-          display: "flex",
-          justifyContent: "center",
+          paddingLeft: "580px",
+          paddingBottom: "30px",
+          marginTop: "-62px",
         }}
-      ></Grid> */}
-      <Grid item xs={5.5} style={{ paddingLeft: "0px" }}>
-        <FormControl sx={{ minWidth: 120 }} Width style={{ fontSize: "14px" }}>
+      >
+        <FormControl sx={{ minWidth: 150 }} Width style={{ fontSize: "14px" }}>
           <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
             중분류
           </InputLabel>
           <Select
             labelId="certMCat"
             id="demo-select-small"
-            // value={age}
             label="관심분야(중분류)"
-            // onBlur={handleChange}
             style={{ fontSize: "14px" }}
             name="certMCat"
           >

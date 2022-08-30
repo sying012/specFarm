@@ -30,7 +30,7 @@ const StudyContent = ({ studyList }) => {
             <p className="studyRegDate">{regDate}</p>
           </div>
           <div
-            className="studyContentState"
+            className="studyState"
             style={{
               color: "white",
               background: studyState

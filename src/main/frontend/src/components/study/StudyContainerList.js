@@ -4,13 +4,11 @@ import StudyContainer from "./StudyContainer";
 
 const StudyContainerList = ({ studyList }) => {
   return (
-    <>
-      <div className="studyList">
-        {studyList.map((study) => (
-          <StudyContainer key={study.id} studyItem={study} />
-        ))}
-      </div>
-    </>
+    <div className="studyList">
+      {studyList.map((study) => (
+        <StudyContainer key={study.id} studyItem={study} />
+      ))}
+    </div>
   );
 };
 

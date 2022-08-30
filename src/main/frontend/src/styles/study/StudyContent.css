@@ -33,7 +33,7 @@
     margin-bottom: 20px;
 }
 
-.studyContentState {
+.studyState {
     width: 70px;
     height: 35px;
     font-size: larger;
@@ -41,11 +41,10 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    
+    margin-bottom: 130px;
 }
 
 .btnWrapper {
-    margin-top: 130px;
     margin-left: auto;
 }
 

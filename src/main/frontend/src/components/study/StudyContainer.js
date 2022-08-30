@@ -13,19 +13,13 @@ const StudyContainer = ({ studyItem }) => {
   const { studyImg, studyTitle, studyMemCnt, studyState, id } = studyItem;
 
   return (
-    <div
-      className="studyContainer"
-      onClick={() => (window.location = "/community/study/" + id)}
-    >
-      <Card
-        className="studyContainerBody"
-        sx={{ maxWidth: 220, maxHeight: 320 }}
-      >
+    <div className="studyContainer">
+      <Card className="studyContainerBody" sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             className="studyImage"
             component="img"
-            height="220"
+            height="140"
             image={studyImg}
             alt="스터디 이미지"
           />

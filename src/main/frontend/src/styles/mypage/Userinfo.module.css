@@ -2,12 +2,61 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 10px;
 }
 
 .editInfo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 450px;
-    padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 450px;
+  padding: 20px 60px;
+}
+
+.userInfoBtns {
+  margin: 30px auto 0;
+  padding: 0;
+  width: 390px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileCancelBtn,
+.profileApplyBtn {
+  width: 180px;
+  height: 42px;
+  font-size: 1.1em !important;
+  font-weight: bold !important;
+  box-shadow: none !important;
+}
+
+.earnedCert {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.earnedCert h1 {
+  margin-bottom: 30px;
+}
+
+.certContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px 70px;
+}
+
+.addCert {
+  width: 500px;
+  margin-top: 15px !important;
+}
+
+.addCertBtns {
+  margin: 20px auto 10px;
+  padding: 0;
+  width: 90%;
+  display: flex;
+  justify-content: right;
 }

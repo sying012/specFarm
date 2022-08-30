@@ -1,20 +1,29 @@
 import React from "react";
-import "../styles/share/shareText.css";
-import ShareText from "../components/share/ShareText";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Stack from "@mui/material/Stack";
+import ShareForm from "./ShareForm";
+import styles from "../../styles/share/newShare.module.css";
 
-const RegShare = () => {
+const NewShare = () => {
+  // shareData를 백으로 전달
+  // function addNewShareHandler(shateData) {
+  //   fetch함수를 통해 http request 전달
+  //   fetch('url', {
+  //    method: 'POST',
+  //    body: JSON.stringfy(shateData) JSON으로 변환하여 전달
+  //    });
+  // }
+
   return (
-    <div>
-      <div className="titleContainer">
-        <div className="titlewrap">마을회관</div>
-        <div className="subtitlewrap">나눔 장터🤝</div>
-      </div>
-      <div className="shareBox">
-        <div className="carousel"></div>
+    <div className={styles.aa}>
+      <div className={styles.imgBox}>
+        <img
+          className={styles.itemImg}
+          src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
+          alt="img"
+        />
         <div className="uploadBtn">
           <Stack direction="row" alignItems="center" spacing={2}>
             <IconButton
@@ -31,10 +40,11 @@ const RegShare = () => {
             </Button>
           </Stack>
         </div>
-        <ShareText></ShareText>
       </div>
+      <ShareForm />
     </div>
   );
+  //<ShareForm addNewShare={addNewShareHandler}/>
 };
 
-export default RegShare;
+export default NewShare;

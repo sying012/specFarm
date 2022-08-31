@@ -1,29 +1,37 @@
-.studyContainerBody {
-    width: 280px;
-    height: 340px;
-  }
+.studyContainer {
+  width: fit-content;
+  height: fit-content;
+}
 
 .studyState {
-    width: 45px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+  width: 45px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.studyCardTitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: pre-wrap;
 }
 
 .studyContainerBottom {
-    display: flex;
+  display: flex;
 }
 
 .studyMemberCnt {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  width: fit-content;
 }
 
 .memberNum {
-    margin-left: 5px;
-    color: rgb(107, 83, 67);;
+  margin-left: 5px;
+  color: rgb(107, 83, 67);
 }

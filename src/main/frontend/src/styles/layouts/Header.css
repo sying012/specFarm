@@ -1,138 +1,135 @@
 .header {
-    width: 100%;
-    height: 70px;
-    background-color: rgba(187, 205, 110, 0.9);
-    display: flex;
-    align-items: center;
+  width: 100%;
+  height: 70px;
+  background-color: rgba(187, 205, 110, 0.9);
+  display: flex;
+  align-items: center;
 }
 
 .innerheader {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .whitelogo1 {
-    width: 260px;
-    height: 50px;
+  width: 260px;
+  height: 50px;
 }
 
 .catwrap {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    height: 100%;
-    
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  height: 100%;
 }
 
 .catwrap > div {
-    width: 120px ;
-    height: 100%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  width: 120px;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .catwrap > div > a {
-    display: inline;
-    color: white;
-    font-size: 17px;
-    text-decoration: none;
-    
+  display: inline;
+  color: white;
+  font-size: 17px;
+  text-decoration: none;
 }
 
 .catwrap > div > a:hover {
-    font-weight: bold;
-    font-size: 19px;
-    transition-duration: 0.3s;
+  font-weight: bold;
+  font-size: 19px;
+  transition-duration: 0.3s;
 }
 
 .tailwrap {
-    width: 135px;
-    height: 15px;
-    margin-left: auto;
-    display: flex;
-    justify-content: space-between;
+  width: 135px;
+  height: 15px;
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .tailwrap > div {
-    width: 60px;
+  width: 60px;
 }
 
 .tailwrap > div > a {
-    width: 20px;
-    color: white;
-    font-size: small;
-    text-decoration: none;
+  width: 20px;
+  color: white;
+  font-size: small;
+  text-decoration: none;
 }
 
-.tailwrap > div >a:hover {
-    font-weight: bold;
+.tailwrap > div > a:hover {
+  font-weight: bold;
 }
-
 
 .communityMenu {
-    width: fit-content;
-    height: 40px;
-    border-width: 0px 2px 2px 2px;
-    position: absolute;
-    top: 70px;
-    display: flex;
-    align-items: center;
-    background: rgba(187, 205, 110, 0.3);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  width: fit-content;
+  height: 40px;
+  border-width: 0px 2px 2px 2px;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  background: rgba(187, 205, 110, 0.3);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .commItem {
-    color: grey;
+  color: grey;
 }
 
 .commItem:hover {
-    color: black;
-    transition-duration: 0.5s;
+  color: black;
+  transition-duration: 0.5s;
 }
 
 .commCat {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 0px 30px 0px 30px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0px 30px 0px 30px;
 }
 
 .noticeMenu {
-    width: fit-content;
-    height: 40px;
-    border-width: 0px 2px 2px 2px;
-    position: absolute;
-    top: 70px;
-    display: flex;
-    align-items: center;
-    background: rgba(187, 205, 110, 0.3);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  width: fit-content;
+  height: 40px;
+  border-width: 0px 2px 2px 2px;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  background: rgba(187, 205, 110, 0.3);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .noticeItem {
-    color: grey;
+  color: grey;
 }
 
 .noticeItem:hover {
-    color: black;
-    transition-duration: 0.5s;
+  color: black;
+  transition-duration: 0.5s;
 }
 
 .noticeCat {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 0px 30px 0px 30px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0px 30px 0px 30px;
 }

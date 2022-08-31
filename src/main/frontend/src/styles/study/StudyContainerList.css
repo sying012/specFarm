@@ -3,9 +3,36 @@
     min-width: 1200px;
     height: fit-content;
     margin-bottom: 40px;
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    gap: 10px;
+    margin: 2.5% 0px 20px 0px;
+    grid-template-columns: 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr; 
+    grid-template-rows: 330px;
 }
+
+@media screen and (min-width: 1200px) {
+    .studyList {
+      grid-template-columns: repeat(5, minmax(230px, 0.2fr));
+    }
+  }
+  
+  @media screen and (max-width: 1094px) {
+    .studyList {
+      grid-template-columns: repeat(4, minmax(230px, 0.2fr));
+    }
+  }
+  
+  @media screen and (max-width: 819px) {
+    .studyList {
+      grid-template-columns: repeat(3, minmax(230px, 0.2fr));
+    }
+  }
+
+  @media screen and (max-width: 580px) {
+    .studyList {
+      grid-template-columns: repeat(2, minmax(230px, 0.2fr));
+    }
+  }
 
 .regBtnContainer {
     /* background-color: aqua; */

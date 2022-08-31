@@ -1,47 +1,63 @@
 .studyRegContainer {
-    width: 100%;
-    height: fit-content;
-    display: flex;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  margin-bottom: 50px;
 }
 
 .leftContainer {
-    /* background-color: aquamarine; */
-    width: 400px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 8px;
+  /* background-color: aquamarine; */
+  width: 400px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
 }
 
 .studyImgPreview {
-    width: 350px;
-    height: 350px;
-    margin-bottom: 30px;
-    border-radius: 4px;
+  width: 350px;
+  height: 350px;
+  margin-bottom: 30px;
+  border-radius: 4px;
 }
 
 .selectorWrapper {
-    margin-right: 230px;
-
+  margin-right: 230px;
 }
 
-.rightContainer{
-    /* background-color: antiquewhite; */
-    width: 800px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
+.rightContainer {
+  /* background-color: antiquewhite; */
+  width: 800px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
 }
 
 .submitBtnWrapper {
-    margin-left: auto;
-    margin-right: 45px;
+  margin-left: auto;
+  margin-right: 45px;
 }
 
 .submitBtnWrapper > button {
-    width: 80px;
-    height: 40px;
-    margin-left: 10px;
-    font-size: 17px;
+  width: 80px;
+  height: 40px;
+  margin-left: 10px;
+  font-size: 17px;
+}
+
+.studyRegBtn {
+  background-color: rgba(187, 205, 110, 0.8);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.studyRegCancel {
+  background-color: rgba(107, 83, 67, 0.8);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }

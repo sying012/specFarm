@@ -67,7 +67,14 @@ const CertMain = () => {
           marginTop: "-62px",
         }}
       >
-        <FormControl sx={{ minWidth: 150 }} Width style={{ fontSize: "14px" }}>
+        <FormControl
+          sx={{ minWidth: 150 }}
+          Width
+          style={{
+            fontSize: "14px",
+            marginBottom: "30px",
+          }}
+        >
           <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
             중분류
           </InputLabel>
@@ -99,7 +106,13 @@ const CertMain = () => {
       />
       <div className={styles.smallcert}>
         <Stack spacing={2} direction="row">
-          <Button variant="text" sx={{ color: "#6b5343" }}>
+          <Button
+            variant="text"
+            sx={{ color: "#6b5343" }}
+            onClick={() => {
+              window.location = "/CertFind";
+            }}
+          >
             거푸집기능사
           </Button>
           <Button variant="text" sx={{ color: "#6b5343" }}>

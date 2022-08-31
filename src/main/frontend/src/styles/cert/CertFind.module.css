@@ -1,7 +1,71 @@
-.certContainer {
+  .certContainer {
     width: 300px;
-    height: 88vh;
+    height: 80vh;
     box-shadow: 15px 10px 15px 2px rgb(190, 190, 190);
     display: flex;
+} 
+  .certfindinput {
+    width: 450px;
+    height: 40px;
+    margin-left: 15%;
+    margin-top: 60px;  
+}
+  .smallfindcert {
+  margin-left: -1200px;
+  font-size: 25px;
+  margin-top: 300px;
+}
+  .certFind {
+  width: 800px;
+  height: 500px;
+  border: none;
+  color: black;
+
+}
+  .certFindTitle {
+  font-size: 40px;
+  padding: 10px;
+}
+
+  .certFindInfo {
+  display: flex;
+  justify-content: space-between;
+}
+  .infoHead {
+  text-align: center; 
+  width: 40px;
+  }
+
+  .infoBody {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .infoTable {
+    width: 100%;
+    height: max-content;
+    border-collapse: collapse;
+    border-top: 2px solid #bdbdbd;
+    border-bottom: 2px solid #bdbdbd;
+    text-align: center;
+  }
+
+  .infoTable > thead > tr > th {
+    background-color: #eeeeee;
+    border-top: 1px solid #bdbdbd;
+    padding: 15px 5px;
+    text-align: center;
   }
   
+  .infoTable > tbody > tr > td {
+    margin-left: 100px;
+    border-top: 1px solid #bdbdbd;
+    padding: 15px 5px;
+    text-align: center;
+  }
+
+  .infoButton {
+    text-align: center;
+    padding: 20px 5px;
+    color: rgb(107, 83, 67);
+  }

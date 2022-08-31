@@ -1,0 +1,22 @@
+.faqcontainer {
+  /* background-color: beige; */
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 50px;
+}
+
+.accordionContainer {
+  /* background-color: brown; */
+  margin-top: 20px;
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 20px;
+}
+
+.pageBtnContainer {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

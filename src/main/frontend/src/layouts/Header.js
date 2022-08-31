@@ -1,6 +1,7 @@
 import "../styles/layouts/Header.css";
 import whitelogo1 from "../images/logo_white1.png";
 import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const commRef = useRef();
@@ -14,9 +15,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="innerheader">
-        <a href="/">
+        <Link to="/">
           <img className="whitelogo1" src={whitelogo1} alt="" />
-        </a>
+        </Link>
         <nav className="catwrap">
           <div></div>
           <div
@@ -27,7 +28,7 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/cert">자격증 찾기</a>
+            <Link to="/cert">자격증 찾기</Link>
           </div>
 
           <div
@@ -39,7 +40,7 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/seminar">세미나</a>
+            <Link to="/seminar">세미나</Link>
           </div>
           <div
             onMouseOver={() => {
@@ -49,9 +50,9 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/community" ref={commRef}>
+            <Link to="/community" ref={commRef}>
               {commName}
-            </a>
+            </Link>
             {commHover ? (
               <div
                 className="communityMenu"
@@ -61,15 +62,15 @@ const Header = () => {
                 }}
               >
                 <div className="commCat">
-                  <a className="commItem" href="/community/study">
+                  <Link className="commItem" to="/community/study">
                     지식 품앗이
-                  </a>
-                  <a className="commItem" href="/community/ask">
+                  </Link>
+                  <Link className="commItem" to="/community/ask">
                     물어방
-                  </a>
-                  <a className="commItem" href="/community/share">
+                  </Link>
+                  <Link className="commItem" to="/community/share">
                     나눔장터
-                  </a>
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -84,9 +85,9 @@ const Header = () => {
               setNoticeName("마을소식");
             }}
           >
-            <a href="/notice" ref={noticeRef}>
+            <Link to="/cs/notice" ref={noticeRef}>
               {noticeName}
-            </a>
+            </Link>
             {noticeHover ? (
               <div
                 className="noticeMenu"
@@ -97,15 +98,15 @@ const Header = () => {
                 }}
               >
                 <div className="noticeCat">
-                  <a className="noticeItem" href="/notice">
+                  <Link className="noticeItem" to="/cs/notice">
                     이장님 말씀
-                  </a>
-                  <a className="noticeItem" href="/notice/faq">
+                  </Link>
+                  <Link className="noticeItem" to="/cs/faq">
                     FAQ
-                  </a>
-                  <a className="noticeItem" href="/notice/lost">
+                  </Link>
+                  <Link className="noticeItem" to="/cs/lost">
                     분실물센터
-                  </a>
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -123,10 +124,10 @@ const Header = () => {
         </nav>
         <div className="tailwrap">
           <div className="loginbtn">
-            <a href="/login">로그인</a>
+            <Link to="/login">로그인</Link>
           </div>
           <div className="joinbtn">
-            <a href="/join">회원가입</a>
+            <Link to="/join">회원가입</Link>
           </div>
         </div>
       </div>

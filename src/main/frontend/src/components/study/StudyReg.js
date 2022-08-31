@@ -75,9 +75,11 @@ const StudyReg = () => {
           src="https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png"
           alt="미리보기"
           id="studyImgPreview"
+          title="사진을 추가하려면 클릭하세요."
           onClick={() => {
             document.getElementById("uploadImg").click();
           }}
+          style={{ cursor: "pointer" }}
         ></img>
         <div className="selectorWrapper">
           <Box sx={{ minWidth: 120 }}>
@@ -100,8 +102,6 @@ const StudyReg = () => {
           hidden
           type="file"
           className="uploadImg"
-          name="uploadFiles"
-          multiple="multiple"
           id="uploadImg"
           onChange={(e) => {
             readImage(e.target.files[0]);
@@ -150,8 +150,11 @@ const StudyReg = () => {
           />
         </Box>
         <div className="submitBtnWrapper">
-          <button type="submit">등록</button>
+          <button type="submit" className="studyRegBtn">
+            등록
+          </button>
           <button
+            className="studyRegCancel"
             type="button"
             onClick={() => {
               window.location = "../study";

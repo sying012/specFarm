@@ -8,6 +8,24 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      "Hahmlet",
+      "Segoe UI",
+      "Roboto",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+    ].join(","),
+    // fontSize: "15px",
+  },
+});
 
 const StudyContainer = ({ studyItem }) => {
   const { studyImg, studyTitle, studyMemCnt, studyState, id } = studyItem;
@@ -17,24 +35,28 @@ const StudyContainer = ({ studyItem }) => {
       className="studyContainer"
       onClick={() => (window.location = "/community/study/" + id)}
     >
-      <Card
-        className="studyContainerBody"
-        sx={{ maxWidth: 220, maxHeight: 320 }}
-      >
-        <CardActionArea>
+      <Card className="studyContainerBody" sx={{ width: 220, height: 320 }}>
+        <CardActionArea sx={{ height: 320 }}>
           <CardMedia
             className="studyImage"
             component="img"
             height="220"
             image={studyImg}
             alt="스터디 이미지"
+            sx={{ objectFit: "unset" }}
           />
-          <CardContent>
+          <CardContent style={{ padding: "5px 16px" }}>
             <Typography
-              className="studyTitle"
+              className="studyCardTitle"
+              style={{
+                fontSize: "15px",
+                fontWeight: "bold",
+                height: "50px",
+              }}
               gutterBottom
               variant="h6"
               component="div"
+              theme={theme}
             >
               {studyTitle}
             </Typography>
@@ -46,6 +68,7 @@ const StudyContainer = ({ studyItem }) => {
                   background: studyState
                     ? "rgba(187, 205, 110, 0.8)"
                     : "rgba(107, 83, 67, 0.8)",
+                  fontFamily: "Hahmlet",
                 }}
               >
                 {studyState ? "모집" : "완료"}

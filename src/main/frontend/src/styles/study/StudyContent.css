@@ -1,127 +1,178 @@
 .studyContent {
-    width: 100%;
-    height: 1000px;
-    
+  /* background-color: aqua; */
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
 }
 
-.contentTop {
-    display: flex;
-    /* background-color:blanchedalmond; */
+.contentContainer {
+  display: flex;
+}
+
+.contentLeft {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  /* background-color:blanchedalmond; */
 }
 
 .studyBanner {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 50px;
+}
+
+.topWrapper {
+  /* background-color: aquamarine; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .titleWrapper {
-    /* background-color: aquamarine; */
-    width: 540px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 50px;
+  display: flex;
+  min-height: 81px;
+  margin-bottom: 20px;
 }
 
 .studyTitle {
-    font-size: 27px;
-    margin-bottom: 20px;
+  font-size: 27px;
+  width: 750px;
+  line-height: 1.5;
 }
 
-.titleNdate {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+.makerNdate {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.maker {
+  display: flex;
+  align-items: center;
+}
+
+.studyMaker {
+  font-size: 20px;
 }
 
 .studyContentState {
-    width: 70px;
-    height: 35px;
-    font-size: larger;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    
+  width: 70px;
+  height: 35px;
+  font-size: larger;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 15px;
+  margin-top: 5px;
 }
 
 .btnWrapper {
-    margin-top: 130px;
-    margin-left: auto;
+  /* margin-top: 130px; */
+  margin-left: auto;
 }
 
 .btnWrapper > button {
-    width: 100px;
-    height: 50px;
-    margin-left: 10px;
-    font-size: 17px;
+  width: 100px;
+  height: 50px;
+  margin-left: 10px;
+  font-size: 17px;
 }
 
-.contentBottom {
-    margin-top: 50px;
-    display: flex;
+.contentRight {
+  /* background-color: aqua; */
+  width: 100%;
+  min-width: 900px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0px 30px;
 }
 
 .contentWrapper {
-    /* background-color: aqua; */
-    width: 600px;
-    margin-right: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  /* background-color: aqua; */
+  width: 100%;
+  min-height: 300px;
+  margin-right: 50px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+
+.content {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 18px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.contactWrapper {
+  display: flex;
+}
+.contactWrapper > a {
+  margin-left: 5px;
 }
 
 .joinListWrapper {
-    background-color: rgba(107, 83, 67, 0.2);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 250px;
+  background-color: rgba(107, 83, 67, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  margin-right: 50px;
 }
 
 .listName {
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid;
-    flex-direction: column;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid;
+  flex-direction: column;
 }
 
 .memberCnt {
-    font-size: 12px;
-    margin-left: auto;
-    margin-right: 5px;
-    margin-top: 5px;
+  font-size: 12px;
+  margin-left: auto;
+  margin-right: 5px;
+  margin-top: 5px;
 }
 
 .joinList {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .participant {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-left: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .partImg {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    margin-right: 17px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin-right: 17px;
 }
 
 .partId {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .byebtn {
-    margin-left: auto;
-    margin-right: 15px;
+  margin-left: auto;
+  margin-right: 15px;
 }

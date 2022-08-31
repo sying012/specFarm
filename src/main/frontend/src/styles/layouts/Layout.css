@@ -22,6 +22,10 @@
   align-items: flex-end;
 }
 
+.titleContainer > div {
+  cursor: pointer;
+}
+
 .titlewrap {
   font-size: 3rem;
   margin-top: 30px;

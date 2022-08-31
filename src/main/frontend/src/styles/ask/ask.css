@@ -289,6 +289,9 @@ form#certSearchBar input#searchCert{
     max-width: 500px;
     width: 55%;
 }
+#regAskForm .ql-editor{
+    min-height: 300px;
+}
 
 
 #askDetailContainer #detailContentBox .detailWrite{
@@ -306,12 +309,15 @@ form#certSearchBar input#searchCert{
 
 #askDetailContainer #detailContentBox .detailTitle{
     margin-top: 20px;
+    word-break: break-all;
 }
 
 #askDetailContainer #detailContentBox .detailContent{
     margin-top: 15px;
     color: rgb(70, 70, 70);
     font-size: 0.9rem;
+    max-width: 400px;
+    word-break: break-all;
 }
 
 #askDetailContainer #detailContentBox .detailRegDate{

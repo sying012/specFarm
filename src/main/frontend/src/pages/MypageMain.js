@@ -10,6 +10,8 @@ function MypageMain() {
   const [certs, setCerts] = useState([
     { id: 1, certName: "정보처리기사", earnedDate: "2022.08.30" },
     { id: 2, certName: "전기어쩌구자격증", earnedDate: "2021.07.22" },
+    { id: 3, certName: "정보처리기사", earnedDate: "2022.08.30" },
+    { id: 4, certName: "전기어쩌구자격증", earnedDate: "2021.07.22" },
   ]);
 
   const [asks, setAsks] = useState([
@@ -52,7 +54,7 @@ function MypageMain() {
 
   return (
     <div className={styles.mypageMain}>
-      <Profile />
+      <Profile certs={certs} />
       <div className={styles.mypageFrame}>
         <Routes>
           <Route

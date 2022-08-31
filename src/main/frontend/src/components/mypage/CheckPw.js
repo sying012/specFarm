@@ -19,13 +19,21 @@ function CheckPw() {
   const [PwValidationError, setPwValidationError] = useState(false);
   const [PwValidationErrorText, setPwValidationErrorText] = useState("");
 
-  const deactivate = (e) => {
-    const userPw = document.getElementById("userPw").value;
-    e.preventDefault();
+  const checkPw = (e) => {
+    const userPw = e.target.value;
     if (userPw === null || userPw === "") {
       setPwValidationError(true);
       setPwValidationErrorText("필수 정보입니다.");
-    } else if (userPw !== "dd") {
+    } else {
+      setPwValidationError(false);
+      setPwValidationErrorText("");
+    }
+  };
+
+  const deactivate = (e) => {
+    const userPw = document.getElementById("userPw").value;
+    e.preventDefault();
+    if (userPw !== "dd") {
       setPwValidationError(true);
       setPwValidationErrorText("비밀번호가 일치하지 않습니다.");
     } else {
@@ -55,6 +63,7 @@ function CheckPw() {
                 fullWidth
                 error={PwValidationError}
                 helperText={PwValidationErrorText}
+                onChange={checkPw}
               />
             </Grid>
           </Grid>

@@ -93,10 +93,10 @@ const CommunityMain = () => {
         <p>나눔장터 인기글🧚‍♀️</p>
       </div>
       <div className="popShareContainer">
+        {/* <ShareCard></ShareCard>
         <ShareCard></ShareCard>
         <ShareCard></ShareCard>
-        <ShareCard></ShareCard>
-        <ShareCard></ShareCard>
+        <ShareCard></ShareCard> */}
       </div>
     </div>
   );

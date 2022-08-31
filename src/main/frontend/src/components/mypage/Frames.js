@@ -108,18 +108,25 @@ function Frames({ certs, asks, shares }) {
           )}
 
           {!isVisible && (
-            <div className={styles.shareList}>
+            <div>
               {shares.map(
                 (share) =>
                   share.id === 1 && (
-                    <div key={share.id}>
-                      <div className={styles.shareListHeader}>
-                        <h1 className={styles.writtenTitle}>
-                          {share.shareTitle}
-                        </h1>
-                        <p>{share.shareRegDate}</p>
+                    <div className={styles.shareList} key={share.id}>
+                      <img
+                        src={share.shareFilePath}
+                        alt="나눔이미지 파일"
+                        className={styles.shareFile}
+                      />
+                      <div>
+                        <div className={styles.shareListHeader}>
+                          <h1 className={styles.writtenTitle}>
+                            {share.shareTitle}
+                          </h1>
+                          <p>{share.shareRegDate}</p>
+                        </div>
+                        <p>{share.shareContent}</p>
                       </div>
-                      <p>{share.shareContent}</p>
                     </div>
                   )
               )}

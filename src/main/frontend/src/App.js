@@ -16,7 +16,6 @@ import FAQ from "./pages/FAQ";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
-import { useState } from "react";
 import Deactivate from "./components/mypage/Deactivate";
 import ProfileMdf from "./components/mypage/ProfileMdf";
 import CheckPw from "./components/mypage/CheckPw";
@@ -40,9 +39,9 @@ function App() {
         <Route path="/community/ask/*" element={<Ask />}></Route>
         <Route path="/community/share/*" element={<Share />}></Route>
 
-        <Route path="/notice" element={<NoticeMain />}></Route>
-        <Route path="/notice/faq" element={<FAQ />}></Route>
-        <Route path="/notice/lost" element={<Lost />}></Route>
+        <Route path="/cs/notice" element={<NoticeMain />}></Route>
+        <Route path="/cs/faq" element={<FAQ />}></Route>
+        <Route path="/cs/lost" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
         <Route path="/mypage/deactivate" element={<Deactivate />}></Route>

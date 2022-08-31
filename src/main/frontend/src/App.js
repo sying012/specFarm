@@ -20,6 +20,7 @@ import { useState } from "react";
 import Deactivate from "./components/mypage/Deactivate";
 import ProfileMdf from "./components/mypage/ProfileMdf";
 import CheckPw from "./components/mypage/CheckPw";
+import CertFind from "./components/cert/CertFind";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
 
       <Route element={<Layout />}>
         <Route path="/cert" element={<CertMain />}></Route>
-
+        <Route path="/certfind" element={<CertFind />}></Route>
         <Route path="/seminar" element={<SeminarMain />}></Route>
 
         <Route path="/community" element={<CommunityMain />}></Route>

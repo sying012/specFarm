@@ -5,6 +5,7 @@ import AskReg from "../components/ask/AskReg";
 import AskDetail from "../components/ask/AskDetail";
 import { Routes, Route } from "react-router-dom";
 import AskEdit from "../components/ask/AskEdit";
+import Editer from "../components/Editer";
 
 const Ask = (props) => {
   //리스폰스롤 받아온 데이터를 사용하기위한 state, ask엔티티가 아닌 받변개수가 추가된 DTO로 응답
@@ -49,6 +50,7 @@ const Ask = (props) => {
           path="/edit/:askId"
           element={<AskEdit asks={asks}></AskEdit>}
         ></Route>
+        <Route path="/edit" element={<Editer></Editer>}></Route>
         <Route path="/write" element={<AskReg />}></Route>
       </Routes>
     </div>

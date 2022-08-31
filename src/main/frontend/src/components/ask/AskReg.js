@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField } from "@mui/material";
-import { maxWidth } from "@mui/system";
+import Editer from "../Editer";
 
 const AskReg = () => {
+  const [contentValue, setContentValue] = useState("");
+  const handleContentValue = (value) => {
+    setContentValue(value);
+  };
   return (
     <div id="container">
       <div id="RegContainer">
@@ -51,7 +55,7 @@ const AskReg = () => {
             style={{ display: "block", maxWidth: "600px", width: "100%" }}
           />
           <div id="writeContent">
-            <form action="" id="regAskForm">
+            <form action="#" id="regAskForm" method="post">
               <p style={{ fontSize: "1.5rem" }}>질문작성</p>
               <br />
               <TextField
@@ -60,8 +64,10 @@ const AskReg = () => {
                 variant="standard"
                 required={true}
                 style={{ width: "100%" }}
+                name="askTitle"
+                autoComplete="off"
               />
-              <TextField
+              {/* <TextField
                 id="standard-basic"
                 label="내용"
                 variant="standard"
@@ -69,7 +75,19 @@ const AskReg = () => {
                 multiline={true}
                 minRows="5"
                 style={{ width: "100%" }}
+              /> */}
+              <input
+                type="hidden"
+                id="askContent"
+                name="askContent"
+                value={contentValue}
+                required={true}
               />
+              <Editer
+                placeholder="내용을 입력하세요"
+                value={contentValue}
+                onChange={handleContentValue}
+              ></Editer>
               <button>글쓰기</button>
             </form>
           </div>

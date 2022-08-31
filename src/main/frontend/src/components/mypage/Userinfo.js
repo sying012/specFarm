@@ -34,16 +34,20 @@ function Userinfo({ certs }) {
     },
   });
 
-  const [TelError, setTelError] = useState(false);
-  const [TelErrorText, setTelErrorText] = useState("");
-  const [TelAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [TelAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
-  const [TelAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
-  const [EmailError, setEmailError] = useState(false);
-  const [EmailErrorText, setEmailErrorText] = useState("");
+  const [telError, setTelError] = useState(false);
+  const [telErrorText, setTelErrorText] = useState("");
+  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
+  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorText, setEmailErrorText] = useState("");
+  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certL, setCertL] = useState("");
+  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certM, setCertM] = useState("");
 
   // Phone number authentication
-  const TelAuth = useCallback((e) => {
+  const telAuth = useCallback((e) => {
     const userTel = document.getElementById("userTel").value;
     // remove Hyphen
     const newUserTel = userTel.replace(/-/g, "");
@@ -65,24 +69,23 @@ function Userinfo({ certs }) {
   }, []);
 
   // Phone number authentication Number Check
-  const TelAuthNumberCheck = useCallback((e) => {
-    const userTelAuthNumber = e.target.value;
-    if (userTelAuthNumber === null || userTelAuthNumber === "") {
+  const telAuthNumberCheck = useCallback((e) => {
+    const usertelAuthNumber = e.target.value;
+    if (usertelAuthNumber === null || usertelAuthNumber === "") {
       setTelAuthNumberError(true);
       setTelAuthNumberErrorText("인증이 필요합니다.");
     } else {
       setTelAuthNumberError(false);
       setTelAuthNumberErrorText("");
     }
-    // 인증번호 비교 후 인증 성공 실패 관련
   }, []);
 
-  // Email Validation Check
-  const EmailCheck = useCallback((e) => {
-    const userEmail = e.target.value;
+  // email Validation Check
+  const emailCheck = useCallback((e) => {
+    const useremail = e.target.value;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!emailRegex.test(userEmail)) {
+    if (!emailRegex.test(useremail)) {
       setEmailError(true);
       setEmailErrorText("이메일 주소를 다시 확인해주세요.");
     } else {
@@ -91,25 +94,123 @@ function Userinfo({ certs }) {
     }
   }, []);
 
-  const userInfoEdit = (e) => {};
+  // Cert Large Category
+  const certLCatChange = (e) => {
+    setCertL(e.target.value);
+  };
+
+  // Cert Middle Category
+  const certMCatChange = (e) => {
+    setCertM(e.target.value);
+  };
+
+  const userInfoEdit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const userTel = data.get("userTel");
+    const usertelAuthNumber = data.get("usertelAuthNumber");
+
+    if (userTel !== "01000000000") {
+      if (usertelAuthNumber === null || usertelAuthNumber === "") {
+        setTelAuthNumberError(true);
+        setTelAuthNumberErrorText("인증이 필요합니다.");
+      } else if (usertelAuthNumber !== "0000") {
+        setTelAuthNumberError(true);
+        setTelAuthNumberErrorText("인증번호가 일치하지 않습니다.");
+      }
+
+      if (!telAuthNumberError && usertelAuthNumber === "0000") {
+        alert("변경되었습니다.");
+        window.location = "/mypage";
+      }
+    } else {
+      alert("변경되었습니다.");
+      window.location = "/mypage";
+    }
+  };
 
   // 자격증 추가 버튼 클릭시 div 추가
   const [countList, setCountList] = useState(certs);
+  const [visible, setVisible] = useState(true);
+  const [singleCert, setSingleCert] = useState({});
 
-  const addCert = () => {
-    let addCertCount = [...countList];
-    let counter = addCertCount.slice(-1)[0];
-    counter += 1;
+  const addCert = (e) => {
+    const addCertCount = [...countList];
+
+    const counter = {
+      id: addCertCount.length + 1,
+      certName: "",
+      earnedDate: "",
+    };
+
     addCertCount.push(counter);
     setCountList(addCertCount);
+    setVisible(true);
+    if (addCertCount.length > 9) {
+      setVisible(false);
+    }
   };
 
   // 자격증 삭제 버튼 클릭시 div 삭제
-  const deleteCertDiv = useCallback((i) => {
-    const newCertContainer = document.getElementById("newCertContainer" + i);
+  const deleteCertDiv = useCallback(
+    (i) => {
+      setCountList(countList.filter((cert) => cert.id !== i));
+      setVisible(true);
+    },
+    [countList]
+  );
 
-    newCertContainer.remove();
-  }, []);
+  // 취득한 자격증란 onChnage
+  const handleChange = (id, e) => {
+    const addCert =
+      singleCert.id === id
+        ? {
+            ...singleCert,
+            [e.target.name]: e.target.value,
+          }
+        : {
+            id: id,
+            [e.target.name]: e.target.value,
+          };
+
+    setSingleCert(addCert);
+
+    setCountList(
+      countList.map((cer) =>
+        cer.id === id
+          ? {
+              ...cer,
+              certName: addCert.certName,
+              earnedDate: addCert.earnedDate,
+            }
+          : cer
+      )
+    );
+  };
+
+  const handleCertSubmit = (e) => {
+    e.preventDefault();
+    const certNameInput = document.getElementsByName("certName");
+    const earnedDateInput = document.getElementsByName("earnedDate");
+    let error = false;
+    for (let i = 0; i < certNameInput.length; i++) {
+      if (
+        certNameInput[i].value === null ||
+        certNameInput[i].value === "" ||
+        earnedDateInput[i].value === null ||
+        earnedDateInput[i].value === ""
+      ) {
+        error = true;
+      }
+    }
+
+    if (error === true) {
+      alert("빈칸을 입력해주세요.");
+    } else {
+      alert("변경되었습니다.");
+      window.location.replace("/mypage/userinfo");
+    }
+  };
 
   return (
     <div>
@@ -175,8 +276,8 @@ function Userinfo({ certs }) {
                 label="휴대폰 번호"
                 defaultValue="01000000000"
                 fullWidth
-                error={TelError}
-                helperText={TelErrorText}
+                error={telError}
+                helperText={telErrorText}
               />
             </Grid>
             <Grid
@@ -193,35 +294,40 @@ function Userinfo({ certs }) {
                   lineHeight: "18px",
                   padding: "14px 20px",
                 }}
-                onClick={TelAuth}
+                onClick={telAuth}
               >
                 인증번호 받기
               </Button>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="userTelAuthNumber"
+                name="usertelAuthNumber"
                 variant="outlined"
-                id="userTelAuthNumber"
+                id="usertelAuthNumber"
                 label="인증번호"
                 fullWidth
-                onBlur={TelAuthNumberCheck}
-                error={TelAuthNumberError}
-                helperText={TelAuthNumberErrorText}
-                disabled={TelAuthNumberDisabled}
+                onChange={telAuthNumberCheck}
+                error={telAuthNumberError}
+                helperText={telAuthNumberErrorText}
+                disabled={telAuthNumberDisabled}
+                sx={{
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    backgroundColor: "#F5F5F5",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="userEmail"
+                name="useremail"
                 variant="outlined"
-                id="userEmail"
+                id="useremail"
                 label="이메일(선택)"
                 defaultValue="thisis@email.com"
                 fullWidth
-                onChange={EmailCheck}
-                error={EmailError}
-                helperText={EmailErrorText}
+                onChange={emailCheck}
+                error={emailError}
+                helperText={emailErrorText}
               />
             </Grid>
             <Grid item xs={5.9}>
@@ -232,26 +338,18 @@ function Userinfo({ certs }) {
               >
                 <InputLabel id="demo-select-small">관심분야(대분류)</InputLabel>
                 <Select
-                  labelId="demo-select-small"
-                  id="certLCat"
-                  // value={age}
+                  labelId="certLCat"
+                  id="certLCatSelect"
+                  value={certL}
                   label="관심분야(대분류)"
-                  // onBlur={handleChange}
-                  style={{ fontSize: "14px" }}
+                  onChange={certLCatChange}
                   name="certLCat"
                 >
-                  <MenuItem value="" style={{ fontSize: "14px" }}>
-                    대분류
-                  </MenuItem>
-                  <MenuItem value={10} style={{ fontSize: "14px" }}>
-                    사업관리
-                  </MenuItem>
-                  <MenuItem value={20} style={{ fontSize: "14px" }}>
-                    경영.회계.세무
-                  </MenuItem>
-                  <MenuItem value={30} style={{ fontSize: "14px" }}>
-                    금융.보험
-                  </MenuItem>
+                  {certLCat.map((certL) => (
+                    <MenuItem key={certL.id} value={certL.name}>
+                      {certL.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -276,19 +374,17 @@ function Userinfo({ certs }) {
                 <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
                 <Select
                   labelId="certMCat"
-                  id="demo-select-small"
-                  // value={age}
+                  id="certMCatSelect"
+                  value={certM}
                   label="관심분야(중분류)"
-                  // onBlur={handleChange}
-                  style={{ fontSize: "14px" }}
+                  onChange={certMCatChange}
                   name="certMCat"
                 >
-                  <MenuItem value="" style={{ fontSize: "14px" }}>
-                    관심분야(중분류)
-                  </MenuItem>
-                  <MenuItem value={10} style={{ fontSize: "14px" }}>
-                    사업관리
-                  </MenuItem>
+                  {certMCat.map((certM) => (
+                    <MenuItem key={certM.id} value={certM.name}>
+                      {certM.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -307,9 +403,6 @@ function Userinfo({ certs }) {
               type="submit"
               color="primary"
               variant="contained"
-              onClick={() => {
-                alert("반영되었습니다.");
-              }}
               theme={theme}
               className={styles.profileApplyBtn}
             >
@@ -326,37 +419,47 @@ function Userinfo({ certs }) {
           countList.map((cert, i) => (
             <div
               className={styles.certContainer}
-              id={"newCertContainer" + i}
+              id={"newCertContainer" + cert.id}
               key={i}
             >
               <TextField
                 variant="outlined"
                 label="자격증 명"
-                defaultValue={cert.certName}
+                value={cert.certName || ""}
+                onChange={(e) => handleChange(cert.id, e)}
+                name="certName"
               />
               <TextField
                 variant="outlined"
-                label="취득 일자"
-                defaultValue={cert.earnedDate}
+                label="취득 일자(YYYY.MM.DD)"
+                value={cert.earnedDate || ""}
+                onChange={(e) => handleChange(cert.id, e)}
+                name="earnedDate"
               />
-              <IconButton aria-label="details" onClick={() => deleteCertDiv(i)}>
+              <IconButton
+                aria-label="details"
+                onClick={() => deleteCertDiv(cert.id)}
+              >
                 <HighlightOff fontSize="large" style={{ color: "red" }} />
               </IconButton>
             </div>
           ))}
 
-        <Button
-          variant="outlined"
-          color="secondary"
-          component="label"
-          className={styles.addCert}
-          onClick={addCert}
-          theme={theme}
-          style={{ margin: "0 auto" }}
-          startIcon={<AddCircle theme={theme} color="primary" />}
-        >
-          자격증 추가
-        </Button>
+        {visible && (
+          <Button
+            variant="outlined"
+            color="secondary"
+            component="label"
+            id="addCertBtn"
+            className={styles.addCert}
+            onClick={addCert}
+            theme={theme}
+            style={{ margin: "0 auto" }}
+            startIcon={<AddCircle theme={theme} color="primary" />}
+          >
+            자격증 추가
+          </Button>
+        )}
 
         <div className={styles.addCertBtns}>
           <Button
@@ -374,9 +477,7 @@ function Userinfo({ certs }) {
             href="/mypage"
             theme={theme}
             style={{ margin: "10px", fontWeight: "bold" }}
-            onClick={() => {
-              alert("반영되었습니다.");
-            }}
+            onClick={(e) => handleCertSubmit(e)}
           >
             수정
           </Button>

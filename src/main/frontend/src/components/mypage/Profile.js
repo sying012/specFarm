@@ -2,13 +2,16 @@ import { Avatar, Badge } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
-import avocado from "../../images/avocado.png";
-import apple from "../../images/apple.png";
-
 import styles from "../../styles/mypage/Profile.module.css";
 import { Edit } from "@mui/icons-material";
 
-function Profile() {
+function Profile({ certs }) {
+  const size = 18;
+  const badgeArr = [];
+  for (let i = 0; i < size; i++) {
+    badgeArr.push("/upload/badge/" + (i + 1) + ".png");
+  }
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.innerContainer}>
@@ -37,8 +40,14 @@ function Profile() {
             <p>수확 현황</p>
           </div>
           <div className={styles.badges}>
-            <img src={avocado} title="정보처리기사" alt="badge" />
-            <img src={apple} title="전기어쩌구" alt="badge" />
+            {certs.map((cert) => (
+              <img
+                key={cert.id}
+                src={badgeArr[cert.id - 1]}
+                title={cert.certName}
+                alt={cert.certName}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import ShareList from "../components/share/ShareList";
 import NewShare from "../components/share/NewShare";
 import ShareDetail from "../components/share/ShareDetail";
+import ShareContainer from "../components/share/ShareContainer";
 
 const Share = () => {
   const [shareList, setShareList] = useState([
@@ -54,9 +54,15 @@ const Share = () => {
         <div className="subtitlewrap">나눔 장터🤝</div>
       </div>
       <Routes>
-        <Route path="/" element={<ShareList shareList={shareList} />}></Route>
+        <Route
+          path="/"
+          element={<ShareContainer shareList={shareList} />}
+        ></Route>
         <Route path="/newShare" element={<NewShare />}></Route>
-        <Route path="/detail" element={<ShareDetail />}></Route>
+        <Route
+          path="/:id"
+          element={<ShareDetail shareList={shareList} />}
+        ></Route>
       </Routes>
     </div>
   );

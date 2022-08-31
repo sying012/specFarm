@@ -1,8 +1,53 @@
-import { useRef } from "react";
-import React from "react";
+import { useRef, useState } from "react";
 import styles from "../../styles/share/form.module.css";
+import { Button, createTheme, Box, TextField } from "@mui/material";
 
 const shareForm = () => {
+  const theme = createTheme({
+    palette: {
+      brown: {
+        main: "rgb(107, 83, 67)",
+        contrastText: "#fff",
+      },
+      primary: {
+        main: "rgb(187, 205, 110)",
+        contrastText: "#fff",
+      },
+      secondary: {
+        main: "#555",
+      },
+    },
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
+    },
+  });
+
+  const fontStyle = createTheme({
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
+    },
+  });
+
   // //useRef - ref 연결
   // const imageInputRef = useRef();
   // const titleInputRef = useRef();
@@ -26,11 +71,13 @@ const shareForm = () => {
   // }
 
   return (
-    <div className={styles.shareBody}>
+    <div>
       <form
-      //onSubmit={submitHandler}
+        className={styles.shareForm}
+        //onSubmit={submitHandler}
       >
         <input
+          fontStyle={fontStyle}
           className={styles.title}
           placeholder="제목"
           //id="title"
@@ -38,6 +85,7 @@ const shareForm = () => {
           //ref={titleInputRef}
         ></input>
         <textarea
+          fontStyle={fontStyle}
           className={styles.content}
           placeholder="무엇을 나눔하고 싶으신가요?"
           style={{ fontSize: 15 }}
@@ -46,16 +94,37 @@ const shareForm = () => {
           // ref={contentInputRef}
         ></textarea>
         <div className={styles.shareBtn}>
-          <button className={styles.cancelBtn}>취소</button>
-          <button
+          <Button
+            variant="outlined"
+            color="secondary"
+            href="/community/share"
+            theme={theme}
+            className={styles.cancelBtn}
+          >
+            취소
+          </Button>
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            onClick={() => (
+              (window.location = "./detail"), alert("등록되었습니다.")
+            )}
+            theme={theme}
             className={styles.RegBtn}
-            type="button"
-            onClick={() => (window.location = "./detail")}
           >
             등록
-          </button>
+          </Button>
         </div>
       </form>
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      ></Box>
     </div>
   );
 };

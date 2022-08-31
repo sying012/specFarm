@@ -1,0 +1,21 @@
+/* 버튼 색상 
+"rgba(107, 83, 67, 0.8)"
+"rgba(187, 205, 110, 0.8)" */
+
+.search {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.newshareBtn {
+  width: 60px;
+  height: 40px;
+  color: aliceblue;
+  font-size: medium;
+  font-weight: 700;
+  border-style: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-color: rgba(187, 205, 110, 0.8);
+}

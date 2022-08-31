@@ -1,10 +1,7 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import Stack from "@mui/material/Stack";
 import ShareForm from "./ShareForm";
 import styles from "../../styles/share/newShare.module.css";
+import { Stack, Button, createTheme } from "@mui/material";
 
 const NewShare = () => {
   // shareData를 백으로 전달
@@ -16,33 +13,81 @@ const NewShare = () => {
   //    });
   // }
 
+  const theme = createTheme({
+    status: {
+      danger: "#e53e3e",
+    },
+    palette: {
+      brown: {
+        main: "rgb(107, 83, 67)",
+        contrastText: "#fff",
+      },
+      primary: {
+        main: "rgb(187, 205, 110)",
+        contrastText: "#fff",
+      },
+      secondary: {
+        main: "#555",
+      },
+    },
+  });
+
+  const readImage = (file) => {
+    // 인풋 태그에 파일이 있는 경우
+    if (file) {
+      // FileReader 인스턴스 생성
+      const reader = new FileReader();
+
+      // 이미지가 로드가 된 경우
+      reader.onload = (e) => {
+        const preImg = document.getElementById("shareImgPreview");
+        preImg.src = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <div className={styles.aa}>
-      <div className={styles.imgBox}>
-        <img
-          className={styles.itemImg}
-          src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
-          alt="img"
-        />
-        <div className="uploadBtn">
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-            >
-              <input hidden accept="image/*" type="file" />
-              <PhotoCamera />
-            </IconButton>
-            <Button variant="contained" component="label">
-              Upload
-              <input hidden accept="image/*" multiple type="file" />
-            </Button>
-          </Stack>
+    <>
+      <div className={styles.regBox}>
+        <div className={styles.imgBox}>
+          <img
+            style={{ cursor: "pointer" }}
+            className={styles.itemImg}
+            src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
+            alt="img"
+            id="shareImgPreview"
+            onClick={() => {
+              document.getElementById("fileInput").click();
+            }}
+          />
+          <input
+            hidden
+            type="file"
+            id="fileInput"
+            onChange={(e) => {
+              readImage(e.target.files[0]);
+            }}
+          />
+          <div className={styles.fileloadBtn}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Button
+                style={{
+                  backgroundColor: "rgba(187, 205, 110, 0.8)",
+                  color: "white",
+                }}
+                component="label"
+              >
+                Upload
+                <input hidden type="file" multiple={true} id="fileUpload" />
+              </Button>
+            </Stack>
+          </div>
         </div>
+        <ShareForm />
       </div>
-      <ShareForm />
-    </div>
+    </>
   );
   //<ShareForm addNewShare={addNewShareHandler}/>
 };

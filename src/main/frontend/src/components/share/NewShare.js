@@ -65,13 +65,12 @@ const NewShare = () => {
           <input
             hidden
             type="file"
-            className={styles.fileInput}
             id="fileInput"
             onChange={(e) => {
               readImage(e.target.files[0]);
             }}
           />
-          <div className={styles.uploadBtn}>
+          <div className={styles.fileloadBtn}>
             <Stack direction="row" alignItems="center" spacing={2}>
               <Button
                 style={{
@@ -81,7 +80,7 @@ const NewShare = () => {
                 component="label"
               >
                 Upload
-                <input hidden accept="image/*" multiple type="file" />
+                <input hidden type="file" multiple={true} id="fileUpload" />
               </Button>
             </Stack>
           </div>

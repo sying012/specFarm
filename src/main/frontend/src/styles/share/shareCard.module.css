@@ -1,0 +1,31 @@
+/* ShareCard */
+
+.cardbody {
+  width: 280px;
+  height: 340px;
+}
+
+.img {
+  height: 250px;
+}
+
+.writer {
+  padding-top: 6px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.state {
+  background-color: rgba(187, 205, 110, 0.8);
+  width: 60px;
+  height: 30px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

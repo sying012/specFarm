@@ -107,10 +107,15 @@
 
 .replyText {
   width: 90%;
+  resize: none;
   height: 50%;
   border-radius: 10px;
   box-shadow: 5px 6px 22px lightgray;
   border: 2.5px solid lightgray;
+}
+
+.replyText::placeholder {
+  font-size: 1.5em;
 }
 
 .replyBottom {

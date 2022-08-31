@@ -3,9 +3,11 @@ import { useParams } from "react-router";
 import styles from "../../styles/share/detail.module.css";
 import { Stack, createTheme, Button, Avatar } from "@mui/material";
 
-const ShareDetail = ({ shareItem }) => {
-  //const { id, shareTitle, userId, content, itemImg, shareState, regDate } =
-  //shareItem;
+const ShareDetail = ({ shareList }) => {
+  const { id } = useParams();
+
+  const { shareTitle, userId, content, itemImg, shareState, regDate } =
+    shareList[id - 1];
 
   const theme = createTheme({
     status: {

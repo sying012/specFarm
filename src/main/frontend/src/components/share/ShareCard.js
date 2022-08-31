@@ -1,14 +1,17 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea, createTheme } from "@mui/material";
-import styles from "../../styles/share/list.module.css";
+import {
+  CardActionArea,
+  createTheme,
+  Typography,
+  CardContent,
+  Card,
+  CardMedia,
+} from "@mui/material";
+import styles from "../../styles/share/shareCard.module.css";
+import { Link } from "react-router-dom";
 
 const ShareCard = ({ shareItem }) => {
-  const { id, shareTitle, userId, content, itemImg, shareState, regDate } =
-    shareItem;
+  const { id, shareTitle, userId, itemImg, shareState, content } = shareItem;
 
   const theme = createTheme({
     typography: {
@@ -27,7 +30,7 @@ const ShareCard = ({ shareItem }) => {
   });
 
   return (
-    <div className={styles.shareCardList}>
+    <Link to={`/community/share/${id}`}>
       <Card theme={theme} className={styles.cardbody} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
@@ -61,7 +64,7 @@ const ShareCard = ({ shareItem }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-    </div>
+    </Link>
   );
 };
 

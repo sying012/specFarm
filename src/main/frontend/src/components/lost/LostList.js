@@ -1,8 +1,6 @@
 import {
-  Box,
+  createTheme,
   FormControl,
-  InputAdornment,
-  InputLabel,
   MenuItem,
   Pagination,
   Select,
@@ -12,67 +10,41 @@ import {
 import React, { useState } from "react";
 import styles from "../../styles/lost/Lost.module.css";
 import SearchIcon from "@mui/icons-material/Search";
-import { NearMeSharp } from "@mui/icons-material";
 
-const LostList = () => {
-  const [losts, setLosts] = useState([
-    {
-      id: 1,
-      brchName: "서울",
-      lostCat: "MP3/전자제품/게임기 등",
-      lostItem: "USB",
-      lostLoc: "서울여자고등학교",
-      lostDate: "2022.00.00",
+const theme = createTheme({
+  status: {
+    danger: "#e53e3e",
+  },
+  palette: {
+    green: {
+      main: "rgb(159, 182, 72)",
+      contrastText: "#fff",
     },
-    {
-      id: 2,
-      brchName: "대전",
-      lostCat: "기타",
-      lostItem: "주민등록증",
-      lostLoc: "청운중학교",
-      lostDate: "2022.00.00",
+    brown: {
+      main: "rgb(107, 83, 67)",
+      contrastText: "#fff",
     },
-    {
-      id: 3,
-      brchName: "대구",
-      lostCat: "기타",
-      lostItem: "MP3/전자제품/게임기 등",
-      lostLoc: "서울여자고등학교",
-      lostDate: "2022.00.00",
-    },
-    {
-      id: 3,
-      brchName: "경기북부",
-      lostCat: "기타",
-      lostItem: "MP3/전자제품/게임기 등",
-      lostLoc: "서울전자고등학교 제19시험장",
-      lostDate: "2022.00.00",
-    },
-  ]);
+  },
+  typography: {
+    fontFamily: [
+      "Hahmlet",
+      "Segoe UI",
+      "Roboto",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+    ].join(","),
+  },
+});
 
-  const [searchTypeItem, setSearchTypeItem] = useState([
-    {
-      id: 1,
-      name: "전체",
-    },
-    {
-      id: 2,
-      name: "지사",
-    },
-    {
-      id: 3,
-      name: "분실물 목록",
-    },
-    {
-      id: 4,
-      name: "분실 장소",
-    },
-    {
-      id: 5,
-      name: "분실 일자",
-    },
-  ]);
+const goLostItem = (e) => {
+  window.location.pathname = "./notice/lost/1";
+};
 
+const LostList = ({ searchTypeItem, losts }) => {
   const [searchType, setSearchType] = useState("전체");
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -89,9 +61,9 @@ const LostList = () => {
             value={searchType}
             onChange={handleChange}
           >
-            {searchTypeItem.map((st) => (
-              <MenuItem key={st.name} value={st.name}>
-                {st.name}
+            {searchTypeItem.map((item) => (
+              <MenuItem key={item.id} value={item.name} theme={theme}>
+                {item.name}
               </MenuItem>
             ))}
           </Select>
@@ -100,7 +72,8 @@ const LostList = () => {
           id="outlined-search"
           type="search"
           InputProps={{
-            startAdornment: <SearchIcon color="inherit" />,
+            startAdornment: <SearchIcon color="action" />,
+            styles: { fontFamily: "Hahmlet" },
           }}
           size="small"
         ></TextField>
@@ -116,7 +89,12 @@ const LostList = () => {
         </thead>
         <tbody>
           {losts.map((lost) => (
-            <tr>
+            <tr
+              key={lost.id}
+              onClick={() => {
+                window.location = "./lost/1";
+              }}
+            >
               <td className={styles.brchName}>{lost.brchName}</td>
               <td>
                 [{lost.lostCat}] {lost.lostItem}

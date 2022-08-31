@@ -78,8 +78,7 @@
 }
 
 body {
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100vh;
 } */
 
@@ -142,7 +141,8 @@ body {
   font-size: 22px;
 }
 
-.certPlanDiv {
+.certPlanP {
+  line-height: 150%;
   width: 95%;
   height: fit-content;
   margin-bottom: 15px;

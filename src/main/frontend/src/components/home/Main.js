@@ -6,9 +6,39 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useRef, useState } from "react";
 import logo from "../../images/logo_white1.png";
 import styles from "../../styles/home/home.module.css";
+import whitelogo1 from "../../images/logo_white1.png";
+
+const theme = createTheme({
+  status: {
+    danger: "#e53e3e",
+  },
+  palette: {
+    green: {
+      main: "rgb(159, 182, 72)",
+      contrastText: "#fff",
+    },
+    brown: {
+      main: "rgb(107, 83, 67)",
+      contrastText: "#fff",
+    },
+  },
+  typography: {
+    fontFamily: [
+      "Hahmlet",
+      "Segoe UI",
+      "Roboto",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+    ].join(","),
+  },
+});
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -23,7 +53,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -47,24 +77,25 @@ const Main = () => {
   return (
     <>
       <div className={styles.homeBackground}>
-        <Container>
-          <div className={styles.homeHeader}>
-            <div className={styles.homeHeaderDiv}>
-              <a href="/">
-                <img src={logo} className={styles.homeLogo} alt="" />
-              </a>
-              <div>
-                <div className={styles.tailwrap}>
-                  <div className="loginbtn">
-                    <a href="/login">로그인</a>
-                  </div>
-                  <div className="joinbtn">
-                    <a href="/join">회원가입</a>
-                  </div>
-                </div>
+        <header
+          className="header"
+          style={{ background: "none", position: "fixed" }}
+        >
+          <div className="innerheader">
+            <a href="/">
+              <img className="whitelogo1" src={whitelogo1} alt="logo" />
+            </a>
+            <div className="tailwrap">
+              <div className="loginbtn">
+                <a href="/login">로그인</a>
+              </div>
+              <div className="joinbtn">
+                <a href="/join">회원가입</a>
               </div>
             </div>
           </div>
+        </header>
+        <Container>
           {/* <div style={{ padding: "70px" }}>
             <Stack spacing={1} sx={{ width: "100%" }}>
               <Alert severity="error">
@@ -105,8 +136,8 @@ const Main = () => {
                       "& button": { background: "rgba(159, 182, 72, 0.5)" },
                     }}
                   >
-                    <Tab label="접수 일정" {...a11yProps(0)} />
-                    <Tab label="시험 일정" {...a11yProps(1)} />
+                    <Tab label="접수 일정" {...a11yProps(0)} theme={theme} />
+                    <Tab label="시험 일정" {...a11yProps(1)} theme={theme} />
                   </Tabs>
                 </Box>
                 <TabPanel
@@ -114,42 +145,42 @@ const Main = () => {
                   index={0}
                   style={{ background: "rgba(255, 255, 255, 0.05)" }}
                 >
-                  <div className={styles.certPlanDiv}>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     접수 : 2022.08.29 ~ 2022.09.02
-                  </div>
-                  <div className={styles.certPlanDiv}>
+                  </p>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     접수 : 2022.08.29 ~ 2022.09.02
-                  </div>
-                  <div className={styles.certPlanDiv}>
+                  </p>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     접수 : 2022.08.29 ~ 2022.09.02
-                  </div>
+                  </p>
                 </TabPanel>
                 <TabPanel
                   value={value}
                   index={1}
                   style={{ background: "rgba(255, 255, 255, 0.05)" }}
                 >
-                  <div className={styles.certPlanDiv}>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     시험 : 2022.08.29 ~ 2022.09.02
-                  </div>
-                  <div className={styles.certPlanDiv}>
+                  </p>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     시험 : 2022.08.29 ~ 2022.09.02
-                  </div>
-                  <div className={styles.certPlanDiv}>
+                  </p>
+                  <p className={styles.certPlanP}>
                     2022년 제 32회 정수시설운영관리사 1,2차 동시
                     <br />
                     시험 : 2022.08.29 ~ 2022.09.02
-                  </div>
+                  </p>
                 </TabPanel>
               </Box>
             </div>

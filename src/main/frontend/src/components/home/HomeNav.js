@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import whitelogo1 from "../../images/logo_white1.png";
 
-const HomeNav = () => {
+const HomeNav = ({ goClickPage }) => {
   const commRef = useRef();
   const noticeRef = useRef();
 
@@ -31,7 +31,9 @@ const HomeNav = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/cert">자격증 찾기</a>
+            <a id="CertMain" onClick={(e) => goClickPage(e)}>
+              자격증 찾기
+            </a>
           </div>
 
           <div
@@ -43,7 +45,9 @@ const HomeNav = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/seminar">세미나</a>
+            <a id="SeminarMain" onClick={(e) => goClickPage(e)}>
+              세미나
+            </a>
           </div>
           <div
             onMouseOver={() => {
@@ -53,7 +57,7 @@ const HomeNav = () => {
               setNoticeName("공지사항");
             }}
           >
-            <a href="/community" ref={commRef}>
+            <a id="CommunityMain" onClick={(e) => goClickPage(e)} ref={commRef}>
               {commName}
             </a>
             {commHover ? (
@@ -63,19 +67,7 @@ const HomeNav = () => {
                   setcommHover(0);
                   setCommName("커뮤니티");
                 }}
-              >
-                <div className="commCat">
-                  <a className="commItem" href="/community/study">
-                    지식 품앗이
-                  </a>
-                  <a className="commItem" href="/community/ask">
-                    물어방
-                  </a>
-                  <a className="commItem" href="/community/share">
-                    나눔장터
-                  </a>
-                </div>
-              </div>
+              ></div>
             ) : (
               ""
             )}
@@ -88,7 +80,7 @@ const HomeNav = () => {
               setNoticeName("마을소식");
             }}
           >
-            <a href="/notice" ref={noticeRef}>
+            <a id="Notice" onClick={(e) => goClickPage(e)} ref={noticeRef}>
               {noticeName}
             </a>
             {noticeHover ? (
@@ -99,19 +91,7 @@ const HomeNav = () => {
                   setCommName("커뮤니티");
                   setNoticeName("공지사항");
                 }}
-              >
-                <div className="noticeCat">
-                  <a className="noticeItem" href="/notice">
-                    이장님 말씀
-                  </a>
-                  <a className="noticeItem" href="/notice/faq">
-                    FAQ
-                  </a>
-                  <a className="noticeItem" href="/notice/lost">
-                    분실물센터
-                  </a>
-                </div>
-              </div>
+              ></div>
             ) : (
               ""
             )}

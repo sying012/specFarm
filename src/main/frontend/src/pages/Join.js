@@ -30,6 +30,19 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
+  typography: {
+    fontFamily: [
+      "Hahmlet",
+      "Segoe UI",
+      "Roboto",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+    ].join(","),
+  },
 });
 
 const Join = () => {

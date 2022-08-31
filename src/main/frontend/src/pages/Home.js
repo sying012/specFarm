@@ -1,46 +1,81 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import CertMain from "./CertMain";
 import HomeNav from "../components/home/HomeNav";
 import Main from "../components/home/Main";
 import styles from "../styles/home/home.module.css";
+import CertMain from "./CertMain";
+import SeminarMain from "./SeminarMain";
+import CommunityMain from "./CommunityMain";
+import NoticeMain from "./NoticeMain";
 
 const Home = () => {
+  const boody = useRef();
+  document.getElementsByTagName("body")[0].style.overflowY = "scroll";
   const wheelEvent = (e) => {
-    // document.documentElement.scrollTop = window.innerHeight;
     if (e.deltaY >= 0)
-      window.scrollTo({ top: window.innerHeight, left: 0, behavior: "smooth" });
+      window.scrollTo({
+        top: window.innerHeight - 70,
+        left: 0,
+        behavior: "smooth",
+      });
   };
 
-  const ssss = <div style={{ height: "739px" }}></div>;
+  const [homepage, setHomepage] = useState(
+    <div className={styles.outer} onWheel={wheelEvent}>
+      <Main className={styles.content} />
+    </div>
+  );
+
+  const [ppp, setPpp] = useState(<CertMain />);
+
+  const goClickPage = (click) => {
+    const id = "<" + click.target.id + "/>";
+    setPpp(<CommunityMain />);
+    boody.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const [page, setPage] = useState(
-    <div className={styles.outer} id="aa" onWheel={wheelEvent}>
-      <Main className={styles.content} />
-      <div className={styles.homeDiv} id="scroll" style={{ height: "100%" }}>
-        <HomeNav />
-        {ssss}
+    <div className={styles.homeDiv} id="scroll">
+      <div className="layout">
+        <HomeNav goClickPage={goClickPage} />
+        <main className="main">{ppp}</main>
         <Footer />
       </div>
     </div>
   );
 
+  useEffect(() => {
+    setPage(
+      <div className={styles.homeDiv} id="scroll">
+        <div className="layout">
+          <HomeNav goClickPage={goClickPage} />
+          <main className="main">{ppp}</main>
+          <Footer />
+        </div>
+      </div>
+    );
+  }, [ppp]);
+
   const homeScroll = (window.onscroll = () => {
     if (window.scrollY >= window.innerHeight - 70) {
-      console.log(window.innerHeight - 70);
-      // setHomepage(<></>);
+      setHomepage(<></>);
       setPage(
-        <div style={{ height: "100%" }}>
+        <div className="layout">
           <Header />
-          {ssss}
+          <main className="main">{ppp}</main>
           <Footer />
         </div>
       );
     }
   });
 
-  return <>{page}</>;
+  return (
+    <>
+      {homepage}
+      <div ref={boody}>{page}</div>
+    </>
+  );
 };
 
 export default Home;

@@ -27,6 +27,17 @@ function ResetPw() {
   const [PwError, setPwError] = useState(false);
   const [PwErrorText, setPwErrorText] = useState("");
 
+  const pastPwCheck = useCallback((e) => {
+    const userTelAuthNumber = e.target.value;
+    if (userTelAuthNumber === null || userTelAuthNumber === "") {
+      setPastPwError(true);
+      setPastPwErrorText("필수 정보입니다.");
+    } else {
+      setPastPwError(false);
+      setPastPwErrorText("");
+    }
+  }, []);
+
   // Password Validation Check
   const PwValidationCheck = useCallback((e) => {
     const userPw = e.target.value;
@@ -76,17 +87,11 @@ function ResetPw() {
     } else if (pastPw !== "dd") {
       setPastPwError(true);
       setPastPwErrorText("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPastPwError(false);
-      setPastPwErrorText("");
     }
 
     if (newPw === null || newPw === "") {
       setPwValidationError(true);
       setPwValidationErrorText("필수 정보입니다.");
-    } else {
-      setPwValidationError(false);
-      setPwValidationErrorText("");
     }
 
     if (userPwCheck === null || userPwCheck === "") {
@@ -95,9 +100,6 @@ function ResetPw() {
     } else if (newPw !== userPwCheck) {
       setPwError(true);
       setPwErrorText("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPwError(false);
-      setPwErrorText("");
     }
 
     if (
@@ -129,6 +131,7 @@ function ResetPw() {
                 fullWidth
                 error={pastPwError}
                 helperText={pastPwErrorText}
+                onChange={pastPwCheck}
               />
             </Grid>
             <Grid item xs={12}>

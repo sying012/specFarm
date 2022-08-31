@@ -4,9 +4,6 @@ import { Button, createTheme, Box, TextField } from "@mui/material";
 
 const shareForm = () => {
   const theme = createTheme({
-    status: {
-      danger: "#e53e3e",
-    },
     palette: {
       brown: {
         main: "rgb(107, 83, 67)",
@@ -19,6 +16,35 @@ const shareForm = () => {
       secondary: {
         main: "#555",
       },
+    },
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
+    },
+  });
+
+  const fontStyle = createTheme({
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
     },
   });
 
@@ -51,6 +77,7 @@ const shareForm = () => {
         //onSubmit={submitHandler}
       >
         <input
+          fontStyle={fontStyle}
           className={styles.title}
           placeholder="제목"
           //id="title"
@@ -58,6 +85,7 @@ const shareForm = () => {
           //ref={titleInputRef}
         ></input>
         <textarea
+          fontStyle={fontStyle}
           className={styles.content}
           placeholder="무엇을 나눔하고 싶으신가요?"
           style={{ fontSize: 15 }}

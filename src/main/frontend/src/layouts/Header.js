@@ -1,25 +1,33 @@
 import "../styles/layouts/Header.css";
-import whitelogo1 from "../images/logo_white1.png";
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { boxSizing, display } from "@mui/system";
 
 const Header = () => {
-  const commRef = useRef();
-  const noticeRef = useRef();
-
   const [commHover, setcommHover] = useState(0);
   const [commName, setCommName] = useState("커뮤니티");
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
+  const [navActive, setNavActive] = useState(0);
+
+  // const navlinkname = noticeRef.current;
+  const navlinkname = document.getElementById("noticeid");
+
+  useEffect(() => {
+    console.log("mm");
+  }, [noticeName]);
+
+  console.log(navlinkname);
 
   return (
     <header className="header">
       <div className="innerheader">
         <Link to="/">
-          <img className="whitelogo1" src={whitelogo1} alt="" />
+          <div className="logo">specFarm</div>
         </Link>
         <nav className="catwrap">
           <div></div>
+          {/* 자격증 찾기 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(0);
@@ -28,11 +36,20 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <Link to="/cert">자격증 찾기</Link>
+            <NavLink
+              to="/cert"
+              className="catStyle"
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+            >
+              자격증 찾기
+            </NavLink>
           </div>
 
+          {/* 세미나 메뉴 */}
           <div
-            style={{ marginLeft: "10px" }}
+            // style={{ marginLeft: "10px" }}
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(0);
@@ -40,8 +57,18 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <Link to="/seminar">세미나</Link>
+            <NavLink
+              className="catStyle"
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+              to="/seminar"
+            >
+              세미나
+            </NavLink>
           </div>
+
+          {/* 커뮤니티 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(1);
@@ -50,9 +77,15 @@ const Header = () => {
               setNoticeName("공지사항");
             }}
           >
-            <Link to="/community" ref={commRef}>
+            <NavLink
+              className="catStyle"
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+              to="/community"
+            >
               {commName}
-            </Link>
+            </NavLink>
             {commHover ? (
               <div
                 className="communityMenu"
@@ -77,6 +110,8 @@ const Header = () => {
               ""
             )}
           </div>
+
+          {/* 공지사항 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(0);
@@ -85,9 +120,20 @@ const Header = () => {
               setNoticeName("마을소식");
             }}
           >
-            <Link to="/cs/notice" ref={noticeRef}>
+            <NavLink
+              className="catStyle"
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+              to="/cs"
+              id="noticeid"
+              // onClick={() => {
+              //   setNavActive(1);
+              // }}
+            >
+              {/* {navActive ? "마을소식" : noticeName} */}
               {noticeName}
-            </Link>
+            </NavLink>
             {noticeHover ? (
               <div
                 className="noticeMenu"
@@ -98,7 +144,7 @@ const Header = () => {
                 }}
               >
                 <div className="noticeCat">
-                  <Link className="noticeItem" to="/cs/notice">
+                  <Link className="noticeItem" to="/cs">
                     이장님 말씀
                   </Link>
                   <Link className="noticeItem" to="/cs/faq">

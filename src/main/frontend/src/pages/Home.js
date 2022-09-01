@@ -5,7 +5,7 @@ import HomeNav from "../components/home/HomeNav";
 import Main from "../components/home/Main";
 import styles from "../styles/home/home.module.css";
 import CertMain from "./CertMain";
-import SeminarMain from "./SeminarMain";
+import SkillsMain from "./SkillsMain";
 import CommunityMain from "./CommunityMain";
 import NoticeMain from "./NoticeMain";
 

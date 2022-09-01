@@ -13,7 +13,7 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
     fontFamily: [
-      "Hahmlet",
+      "Pretendard-Regular",
       "Segoe UI",
       "Roboto",
       "Oxygen",

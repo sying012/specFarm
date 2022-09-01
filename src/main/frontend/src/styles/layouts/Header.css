@@ -1,9 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans:400");
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean");
+
 .header {
   width: 100%;
   height: 70px;
-  background-color: rgba(187, 205, 110, 0.9);
   display: flex;
   align-items: center;
+  border-bottom: 1px solid rgb(230, 230, 230);
+  background-color: white;
+  box-sizing: border-box;
 }
 
 .innerheader {
@@ -16,9 +21,12 @@
   height: 100%;
 }
 
-.whitelogo1 {
-  width: 260px;
-  height: 50px;
+.logo {
+  height: 100%;
+  color: #1d5902;
+  font-size: 2.3em; /* 2.6em*/
+  font-family: "Black Han Sans";
+  font-weight: 500;
 }
 
 .catwrap {
@@ -36,17 +44,27 @@
   justify-content: center;
 }
 
-.catwrap > div > a {
-  display: inline;
-  color: white;
-  font-size: 17px;
-  text-decoration: none;
+.catStyle {
+  display: flex;
+  align-items: center;
+  width: 75%;
+  height: 70px;
+  justify-content: center;
+  box-sizing: content-box;
+  color: #567348;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.catwrap > div > a:hover {
+.catwrap .active {
   font-weight: bold;
   font-size: 19px;
   transition-duration: 0.3s;
+  border-bottom: 2px solid #1d5902;
+}
+
+.catStyle:hover {
+  border-bottom: 2px solid #1d5902;
 }
 
 .tailwrap {
@@ -63,7 +81,7 @@
 
 .tailwrap > div > a {
   width: 20px;
-  color: white;
+  color: black;
   font-size: small;
   text-decoration: none;
 }
@@ -80,7 +98,6 @@
   top: 70px;
   display: flex;
   align-items: center;
-  background: rgba(187, 205, 110, 0.3);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
@@ -111,7 +128,6 @@
   top: 70px;
   display: flex;
   align-items: center;
-  background: rgba(187, 205, 110, 0.3);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }

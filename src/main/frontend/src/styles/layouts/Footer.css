@@ -1,26 +1,33 @@
-.footer {
-    width: 100%;
-    height: 60px;
-    background-color: rgb(107, 83, 67);
-    display: flex;
-    align-items: center;
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans:400");
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean");
 
+.footer {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgb(230, 230, 230);
+  background-color: white;
 }
 
 .innerfooter {
   width: 64%;
-    max-width: 1200px;
+  max-width: 1200px;
   align-items: center;
   justify-content: center;
   display: flex;
   margin: 0 auto;
 }
 
-.footlogo {
-  width: 130px;
-  margin-right: 15px;
+.footerlogo {
+  width: 120px;
+  height: 100%;
+  color: #1d5902;
+  font-size: 1.2em;
+  font-family: "Black Han Sans";
+  font-weight: 500;
 }
 
 .innerfooter > p {
-  color: white;
+  color: black;
 }

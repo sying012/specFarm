@@ -6,7 +6,9 @@ import Login from "./pages/Login";
 import Join from "./pages/Join";
 import FindUser from "./pages/FindUser";
 import CertMain from "./pages/CertMain";
-import SeminarMain from "./pages/SeminarMain";
+import SkillsMain from "./pages/SkillsMain";
+import JobCafe from "./pages/JobCafe";
+import Hrd from "./pages/Hrd";
 import CommunityMain from "./pages/CommunityMain";
 import Study from "./pages/Study";
 import Ask from "./pages/Ask";
@@ -32,16 +34,19 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/cert" element={<CertMain />}></Route>
         <Route path="/certfind" element={<CertFind />}></Route>
-        <Route path="/seminar" element={<SeminarMain />}></Route>
+
+        <Route path="/skills" element={<SkillsMain />}></Route>
+        <Route path="/skills/jobcafe/*" element={<JobCafe />}></Route>
+        <Route path="/skills/hrd/*" element={<Hrd />}></Route>
 
         <Route path="/community" element={<CommunityMain />}></Route>
         <Route path="/community/study/*" element={<Study />}></Route>
         <Route path="/community/ask/*" element={<Ask />}></Route>
         <Route path="/community/share/*" element={<Share />}></Route>
 
-        <Route path="/cs/notice" element={<NoticeMain />}></Route>
+        <Route path="/cs" element={<NoticeMain />}></Route>
         <Route path="/cs/faq" element={<FAQ />}></Route>
-        <Route path="/cs/lost" element={<Lost />}></Route>
+        <Route path="/cs/lost/*" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
         <Route path="/mypage/deactivate" element={<Deactivate />}></Route>

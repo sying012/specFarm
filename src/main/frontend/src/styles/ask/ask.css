@@ -34,7 +34,6 @@ div#content{
 form#keywordSearchBar{
     position: relative;
     display: flex;
-    width: 300px;
 }
 
 #container #searchBar input[type="text"]:focus-visible{

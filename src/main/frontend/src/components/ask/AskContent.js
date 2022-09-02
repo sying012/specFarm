@@ -4,7 +4,8 @@ import searchIcon from "../../images/loupe.png";
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Pagenation from "./Pagenation";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const AskContent = ({ asks }) => {
   const certList = useRef();
@@ -17,14 +18,15 @@ const AskContent = ({ asks }) => {
       <div id="boardTop">
         <div id="searchBar">
           <form id="keywordSearchBar" action="">
-            <input
-              type="text"
-              name="searchKeyword"
-              style={{ fontSize: "1.1rem", paddingLeft: "10px" }}
-            />
-            <button id="search" type="submit">
-              <img src={searchIcon} alt="" style={{ width: "100%" }} />
-            </button>
+            <TextField
+              id="outlined-search"
+              type="search"
+              InputProps={{
+                startAdornment: <SearchIcon color="action" />,
+                styles: { fontFamily: "Hahmlet" },
+              }}
+              size="small"
+            ></TextField>
           </form>
           <form id="certSearchBar" action="">
             <input

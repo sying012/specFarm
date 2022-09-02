@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 
 const TestSchedule = () => {
+  const [testSc, setTestSc] = useState([
+    {
+      test1: "2022년 정기 기사 4회",
+      test2: `2022.08.16 
+      ~ 2022.08.19`,
+      test3: `2022.08.11`,
+      test4: `2022.08.12`,
+      test5: `2022.08.13`,
+      test6: `2022.08.14
+      ~ 2022.08.19`,
+      test7: `11`,
+      id: 1,
+    },
+    {
+      test1: "2022년 정기 기사 3회",
+      test2: `2022.08.13 
+      ~ 2022.08.19`,
+      test3: `2022.08.13`,
+      test4: `2022.08.12`,
+      test5: `2022.08.15`,
+      test6: `2022.08.16
+      ~ 2022.08.19`,
+      test7: `11`,
+      id: 2,
+    },
+  ]);
   return (
     <div>
       <table className={styles.infoTable}>
@@ -17,26 +43,21 @@ const TestSchedule = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className={styles.infoBody}>
-            <td>2022년 정기 기사 4회</td>
-            <td>
-              2022.08.16
-              <br />~ 2022.08.19
-            </td>
-            <td>2022.08.16</td>
-            <td>2022.08.16</td>
-            <td>
-              2022.08.16
-              <br />~ 2022.08.19
-            </td>
-            <td>2022.08.16</td>
-            <td>
-              2022.08.16
-              <br /> ~2022.08.16
-            </td>
-          </tr>
+          {testSc.map((sc, index) => (
+            <tr key={sc.id} className={styles.infoBody}>
+              <td key={sc.test1 + sc.id}>{sc.test1}</td>
+              <td key={sc.test2 + sc.id}>{sc.test2}</td>
+              <td key={sc.test3 + sc.id}>{sc.test3}</td>
+              <td key={sc.test4 + sc.id}>{sc.test4}</td>
+              <td key={sc.test5 + sc.id}>{sc.test5}</td>
+              <td key={sc.test6 + sc.id}>{sc.test6}</td>
+              <td key={sc.test7 + sc.id}>{sc.test7}</td>
+              <td key={sc.test8 + sc.id}></td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <div className={styles.testInfo}>여기에 시험정보 들어가야함요</div>
       <div className={styles.infoButton}>
         <a href="https://www.q-net.or.kr/">
           <button type="button">원서접수</button>

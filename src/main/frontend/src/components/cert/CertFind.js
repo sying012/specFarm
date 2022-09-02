@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 import Grid from "@mui/system/Unstable_Grid";
 import FormControl from "@mui/material/FormControl";
@@ -6,11 +6,9 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from "@mui/icons-material/Search";
-import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Applicationcaution from "./Applicationcaution";
 import Applicationinfo from "./Applicationinfo";
 import Basicsinfo from "./Basicsinfo";
@@ -33,7 +31,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -49,6 +47,20 @@ function a11yProps(index) {
 
 const CertFind = () => {
   const [value, setValue] = React.useState(0);
+  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certL, setCertL] = useState("");
+  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certM, setCertM] = useState("");
+
+  const certLCatChange = (e) => {
+    console.log(e.target.value);
+    setCertL(e.target.value);
+  };
+
+  const certMCatChange = (e) => {
+    console.log(e.target.value);
+    setCertM(e.target.value);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,110 +75,71 @@ const CertFind = () => {
       </div>
       <div className={styles.certFindInfo}>
         <div className={styles.certContainer}>
-          <input className={styles.certfindinput} placeholder="검색"></input>
-          <SearchIcon
-            fontSize="large"
-            sx={{ marginLeft: "-30px", marginTop: "65px" }}
-          />
-          <Grid
-            item
-            xs={6}
-            style={{ paddingLeft: "380px", paddingTop: "30px" }}
-          >
-            <FormControl
-              sx={{ minWidth: 220 }}
-              Width
-              style={{
-                fontSize: "14px",
-                marginLeft: "-605px",
-                marginTop: "100px",
-              }}
-            >
-              <InputLabel id="demo-select-small" style={{ fontSize: "14px" }}>
-                대분류
-              </InputLabel>
+          <div className={styles.certFindSearchBar}>
+            <input className={styles.certfindinput} placeholder="검색"></input>
+            <SearchIcon fontSize="large" color="action" />
+          </div>
+          <Grid xs={6} style={{ padding: "20px 20px" }}>
+            <FormControl sx={{ minWidth: 150 }} style={{ fontSize: "14px" }}>
+              <InputLabel id="certLCat">대분류</InputLabel>
               <Select
-                labelId="demo-select-small"
-                id="certLCat"
-                label="관심분야(대분류)"
-                style={{ fontSize: "14px" }}
+                labelId="certLCat"
+                id="certLCatSelect"
+                value={certL}
+                label="대분류"
+                onChange={certLCatChange}
                 name="certLCat"
               >
-                <MenuItem value="" style={{ fontSize: "14px" }}>
-                  대분류
-                </MenuItem>
-                <MenuItem value={10} style={{ fontSize: "14px" }}>
-                  사업관리
-                </MenuItem>
-                <MenuItem value={20} style={{ fontSize: "14px" }}>
-                  경영.회계.세무
-                </MenuItem>
-                <MenuItem value={30} style={{ fontSize: "14px" }}>
-                  금융.보험
-                </MenuItem>
+                {certLCat.map((certL) => (
+                  <MenuItem key={certL.id} value={certL.name}>
+                    {certL.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid
-            item
-            xs={6}
-            style={{
-              paddingLeft: "580px",
-              paddingBottom: "30px",
-              marginTop: "-62px",
-            }}
-          >
-            <FormControl
-              sx={{ minWidth: 220 }}
-              Width
-              style={{
-                fontSize: "14px",
-                marginTop: "270px",
-                marginLeft: "-1185px",
-              }}
-            >
-              <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
-                중분류
-              </InputLabel>
+          <Grid xs={6} style={{ padding: "10px 90px" }}>
+            <FormControl sx={{ minWidth: 120 }} style={{ fontSize: "14px" }}>
+              <InputLabel id="certMCat">중분류</InputLabel>
               <Select
                 labelId="certMCat"
-                id="demo-select-small"
-                label="관심분야(중분류)"
-                style={{ fontSize: "14px" }}
+                id="certMCatSelect"
+                value={certM}
+                label="중분류"
+                onChange={certMCatChange}
                 name="certMCat"
               >
-                <MenuItem value="" style={{ fontSize: "14px" }}>
-                  관심분야
-                </MenuItem>
-                <MenuItem value={10} style={{ fontSize: "14px" }}>
-                  사업관리
-                </MenuItem>
+                {certMCat.map((certM) => (
+                  <MenuItem key={certM.id} value={certM.name}>
+                    {certM.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
-          <div className={styles.smallfindcert}>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              거푸집기능사
-            </Button>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              건축구조기술사
-            </Button>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              건축기사
-            </Button>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              건축기사
-            </Button>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              건축기사
-            </Button>
-            <Button variant="text" sx={{ color: "#6b5343" }}>
-              qqqqqqqqqqqq
-            </Button>
-          </div>
+          {/* <div> */}
+          <button type="button" className={styles.smallFindCert}>
+            거푸집기능사
+          </button>
+          <button type="button" className={styles.smallFindCert}>
+            건축구조기술사
+          </button>
+          <button type="button" className={styles.smallFindCert}>
+            건축기사
+          </button>
+          <button type="button" className={styles.smallFindCert}>
+            건축기사
+          </button>
+          <button type="button" className={styles.smallFindCert}>
+            건축기사
+          </button>
+          <button type="button" className={styles.smallFindCert}>
+            건축기사
+          </button>
+          {/* </div> */}
         </div>
         <div className={styles.certFind}>
-          <p className={styles.certFindTitle}>
+          <div className={styles.certFindTitle}>
             사회조사분석사1급{" "}
             <Checkbox
               {...label}
@@ -174,7 +147,7 @@ const CertFind = () => {
               checkedIcon={<Favorite />}
               classes={{ root: "custom-checkbox-root" }}
             />{" "}
-          </p>
+          </div>
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 0, borderColor: "divider" }}>
               <Tabs

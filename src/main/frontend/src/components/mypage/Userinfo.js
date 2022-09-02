@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/mypage/Userinfo.module.css";
 
-function Userinfo({ certs }) {
+function Userinfo({ certs, user }) {
   const theme = createTheme({
     status: {
       danger: "#e53e3e",
@@ -110,7 +110,7 @@ function Userinfo({ certs }) {
     const userTel = data.get("userTel");
     const usertelAuthNumber = data.get("usertelAuthNumber");
 
-    if (userTel !== "01000000000") {
+    if (userTel !== user.userTel) {
       if (usertelAuthNumber === null || usertelAuthNumber === "") {
         setTelAuthNumberError(true);
         setTelAuthNumberErrorText("인증이 필요합니다.");
@@ -236,7 +236,7 @@ function Userinfo({ certs }) {
                 name="userId"
                 variant="outlined"
                 id="userId"
-                value="thisisId"
+                defaultValue={user.userId}
                 fullWidth
                 disabled
               />
@@ -263,7 +263,7 @@ function Userinfo({ certs }) {
                 name="userName"
                 variant="outlined"
                 id="userName"
-                value="조유미"
+                defaultValue={user.userName}
                 disabled
                 fullWidth
               />
@@ -274,7 +274,7 @@ function Userinfo({ certs }) {
                 variant="outlined"
                 id="userTel"
                 label="휴대폰 번호"
-                defaultValue="01000000000"
+                defaultValue={user.userTel}
                 fullWidth
                 error={telError}
                 helperText={telErrorText}
@@ -323,7 +323,7 @@ function Userinfo({ certs }) {
                 variant="outlined"
                 id="useremail"
                 label="이메일(선택)"
-                defaultValue="thisis@email.com"
+                defaultValue={user.userEmail}
                 fullWidth
                 onChange={emailCheck}
                 error={emailError}

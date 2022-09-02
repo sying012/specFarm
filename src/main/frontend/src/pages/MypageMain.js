@@ -7,6 +7,16 @@ import Profile from "../components/mypage/Profile";
 import styles from "../styles/mypage/MypageMain.module.css";
 
 function MypageMain() {
+  const [user, setUser] = useState({
+    userId: "thisisId",
+    userPw: "dd",
+    userName: "조유미",
+    userTel: "010-0000-0000",
+    userEmail: "801@bitcamp.com",
+    nickname: "박지은",
+    profilePath: "",
+  });
+
   const [certs, setCerts] = useState([
     { id: 1, certName: "정보처리기사", earnedDate: "2022.08.30" },
     { id: 2, certName: "전기어쩌구자격증", earnedDate: "2021.07.22" },
@@ -36,44 +46,78 @@ function MypageMain() {
   const [shares, setShares] = useState([
     {
       id: 1,
-      shareTitle: "나눔제목1",
-      shareContent:
-        "나눔내용 나눔내용 나눔내용나눔내용 나눔내용나눔내용나눔내용 나눔내용나눔내용나눔내용 나눔내용나눔내용나눔내용 나눔내용나눔내용나눔내용 나눔내용나눔내용나눔내용 나눔내용나눔내용나눔내용",
-      shareRegDate: "2022.08.29 11:34 AM",
-      shareFilePath: "/upload/share/corn.png",
+      shareTitle: "나눔해요1",
+      userId: "당근",
+      regDate: "2022.08.01",
+      content: "aaaa",
+      itemImg:
+        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
+      shareState: 0,
     },
     {
       id: 2,
-      shareTitle: "나눔제목2",
-      shareContent:
-        "나눔내용 나눔내용 나눔내용나눔내용 나눔내용나눔내용 나눔내용나눔내용 나눔내용나눔내용 나눔내용나눔내용나눔내용",
-      shareRegDate: "2022.08.29 12:34 AM",
-      shareFilePath: "/upload/share/cherries.png",
+      shareTitle: "나눔해요2",
+      userId: "당근",
+      regDate: "2022.08.02",
+      content:
+        "aaaaㅇㅇㅇㅇㅇㅇㅇ아아아앙아아아아아아아아아아ㅏ앙아ㅏㅇ아아아아아아아아아아앙아아ㅏ아아앙ㅇ닫러재ㅑㄷ뤄마뎌ㅣㄱㅎㅍㄷ구 판어푸냎 아앙ㅇ닫러재ㅑㄷ뤄마뎌ㅣㄱㅎㅍㄷ구 판어푸냎ㄷ잘채ㅔㅈ긍파ㅡㄴㅇ",
+      itemImg:
+        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
+      shareState: 1,
+    },
+    {
+      id: 3,
+      shareTitle: "나눔해요3",
+      userId: "당근",
+      regDate: "2022.08.03",
+      content: "aaaa",
+      itemImg:
+        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
+      shareState: 0,
+    },
+    {
+      id: 4,
+      shareTitle: "나눔해요4",
+      userId: "당근",
+      regDate: "2022.08.04",
+      content: "aaaa",
+      itemImg:
+        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
+      shareState: 1,
     },
   ]);
 
   return (
     <div className={styles.mypageMain}>
-      <Profile certs={certs} />
+      <Profile certs={certs} user={user} />
       <div className={styles.mypageFrame}>
         <Routes>
           <Route
             path="/userinfo"
-            element={<HalfFrame text="회원정보 수정" certs={certs} />}
+            element={
+              <HalfFrame text="회원정보 수정" certs={certs} user={user} />
+            }
           />
           <Route
             path="/written"
             element={
-              <HalfFrame text="내가 쓴 글" asks={asks} shares={shares} />
+              <HalfFrame
+                text="내가 쓴 글"
+                asks={asks}
+                shares={shares}
+                user={user}
+              />
             }
           />
           <Route
             path="/resetpassword"
-            element={<HalfFrame text="비밀번호 변경" />}
+            element={<HalfFrame text="비밀번호 변경" user={user} />}
           />
           <Route
             path="/"
-            element={<Frames certs={certs} asks={asks} shares={shares} />}
+            element={
+              <Frames user={user} certs={certs} asks={asks} shares={shares} />
+            }
           />
         </Routes>
       </div>

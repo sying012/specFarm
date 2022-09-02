@@ -2,6 +2,7 @@ import { useState } from "react";
 import AskListItem from "../ask/AskListItem";
 
 import styles from "../../styles/mypage/Written.module.css";
+import { NavLink } from "react-router-dom";
 
 function Written({ asks, shares }) {
   console.log(asks);
@@ -49,7 +50,9 @@ function Written({ asks, shares }) {
         {isVisible && (
           <div className={styles.askList}>
             {asks.map((ask) => (
-              <AskListItem key={ask.id} ask={ask} />
+              <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
+                <AskListItem key={ask.id} ask={ask} />
+              </NavLink>
             ))}
           </div>
         )}
@@ -57,20 +60,24 @@ function Written({ asks, shares }) {
         {!isVisible && (
           <div>
             {shares.map((share) => (
-              <div className={styles.shareList} key={share.id}>
-                <img
-                  src={share.shareFilePath}
-                  alt="나눔이미지 파일"
-                  className={styles.shareFile}
-                />
-                <div>
-                  <div className={styles.shareListHeader}>
-                    <h1 className={styles.writtenTitle}>{share.shareTitle}</h1>
-                    <p>{share.shareRegDate}</p>
+              <NavLink key={share.id} to={`/community/share/${share.id}`}>
+                <div className={styles.shareList} key={share.id}>
+                  <img
+                    src={share.itemImg}
+                    alt="나눔이미지 파일"
+                    className={styles.shareFile}
+                  />
+                  <div className={styles.shareContainer}>
+                    <div className={styles.shareListHeader}>
+                      <h1 className={styles.writtenTitle}>
+                        {share.shareTitle}
+                      </h1>
+                      <p className={styles.shareRegDate}>{share.regDate}</p>
+                    </div>
+                    <p className={styles.shareContent}>{share.content}</p>
                   </div>
-                  <p>{share.shareContent}</p>
                 </div>
-              </div>
+              </NavLink>
             ))}
           </div>
         )}

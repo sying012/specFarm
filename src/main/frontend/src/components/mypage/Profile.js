@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import styles from "../../styles/mypage/Profile.module.css";
 import { Edit } from "@mui/icons-material";
 
-function Profile({ certs }) {
+function Profile({ certs, user }) {
   const size = 18;
   const badgeArr = [];
   for (let i = 0; i < size; i++) {
@@ -25,15 +25,19 @@ function Profile({ certs }) {
               <Avatar
                 title="프로필 사진을 수정하려면 클릭하세요."
                 alt="profile image"
-                src="https://as1.ftcdn.net/v2/jpg/03/58/90/78/1000_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg"
+                src={
+                  user.profilePath === ""
+                    ? "/upload/profile/farmer.png"
+                    : user.profilePath
+                }
                 sx={{ width: 140, height: 140 }}
               />
             </Badge>
           </Link>
         </div>
         <div className={styles.profileInfo}>
-          <h1 className={styles.nickname}>닉네임</h1>
-          <p className={styles.email}>bitcamp801@bitcamp.com</p>
+          <h1 className={styles.nickname}>{user.nickname}</h1>
+          <p className={styles.email}>{user.userEmail}</p>
         </div>
         <div>
           <div className={styles.badgeLabel}>

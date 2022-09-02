@@ -2,13 +2,12 @@
   width: 760px;
   min-height: 600px;
   border-radius: 15px;
-  box-shadow: 10px 10px 10px 1px rgb(190, 190, 190);
+  box-shadow: 5px 6px 22px lightgray;
   margin-bottom: 80px;
 }
 
 .frameTitle {
   height: 45px;
-  background-color: rgba(187, 205, 110, 0.88);
   border-radius: 15px 15px 0 0;
   margin-top: 40px;
   display: flex;
@@ -16,12 +15,12 @@
 }
 
 .frameTitle h2 {
-  color: white;
+  color: #777;
   font-size: 1.5em;
 }
 
 .backBtn {
-  color: white;
+  color: #1d5902;
   margin-right: 7px;
 }
 
@@ -35,6 +34,6 @@
 }
 
 h1 {
-  color: rgb(107, 83, 67);
+  color: #1d5902;
   font-size: 1.3em;
 }

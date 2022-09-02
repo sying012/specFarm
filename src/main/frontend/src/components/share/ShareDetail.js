@@ -2,12 +2,20 @@ import * as React from "react";
 import { useParams } from "react-router";
 import styles from "../../styles/share/detail.module.css";
 import { Stack, createTheme, Button, Avatar } from "@mui/material";
+import Comment from "./Comment";
+import CommentContainer from "./CommentContainer";
 
 const ShareDetail = ({ shareList }) => {
   const { id } = useParams();
-
   const { shareTitle, userId, content, itemImg, shareState, regDate } =
     shareList[id - 1];
+
+  //2. 댓글 입력 값 저장되는 곳 지정
+  const [commentArray, setCommentArray] = React.useState([]);
+
+  const addCommentArray = (array) => {
+    setCommentArray(array);
+  };
 
   const theme = createTheme({
     status: {
@@ -25,6 +33,19 @@ const ShareDetail = ({ shareList }) => {
       secondary: {
         main: "#555",
       },
+    },
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
     },
   });
 
@@ -81,53 +102,16 @@ const ShareDetail = ({ shareList }) => {
             </div>
           </div>
         </div>
-
         <div className={styles.detailBoxBottom}>
           <div className={styles.reply}>
-            <textarea
-              className={styles.replyText}
-              placeholder="내용을 입력해주세요 (비회원시 - alert 로그인이 필요합니다)"
+            <CommentContainer
+              addCommentArray={addCommentArray}
+              commentArray={commentArray}
             />
+            <hr></hr>
             <div className={styles.replyBottom}>
-              <p>댓글 100</p>
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                onClick={() => (
-                  (window.location = "./detail"), alert("등록되었습니다.")
-                )}
-                theme={theme}
-                className={styles.replyRegBtn}
-              >
-                등록
-              </Button>
-            </div>
-          </div>
-          <hr></hr>
-          <div className={styles.replys}>
-            <div className={styles.replyItems}>
-              <div className={styles.replyItem}>
-                <Stack direction="row" spacing={2} className={styles.writer}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                  <p>writer</p>
-                  <div>2022.00.00</div>
-                  <Button
-                    style={{
-                      border: "2px solid rgba(187, 205, 110, 0.8)",
-                      color: "rgba(187, 205, 110, 0.8)",
-                      height: "38px",
-                    }}
-                    href="/community/share"
-                    className={styles.deleteBtn}
-                    onClick={() => (
-                      (window.location = "/share"), alert("삭제되었습니다.")
-                    )}
-                  >
-                    삭제
-                  </Button>
-                </Stack>
-                <p className={styles.content}>content</p>
+              <div>
+                <Comment commentArray={commentArray} />
               </div>
             </div>
           </div>

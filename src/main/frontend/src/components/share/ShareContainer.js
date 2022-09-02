@@ -1,5 +1,5 @@
 import React from "react";
-import { createTheme, TextField } from "@mui/material";
+import { createTheme, TextField, Stack, Pagination } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/share/container.module.css";
 import ShareList from "./ShareList";
@@ -46,6 +46,11 @@ const ShareContainer = ({ shareList }) => {
         </button>
       </div>
       <ShareList shareList={shareList}></ShareList>
+      <div className={styles.pageNation}>
+        <Stack spacing={2}>
+          <Pagination count={10} />
+        </Stack>
+      </div>
     </>
   );
 };

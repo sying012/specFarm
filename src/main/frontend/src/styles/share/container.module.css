@@ -19,3 +19,11 @@
   margin-right: 10px;
   background-color: rgba(187, 205, 110, 0.8);
 }
+
+.pageNation {
+  margin-top: 60px;
+}
+
+.pageNation > div {
+  align-items: center;
+}

@@ -47,7 +47,7 @@ const Header = () => {
             </NavLink>
           </div>
 
-          {/* 세미나 메뉴 */}
+          {/* 스킬즈 메뉴 */}
           <div
             // style={{ marginLeft: "10px" }}
             onMouseOver={() => {
@@ -62,7 +62,7 @@ const Header = () => {
               style={({ isActive }) => ({
                 // borderBottom: isActive ? "2px solid black" : "",
               })}
-              to="/seminar"
+              to="/skills"
             >
               세미나
             </NavLink>

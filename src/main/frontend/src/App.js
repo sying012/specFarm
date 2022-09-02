@@ -44,7 +44,7 @@ function App() {
         <Route path="/community/ask/*" element={<Ask />}></Route>
         <Route path="/community/share/*" element={<Share />}></Route>
 
-        <Route path="/cs" element={<NoticeMain />}></Route>
+        <Route path="/cs/*" element={<NoticeMain />}></Route>
         <Route path="/cs/faq" element={<FAQ />}></Route>
         <Route path="/cs/lost/*" element={<Lost />}></Route>
 

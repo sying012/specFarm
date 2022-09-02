@@ -8,16 +8,7 @@ const Header = () => {
   const [commName, setCommName] = useState("커뮤니티");
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
-  const [navActive, setNavActive] = useState(0);
-
-  // const navlinkname = noticeRef.current;
-  const navlinkname = document.getElementById("noticeid");
-
-  useEffect(() => {
-    console.log("mm");
-  }, [noticeName]);
-
-  console.log(navlinkname);
+  const [skillsHover, setSkillsHover] = useState(0);
 
   return (
     <header className="header">
@@ -32,6 +23,7 @@ const Header = () => {
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(0);
+              setSkillsHover(0);
               setCommName("커뮤니티");
               setNoticeName("공지사항");
             }}
@@ -53,6 +45,7 @@ const Header = () => {
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(0);
+              setSkillsHover(1);
               setCommName("커뮤니티");
               setNoticeName("공지사항");
             }}
@@ -64,8 +57,27 @@ const Header = () => {
               })}
               to="/skills"
             >
-              세미나
+              Skills(미정)
             </NavLink>
+            {skillsHover ? (
+              <div
+                className="skillsMenu"
+                onMouseOut={() => {
+                  setSkillsHover(0);
+                }}
+              >
+                <div className="skillsCat">
+                  <Link className="skillsItem" to="/skills/jobcafe">
+                    일자리 CaFe
+                  </Link>
+                  <Link className="skillsItem" to="/skills/findcourse">
+                    직Up훈련탐색
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           {/* 커뮤니티 메뉴 */}
@@ -73,6 +85,7 @@ const Header = () => {
             onMouseOver={() => {
               setcommHover(1);
               setnoticeHover(0);
+              setSkillsHover(0);
               setCommName("마을회관");
               setNoticeName("공지사항");
             }}
@@ -116,6 +129,7 @@ const Header = () => {
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(1);
+              setSkillsHover(0);
               setCommName("커뮤니티");
               setNoticeName("마을소식");
             }}
@@ -163,6 +177,7 @@ const Header = () => {
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(0);
+              setSkillsHover(0);
               setCommName("커뮤니티");
               setNoticeName("공지사항");
             }}

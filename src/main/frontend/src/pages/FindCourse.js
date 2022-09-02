@@ -1,5 +1,7 @@
 import React from "react";
-import styles from "../styles/findcourse/findcourse.module.css";
+import { Route, Routes } from "react-router";
+import CourseContainer from "../components/findCourse/CourseContainer";
+import CourseDetail from "../components/findCourse/CourseDetail";
 
 const FindCourse = () => {
   return (
@@ -22,7 +24,10 @@ const FindCourse = () => {
           직업훈련탐색
         </div>
       </div>
-      <div className></div>
+      <Routes>
+        <Route path="/" element={<CourseContainer />} />
+        <Route path="/:id" element={<CourseDetail />} />
+      </Routes>
     </div>
   );
 };

@@ -51,7 +51,7 @@
   height: 70px;
   justify-content: center;
   box-sizing: content-box;
-  color: #567348;
+  color: black;
   font-size: 1.1rem;
   font-weight: 500;
 }
@@ -60,11 +60,11 @@
   font-weight: bold;
   font-size: 19px;
   transition-duration: 0.3s;
-  border-bottom: 2px solid #1d5902;
+  border-bottom: 2px solid black;
 }
 
 .catStyle:hover {
-  border-bottom: 2px solid #1d5902;
+  border-bottom: 2px solid black;
 }
 
 .tailwrap {
@@ -143,6 +143,36 @@
 
 .noticeCat {
   width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0px 30px 0px 30px;
+}
+
+.skillsMenu {
+  width: fit-content;
+  height: 40px;
+  border-width: 0px 2px 2px 2px;
+  position: absolute;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.skillsItem {
+  color: grey;
+}
+
+.skillsItem:hover {
+  color: black;
+  transition-duration: 0.5s;
+}
+
+.skillsCat {
+  width: 250px;
   display: flex;
   align-items: center;
   justify-content: space-between;

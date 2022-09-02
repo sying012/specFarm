@@ -1,0 +1,29 @@
+.replyItem {
+  background-color: yellowgreen;
+  width: 90%;
+  height: 100px;
+  display: flex;
+  padding: 26px 25px 5px 25px;
+  margin-left: 50px;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.replys {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.writer {
+  display: flex;
+  align-items: center;
+}
+
+.writer > p {
+  display: flex;
+  flex-grow: 1;
+}
+
+.aa {
+  background-color: yellowgreen;
+}

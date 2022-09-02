@@ -1,7 +1,6 @@
 import React from "react";
-import ShareForm from "./ShareForm";
 import styles from "../../styles/share/newShare.module.css";
-import { Stack, Button, createTheme } from "@mui/material";
+import { Stack, Button, createTheme, Box } from "@mui/material";
 
 const NewShare = () => {
   // shareData를 백으로 전달
@@ -13,10 +12,29 @@ const NewShare = () => {
   //    });
   // }
 
+  // //useRef - ref 연결
+  // const imageInputRef = useRef();
+  // const titleInputRef = useRef();
+  // const contentInputRef = useRef();
+
+  // function submitHandler(event) {
+  //   event.preventDefault();
+
+  //   //사용자 입력값 받아옴
+  //   const enteredTitle = titleInputRef.current.value;
+  //   const enteredImage = imageInputRef.current.value;
+  //   const enteredContent = contentInputRef.current.value;
+
+  //   const shareData = {
+  //     image: enteredImage,
+  //     title: enteredTitle,
+  //     content: enteredContent,
+  //   };
+
+  //   this.props.addNewShare(shareData);
+  // }
+
   const theme = createTheme({
-    status: {
-      danger: "#e53e3e",
-    },
     palette: {
       brown: {
         main: "rgb(107, 83, 67)",
@@ -29,6 +47,19 @@ const NewShare = () => {
       secondary: {
         main: "#555",
       },
+    },
+    typography: {
+      fontFamily: [
+        "Hahmlet",
+        "Segoe UI",
+        "Roboto",
+        "Oxygen",
+        "Ubuntu",
+        "Cantarell",
+        "Fira Sans",
+        "Droid Sans",
+        "Helvetica Neue",
+      ].join(","),
     },
   });
 
@@ -46,6 +77,10 @@ const NewShare = () => {
 
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleFileChange = (e) => {
+    document.getElementById("uploadFileName").value = e.target.value;
   };
 
   return (
@@ -71,21 +106,82 @@ const NewShare = () => {
             }}
           />
           <div className={styles.fileloadBtn}>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Button
-                style={{
-                  backgroundColor: "rgba(187, 205, 110, 0.8)",
-                  color: "white",
-                }}
-                component="label"
-              >
-                Upload
-                <input hidden type="file" multiple={true} id="fileUpload" />
-              </Button>
-            </Stack>
+            <div className={styles.regBoxBottom}>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <input
+                  className={styles.uploadFileName}
+                  value="첨부파일"
+                  placeholder="첨부파일"
+                  id="uploadFileName"
+                />
+
+                <label for="fileUpload" style={{ marginLeft: "0px" }}>
+                  파일첨부
+                </label>
+                <input
+                  type="file"
+                  multiple={true}
+                  onChange={handleFileChange}
+                  id="fileUpload"
+                />
+              </Stack>
+            </div>
           </div>
         </div>
-        <ShareForm />
+
+        <div className={styles.shareForm}>
+          <form
+          //onSubmit={submitHandler}
+          >
+            <input
+              className={styles.title}
+              placeholder="제목"
+              //id="title"
+              required
+              //ref={titleInputRef}
+            ></input>
+            <textarea
+              className={styles.content}
+              placeholder="무엇을 나눔하고 싶으신가요?"
+              style={{ fontSize: 15 }}
+              // id="content"
+              required
+              // ref={contentInputRef}
+            ></textarea>
+            <div className={styles.shareBtn}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                href="/community/share"
+                theme={theme}
+                className={styles.cancelBtn}
+              >
+                취소
+              </Button>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                // /:id로 변경 예정
+                onClick={() => (
+                  (window.location = "./"), alert("등록되었습니다.")
+                )}
+                theme={theme}
+                className={styles.RegBtn}
+              >
+                등록
+              </Button>
+            </div>
+          </form>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          ></Box>
+        </div>
       </div>
     </>
   );

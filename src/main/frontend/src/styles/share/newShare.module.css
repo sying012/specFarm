@@ -1,10 +1,12 @@
 .regBox {
-  width: 950px;
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .imgBox {
+  width: 48%;
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -12,13 +14,117 @@
 
 .itemImg {
   display: flex;
-  width: 450px;
-  height: 365px;
+  width: 100%;
+  height: 400px;
   border-radius: 10px;
   box-shadow: 5px 6px 22px lightgray;
 }
 
 .fileloadBtn {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+}
+
+.regBoxBottom {
+  width: 100%;
+}
+
+.uploadFileName {
+  width: 100%;
+  height: 35px;
+  border-radius: 4px;
+}
+
+.fileloadBtn input[type="file"] {
+  position: absolute;
+  width: 500px;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.fileloadBtn label {
+  background-color: rgba(187, 205, 110, 0.8);
+  color: white;
+  width: 85px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  border-radius: 4px;
+  margin-left: 0px;
+}
+
+.fileloadBtn label:active {
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
+    0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+.fileloadBtn .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+}
+
+/* form */
+
+.shareForm {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  box-shadow: 5px 6px 22px lightgray;
+  border: none;
+}
+
+.content {
+  resize: none;
+  width: 100%;
+  height: 320px;
+  margin-top: 23px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 5px 6px 22px lightgray;
+  font-size: large;
+}
+
+.shareBtn {
+  width: 140px;
+  display: flex;
+  float: right;
+  justify-content: space-between;
+}
+
+.cancelBtn {
+  color: white;
+  width: 85px;
+  height: 40px;
+  border-radius: 4px;
+  border-style: none;
+  background-color: rgba(107, 83, 67, 0.8);
+}
+
+.RegBtn {
+  margin-left: 10px;
+  color: white;
+  width: 85px;
+  height: 40px;
+  border-radius: 4px;
+  border-style: none;
+  background-color: rgba(187, 205, 110, 0.8);
 }

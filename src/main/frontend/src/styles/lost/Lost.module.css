@@ -8,36 +8,45 @@
   width: 100%;
   height: max-content;
   border-collapse: collapse;
-  border-top: 2px solid #bdbdbd;
-  border-bottom: 2px solid #bdbdbd;
+  border-radius: 10px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px rgba(150, 150, 150, 0.3);
 }
 
 .table > thead > tr > th {
-  background-color: #eeeeee;
-  border-top: 1px solid #bdbdbd;
+  background: rgb(245, 245, 245);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.3);
   padding: 15px 5px;
   text-align: center;
 }
 
 .table > tbody > tr > td {
   margin-left: 100px;
-  border-top: 1px solid #bdbdbd;
-  padding: 15px 5px;
+  border-top: 1px solid rgba(150, 150, 150, 0.3);
+  padding: 14px;
+}
+
+.table > tbody > tr:hover {
+  background-color: rgba(140, 191, 117, 0.1);
+  border-radius: 0;
+  cursor: pointer;
+  border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .brchName {
   text-align: center;
-  width: 150px;
+  width: 120px;
 }
 
 .lostLoc {
   text-align: center;
-  width: 300px;
+  width: 250px;
 }
 
 .lostDate {
   text-align: center;
-  width: 150px;
+  width: 120px;
 }
 
 /*page Nation*/
@@ -48,4 +57,64 @@
 
 .pageNation > div {
   align-items: center;
+}
+
+/* lost Item */
+.itemMainDiv {
+  margin: 0 15px;
+  border: 1px solid rgba(150, 150, 150, 0.3);
+  border-radius: 10px;
+}
+
+.itemdiv {
+  background-color: rgb(245, 245, 245);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.3);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* lost Item table */
+.itemtable {
+  width: 700px;
+  height: max-content;
+  border-collapse: collapse;
+  margin: 20px;
+}
+
+.itemtable > tbody > tr > th {
+  background-color: #eeeeee;
+  padding: 15px 5px;
+  text-align: center;
+  width: 140px;
+}
+
+.itemtable > tbody > tr > td {
+  margin-left: 100px;
+  padding: 14px;
+  align-items: center;
+}
+
+.itemDivB {
+  background-color: rgb(245, 245, 245);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.itemDivB > div {
+  border-top: 1px solid rgba(150, 150, 150, 0.3);
+
+  display: flex;
+}
+
+.itemDivB > div > p {
+  padding: 20px;
+}
+
+.itemDivB > div > a {
+  padding: 20px;
+  text-decoration: none;
+  color: black;
 }

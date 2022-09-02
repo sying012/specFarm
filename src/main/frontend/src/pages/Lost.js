@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router";
+import { NavLink } from "react-router-dom";
 import LostItem from "../components/lost/LostItem";
 import LostList from "../components/lost/LostList";
 import LostListTest from "../components/lost/LostListTest";
@@ -13,6 +14,9 @@ const Lost = () => {
       lostItem: "USB",
       lostLoc: "서울여자고등학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 2,
@@ -21,6 +25,9 @@ const Lost = () => {
       lostItem: "주민등록증",
       lostLoc: "청운중학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "대전지사",
+      brchTel: "02-432-9876",
+      brchAddr: "대전시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 3,
@@ -29,6 +36,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울여자고등학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "대구지사",
+      brchTel: "02-432-9876",
+      brchAddr: "대구시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 4,
@@ -37,6 +47,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울전자고등학교 제19시험장",
       lostDate: "2022.00.00",
+      brchTrthNm: "경기북부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "경기도 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 5,
@@ -45,6 +58,9 @@ const Lost = () => {
       lostItem: "USB",
       lostLoc: "서울여자고등학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 6,
@@ -53,6 +69,9 @@ const Lost = () => {
       lostItem: "주민등록증",
       lostLoc: "청운중학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 7,
@@ -61,6 +80,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울여자고등학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 8,
@@ -69,6 +91,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울전자고등학교 제19시험장",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 9,
@@ -77,6 +102,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울여자고등학교",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
     {
       id: 10,
@@ -85,6 +113,9 @@ const Lost = () => {
       lostItem: "MP3/전자제품/게임기 등",
       lostLoc: "서울전자고등학교 제19시험장",
       lostDate: "2022.00.00",
+      brchTrthNm: "서울서부지사",
+      brchTel: "02-432-9876",
+      brchAddr: "서울특별시 은평구 진관 3 로 36(진관동)",
     },
   ]);
 
@@ -115,14 +146,16 @@ const Lost = () => {
     <div id="content">
       <div className="titleContainer">
         <div className="titlewrap">마을소식</div>
-        <div className="subtitlewrap">분실물 센터</div>
+        <NavLink to="/cs/lost">
+          <div className="subtitlewrap">분실물 센터</div>
+        </NavLink>
       </div>
       <Routes>
         <Route
           path="/"
           element={<LostList losts={losts} searchTypeItem={searchTypeItem} />}
         ></Route>
-        <Route path="/mm" element={<LostItem />}></Route>
+        <Route path="/:lostsId" element={<LostItem losts={losts} />}></Route>
       </Routes>
     </div>
   );

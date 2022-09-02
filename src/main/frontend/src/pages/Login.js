@@ -1,5 +1,6 @@
 import { Button, createTheme, Grid, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../images/logo_green1.png";
 import styles from "../styles/login/Login.module.css";
 
@@ -9,7 +10,7 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "rgb(159, 182, 72)",
+      main: "#8cbf75",
       contrastText: "#fff",
     },
     brown: {
@@ -77,9 +78,9 @@ const Login = () => {
   return (
     <div className={styles.center}>
       <div className={styles.form}>
-        <a href="/">
-          <img src={logo} className={styles.logo} alt="specfarm-logo" />
-        </a>
+        <div className={styles.logo}>
+          <NavLink to="/">specFarm</NavLink>
+        </div>
         <p className={styles.title}>로그인</p>
         <form onSubmit={loginSubmit}>
           <Grid container spacing={3} className={styles.padding}>
@@ -130,10 +131,10 @@ const Login = () => {
               className={styles.aTagDiv}
               style={{ textAlign: "center", marginTop: "24px" }}
             >
-              <a href="/findUser">계정정보 찾기</a>
-              <a href="/join" style={{ marginLeft: "50px" }}>
+              <Link to="/findUser">계정정보 찾기</Link>
+              <Link to="/join" style={{ marginLeft: "50px" }}>
                 회원가입
-              </a>
+              </Link>
             </div>
             <div className={styles.snsLogin}>
               <p>SNS계정으로 간편 로그인/회원가입</p>

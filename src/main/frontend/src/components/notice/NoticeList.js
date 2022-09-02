@@ -36,7 +36,7 @@ const NoticeList = () => {
         <Button
           className="askRegButton"
           variant="outlined"
-          onClick={() => (window.location = "./notice/write")}
+          onClick={() => (window.location = "./cs/write")}
         >
           글쓰기
         </Button>
@@ -78,7 +78,7 @@ export const NoticeListItem = ({ notice }) => (
   <tr>
     <td className="noticeNo">{notice.id}</td>
     <td className="noticeTitle">
-      <Link to={"/notice/1"}>{notice.noticeTitle}</Link>
+      <Link to={"/cs/1"}>{notice.noticeTitle}</Link>
     </td>
     <td className="noticeDate">{notice.noticeRegDate}</td>
   </tr>

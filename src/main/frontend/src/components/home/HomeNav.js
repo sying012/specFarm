@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import whitelogo1 from "../../images/logo_white1.png";
+import { NavLink, Link } from "react-router-dom";
+import styles from "../../styles/home/Home.module.css";
 
 const HomeNav = ({ goClickPage }) => {
   const commRef = useRef();
@@ -11,18 +12,14 @@ const HomeNav = ({ goClickPage }) => {
   const [noticeName, setNoticeName] = useState("공지사항");
 
   return (
-    <header className="header" style={{ background: "none" }}>
+    <header className={styles.homeNav}>
       <div className="innerheader">
-        <a href="/">
-          <img
-            className="whitelogo1"
-            src={whitelogo1}
-            alt="logo"
-            style={{ visibility: "hidden" }}
-          />
-        </a>
+        <Link to="/">
+          <div className={styles.logo}></div>
+        </Link>
         <nav className="catwrap">
           <div></div>
+          {/* 자격증 찾기 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(0);
@@ -31,13 +28,20 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("공지사항");
             }}
           >
-            <a id="CertMain" onClick={(e) => goClickPage(e)}>
+            <NavLink
+              to="/cert"
+              className={styles.catStyle}
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+            >
               자격증 찾기
-            </a>
+            </NavLink>
           </div>
 
+          {/* 세미나 메뉴 */}
           <div
-            style={{ marginLeft: "10px" }}
+            // style={{ marginLeft: "10px" }}
             onMouseOver={() => {
               setcommHover(0);
               setnoticeHover(0);
@@ -45,10 +49,16 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("공지사항");
             }}
           >
-            <a id="SeminarMain" onClick={(e) => goClickPage(e)}>
+            <a
+              className={styles.catStyle}
+              id="2"
+              onClick={(e) => goClickPage(e)}
+            >
               세미나
             </a>
           </div>
+
+          {/* 커뮤니티 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(1);
@@ -57,7 +67,11 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("공지사항");
             }}
           >
-            <a id="CommunityMain" onClick={(e) => goClickPage(e)} ref={commRef}>
+            <a
+              className={styles.catStyle}
+              id="2"
+              onClick={(e) => goClickPage(e)}
+            >
               {commName}
             </a>
             {commHover ? (
@@ -67,11 +81,13 @@ const HomeNav = ({ goClickPage }) => {
                   setcommHover(0);
                   setCommName("커뮤니티");
                 }}
-              ></div>
+              />
             ) : (
               ""
             )}
           </div>
+
+          {/* 공지사항 메뉴 */}
           <div
             onMouseOver={() => {
               setcommHover(0);
@@ -80,9 +96,20 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("마을소식");
             }}
           >
-            <a id="Notice" onClick={(e) => goClickPage(e)} ref={noticeRef}>
+            <NavLink
+              className={styles.catStyle}
+              style={({ isActive }) => ({
+                // borderBottom: isActive ? "2px solid black" : "",
+              })}
+              to="/cs"
+              id="noticeid"
+              // onClick={() => {
+              //   setNavActive(1);
+              // }}
+            >
+              {/* {navActive ? "마을소식" : noticeName} */}
               {noticeName}
-            </a>
+            </NavLink>
             {noticeHover ? (
               <div
                 className="noticeMenu"
@@ -91,7 +118,7 @@ const HomeNav = ({ goClickPage }) => {
                   setCommName("커뮤니티");
                   setNoticeName("공지사항");
                 }}
-              ></div>
+              />
             ) : (
               ""
             )}
@@ -105,13 +132,9 @@ const HomeNav = ({ goClickPage }) => {
             }}
           ></div>
         </nav>
-        <div className="tailwrap" style={{ visibility: "hidden" }}>
-          <div className="loginbtn">
-            <a href="/login">로그인</a>
-          </div>
-          <div className="joinbtn">
-            <a href="/join">회원가입</a>
-          </div>
+        <div className="tailwrap">
+          <div className="loginbtn"></div>
+          <div className="joinbtn"></div>
         </div>
       </div>
     </header>

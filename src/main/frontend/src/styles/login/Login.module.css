@@ -4,6 +4,23 @@
   align-items: center;
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+.logo > a {
+  color: #1d5902;
+  font-size: 4em;
+  font-family: "Black Han Sans";
+  font-weight: 500;
+  padding: 30px 0 20px 0;
+}
+
+.margin15 {
+  margin: 15px;
+}
+
 .form {
   max-width: 600px;
   margin: 30px auto;
@@ -13,12 +30,6 @@
 
 .padding {
   padding: 0 70px;
-}
-
-.logo {
-  width: 480px;
-  height: 82px;
-  padding: 20px 60px 10px 60px;
 }
 
 .title {

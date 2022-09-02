@@ -1,6 +1,7 @@
 import {
   createTheme,
   FormControl,
+  Link,
   MenuItem,
   Pagination,
   Select,
@@ -10,6 +11,7 @@ import {
 import React, { useState } from "react";
 import styles from "../../styles/lost/Lost.module.css";
 import SearchIcon from "@mui/icons-material/Search";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   status: {
@@ -40,15 +42,18 @@ const theme = createTheme({
   },
 });
 
-const goLostItem = (e) => {
-  window.location.pathname = "./notice/lost/1";
-};
-
 const LostList = ({ searchTypeItem, losts }) => {
   const [searchType, setSearchType] = useState("전체");
+
+  // search type select
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSearchType(e.target.value);
+  };
+
+  // tr click => lostItem
+  const navigate = useNavigate();
+  const goLostItem = (id) => {
+    navigate(`./${id}`);
   };
 
   return (
@@ -81,20 +86,25 @@ const LostList = ({ searchTypeItem, losts }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.brchName}>지사</th>
+            <th
+              className={styles.brchName}
+              style={{ borderTopLeftRadius: "10px" }}
+            >
+              지역
+            </th>
             <th>분실물 목록</th>
-            <th>분실 장소</th>
-            <th className={styles.lostDate}>분실 일자</th>
+            <th className={styles.lostLoc}>분실 장소</th>
+            <th
+              className={styles.lostDate}
+              style={{ borderTopRightRadius: "10px" }}
+            >
+              분실 일자
+            </th>
           </tr>
         </thead>
         <tbody>
           {losts.map((lost) => (
-            <tr
-              key={lost.id}
-              onClick={() => {
-                window.location = "./lost/1";
-              }}
-            >
+            <tr key={lost.id} onClick={() => goLostItem(lost.id)}>
               <td className={styles.brchName}>{lost.brchName}</td>
               <td>
                 [{lost.lostCat}] {lost.lostItem}

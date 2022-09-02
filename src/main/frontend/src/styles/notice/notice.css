@@ -1,108 +1,108 @@
 /* NoticeList */
-#noticeTable{
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    color:rgb(82, 42, 0);
-    font-size: 0.9rem;
-    table-layout: fixed;
-    white-space:nowrap;
+#noticeTable {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  color: rgb(82, 42, 0);
+  font-size: 0.9rem;
+  table-layout: fixed;
+  white-space: nowrap;
 }
 
-#noticeTable td, th{
-    height: 40px;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    vertical-align: middle;
+#noticeTable td,
+#noticeTable th {
+  height: 40px;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  vertical-align: middle;
 }
 
-#noticeTable th{
-   background: rgb(232, 232, 232);
-  }
-
-#noticeTable td{
-    font-size: 0.9rem;
+#noticeTable th {
+  background: rgb(232, 232, 232);
 }
 
-#noticeTable .noticeNo{
-    width: 50px;
-    text-align: center;
+#noticeTable td {
+  font-size: 0.9rem;
 }
 
-#noticeTable .noticeTitle{
-    width: 78%;
-    min-width: 0;
-    text-align: left;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+#noticeTable .noticeNo {
+  width: 50px;
+  text-align: center;
 }
 
-#noticeTable .noticeTitle a{
-    color:rgb(82, 42, 0);
+#noticeTable .noticeTitle {
+  width: 78%;
+  min-width: 0;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-#noticeTable .noticeDate{
-    width: 150px;
-    text-align: center;
+#noticeTable .noticeTitle a {
+  color: rgb(82, 42, 0);
+}
 
+#noticeTable .noticeDate {
+  width: 150px;
+  text-align: center;
 }
 /* 검색바 */
 
-#noticeSearchBar{
-    margin: 0 auto 5px;
-    display: flex;
-    height: 40px ;
-    width: 100%;
-    max-width: 1000px;
-    justify-content: flex-end;
+#noticeSearchBar {
+  margin: 0 auto 5px;
+  display: flex;
+  height: 40px;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: flex-end;
 }
 
-#noticeSearchBar input[type="text"]{
-    box-sizing: border-box;
-    border: 1px solid rgb(178, 178, 178);
-    border-radius: 3px;
-    width: 300px;
-    height: 40px;
+#noticeSearchBar input[type="text"] {
+  box-sizing: border-box;
+  border: 1px solid rgb(178, 178, 178);
+  border-radius: 3px;
+  width: 300px;
+  height: 40px;
 }
 
-#noticeSearchBar input[type="text"]:focus-visible{
-    outline: 2px solid rgb(187, 205, 110);
+#noticeSearchBar input[type="text"]:focus-visible {
+  outline: 2px solid rgb(187, 205, 110);
 }
 
-#noticeSearchBar button.askRegButton{
-    color: rgb(187, 205, 110);
-    border-color: rgb(187, 205, 110);
-    font-weight: 600;
+#noticeSearchBar button.askRegButton {
+  color: rgb(187, 205, 110);
+  border-color: rgb(187, 205, 110);
+  font-weight: 600;
 }
 
-#noticeSearchBar button.askRegButton:hover{
+#noticeSearchBar button.askRegButton:hover {
   background: rgb(187, 205, 110);
   color: white;
 }
 
 /* 페이지네이션 */
-#noticePagination{
-    margin: 50px auto;
-    display: flex;
-    justify-content: center;
+#noticePagination {
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
 }
 
-#noticePagination .Mui-selected{
-   background:  rgb(187, 205, 110);
-   color: white;
+#noticePagination .Mui-selected {
+  background: rgb(187, 205, 110);
+  color: white;
 }
 
-.noticePagination button{
-    background-color: rgb(229, 229, 229);
+.noticePagination button {
+  background-color: rgb(229, 229, 229);
 }
 
 /* RegNotice */
-#noticeRegContainer{
-    margin:0 auto;
-    max-width: 1000px;
+#noticeRegContainer {
+  margin: 0 auto;
+  max-width: 1000px;
 }
 
-#noticeRegContainer .ql-editor{
-    min-height: 400px;
+#noticeRegContainer .ql-editor {
+  min-height: 400px;
 }

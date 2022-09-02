@@ -8,7 +8,7 @@ import FindUser from "./pages/FindUser";
 import CertMain from "./pages/CertMain";
 import SkillsMain from "./pages/SkillsMain";
 import JobCafe from "./pages/JobCafe";
-import Hrd from "./pages/Hrd";
+import FindCourse from "./pages/FindCourse";
 import CommunityMain from "./pages/CommunityMain";
 import Study from "./pages/Study";
 import Ask from "./pages/Ask";
@@ -37,14 +37,14 @@ function App() {
 
         <Route path="/skills" element={<SkillsMain />}></Route>
         <Route path="/skills/jobcafe/*" element={<JobCafe />}></Route>
-        <Route path="/skills/hrd/*" element={<Hrd />}></Route>
+        <Route path="/skills/findcourse/*" element={<FindCourse />}></Route>
 
         <Route path="/community" element={<CommunityMain />}></Route>
         <Route path="/community/study/*" element={<Study />}></Route>
         <Route path="/community/ask/*" element={<Ask />}></Route>
         <Route path="/community/share/*" element={<Share />}></Route>
 
-        <Route path="/cs" element={<NoticeMain />}></Route>
+        <Route path="/cs/*" element={<NoticeMain />}></Route>
         <Route path="/cs/faq" element={<FAQ />}></Route>
         <Route path="/cs/lost/*" element={<Lost />}></Route>
 

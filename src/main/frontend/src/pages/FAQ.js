@@ -13,7 +13,7 @@ import FaqAccordion from "../components/faq/FaqAccordion";
 const FAQ = () => {
   const theme = createTheme({
     typography: {
-      fontFamily: ["Hahmlet"],
+      fontFamily: ["Pretendard-Regular"],
     },
   });
 

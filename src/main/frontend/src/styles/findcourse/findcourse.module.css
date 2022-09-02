@@ -1,0 +1,54 @@
+.courseContainer {
+  width: 100%;
+  height: 800px;
+  background-color: beige;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.courseSearchBar {
+  width: 650px;
+  position: relative;
+}
+
+.courseinput {
+  border-radius: 30px;
+  padding: 0 15px;
+  border: 3px solid lightgray;
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.popCourse {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skillsBtns {
+  font-size: 13px;
+  border-radius: 30px;
+  background-color: lightgray;
+  margin: 5px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.skillsBtns > a {
+  font-size: 16px;
+  padding: 2px 13px;
+  color: black;
+}
+
+.selectWrapper {
+  width: 100%;
+  height: 600px;
+  background-color: bisque;
+}

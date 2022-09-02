@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { styled } from "@mui/material/styles";
+import { styled, ThemeProvider } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -43,9 +43,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function FaqAccordion() {
+export default function FaqAccordion({ test }) {
   const [expanded, setExpanded] = useState("");
-
   const headerRef = useRef([]);
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -75,6 +74,7 @@ export default function FaqAccordion() {
             비방/비하, 명예훼손 등을 당했어요.
           </Typography>
         </AccordionSummary>
+
         <AccordionDetails>
           <div className={styles.faqContent}>
             <p>신고센터를 통해 명예훼손 등의 신고를 진행할 수 있습니다.</p>
@@ -94,6 +94,7 @@ export default function FaqAccordion() {
           </div>
         </AccordionDetails>
       </Accordion>
+
       <Accordion
         expanded={expanded === "panel2"}
         onChange={handleChange("panel2")}

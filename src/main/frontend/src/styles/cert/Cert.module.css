@@ -5,16 +5,52 @@
 }
 
 .certinput {
-    width: 450px;
-    height: 40px;
-    margin-left: 30%;
-    margin-top: 60px;  
+    border-radius: 30px;
+    padding: 0 15px ;
+    border: 3px solid lightgray;
+     width: 100%;
+    height: 60px;
+    margin-top: 60px;
+    box-sizing: border-box;
 }
-.smallcert {
-    margin-left: 230px;
-    font-size: 40px;
-    margin-top: -99px;
+
+.smallcert1 {
+    height: 30px;
+    padding: 0 20px;
+    border-radius: 30px;
+    background: #eee;
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: -.5px;
+    text-decoration: none;
+    border: 1px solid lightgray;
+    
 }
+ .smallcert2 {
+    height: 30px;
+    padding: 0 20px;
+    border-radius: 30px;
+    background: #eee;
+    font-size: 14px;
+    line-height: 30px;
+    letter-spacing: -.5px;
+    text-decoration: none;
+    border: 1px solid lightgray;
+    
+}
+
+.certSearchBar {
+    width: 650px;
+    position: relative;
+}
+
+
+
+
+
+
+
+
 
 
 

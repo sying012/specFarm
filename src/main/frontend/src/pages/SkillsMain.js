@@ -1,7 +1,16 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import styles from "../styles/skills/SkillsMain.module.css";
 
-const SeminarMain = () => {
-  return <div></div>;
-};
+function SkillsMain() {
+  return (
+    <div>
+      <div className={styles.mainContainer}>
+        <Link to="/skills/jobcafe">일자리 카페 바로가기</Link>
+        <br />
+        <Link to="/skills/findcourse">직업훈련탐색 바로가기</Link>
+      </div>
+    </div>
+  );
+}
 
-export default SeminarMain;
+export default SkillsMain;

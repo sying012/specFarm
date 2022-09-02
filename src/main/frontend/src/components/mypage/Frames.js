@@ -10,8 +10,9 @@ import { useState } from "react";
 import AskListItem from "../ask/AskListItem";
 
 import styles from "../../styles/mypage/Frames.module.css";
+import { NavLink } from "react-router-dom";
 
-function Frames({ certs, asks, shares }) {
+function Frames({ certs, asks, shares, user }) {
   function deleteHandler() {
     // DB에서 날리기
   }
@@ -36,11 +37,11 @@ function Frames({ certs, asks, shares }) {
             <h5>회원정보</h5>
             <div className={styles.userContent}>
               <Person color="action" inheritViewBox />
-              <p className={styles.userDetail}>조유미</p>
+              <p className={styles.userDetail}>{user.userName}</p>
             </div>
             <div className={styles.userContent}>
               <PhoneIphone color="action" inheritViewBox />
-              <p className={styles.userDetail}>010-2***-1***</p>
+              <p className={styles.userDetail}>{user.userTel}</p>
             </div>
           </div>
           <div className={styles.earned}>
@@ -102,7 +103,12 @@ function Frames({ certs, asks, shares }) {
           {isVisible && (
             <div className={styles.askList}>
               {asks.map(
-                (ask) => ask.id === 1 && <AskListItem key={ask.id} ask={ask} />
+                (ask) =>
+                  ask.id === 1 && (
+                    <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
+                      <AskListItem key={ask.id} ask={ask} />
+                    </NavLink>
+                  )
               )}
             </div>
           )}
@@ -112,22 +118,26 @@ function Frames({ certs, asks, shares }) {
               {shares.map(
                 (share) =>
                   share.id === 1 && (
-                    <div className={styles.shareList} key={share.id}>
-                      <img
-                        src={share.shareFilePath}
-                        alt="나눔이미지 파일"
-                        className={styles.shareFile}
-                      />
-                      <div>
-                        <div className={styles.shareListHeader}>
-                          <h1 className={styles.writtenTitle}>
-                            {share.shareTitle}
-                          </h1>
-                          <p>{share.shareRegDate}</p>
+                    <NavLink key={share.id} to={`/community/share/${share.id}`}>
+                      <div className={styles.shareList} key={share.id}>
+                        <img
+                          src={share.itemImg}
+                          alt="나눔이미지 파일"
+                          className={styles.shareFile}
+                        />
+                        <div className={styles.shareContainer}>
+                          <div className={styles.shareListHeader}>
+                            <h1 className={styles.writtenTitle}>
+                              {share.shareTitle}
+                            </h1>
+                            <p className={styles.shareRegDate}>
+                              {share.regDate}
+                            </p>
+                          </div>
+                          <p className={styles.shareContent}>{share.content}</p>
                         </div>
-                        <p>{share.shareContent}</p>
                       </div>
-                    </div>
+                    </NavLink>
                   )
               )}
             </div>

@@ -1,7 +1,6 @@
 .courseContainer {
   width: 100%;
-  height: 800px;
-  background-color: beige;
+  height: fit-content;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -24,11 +23,12 @@
 .popCourse {
   width: 100%;
   height: 50px;
-  margin-top: 10px;
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
 .skillsBtns {
@@ -47,8 +47,22 @@
   color: black;
 }
 
-.selectWrapper {
+.selectContainer {
   width: 100%;
-  height: 600px;
-  background-color: bisque;
+  height: fit-content;
+  /* background-color: aquamarine; */
+  display: flex;
+}
+
+.selectWrapper {
+  width: 25%;
+  height: fit-content;
+  margin-right: 50px;
+  /* background-color: bisque; */
+}
+
+.selectBox {
+  width: 70%;
+  height: fit-content;
+  /* background-color: cadetblue; */
 }

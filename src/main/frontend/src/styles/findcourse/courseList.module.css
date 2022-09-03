@@ -1,0 +1,10 @@
+.courseList {
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 40px;
+  display: grid;
+  place-items: center;
+  gap: 20px 0px;
+  margin: 2.5% 0px 20px 0px;
+  grid-template-columns: 1fr 1fr 1fr;
+}

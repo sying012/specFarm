@@ -2,6 +2,8 @@ import React from "react";
 import styles from "../../styles/findcourse/findcourse.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CourseSelector from "../../components/findCourse/CourseSelector";
+import CourseList from "./CourseList";
+import { Pagination, Stack } from "@mui/material";
 
 const CourseContainer = () => {
   return (
@@ -40,6 +42,20 @@ const CourseContainer = () => {
       <div className={styles.selectContainer}>
         <div className={styles.selectWrapper}>
           <CourseSelector></CourseSelector>
+        </div>
+        <div className={styles.selectBox}>
+          <CourseList></CourseList>
+          <div className="pageBtnContainer">
+            <Stack spacing={2}>
+              <Pagination
+                count={30}
+                variant="outlined"
+                shape="rounded"
+                siblingCount={3}
+                boundaryCount={1}
+              />
+            </Stack>
+          </div>
         </div>
       </div>
     </div>

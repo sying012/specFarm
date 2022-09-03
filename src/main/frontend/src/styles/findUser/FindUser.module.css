@@ -27,7 +27,7 @@
 }
 
 .title {
-  color: rgb(107, 83, 67);
+  color: #0d0d0d;
   font-size: 22px;
   font-weight: bold;
   padding: 0 70px;
@@ -82,4 +82,13 @@
   .title {
     padding: 0 40px;
   }
+}
+
+/* navLink to login */
+.goLogin {
+  color: black;
+}
+
+.goLogin:hover {
+  text-decoration: underline;
 }

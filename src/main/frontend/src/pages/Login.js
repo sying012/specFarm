@@ -1,7 +1,6 @@
 import { Button, createTheme, Grid, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "../images/logo_green1.png";
 import styles from "../styles/login/Login.module.css";
 
 const theme = createTheme({
@@ -10,11 +9,7 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "#8cbf75",
-      contrastText: "#fff",
-    },
-    brown: {
-      main: "rgb(107, 83, 67)",
+      main: "#1d5902",
       contrastText: "#fff",
     },
   },
@@ -27,6 +22,7 @@ const Login = () => {
   // Id Check
   const idCheck = useCallback((e) => {
     const userId = e.target.value;
+    console.log(userId === null);
 
     if (userId === null || userId === "") {
       setIdError(true);
@@ -44,6 +40,10 @@ const Login = () => {
     // });
   }, []);
 
+  const idErrorReset = useCallback((e) => {
+    setIdError(false);
+  });
+
   // Password Validation Check
   const pwCheck = useCallback((e) => {
     const userPw = e.target.value;
@@ -54,6 +54,10 @@ const Login = () => {
       setPwError(false);
     }
   }, []);
+
+  const pwErrorReset = useCallback((e) => {
+    setPwError(false);
+  });
 
   // login submit
   const loginSubmit = (e) => {
@@ -93,6 +97,7 @@ const Login = () => {
                 fullWidth
                 onBlur={idCheck}
                 error={idError}
+                onFocus={idErrorReset}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +110,7 @@ const Login = () => {
                 fullWidth
                 onBlur={pwCheck}
                 error={pwError}
+                onFocus={pwErrorReset}
               />
             </Grid>
             <Grid item xs={12}>

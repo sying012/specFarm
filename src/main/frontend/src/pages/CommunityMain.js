@@ -5,7 +5,6 @@ import ShareList from "../components/share/ShareList";
 import StudyContainer from "../components/study/StudyContainer";
 import StudyContainerList from "../components/study/StudyContainerList";
 import "../styles/community/CommunityMain.css";
-import { useBeforeRender } from "../utils";
 
 const CommunityMain = () => {
   const [studyList, setStudyList] = useState([
@@ -102,10 +101,6 @@ const CommunityMain = () => {
       shareState: 1,
     },
   ]);
-
-  useBeforeRender(() => {
-    window.scrollTo({ top: 0 });
-  }, []);
 
   return (
     <div>

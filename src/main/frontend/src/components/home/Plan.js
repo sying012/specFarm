@@ -5,7 +5,6 @@ import {
   MobileStepper,
   Tab,
   Tabs,
-  Typography,
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -14,18 +13,10 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 // mui theme
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
+const buttonTheme = createTheme({
   palette: {
     green: {
       main: "#8cbf75",
-      contrastText: "#fff",
-    },
-    brown: {
-      main: "rgb(107, 83, 67)",
-      contrastText: "#fff",
     },
   },
 });
@@ -52,19 +43,28 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ pr: 3, pt: 3, pl: 3, pb: 2 }}>
           <div>{children}</div>
           <MobileStepper
             variant="dots"
             steps={6}
             position="static"
             activeStep={activeStep}
-            sx={{ maxWidth: 500, flexGrow: 1, background: "none" }}
+            sx={{
+              maxWidth: 500,
+              flexGrow: 1,
+              background: "none",
+              "& .MuiMobileStepper-dotActive": {
+                backgroundColor: "#8cbf75",
+              },
+            }}
             nextButton={
               <Button
                 size="small"
                 onClick={handleNext}
                 disabled={activeStep === 5}
+                theme={buttonTheme}
+                color="green"
               >
                 Next
                 {theme.direction === "rtl" ? (
@@ -79,11 +79,13 @@ function TabPanel(props) {
                 size="small"
                 onClick={handleBack}
                 disabled={activeStep === 0}
+                theme={buttonTheme}
+                color="green"
               >
                 {theme.direction === "rtl" ? (
-                  <KeyboardArrowRight />
+                  <KeyboardArrowRight theme={theme} color="green" />
                 ) : (
-                  <KeyboardArrowLeft />
+                  <KeyboardArrowLeft theme={theme} color="green" />
                 )}
                 Back
               </Button>
@@ -94,26 +96,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
-// function TabPanel(props) {
-//   const { children, value, index, ...other } = props;
-
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && (
-//         <Box sx={{ p: 3 }}>
-//           <div>{children}</div>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// }
 
 function a11yProps(index) {
   return {
@@ -140,22 +122,40 @@ const Plan = ({ acceptances, tests }) => {
               onChange={handleChange}
               textColor="inherit"
               TabIndicatorProps={{
-                style: { background: "rgb(140, 191, 117)" },
+                style: {
+                  background: "rgb(140, 191, 117)",
+                },
               }}
               aria-label="cert plan"
               variant="fullWidth"
               sx={{
-                "& button": { background: "rgba(140, 191, 117, 0.5)" },
+                "& button": {
+                  background: "rgba(140, 191, 117, 0.5)",
+                },
               }}
             >
-              <Tab label="접수 일정" />
-              <Tab label="시험 일정" />
+              <Tab
+                label="접수 일정"
+                sx={{
+                  borderTopLeftRadius: "15px",
+                }}
+              />
+              <Tab
+                label="시험 일정"
+                sx={{
+                  borderTopRightRadius: "15px",
+                }}
+              />
             </Tabs>
           </Box>
           <TabPanel
             value={value}
             index={0}
-            style={{ background: "rgba(255, 255, 255, 0.05)" }}
+            style={{
+              background: "rgba(255, 255, 255, 0.05)",
+              borderBottomLeftRadius: "15px",
+              borderBottomRightRadius: "15px",
+            }}
           >
             {acceptances.map((accept) => (
               <p key={accept.id} className={styles.certPlanP}>
@@ -168,7 +168,11 @@ const Plan = ({ acceptances, tests }) => {
           <TabPanel
             value={value}
             index={1}
-            style={{ background: "rgba(255, 255, 255, 0.05)" }}
+            style={{
+              background: "rgba(255, 255, 255, 0.05)",
+              borderBottomLeftRadius: "15px",
+              borderBottomRightRadius: "15px",
+            }}
           >
             {tests.map((test) => (
               <p key={test.id} className={styles.certPlanP}>

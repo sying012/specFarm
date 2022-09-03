@@ -1,6 +1,7 @@
 import { createTheme, Grid, TextField, Button, Link } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import styles from "../../styles/findUser/findUser.module.css";
+import { NavLink } from "react-router-dom";
+import styles from "../../styles/findUser/FindUser.module.css";
 
 const theme = createTheme({
   status: {
@@ -8,11 +9,11 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "rgb(159, 182, 72)",
+      main: "#1d5902",
       contrastText: "#fff",
     },
-    brown: {
-      main: "rgb(107, 83, 67)",
+    lightgreen: {
+      main: "#8cbf75",
       contrastText: "#fff",
     },
   },
@@ -46,6 +47,12 @@ const FindId = () => {
       setNameErrorText("");
     }
   }, []);
+
+  const nameErrorReset = useCallback((e) => {
+    setNameError(false);
+    setNameErrorText("");
+  });
+
   // Phone number authentication
   const telAuth = useCallback((e) => {
     const userTel = document.getElementById("findId_userTel").value;
@@ -66,8 +73,16 @@ const FindId = () => {
       setTelError(false);
       setTelErrorText("");
       setTelAuthNumberDisabled(false);
+
+      setTelAuthNumberError(false);
+      setTelAuthNumberErrorText("");
     }
   }, []);
+
+  const telErrorReset = useCallback((e) => {
+    setTelError(false);
+    setTelErrorText("");
+  });
 
   // Phone number authentication Number Check
   const telAuthNumberCheck = useCallback((e) => {
@@ -82,6 +97,11 @@ const FindId = () => {
     }
     // 인증번호 비교 후 인증 성공 실패 관련
   }, []);
+
+  const telAuthNumberErrorReset = useCallback((e) => {
+    setTelAuthNumberError(false);
+    setTelAuthNumberErrorText("");
+  });
 
   // find id identify check
   const findIdIdentifyCheck = false;
@@ -136,6 +156,7 @@ const FindId = () => {
             onBlur={nameCheck}
             error={nameError}
             helperText={nameErrorText}
+            onFocus={nameErrorReset}
           />
         </Grid>
         <Grid item xs={9}>
@@ -147,13 +168,14 @@ const FindId = () => {
             fullWidth
             error={telError}
             helperText={telErrorText}
+            onFocus={telErrorReset}
           />
         </Grid>
         <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
           <Button
             variant="contained"
             theme={theme}
-            color="brown"
+            color="lightgreen"
             style={{
               fontSize: "14px",
               lineHeight: "18px",
@@ -172,6 +194,7 @@ const FindId = () => {
             label="인증번호"
             fullWidth
             onBlur={telAuthNumberCheck}
+            onFocus={telAuthNumberErrorReset}
             error={telAuthNumberError}
             helperText={telAuthNumberErrorText}
             disabled={telAuthNumberDisabled}
@@ -208,9 +231,9 @@ const FindId = () => {
         '{userName}'님의 아이디는 {findId}입니다.
       </p>
       <br />
-      <Link color="inherit" underline="hover" href="/login">
+      <NavLink to="/login" className={styles.goLogin}>
         &nbsp;&nbsp;로그인하러 가기 ▶
-      </Link>
+      </NavLink>
     </div>
   );
 

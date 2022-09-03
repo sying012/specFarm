@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   createTheme,
   FormControl,
   Link,
@@ -6,6 +7,7 @@ import {
   Pagination,
   Select,
   Stack,
+  styled,
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -19,7 +21,7 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "rgb(159, 182, 72)",
+      main: "#8cbf75",
       contrastText: "#fff",
     },
     brown: {
@@ -42,9 +44,9 @@ const theme = createTheme({
   },
 });
 
-const LostList = ({ searchTypeItem, losts }) => {
+const LostList = ({ searchTypeItem, losts, brchNames }) => {
   const [searchType, setSearchType] = useState("전체");
-
+  console.log(searchType);
   // search type select
   const handleChange = (e) => {
     setSearchType(e.target.value);
@@ -56,6 +58,55 @@ const LostList = ({ searchTypeItem, losts }) => {
     navigate(`./${id}`);
   };
 
+  let searchBar =
+    searchType !== "지사" ? (
+      <TextField
+        id="outlined-search"
+        type="search"
+        InputProps={{
+          startAdornment: <SearchIcon color="action" />,
+        }}
+        size="small"
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            "&.Mui-focused fieldset": {
+              borderColor: "#8cbf75",
+            },
+          },
+        }}
+        style={{ width: "250px" }}
+      ></TextField>
+    ) : (
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={brchNames.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              type: "search",
+              startAdornment: <SearchIcon color="action" />,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+                "&.MuiInputBase-sizeSmall": {
+                  paddingLeft: "14px",
+                },
+              },
+            }}
+            size="small"
+            style={{ width: "250px" }}
+          />
+        )}
+      />
+    );
+
   return (
     <div>
       <div className={styles.search}>
@@ -65,23 +116,35 @@ const LostList = ({ searchTypeItem, losts }) => {
             id="searchTypeSelect"
             value={searchType}
             onChange={handleChange}
+            sx={{
+              "&.MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+              },
+            }}
           >
             {searchTypeItem.map((item) => (
-              <MenuItem key={item.id} value={item.name} theme={theme}>
+              <MenuItem
+                key={item.id}
+                value={item.name}
+                sx={{
+                  "&.MuiMenuItem-root": {
+                    "&.Mui-selected": {
+                      backgroundColor: "rgba(140, 191, 117, 0.2)",
+                    },
+                    "&.Mui-selected:hover": {
+                      backgroundColor: "rgba(140, 191, 117, 0.3)",
+                    },
+                  },
+                }}
+              >
                 {item.name}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <TextField
-          id="outlined-search"
-          type="search"
-          InputProps={{
-            startAdornment: <SearchIcon color="action" />,
-            styles: { fontFamily: "Hahmlet" },
-          }}
-          size="small"
-        ></TextField>
+        {searchBar}
       </div>
       <table className={styles.table}>
         <thead>

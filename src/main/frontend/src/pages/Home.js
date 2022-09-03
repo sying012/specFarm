@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../layouts/Footer";
 import HomeNav from "../components/home/HomeNav";
 import Main from "../components/home/Main";
@@ -10,10 +10,17 @@ import NoticeMain from "./NoticeMain";
 import { useNavigate } from "react-router";
 
 const Home = () => {
-  const navigate = useNavigate("/");
+  const navigate = useNavigate();
   const [page, setPage] = useState("/cert");
   const [pageComponent, setPageComponent] = useState(<CertMain />);
 
+  useEffect(() => {
+    return () => {
+      for (let i = 0; i < scrollInterval; i++) {
+        clearInterval(i);
+      }
+    };
+  }, []);
   // Application acceptance schedule
   const [acceptances, setAcceptance] = useState([
     {
@@ -66,25 +73,24 @@ const Home = () => {
   // wheel event
   const wheelEvent = (e) => {
     if (e.deltaY >= 0) {
-      let position = window.scrollY;
-      let i = 0.15;
-
-      scrollInterval = setInterval(() => {
-        position += 5;
-        window.scroll({
-          top: position,
-        });
-
-        // i += 0.005;
-        // document.getElementsByClassName(
-        //   "layout"
-        // )[0].style.background = `rgba(255, 255, 255, ${i})`;
-      }, 1);
+      fnScrollInterval();
     }
+  };
+
+  const fnScrollInterval = () => {
+    let position = window.scrollY;
+
+    scrollInterval = setInterval(() => {
+      position += 5;
+      window.scroll({
+        top: position,
+      });
+    }, 1);
   };
 
   // home nav click event
   const goClickPage = (click) => {
+    console.log(click.target.id);
     switch (click.target.id) {
       case "1":
         setPage("/cert");
@@ -97,6 +103,7 @@ const Home = () => {
       case "3":
         setPage("/community");
         setPageComponent(<CommunityMain />);
+        console.log("dkdkd");
         break;
       case "4":
         setPage("/cs");
@@ -106,20 +113,13 @@ const Home = () => {
         break;
     }
 
+    //fnScrollInterval();
     window.scrollTo({ top: window.innerHeight - 70, behavior: "smooth" });
-    // let p = window.scrollY;
-
-    // scrollInterval = setInterval(() => {
-    //   p += 5;
-    //   window.scroll({
-    //     top: p,
-    //   });
-    // }, 8);
   };
 
   // scroll event
   window.onscroll = () => {
-    if (window.scrollY >= window.innerHeight - 70) {
+    if (window.scrollY >= window.innerHeight - 71) {
       clearInterval(scrollInterval);
       navigate(page);
       window.onscroll = () => {};

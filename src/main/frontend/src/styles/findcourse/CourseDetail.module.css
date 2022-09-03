@@ -1,0 +1,114 @@
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailHeader {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.courseOrgName {
+  font-size: 15px;
+}
+
+.courseName {
+  font-size: 32px;
+  margin-top: 25px;
+  line-height: 1.38;
+}
+
+.detailHr {
+  border: dotted black 6px;
+  border-bottom: none;
+  width: 20%;
+  margin: 70px auto 60px;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  margin: 60px auto;
+  width: 700px;
+}
+
+.contentRow {
+  display: flex;
+  margin: 7px 0;
+  align-items: center;
+}
+
+.contentRow > h4 {
+  width: 200px;
+  font-size: 18px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.applyCard {
+  width: 700px;
+  height: 230px;
+  border-radius: 12px;
+  background-color: rgb(243, 243, 243);
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.applyCard > h1 {
+  font-size: 22px;
+}
+
+.applyCardBtn {
+  padding: 12px 22px;
+  border-radius: 24px;
+  background-color: black;
+  color: white;
+  font-weight: 700;
+  margin-top: 26px;
+  font-size: 14px;
+}
+
+.detailListBtn {
+  width: 100px;
+  padding: 15px 20px;
+  border-radius: 24px;
+  background-color: rgb(230, 230, 230);
+  font-weight: 700;
+  margin: 26px auto 50px;
+  font-size: 18px;
+  text-align: center;
+  color: black;
+}
+
+.courseDetails {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  min-width: 1000px;
+  margin: 0 auto 60px;
+}
+
+.courseDetailCard {
+  width: 40%;
+  margin: 2%;
+  padding: 20px;
+  border-radius: 14px;
+  background-color: white;
+  box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+  line-height: 1.7;
+}
+
+.courseDetailCard > h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.courseDetailCard > p {
+  margin-left: 15px;
+  white-space: pre-line;
+}

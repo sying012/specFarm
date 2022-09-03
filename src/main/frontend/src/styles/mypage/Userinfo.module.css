@@ -5,6 +5,11 @@
   padding: 0 10px;
 }
 
+.smallTitle {
+  color: #1d5902;
+  font-size: 1.3em;
+}
+
 .editInfo {
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 
-const Basicsinfo = () => {
+const BasicsInfo = () => {
   return (
     <div>
       <ui>
@@ -31,4 +31,4 @@ const Basicsinfo = () => {
   );
 };
 
-export default Basicsinfo;
+export default BasicsInfo;

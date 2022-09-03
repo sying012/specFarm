@@ -1,32 +1,33 @@
   .certContainer {
     width: 300px;
-    height: 90vh;
-    box-shadow: 15px 10px 15px 2px rgb(190, 190, 190);
-   
+    min-height: calc(100vh - 130px);
+    box-shadow: 5px 6px 22px lightgray;
   } 
   .certfindinput {
-    width: 230px;
+    width: 200px;
     height: 40px;
     margin-left: 8%;
     margin-top: 60px;  
     border: 3px solid lightgray;
     border-radius: 20px;
-  }
-  .smallfindcert {
     font-size: 14px;
-    margin-top: 20px;
-    height: 25px;
-    padding: 0 40px;
+  }
+  .smallFindCert {
+    font-size: 14px;
+    margin: 5px;
+    height: 30px;
     border-radius: 30px;
     background: #eee;
-    font-size: 14px;
-    line-height: 25px;
-    letter-spacing: -.5px;
-    border: 3px solid lightgray;
+    line-height: 20px;
+    
+    border: 1px solid lightgray;
+    cursor: pointer;
+    
+    
     
   }
   .certFind {
-  width: 800px;
+  width: 850px;
   height: 500px;
   color: black;
   
@@ -40,17 +41,18 @@
   .certFindInfo {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 200px;
   }
 
   .infoHead {
   text-align: center; 
   width: 90px;
+  font-size: 14px;
   }
 
   .infoBody {
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
+    width: 50px;
   }
 
   .infoTable {
@@ -88,6 +90,7 @@
   .appInfoCon {
    padding-top: 10px;
    list-style: none;
+   color: lightgray
   }
 
   .testInfo {
@@ -98,4 +101,5 @@
     padding: 0 15px;
   }
 
+  
   

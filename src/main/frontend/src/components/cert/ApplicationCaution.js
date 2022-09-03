@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 
-const Applicationcaution = () => {
+const ApplicationCaution = () => {
   return (
     <div>
       <ui>
@@ -31,4 +31,4 @@ const Applicationcaution = () => {
   );
 };
 
-export default Applicationcaution;
+export default ApplicationCaution;

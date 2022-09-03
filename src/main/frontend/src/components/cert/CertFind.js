@@ -9,10 +9,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Applicationcaution from "./Applicationcaution";
-import Applicationinfo from "./Applicationinfo";
-import Basicsinfo from "./Basicsinfo";
-import Testchedule from "./Testschedule";
+import ApplicationCaution from "./ApplicationCaution";
+import ApplicationInfo from "./ApplicationInfo";
+import BasicsInfo from "./BasicsInfo";
+import TestSchedule from "./TestSchedule";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
@@ -77,11 +77,17 @@ const CertFind = () => {
         <div className={styles.certContainer}>
           <div className={styles.certFindSearchBar}>
             <input className={styles.certfindinput} placeholder="검색"></input>
-            <SearchIcon fontSize="large" color="action" />
+            <SearchIcon
+              fontSize="large"
+              color="action"
+              style={{ position: "absolute", top: "305px", right: "1120px" }}
+            />
           </div>
-          <Grid xs={6} style={{ padding: "20px 20px" }}>
-            <FormControl sx={{ minWidth: 150 }} style={{ fontSize: "14px" }}>
-              <InputLabel id="certLCat">대분류</InputLabel>
+          <Grid xs={6} style={{ width: "150px", padding: "20px 40px" }}>
+            <FormControl sx={{ minWidth: 200 }} style={{ fontSize: "10px" }}>
+              <InputLabel id="certLCat" style={{ fontSize: "14px" }}>
+                대분류
+              </InputLabel>
               <Select
                 labelId="certLCat"
                 id="certLCatSelect"
@@ -89,6 +95,7 @@ const CertFind = () => {
                 label="대분류"
                 onChange={certLCatChange}
                 name="certLCat"
+                style={{ borderRadius: "15px" }}
               >
                 {certLCat.map((certL) => (
                   <MenuItem key={certL.id} value={certL.name}>
@@ -98,9 +105,11 @@ const CertFind = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid xs={6} style={{ padding: "10px 90px" }}>
-            <FormControl sx={{ minWidth: 120 }} style={{ fontSize: "14px" }}>
-              <InputLabel id="certMCat">중분류</InputLabel>
+          <Grid xs={6} style={{ width: "150px", padding: "10px 40px" }}>
+            <FormControl sx={{ minWidth: 200 }}>
+              <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
+                중분류
+              </InputLabel>
               <Select
                 labelId="certMCat"
                 id="certMCatSelect"
@@ -108,6 +117,7 @@ const CertFind = () => {
                 label="중분류"
                 onChange={certMCatChange}
                 name="certMCat"
+                style={{ borderRadius: "15px" }}
               >
                 {certMCat.map((certM) => (
                   <MenuItem key={certM.id} value={certM.name}>
@@ -117,26 +127,38 @@ const CertFind = () => {
               </Select>
             </FormControl>
           </Grid>
-          {/* <div> */}
-          <button type="button" className={styles.smallFindCert}>
-            거푸집기능사
-          </button>
-          <button type="button" className={styles.smallFindCert}>
-            건축구조기술사
-          </button>
-          <button type="button" className={styles.smallFindCert}>
-            건축기사
-          </button>
-          <button type="button" className={styles.smallFindCert}>
-            건축기사
-          </button>
-          <button type="button" className={styles.smallFindCert}>
-            건축기사
-          </button>
-          <button type="button" className={styles.smallFindCert}>
-            건축기사
-          </button>
-          {/* </div> */}
+          <div style={{ margin: "20px" }}>
+            <button type="button" className={styles.smallFindCert}>
+              거푸집기능사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축구조기술사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallFindCert}>
+              길게하면 어디까지 나올까 정말 궁금
+            </button>
+          </div>
         </div>
         <div className={styles.certFind}>
           <div className={styles.certFindTitle}>
@@ -174,28 +196,28 @@ const CertFind = () => {
               index={0}
               style={{ background: "rgba(255, 255, 255, 0.05)" }}
             >
-              <Testchedule></Testchedule>
+              <TestSchedule />
             </TabPanel>
             <TabPanel
               value={value}
               index={1}
               style={{ background: "rgba(255, 255, 255, 0.05)" }}
             >
-              <Applicationinfo />
+              <ApplicationInfo />
             </TabPanel>
             <TabPanel
               value={value}
               index={2}
               style={{ background: "rgba(255, 255, 255, 0.05)" }}
             >
-              <Applicationcaution />
+              <ApplicationCaution />
             </TabPanel>
             <TabPanel
               value={value}
               index={3}
               style={{ background: "rgba(255, 255, 255, 0.05)" }}
             >
-              <Basicsinfo />
+              <BasicsInfo />
             </TabPanel>
           </Box>
         </div>

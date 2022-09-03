@@ -31,9 +31,9 @@ const TestSchedule = () => {
   return (
     <div>
       <table className={styles.infoTable}>
-        <thead>
+        <thead className={styles.infoHead}>
           <tr>
-            <th className={styles.infoHead}>회차</th>
+            <th>회차</th>
             <th>필기원서 접수</th>
             <th>필기시험</th>
             <th>필기합격 발표</th>
@@ -42,9 +42,9 @@ const TestSchedule = () => {
             <th>합격자발표</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.infoBody}>
           {testSc.map((sc, index) => (
-            <tr key={sc.id} className={styles.infoBody}>
+            <tr key={sc.id}>
               <td key={sc.test1 + sc.id}>{sc.test1}</td>
               <td key={sc.test2 + sc.id}>{sc.test2}</td>
               <td key={sc.test3 + sc.id}>{sc.test3}</td>
@@ -52,7 +52,6 @@ const TestSchedule = () => {
               <td key={sc.test5 + sc.id}>{sc.test5}</td>
               <td key={sc.test6 + sc.id}>{sc.test6}</td>
               <td key={sc.test7 + sc.id}>{sc.test7}</td>
-              <td key={sc.test8 + sc.id}></td>
             </tr>
           ))}
         </tbody>

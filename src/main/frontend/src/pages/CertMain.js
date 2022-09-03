@@ -49,7 +49,7 @@ const CertMain = () => {
         style={{
           justifyContent: "space-around",
           margin: "30px auto",
-          width: "650px",
+          width: "420px",
         }}
       >
         <Grid xs={3} style={{ width: "200px", padding: "0" }}>
@@ -62,6 +62,7 @@ const CertMain = () => {
               label="대분류"
               onChange={certLCatChange}
               name="certLCat"
+              style={{ borderRadius: "15px" }}
             >
               {certLCat.map((certL) => (
                 <MenuItem key={certL.id} value={certL.name}>
@@ -81,6 +82,7 @@ const CertMain = () => {
               label="중분류"
               onChange={certMCatChange}
               name="certMCat"
+              style={{ borderRadius: "15px" }}
             >
               {certMCat.map((certM) => (
                 <MenuItem key={certM.id} value={certM.name}>
@@ -91,24 +93,26 @@ const CertMain = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{}}>
         <Grid>
           <Box
             sx={{
-              width: 800,
-              height: 100,
+              width: 750,
+              height: 120,
               border: "1px solid lightgray",
-              borderRadius: "5px",
+              borderRadius: "20px",
             }}
           >
             <div>
-              <Stack
-                spacing={2}
-                direction="row"
-                style={{ justifyContent: "center", margin: "8px auto" }}
+              <div
+                style={{
+                  flex: 1,
+                  flexWrap: "wrap",
+                  padding: "10px",
+                }}
               >
                 <button
-                  className={styles.smallcert1}
+                  className={styles.smallcert}
                   type="button"
                   onClick={() => {
                     window.location = "/CertFind";
@@ -116,22 +120,31 @@ const CertMain = () => {
                 >
                   거푸집기능사
                 </button>
-                <button type="button" className={styles.smallcert2}>
+                <button type="button" className={styles.smallcert}>
                   건축구조기술사
                 </button>
-                <button type="button" className={styles.smallcert2}>
+                <button type="button" className={styles.smallcert}>
                   건축기사
                 </button>
-                <button type="button" className={styles.smallcert2}>
+                <button type="button" className={styles.smallcert}>
                   건축기사
                 </button>
-                <button type="button" className={styles.smallcert2}>
+                <button type="button" className={styles.smallcert}>
                   건축기사
                 </button>
-                <button type="button" className={styles.smallcert2}>
+                <button type="button" className={styles.smallcert}>
                   건축기사
                 </button>
-              </Stack>
+                <button type="button" className={styles.smallcert}>
+                  건축기사
+                </button>
+                <button type="button" className={styles.smallcert}>
+                  건축기사
+                </button>
+                <button type="button" className={styles.smallcert}>
+                  건축기사
+                </button>
+              </div>
             </div>
           </Box>
         </Grid>

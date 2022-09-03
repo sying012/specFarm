@@ -24,6 +24,19 @@
   flex-grow: 1;
 }
 
+/* commentList container */
 .aa {
   background-color: yellowgreen;
+}
+
+.replyBottom {
+  background-color: aqua;
+  width: 88%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.comment {
+  background-color: rgb(204, 138, 39);
 }

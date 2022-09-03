@@ -1,0 +1,90 @@
+.jobDetailContainer {
+  width: 100%;
+}
+
+.containerTop {
+  width: 100%;
+}
+
+.jobCafeName {
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.delBtn {
+  display: flex;
+  float: right;
+}
+
+.smplContent {
+  width: 100%;
+  display: flex;
+}
+
+.imgBox {
+  width: 100%;
+  height: 290px;
+}
+
+.detailImg {
+  width: 95%;
+  height: 290px;
+  border-radius: 10px;
+  box-shadow: 5px 6px 22px lightgray;
+}
+
+.smplIntro {
+  box-sizing: border-box;
+  line-height: 35px;
+  padding: 25px;
+  width: 90%;
+  height: 290px;
+  border-radius: 10px;
+  box-shadow: 5px 6px 22px lightgray;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.intro > p {
+  margin: 0 auto;
+  font-size: 1.3rem;
+}
+
+.useDate {
+  margin-top: 18px;
+}
+
+.rsrveBtn {
+  display: flex;
+  float: inline-end;
+}
+
+.cafeInfo {
+  line-height: 30px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+
+.spaceInfo {
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.spaceInfo_P {
+  font-size: 15px;
+}

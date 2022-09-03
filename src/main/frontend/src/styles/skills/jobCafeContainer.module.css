@@ -1,0 +1,7 @@
+.pageNation {
+  margin-top: 60px;
+}
+
+.pageNation > div {
+  align-items: center;
+}

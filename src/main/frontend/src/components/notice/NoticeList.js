@@ -1,38 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import searchIcon from "../../images/loupe.png";
-import { Pagination } from "@mui/material";
-import { Button } from "@mui/material";
+import { Stack, Pagination, Button, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
-const NoticeList = () => {
-  const noticeData = [
-    {
-      id: 1,
-      noticeTitle:
-        "제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목 제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목 제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목",
-      noticeContent:
-        "내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:34",
-    },
-    {
-      id: 2,
-      noticeTitle: "제목인데 그냥 제목",
-      noticeContent:
-        "내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:35",
-    },
-    {
-      id: 3,
-      noticeTitle: "제목인데 엄청나게 긴 제목이지만 ...은 없을 정도의 제목",
-      noticeContent:
-        "내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:36",
-    },
-  ];
-
+const NoticeList = ({ noticeData }) => {
   return (
     <>
-      <div id="noticeSearchBar">
+      <div id="noticeSearchBar" className="search">
         <Button
           className="askRegButton"
           variant="outlined"
@@ -41,22 +15,27 @@ const NoticeList = () => {
           글쓰기
         </Button>
         <form id="keywordSearchBar" action="">
-          <input
-            type="text"
-            name="searchKeyword"
-            style={{ fontSize: "1.1rem", paddingLeft: "10px" }}
-          />
-          <button id="search" type="submit">
-            <img src={searchIcon} alt="" style={{ width: "100%" }} />
-          </button>
+          <TextField
+            id="outlined-search"
+            type="search"
+            InputProps={{
+              startAdornment: <SearchIcon color="action" />,
+              styles: { fontFamily: "Hahmlet" },
+            }}
+            size="small"
+          ></TextField>
         </form>
       </div>
-      <table id="noticeTable">
+      <table id="noticeTable" className="table">
         <thead>
           <tr>
-            <th className="noticeNo">번호</th>
+            <th className="noticeNo" style={{ borderTopLeftRadius: "10px" }}>
+              번호
+            </th>
             <th className="noticeTitle">이장님 말씀</th>
-            <th className="noticeDate">작성일</th>
+            <th className="noticeDate" style={{ borderTopRightRadius: "10px" }}>
+              작성일
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -65,8 +44,10 @@ const NoticeList = () => {
           ))}
         </tbody>
       </table>
-      <div id="noticePagination">
-        <Pagination className="noticePagination" count={5} shape="rounded" />
+      <div className="noticePageNation">
+        <Stack spacing={2}>
+          <Pagination count={5} />
+        </Stack>
       </div>
     </>
   );
@@ -78,7 +59,7 @@ export const NoticeListItem = ({ notice }) => (
   <tr>
     <td className="noticeNo">{notice.id}</td>
     <td className="noticeTitle">
-      <Link to={"/cs/1"}>{notice.noticeTitle}</Link>
+      <Link to={`/cs/${notice.id}`}>{notice.noticeTitle}</Link>
     </td>
     <td className="noticeDate">{notice.noticeRegDate}</td>
   </tr>

@@ -52,7 +52,7 @@ const AskReg = () => {
           <img
             src={askWriteTop}
             alt=""
-            style={{ display: "block", maxWidth: "600px", width: "100%" }}
+            style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
           <div id="writeContent">
             <form action="#" id="regAskForm" method="post">
@@ -94,7 +94,7 @@ const AskReg = () => {
           <img
             src={askWriteBottom}
             alt=""
-            style={{ display: "block", maxWidth: "600px", width: "100%" }}
+            style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
         </div>
       </div>

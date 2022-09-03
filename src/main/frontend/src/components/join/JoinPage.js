@@ -23,11 +23,7 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "rgb(159, 182, 72)",
-      contrastText: "#fff",
-    },
-    brown: {
-      main: "rgb(107, 83, 67)",
+      main: "#1d5902",
       contrastText: "#fff",
     },
   },
@@ -93,6 +89,11 @@ const JoinPage = () => {
     // });
   }, []);
 
+  const idErrorReset = useCallback((e) => {
+    setIdError(false);
+    setIdErrorText("");
+  });
+
   // Password Validation Check
   const pwValidationCheck = useCallback((e) => {
     const userPw = e.target.value;
@@ -112,6 +113,11 @@ const JoinPage = () => {
     }
   }, []);
 
+  const pwValidationErrorReset = useCallback((e) => {
+    setPwValidationError(false);
+    setPwValidationErrorText("");
+  });
+
   // Password Check
   const pwCheck = useCallback((e) => {
     const userPw = document.getElementById("userPw").value;
@@ -129,6 +135,11 @@ const JoinPage = () => {
     }
   }, []);
 
+  const pwErrorReset = useCallback((e) => {
+    setPwError(false);
+    setPwErrorText("");
+  });
+
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
@@ -140,6 +151,11 @@ const JoinPage = () => {
       setNameErrorText("");
     }
   }, []);
+
+  const nameErrorReset = useCallback((e) => {
+    setNameError(false);
+    setNameErrorText("");
+  });
 
   // Phone number authentication
   const telAuth = useCallback((e) => {
@@ -160,8 +176,16 @@ const JoinPage = () => {
       setTelError(false);
       setTelErrorText("");
       setTelAuthNumberDisabled(false);
+
+      setTelAuthNumberError(false);
+      setTelAuthNumberErrorText("");
     }
   }, []);
+
+  const telErrorReset = useCallback((e) => {
+    setTelError(false);
+    setTelErrorText("");
+  });
 
   // Phone number authentication Number Check
   const telAuthNumberCheck = useCallback((e) => {
@@ -175,6 +199,11 @@ const JoinPage = () => {
     }
     // 인증번호 비교 후 인증 성공 실패 관련
   }, []);
+
+  const telAuthNumberErrorReset = useCallback((e) => {
+    setTelAuthNumberError(false);
+    setTelAuthNumberErrorText("");
+  });
 
   // Email Validation Check
   const emailCheck = useCallback((e) => {
@@ -192,6 +221,11 @@ const JoinPage = () => {
       setEmailErrorText("");
     }
   }, []);
+
+  const emailErrorReset = useCallback((e) => {
+    setEmailError(false);
+    setEmailErrorText("");
+  });
 
   // Cert Large Category
   const certLCatChange = (e) => {
@@ -297,6 +331,7 @@ const JoinPage = () => {
                 onBlur={idCheck}
                 error={idError}
                 helperText={idErrorText}
+                onFocus={idErrorReset}
               />
             </Grid>
             <Grid item xs={12}>
@@ -310,6 +345,7 @@ const JoinPage = () => {
                 onBlur={pwValidationCheck}
                 error={pwValidationError}
                 helperText={pwValidationErrorText}
+                onFocus={pwValidationErrorReset}
               />
             </Grid>
             <Grid item xs={12}>
@@ -323,6 +359,7 @@ const JoinPage = () => {
                 onBlur={pwCheck}
                 error={pwError}
                 helperText={pwErrorText}
+                onFocus={pwErrorReset}
               />
             </Grid>
             <Grid item xs={12}>
@@ -335,6 +372,7 @@ const JoinPage = () => {
                 onBlur={nameCheck}
                 error={nameError}
                 helperText={nameErrorText}
+                onFocus={nameErrorReset}
               />
             </Grid>
             <Grid item xs={9}>
@@ -346,6 +384,7 @@ const JoinPage = () => {
                 fullWidth
                 error={telError}
                 helperText={telErrorText}
+                onFocus={telErrorReset}
               />
             </Grid>
             <Grid
@@ -356,7 +395,7 @@ const JoinPage = () => {
               <Button
                 variant="contained"
                 theme={theme}
-                color="brown"
+                color="green"
                 style={{
                   fontSize: "14px",
                   lineHeight: "18px",
@@ -376,6 +415,7 @@ const JoinPage = () => {
                 label="인증번호"
                 fullWidth
                 onBlur={telAuthNumberCheck}
+                onFocus={telAuthNumberErrorReset}
                 error={telAuthNumberError}
                 helperText={telAuthNumberErrorText}
                 disabled={telAuthNumberDisabled}
@@ -396,6 +436,7 @@ const JoinPage = () => {
                 onBlur={emailCheck}
                 error={emailError}
                 helperText={emailErrorText}
+                onFocus={emailErrorReset}
               />
             </Grid>
             <Grid item xs={5.8}>

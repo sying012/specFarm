@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../images/logo_green1.png";
 import FindId from "../components/findUser/FindId";
 import PwReset from "../components/findUser/PwReset";
-import styles from "../styles/findUser/findUser.module.css";
+import styles from "../styles/findUser/FindUser.module.css";
 import { NavLink } from "react-router-dom";
 
 const FindUser = () => {

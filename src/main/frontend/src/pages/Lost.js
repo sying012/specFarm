@@ -1,9 +1,11 @@
+import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { NavLink } from "react-router-dom";
 import LostItem from "../components/lost/LostItem";
 import LostList from "../components/lost/LostList";
-import LostListTest from "../components/lost/LostListTest";
+import styles from "../styles/lost/Lost.module.css";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Lost = () => {
   const [losts, setLosts] = useState([
@@ -142,18 +144,31 @@ const Lost = () => {
     },
   ]);
 
+  const brchNames = [
+    { title: "서울지사" },
+    { title: "경기북부" },
+    { title: "대구지사" },
+  ];
+
   return (
     <div id="content">
-      <div className="titleContainer">
-        <div className="titlewrap">마을소식</div>
+      <div className={styles.titleContainer}>
+        <div className={styles.titlewrap}>마을소식</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
         <NavLink to="/cs/lost">
-          <div className="subtitlewrap">분실물 센터</div>
+          <div className={styles.subtitlewrap}>분실물 센터</div>
         </NavLink>
       </div>
       <Routes>
         <Route
           path="/"
-          element={<LostList losts={losts} searchTypeItem={searchTypeItem} />}
+          element={
+            <LostList
+              losts={losts}
+              searchTypeItem={searchTypeItem}
+              brchNames={brchNames}
+            />
+          }
         ></Route>
         <Route path="/:lostsId" element={<LostItem losts={losts} />}></Route>
       </Routes>

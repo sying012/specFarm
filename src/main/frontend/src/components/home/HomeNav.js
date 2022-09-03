@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../../styles/home/Home.module.css";
 
 const HomeNav = ({ goClickPage }) => {
@@ -28,15 +28,13 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("공지사항");
             }}
           >
-            <NavLink
-              to="/cert"
+            <a
               className={styles.catStyle}
-              style={({ isActive }) => ({
-                // borderBottom: isActive ? "2px solid black" : "",
-              })}
+              id="1"
+              onClick={(e) => goClickPage(e)}
             >
               자격증 찾기
-            </NavLink>
+            </a>
           </div>
 
           {/* 세미나 메뉴 */}
@@ -66,25 +64,19 @@ const HomeNav = ({ goClickPage }) => {
               setCommName("마을회관");
               setNoticeName("공지사항");
             }}
+            onMouseOut={() => {
+              setcommHover(0);
+              setCommName("커뮤니티");
+            }}
           >
             <a
               className={styles.catStyle}
-              id="2"
+              id="3"
               onClick={(e) => goClickPage(e)}
             >
               {commName}
             </a>
-            {commHover ? (
-              <div
-                className="communityMenu"
-                onMouseOut={() => {
-                  setcommHover(0);
-                  setCommName("커뮤니티");
-                }}
-              />
-            ) : (
-              ""
-            )}
+            {commHover ? <div className="communityMenu" /> : ""}
           </div>
 
           {/* 공지사항 메뉴 */}
@@ -96,24 +88,23 @@ const HomeNav = ({ goClickPage }) => {
               setNoticeName("마을소식");
             }}
           >
-            <NavLink
+            <a
               className={styles.catStyle}
-              style={({ isActive }) => ({
-                // borderBottom: isActive ? "2px solid black" : "",
-              })}
-              to="/cs"
-              id="noticeid"
-              // onClick={() => {
-              //   setNavActive(1);
-              // }}
+              id="4"
+              onClick={(e) => goClickPage(e)}
             >
-              {/* {navActive ? "마을소식" : noticeName} */}
               {noticeName}
-            </NavLink>
+            </a>
             {noticeHover ? (
               <div
                 className="noticeMenu"
                 onMouseOut={() => {
+                  setnoticeHover(0);
+                  setCommName("커뮤니티");
+                  setNoticeName("공지사항");
+                }}
+                onMouseOver={() => {
+                  setcommHover(0);
                   setnoticeHover(0);
                   setCommName("커뮤니티");
                   setNoticeName("공지사항");
@@ -123,14 +114,7 @@ const HomeNav = ({ goClickPage }) => {
               ""
             )}
           </div>
-          <div
-            onMouseOver={() => {
-              setcommHover(0);
-              setnoticeHover(0);
-              setCommName("커뮤니티");
-              setNoticeName("공지사항");
-            }}
-          ></div>
+          <div></div>
         </nav>
         <div className="tailwrap">
           <div className="loginbtn"></div>

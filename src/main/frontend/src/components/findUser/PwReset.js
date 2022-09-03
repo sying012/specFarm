@@ -1,6 +1,6 @@
 import { Button, createTheme, Grid, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import styles from "../../styles/findUser/findUser.module.css";
+import styles from "../../styles/findUser/FindUser.module.css";
 
 const theme = createTheme({
   status: {
@@ -58,6 +58,11 @@ const PwReset = () => {
     // });
   }, []);
 
+  const idErrorReset = useCallback((e) => {
+    setIdError(false);
+    setIdErrorText("");
+  });
+
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
@@ -69,6 +74,11 @@ const PwReset = () => {
       setNameErrorText("");
     }
   }, []);
+
+  const nameErrorReset = useCallback((e) => {
+    setNameError(false);
+    setNameErrorText("");
+  });
 
   // Phone number authentication
   const telAuth = useCallback((e) => {
@@ -88,8 +98,16 @@ const PwReset = () => {
       setTelError(false);
       setTelErrorText("");
       setTelAuthNumberDisabled(false);
+
+      setTelAuthNumberError(false);
+      setTelAuthNumberErrorText("");
     }
   }, []);
+
+  const telErrorReset = useCallback((e) => {
+    setTelError(false);
+    setTelErrorText("");
+  });
 
   // Phone number authentication Number Check
   const telAuthNumberCheck = useCallback((e) => {
@@ -103,6 +121,11 @@ const PwReset = () => {
     }
     // 인증번호 비교 후 인증 성공 실패 관련
   }, []);
+
+  const telAuthNumberErrorReset = useCallback((e) => {
+    setTelAuthNumberError(false);
+    setTelAuthNumberErrorText("");
+  });
 
   // Password Validation Check
   const pwValidationCheck = useCallback((e) => {
@@ -123,6 +146,11 @@ const PwReset = () => {
     }
   }, []);
 
+  const pwValidationErrorReset = useCallback((e) => {
+    setPwValidationError(false);
+    setPwValidationErrorText("");
+  });
+
   // Password Check
   const pwCheck = useCallback((e) => {
     const userPw = document.getElementById("pwReset_userPw").value;
@@ -140,7 +168,12 @@ const PwReset = () => {
     }
   }, []);
 
-  // 개인정보 확인후 넘어가기
+  const pwErrorReset = useCallback((e) => {
+    setPwError(false);
+    setPwErrorText("");
+  });
+
+  // next step
   const [identifyCheck, setIdentifyCheck] = useState(false);
   const PwResetNext = (e) => {
     e.preventDefault();
@@ -224,6 +257,7 @@ const PwReset = () => {
             onBlur={idCheck}
             error={IdError}
             helperText={IdErrorText}
+            onFocus={idErrorReset}
           />
         </Grid>
         <Grid item xs={12}>
@@ -236,6 +270,7 @@ const PwReset = () => {
             onBlur={nameCheck}
             error={nameError}
             helperText={nameErrorText}
+            onFocus={nameErrorReset}
           />
         </Grid>
         <Grid item xs={9}>
@@ -247,6 +282,7 @@ const PwReset = () => {
             fullWidth
             error={telError}
             helperText={telErrorText}
+            onFocus={telErrorReset}
           />
         </Grid>
         <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
@@ -272,6 +308,7 @@ const PwReset = () => {
             label="인증번호"
             fullWidth
             onBlur={telAuthNumberCheck}
+            onFocus={telAuthNumberErrorReset}
             error={telAuthNumberError}
             helperText={telAuthNumberErrorText}
             disabled={telAuthNumberDisabled}
@@ -316,6 +353,7 @@ const PwReset = () => {
             onBlur={pwValidationCheck}
             error={pwValidationError}
             helperText={pwValidationErrorText}
+            onFocus={pwValidationErrorReset}
           />
         </Grid>
         <Grid item xs={12}>
@@ -329,6 +367,7 @@ const PwReset = () => {
             onBlur={pwCheck}
             error={pwError}
             helperText={pwErrorText}
+            onFocus={pwErrorReset}
           />
         </Grid>
         <Grid item xs={12}>

@@ -1,10 +1,13 @@
-import { Container, createTheme } from "@mui/material";
-import React from "react";
+import { Container } from "@mui/material";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/home/Home.module.css";
+import Alerts from "./Alerts";
 import Plan from "./Plan";
 
-const Main = ({ acceptances, tests }) => {
+const Main = ({ acceptances, tests, open }) => {
+  // const [alertH, setAlertH] = useState("-50");
+
   return (
     <>
       <div className={styles.homeBackground}>
@@ -24,17 +27,8 @@ const Main = ({ acceptances, tests }) => {
           </div>
         </header>
         <Container>
-          {/* <div style={{ padding: "70px" }}>
-            <Stack spacing={1} sx={{ width: "100%" }}>
-              <Alert severity="error">
-                This is an error alert — check it out!
-              </Alert>
-              <Alert severity="error">
-                This is an error alert — check it out!
-              </Alert>
-            </Stack>
-          </div> */}
-          <div className={styles.homeContent}>
+          {/* <Alerts open={open} /> */}
+          <div className={styles.homeContent} style={{ position: "relative" }}>
             <div>
               <p className={styles.subTitle}>
                 자격증을 취득하여,

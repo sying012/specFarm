@@ -103,17 +103,9 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 200px;
 }
 
-hr {
+.shareDetailHr {
   margin-top: 60px;
   width: 95%;
-}
-
-.replyBottom {
-  width: 88%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }

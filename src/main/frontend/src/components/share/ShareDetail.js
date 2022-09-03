@@ -108,11 +108,9 @@ const ShareDetail = ({ shareList }) => {
               addCommentArray={addCommentArray}
               commentArray={commentArray}
             />
-            <hr></hr>
-            <div className={styles.replyBottom}>
-              <div>
-                <Comment commentArray={commentArray} />
-              </div>
+            <hr className={styles.shareDetailHr}></hr>
+            <div>
+              <Comment commentArray={commentArray} />
             </div>
           </div>
         </div>

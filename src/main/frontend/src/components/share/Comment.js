@@ -8,13 +8,13 @@ const Comment = (props) => {
 
   return (
     <div>
-      <ul className={styles.comment}>
+      <ul>
         {commentArray.map((value, id) => (
           <li key={id} className="commentText">
             <div>
-              <span className={styles.aa}>
+              <span>
                 <Stack direction="row" spacing={2}>
-                  <div className={styles.aa}>
+                  <div>
                     <Avatar
                       alt="Remy Sharp"
                       src="/static/images/avatar/1.jpg"

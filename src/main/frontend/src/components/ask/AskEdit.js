@@ -50,7 +50,7 @@ const AskEdit = ({ asks }) => {
           <img
             src={askWriteTop}
             alt=""
-            style={{ display: "block", maxWidth: "600px", width: "100%" }}
+            style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
           <div id="writeContent">
             <form action="" id="regAskForm">
@@ -80,7 +80,7 @@ const AskEdit = ({ asks }) => {
           <img
             src={askWriteBottom}
             alt=""
-            style={{ display: "block", maxWidth: "600px", width: "100%" }}
+            style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
         </div>
       </div>

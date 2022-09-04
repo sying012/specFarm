@@ -3,7 +3,9 @@ import "../styles/notice/notice.css";
 import NoticeList from "../components/notice/NoticeList";
 import RegNotice from "../components/notice/RegNotice";
 import NoticeDetail from "../components/notice/NoticeDetail";
-import { Routes, Route } from "react-router-dom";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+import { Routes, Route, NavLink } from "react-router-dom";
 
 const NoticeMain = () => {
   const noticeData = [
@@ -34,7 +36,10 @@ const NoticeMain = () => {
     <div id="content">
       <div className="titleContainer">
         <div className="titlewrap">마을소식</div>
-        <div className="subtitlewrap">이장님 말씀</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to="/cs">
+          <div className="subtitlewrap">이장님 말씀</div>
+        </NavLink>
       </div>
       <Routes>
         <Route

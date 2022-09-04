@@ -9,18 +9,28 @@ const NoticeList = ({ noticeData }) => {
       <div id="noticeSearchBar" className="search">
         <Button
           className="askRegButton"
-          variant="outlined"
+          variant="contained"
           onClick={() => (window.location = "./cs/write")}
         >
           글쓰기
         </Button>
         <form id="keywordSearchBar" action="">
           <TextField
+            name="searchKeyword"
             id="outlined-search"
             type="search"
             InputProps={{
               startAdornment: <SearchIcon color="action" />,
-              styles: { fontFamily: "Hahmlet" },
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+                "&.MuiInputBase-sizeSmall": {
+                  paddingLeft: "14px",
+                },
+              },
             }}
             size="small"
           ></TextField>

@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import Editer from "../Editer";
-import { TextField } from "@mui/material";
+import { TextField, Button, createTheme } from "@mui/material";
 
 const RegNotice = () => {
   const [noticeContent, setNoticeContent] = useState("");
   const handleContent = (value) => {
     setNoticeContent(value);
   };
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#1d5902",
+        contrastText: "#fff",
+      },
+    },
+  });
 
   return (
     <div id="noticeRegContainer">
@@ -25,8 +34,26 @@ const RegNotice = () => {
           value={noticeContent}
           onChange={handleContent}
         ></Editer>
-        <div className="noticeRegButton">
-          <button type="button">취소하기</button> <button>등록하기</button>
+        <div className="btnBox">
+          <Button
+            type="button"
+            variant="outlined"
+            color="primary"
+            href="/mypage"
+            theme={theme}
+            className="noticeRegButton"
+          >
+            취소
+          </Button>
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            theme={theme}
+            className="noticeRegButton"
+          >
+            등록
+          </Button>
         </div>
       </form>
     </div>

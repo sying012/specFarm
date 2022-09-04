@@ -16,31 +16,28 @@
 .titleContainer {
   width: 100%;
   max-width: 1200px;
-  height: 100px;
-  margin: 0 auto;
+  height: fit-content;
+  margin: 50px auto;
   display: flex;
-  margin-bottom: 70px;
   align-items: flex-end;
-}
-
-.titleContainer > div {
-  cursor: pointer;
 }
 
 .titlewrap {
-  font-size: 3rem;
-  margin-top: 30px;
-  color: rgb(107, 83, 67);
+  font-size: 36px;
+  color: #403633;
+  font-weight: bold;
 }
 
 .subtitlewrap {
-  font-size: 1.5rem;
+  font-size: 26px;
   margin-top: 0px;
-  margin-left: 25px;
   display: flex;
   align-items: flex-end;
-  color: rgba(107, 83, 67, 0.8);
-  border-left: 2px solid rgba(107, 83, 67, 0.8);
+  color: #403633;
+  font-weight: bold;
   padding-bottom: 4px;
-  padding-left: 7px;
+}
+
+.subtitlewrap:hover {
+  text-decoration: underline;
 }

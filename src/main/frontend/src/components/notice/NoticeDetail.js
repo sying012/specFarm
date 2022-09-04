@@ -67,23 +67,12 @@ const NoticeDetail = ({ noticeData }) => {
           )}
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Link to="/cs">
-          <Button
-            variant="contained"
-            theme={theme}
-            color="green"
-            style={{
-              fontSize: "16px",
-              lineHeight: "18px",
-              padding: "14px 16px",
-              width: "100px",
-              marginTop: "30px",
-            }}
-            sx={{ borderRadius: "25px" }}
-          >
-            목록
-          </Button>
+      <div
+        className="noticeBottom"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <Link to="/cs" className="detailListBtn">
+          목록 보기
         </Link>
       </div>
     </>

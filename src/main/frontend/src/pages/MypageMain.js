@@ -13,7 +13,7 @@ function MypageMain() {
     userName: "조유미",
     userTel: "010-0000-0000",
     userEmail: "801@bitcamp.com",
-    nickname: "박지은",
+    nickname: "박대리",
     profilePath: "",
   });
 
@@ -87,6 +87,13 @@ function MypageMain() {
     },
   ]);
 
+  const [attrCerts, setAttrCerts] = useState([
+    { id: 1, certId:"1122", certName: "사회복지사1급" },
+    { id: 2, certId:"1234", certName: "전기어쩌구자격증" },
+    { id: 3, certId:"1452", certName: "정보처리기사" },
+    { id: 4, certId:"1172", certName: "전기어쩌구자격증" },
+  ]);
+
   return (
     <div className={styles.mypageMain}>
       <Profile certs={certs} user={user} />
@@ -116,7 +123,7 @@ function MypageMain() {
           <Route
             path="/"
             element={
-              <Frames user={user} certs={certs} asks={asks} shares={shares} />
+              <Frames user={user} certs={certs} asks={asks} shares={shares} attrCerts={attrCerts} />
             }
           />
         </Routes>

@@ -9,11 +9,8 @@ function Deactivate() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "rgb(187, 205, 110)",
+        main: "#1d5902",
         contrastText: "#fff",
-      },
-      secondary: {
-        main: "#555",
       },
     },
   });
@@ -123,7 +120,7 @@ function Deactivate() {
         <div className={styles.deactivateBtns}>
           <Button
             variant="outlined"
-            color="secondary"
+            color="primary"
             className={styles.profileCancelBtn}
             href="/mypage/userinfo"
             theme={theme}

@@ -49,13 +49,15 @@
 .certContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
   padding: 5px 70px;
+  margin-bottom: 5px;
 }
 
 .addCert {
-  width: 500px;
-  margin-top: 15px !important;
+  width: 470px;
+  margin-top: 5px !important;
 }
 
 .addCertBtns {

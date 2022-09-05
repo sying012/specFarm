@@ -12,7 +12,7 @@ import AskListItem from "../ask/AskListItem";
 import styles from "../../styles/mypage/Frames.module.css";
 import { NavLink } from "react-router-dom";
 
-function Frames({ certs, asks, shares, user }) {
+function Frames({ certs, asks, shares, user, attrCerts }) {
   function deleteHandler() {
     // DB에서 날리기
   }
@@ -151,56 +151,18 @@ function Frames({ certs, asks, shares, user }) {
         </div>
         <div className={styles.frameContent}>
           <div className={styles.attactive}>
-            <div className={styles.attractiveCert}>
-              <h1>어쩌구자격증</h1>
-              <IconButton
-                aria-label="delete"
-                className="deleteBtn"
-                onClick={deleteHandler}
-              >
-                <Close fontSize="small" className={styles.deleteBtn} />
-              </IconButton>
-            </div>
-            <div className={styles.attractiveCert}>
-              <h1>어쩌구저쩌구어쩌구저쩌구자격증</h1>
-              <IconButton
-                aria-label="delete"
-                className="deleteBtn"
-                onClick={deleteHandler}
-              >
-                <Close fontSize="small" className={styles.deleteBtn} />
-              </IconButton>
-            </div>
-            <div className={styles.attractiveCert}>
-              <h1>어쩌구저쩌구자격증</h1>
-              <IconButton
-                aria-label="delete"
-                className="deleteBtn"
-                onClick={deleteHandler}
-              >
-                <Close fontSize="small" className={styles.deleteBtn} />
-              </IconButton>
-            </div>
-            <div className={styles.attractiveCert}>
-              <h1>어쩌구저쩌구자격증</h1>
-              <IconButton
-                aria-label="delete"
-                className="deleteBtn"
-                onClick={deleteHandler}
-              >
-                <Close fontSize="small" className={styles.deleteBtn} />
-              </IconButton>
-            </div>
-            <div className={styles.attractiveCert}>
-              <h1>어쩌구자격증</h1>
-              <IconButton
-                aria-label="delete"
-                className="deleteBtn"
-                onClick={deleteHandler}
-              >
-                <Close fontSize="small" className={styles.deleteBtn} />
-              </IconButton>
-            </div>
+            {attrCerts.map((attrCert) => (
+              <div key={attrCert.id} className={styles.attractiveCert}>
+                <a href={`/cert/${attrCert.certId}`}>{attrCert.certName}</a>
+                <IconButton
+                  aria-label="delete"
+                  className="deleteBtn"
+                  onClick={deleteHandler}
+                >
+                  <Close fontSize="small" className={styles.deleteBtn} />
+                </IconButton>
+              </div>
+            ))}
           </div>
         </div>
       </div>

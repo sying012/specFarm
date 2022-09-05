@@ -6,11 +6,8 @@ function CheckPw() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "rgb(187, 205, 110)",
+        main: "#1d5902",
         contrastText: "#fff",
-      },
-      secondary: {
-        main: "#555",
       },
     },
   });
@@ -64,6 +61,18 @@ function CheckPw() {
                 error={PwValidationError}
                 helperText={PwValidationErrorText}
                 onChange={checkPw}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
           </Grid>
@@ -71,7 +80,7 @@ function CheckPw() {
         <div className={styles.deactivateBtns}>
           <Button
             variant="outlined"
-            color="secondary"
+            color="primary"
             href="/mypage/deactivate"
             theme={theme}
             className={styles.profileCancelBtn}

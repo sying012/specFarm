@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import StudyContent from "../components/study/StudyContent";
 import StudyMain from "../components/study/StudyMain";
 import StudyReg from "../components/study/StudyReg";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Study = () => {
   const [studyList, setStudyList] = useState([
@@ -125,12 +126,11 @@ const Study = () => {
   return (
     <div>
       <div className="titleContainer">
-        <Link to={"/community"}>
-          <div className="titlewrap">마을회관</div>
-        </Link>
-        <Link to={"/community/study"}>
-          <div className="subtitlewrap">지식 품앗이👨‍👧‍👧</div>
-        </Link>
+        <div className="titlewrap">마을회관</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to="/community/study">
+          <div className="subtitlewrap">지식 품앗이</div>
+        </NavLink>
       </div>
       <Routes>
         <Route path="/" element={<StudyMain studyList={studyList} />}></Route>

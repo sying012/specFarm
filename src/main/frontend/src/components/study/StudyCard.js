@@ -46,16 +46,30 @@ const StudyCard = ({ studyItem }) => {
             },
           }}
         >
-          <CardActionArea sx={{ height: 350 }}>
+          <CardActionArea
+            sx={{
+              height: 350,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
             <CardMedia
               className="studyImage"
               component="img"
-              height="260"
+              height="240"
               image={studyImg}
               alt="스터디 이미지"
               sx={{ objectFit: "unset" }}
             />
-            <CardContent style={{ padding: "5px 16px" }}>
+            <CardContent
+              style={{
+                padding: "5px 16px",
+                paddingBottom: "15px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
               <Typography
                 className="studyCardTitle"
                 style={{
@@ -75,7 +89,7 @@ const StudyCard = ({ studyItem }) => {
                   className="studyState"
                   style={{
                     color: "white",
-                    background: studyState ? "#1d5902" : "#8cbf75",
+                    background: studyState ? "#1d5902" : "lightslategrey",
                     fontFamily: "Pretendard-Regular",
                   }}
                 >

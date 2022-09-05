@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
 import styles from "../styles/cert/Cert.module.css";
 import Grid from "@mui/system/Unstable_Grid";
+import TextField from "@mui/material/TextField";
+import { ArrowForwardIos } from "@mui/icons-material";
+import sprout from "../images/cert_sprout1.png";
 
 const CertMain = () => {
   const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
@@ -34,14 +35,36 @@ const CertMain = () => {
         justifyContent: "center",
       }}
     >
-      <h1 className={styles.certtitle}>재배할 자격증을 찾아보세요. 🌱</h1>
+      <h1 className={styles.certtitle}>
+        재배할 자격증을 찾아보세요.{" "}
+        <img className={styles.certTitleImg} src={sprout} alt="새싹" />
+      </h1>
+
       <div className={styles.certSearchBar}>
-        <input className={styles.certinput} placeholder="검색"></input>
-        <SearchIcon
-          fontSize="large"
-          color="action"
-          style={{ position: "absolute", top: "73px", right: "20px" }}
-        />
+        <TextField
+          id="outlined-search"
+          type="search"
+          InputProps={{
+            startAdornment: <SearchIcon color="action" fontSize="large" />,
+            style: {
+              width: "650px",
+              height: "60px",
+              borderRadius: "15px",
+              marginTop: "30px",
+              padding: "0 10px",
+            },
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": {
+                borderColor: "#8cbf75",
+              },
+              "&.MuiInputBase-sizeSmall": {
+                paddingLeft: "14px",
+              },
+            },
+          }}
+        ></TextField>
       </div>
       <Grid
         container
@@ -49,7 +72,7 @@ const CertMain = () => {
         style={{
           justifyContent: "space-around",
           margin: "30px auto",
-          width: "420px",
+          width: "500px",
         }}
       >
         <Grid xs={3} style={{ width: "200px", padding: "0" }}>
@@ -72,6 +95,18 @@ const CertMain = () => {
             </Select>
           </FormControl>
         </Grid>
+        <Grid
+          item
+          xs={1}
+          style={{
+            paddingLeft: "15px",
+            paddingTop: "15px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <ArrowForwardIos color="action" />
+        </Grid>
         <Grid xs={3} style={{ width: "200px", padding: "0" }}>
           <FormControl sx={{ minWidth: 200 }} style={{ fontSize: "14px" }}>
             <InputLabel id="certMCat">중분류</InputLabel>
@@ -93,62 +128,46 @@ const CertMain = () => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container spacing={3} style={{}}>
-        <Grid>
-          <Box
-            sx={{
-              width: 750,
-              height: 120,
-              border: "1px solid lightgray",
-              borderRadius: "20px",
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  flex: 1,
-                  flexWrap: "wrap",
-                  padding: "10px",
-                }}
-              >
-                <button
-                  className={styles.smallcert}
-                  type="button"
-                  onClick={() => {
-                    window.location = "/CertFind";
-                  }}
-                >
-                  거푸집기능사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축구조기술사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-                <button type="button" className={styles.smallcert}>
-                  건축기사
-                </button>
-              </div>
-            </div>
-          </Box>
-        </Grid>
-      </Grid>
+
+      <div className={styles.certMainCard}>
+        <div className={styles.certMainBody}>
+          <div>
+            <button
+              className={styles.smallcert}
+              type="button"
+              onClick={() => {
+                window.location = "/CertFind";
+              }}
+            >
+              거푸집기능사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축구조기술사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+            <button type="button" className={styles.smallcert}>
+              건축기사
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

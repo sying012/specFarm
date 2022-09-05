@@ -6,7 +6,7 @@
 }
 
 .certinput {
-    border-radius: 30px;
+    border-radius: 25px;
     padding: 0 15px ;
     border: 3px solid lightgray;
     width: 100%;
@@ -17,17 +17,21 @@
 }
 
 .smallcert {
-    height: 30px;
-    padding: 10px 20px;
+    height: 37px;
+    padding: 10px 15px;
     border-radius: 30px;
     background: #eee;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 10px;
     letter-spacing: -.5px;
-    border: 1px solid lightgray;
+    border: none;
     cursor: pointer;
-    margin: 5px;
-  
+    margin: 10px;
+}
+
+.smallcert:hover {
+    background-color: black;
+    color: white
 }
  
 
@@ -36,6 +40,36 @@
     position: relative;
 }
 
+.certMainCard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .certMainBody {
+    width: 800px;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
+  }
+  
+  .certMainBody:hover {
+    transition: all 0.3s ease;
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    box-shadow: 4px 12px 20px 6px rgb(0 0 0 / 18%);
+  }
+  .certTitleImg {
+    width: 60px;
+    margin: -5px;
+   
+ }
 
 
 

@@ -8,7 +8,6 @@ import SkillsMain from "./SkillsMain";
 import CommunityMain from "./CommunityMain";
 import NoticeMain from "./NoticeMain";
 import { useNavigate } from "react-router";
-import Header from "../layouts/Header";
 import HomeNavAfter from "../components/home/HomeNavAfter";
 import { Link } from "react-router-dom";
 

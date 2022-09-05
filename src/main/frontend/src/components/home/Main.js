@@ -1,6 +1,6 @@
-import { Container } from "@mui/material";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Container, Grid } from "@mui/material";
+import React from "react";
+import { Stack } from "react-bootstrap";
 import styles from "../../styles/home/Home.module.css";
 import Alerts from "./Alerts";
 import Plan from "./Plan";
@@ -11,8 +11,12 @@ const Main = ({ acceptances, tests, open }) => {
   return (
     <>
       <div className={styles.homeBackground}>
-        <Container>
-          {/* <Alerts open={open} /> */}
+        <Container style={{ position: "relative", boxSizing: "content-box" }}>
+          <Grid container className={styles.alert}>
+            <Stack sx={{ width: "510px" }} spacing={1}>
+              <Alerts open={open} />
+            </Stack>
+          </Grid>
           <div className={styles.homeContent} style={{ position: "relative" }}>
             <div>
               <p className={styles.subTitle}>

@@ -1,7 +1,7 @@
 .mdfContainer {
   width: 900px;
   height: 650px;
-  margin: 80px auto 0;
+  margin: 80px auto 40px;
   border-radius: 15px;
   box-shadow: 5px 6px 22px lightgray;
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 .mdfTitle {
-  color: rgb(107, 83, 67);
+  color: #0d0d0d;
   font-size: 2.5rem;
 }
 

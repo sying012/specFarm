@@ -16,10 +16,16 @@
   color: gray;
 }
 
+.tabs:hover {
+  color: #1d5902;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .radioBtn:checked + .tabs {
   font-weight: bold;
-  color: #1D5902;
-  border-bottom: 2px double #1D5902;
+  color: #1d5902;
+  border-bottom: 2px solid #1d5902;
 }
 
 .askList,
@@ -31,7 +37,7 @@
   height: 60px;
   padding: 5px 10px;
   margin-bottom: 15px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.288);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 15%);
   border-radius: 5px;
   display: flex;
   flex-direction: row;

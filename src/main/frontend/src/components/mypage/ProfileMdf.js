@@ -12,23 +12,33 @@ import { useState } from "react";
 import styles from "../../styles/mypage/ProfileMdf.module.css";
 
 function ProfileMdf() {
+  const [user, setUser] = useState({
+    userId: "thisisId",
+    userPw: "dd",
+    userName: "조유미",
+    userTel: "010-0000-0000",
+    userEmail: "801@bitcamp.com",
+    nickname: "박대리",
+    profilePath: "",
+  });
+
   // mui button 테마 지정
   const theme = createTheme({
     palette: {
       primary: {
-        main: "rgb(187, 205, 110)",
+        main: "#1d5902",
         contrastText: "#fff",
       },
       secondary: {
         main: "#555",
       },
+      lightgreen: {
+        main: "#8cbf75",
+      },
     },
   });
 
   const [imageSrc, setImageSrc] = useState("");
-
-  const miribogi = document.getElementById("miribogi");
-  console.log(miribogi);
 
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
@@ -48,7 +58,7 @@ function ProfileMdf() {
     setImageSrc(null);
   }
 
-  const [nicknameValue, setNicknameValue] = useState("공부하자");
+  const [nicknameValue, setNicknameValue] = useState(user.nickname);
 
   // 닉네임 x버튼 클릭시 입력창 초기화
   function resetNicknameHandler() {
@@ -83,10 +93,7 @@ function ProfileMdf() {
           <h1 className={styles.mdfTitle}>프로필 수정</h1>
           <Avatar
             alt="profile"
-            src={
-              imageSrc ||
-              "https://as1.ftcdn.net/v2/jpg/03/58/90/78/1000_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg"
-            }
+            src={imageSrc || "/upload/profile/farmer.png"}
             sx={{ width: 160, height: 160 }}
             className={styles.avatar}
           />
@@ -128,6 +135,8 @@ function ProfileMdf() {
             type="text"
             name="nickname"
             id="nickname"
+            theme={theme}
+            color="lightgreen"
             value={nicknameValue}
             onChange={onChangeNickname}
             placeholder="닉네임을 입력해주세요."
@@ -149,7 +158,7 @@ function ProfileMdf() {
           <div className={styles.profileMdfBtns}>
             <Button
               variant="outlined"
-              color="secondary"
+              color="primary"
               href="/mypage"
               theme={theme}
               className={styles.profileCancelBtn}

@@ -19,7 +19,7 @@
 }
 
 .details {
-  color: #1D5902;
+  color: #1d5902;
   margin-right: 7px;
 }
 
@@ -30,7 +30,7 @@
 .frameContent > div > h5 {
   margin-bottom: 10px;
   font-size: 1.2em;
-  color: #1D5902;
+  color: #1d5902;
   font-weight: 600;
 }
 
@@ -93,10 +93,16 @@
   color: gray;
 }
 
+.tabs:hover {
+  color: #1d5902;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .radioBtn:checked + .tabs {
   font-weight: bold;
-  color: #1D5902;
-  border-bottom: 2px double #1D5902;
+  color: #1d5902;
+  border-bottom: 2px solid #1d5902;
 }
 
 .askList,
@@ -108,7 +114,7 @@
   height: 60px;
   padding: 5px 10px;
   margin-bottom: 15px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.288);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 15%);
   border-radius: 5px;
   display: flex;
   flex-direction: row;
@@ -166,18 +172,21 @@
 }
 
 .attractiveCert {
-  background-color: #8CBF75;
+  background-color: #8cbf75;
   height: 30px;
-  padding: 4px 0 6px 12px;
+  padding: 4px 0 4px 12px;
   border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* min-width: 100px; */
-  margin: 7px 7px;
+  margin: 7px;
 }
 
-.attractiveCert h1 {
+.attractiveCert:hover {
+  background-color: #7aac62;
+}
+
+.attractiveCert a {
   display: inline;
   font-size: 1.2rem;
   font-weight: 500;

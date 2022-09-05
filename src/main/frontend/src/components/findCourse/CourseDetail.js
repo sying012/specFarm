@@ -24,7 +24,7 @@ const CourseDetail = ({ courses }) => {
     orgLink: "http://www.miraeit.or.kr/",
     courseAim: `1. 기계설계제작 관련 이론 및 기술에 대한 지식을 습득하여 기계장치의 설계,제작에 적합한 규격에 맞도록 검토 및 설계를 할 수 있다.
     2. CAD/CAM시스템을 활용한 형상모델링(CAM), 머시닝센터, CNC 프로그래밍 및 가공 기술을 습득하여 모델링 데이터를 이용한 최적의 가공 조건 설정과 NC데이터 프로그램 생성으로 기계부품 가공과 시제품 제작 등을 할 수 있다.`,
-    courseWay: `- 훈련과정 담임(교무/관리) 이원화로 훈련생과의 소통강화
+    courseWay: `- 훈련과정 "담임(교무/관리)" 이원화로 훈련생과의 소통강화
     - 교과목별 훈련교사 전담제와 실습실 담임교사 지정제로 학습성취도 향상
     - 매월 출결우수과정 선정과 시상으로 학습분위기 조성과 훈련성과 고취
     - 직업상담사의 취업진로상담 컨설팅
@@ -55,11 +55,12 @@ const CourseDetail = ({ courses }) => {
 
   return (
     <div className={styles.detailContainer}>
+      <div className={styles.detailTitleBackground}></div>
       <div className={styles.detailHeader}>
         <p className={styles.courseOrgName}>{course.orgName}</p>
         <h1 className={styles.courseName}>{course.courseName}</h1>
       </div>
-      <hr className={styles.detailHr} />
+      {/* <hr className={styles.detailHr} /> */}
       <div className={styles.detailContent}>
         <div className={styles.contentRow}>
           <h4>NCS 직무분류</h4>
@@ -130,10 +131,8 @@ const CourseDetail = ({ courses }) => {
           <a href={course.orgLink}>{course.orgLink}</a>
         </div>
       </div>
-      <Link to="/skills/findcourse">
-        <div className={styles.detailListBtn}>
-          <p>목록 보기</p>
-        </div>
+      <Link to="/skills/findcourse" className={styles.detailListBtn}>
+        목록 보기
       </Link>
       <div className={styles.courseDetails}>
         <div className={styles.courseDetailCard}>

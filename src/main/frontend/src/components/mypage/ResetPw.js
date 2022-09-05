@@ -11,11 +11,8 @@ function ResetPw() {
     },
     palette: {
       primary: {
-        main: "rgb(187, 205, 110)",
+        main: "#1d5902",
         contrastText: "#fff",
-      },
-      secondary: {
-        main: "#555",
       },
     },
   });
@@ -132,6 +129,18 @@ function ResetPw() {
                 error={pastPwError}
                 helperText={pastPwErrorText}
                 onChange={pastPwCheck}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -145,6 +154,18 @@ function ResetPw() {
                 onChange={PwValidationCheck}
                 error={PwValidationError}
                 helperText={PwValidationErrorText}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -158,6 +179,18 @@ function ResetPw() {
                 onChange={PwCheck}
                 error={PwError}
                 helperText={PwErrorText}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
           </Grid>
@@ -165,7 +198,7 @@ function ResetPw() {
             <Link to="/mypage/userinfo">
               <Button
                 variant="outlined"
-                color="secondary"
+                color="primary"
                 theme={theme}
                 className={styles.profileCancelBtn}
               >

@@ -14,7 +14,7 @@ const AskListItem = ({ ask }) => {
       <div id="contentBox">
         <div id="title">
           <span>
-            [{ask.certIdx}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
+            [{ask.certName}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
           </span>
         </div>
         <div id="writer"> {ask.userId} </div>

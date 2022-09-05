@@ -213,9 +213,10 @@ form#certSearchBar input#searchCert{
 }
 
 #certContainer{
-    margin-top: 110px;
+    margin-top: 40px;
     border-radius: 20px;
     max-width: 500px;
+    min-height: 500px;
     width: 50%;
     height: fit-content;
     background: white;
@@ -236,16 +237,18 @@ form#certSearchBar input#searchCert{
     align-items: center;
     white-space: nowrap;
     padding: 4px 12px;
-    background: white;
     border-radius: 19px;
     height: 30px;
     margin: 0 7px;
     margin-bottom: 10px;
     background:  lightgray;
     font-size: 1.2rem;
+    color: #0d0d0d;
+    cursor: pointer;
 }
 
 #writeContainer{
+    margin-top: -60px;
     max-width: 800px;
     min-height: 400px;
     width: 75%;    
@@ -279,8 +282,7 @@ form#certSearchBar input#searchCert{
     margin-top: 20px;
 }
   
-.askRegButton{
-    width: 100px;
+.askInRegButton{
     margin-left: 10px !important;
 }
 
@@ -319,7 +321,7 @@ form#certSearchBar input#searchCert{
     height: fit-content;
 }
 #regAskForm .ql-editor{
-    min-height: 200px;
+    min-height: 300px;
 }
 
 #askDetailContainer #detailContentBox .detailWrite{

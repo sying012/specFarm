@@ -1,80 +1,139 @@
-import React from "react";
+import React, { useState } from "react";
 import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
-import { TextField } from "@mui/material";
+import { TextField, Button, createTheme } from "@mui/material";
 import { useParams } from "react-router";
+import Editer from "../Editer";
 
-const AskEdit = ({ asks }) => {
+const AskEdit = ({ asks, certNames }) => {
   const { askId } = useParams();
   const ask = asks[askId - 1];
+  const [contentValue, setContentValue] = useState(ask.askContent);
+  const [certName, setCertName] = useState();
+
+  const handleContentValue = (value) => {
+    setContentValue(value);
+  };
+
+  const handleCertValue = (e) => {
+    setCertName(e.target.value);
+  };
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#1d5902",
+        contrastText: "#fff",
+      },
+    },
+  });
+
   return (
     <div id="container">
       <div id="RegContainer">
         <div id="certContainer">
-          <form action="" id="searchCertForm">
+          <div id="searchCertForm">
             <TextField
               id="outlined-search"
               label="자격증 검색"
+              name="certName"
+              value={certName}
+              onChange={handleCertValue}
               type="search"
-              style={{ width: "80%" }}
+              style={{
+                width: "80%",
+                borderRadius: "30px",
+              }}
+              autoComplete="off"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
+                },
+              }}
             />
-          </form>
+          </div>
           <div id="certResultContainer">
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
-            <div className="certItem">용접기능사</div>
-            <div className="certItem">기계기사</div>
-            <div className="certItem">정보처리기사</div>
-            <div className="certItem">도로및공항기술사</div>
+            {certNames.map((cert) => (
+              <div
+                key={cert.certIdx}
+                className="certItem"
+                onClick={() => setCertName(cert.certName)}
+              >
+                {cert.certName}
+              </div>
+            ))}
           </div>
         </div>
-        <div id="writeContaner">
+        <div id="writeContainer">
           <img
             src={askWriteTop}
             alt=""
             style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
           <div id="writeContent">
-            <form action="" id="regAskForm">
-              <p style={{ fontSize: "1.5rem" }}>질문작성</p>
-              <br />
+            <form action="#" id="regAskForm" method="post">
               <TextField
                 id="standard-basic"
                 label="제목"
                 variant="standard"
                 required={true}
                 style={{ width: "100%" }}
-                defaultValue={ask.askTitle}
+                name="askTitle"
+                autoComplete="off"
+                sx={{
+                  "& .MuiInput-root": {
+                    "&:after": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
-              <TextField
-                id="standard-basic"
-                label="내용"
-                variant="standard"
+
+              <input
+                type="hidden"
+                id="askContent"
+                name="askContent"
+                value={contentValue}
                 required={true}
-                multiline={true}
-                minRows="5"
-                style={{ width: "100%" }}
-                defaultValue={ask.askContent}
               />
-              <button>수정</button>
+              <Editer
+                placeholder="내용을 입력하세요"
+                value={contentValue}
+                onChange={handleContentValue}
+              ></Editer>
+              <div className="askbtnBox">
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="primary"
+                  href="/mypage"
+                  theme={theme}
+                  className="askInRegButton"
+                >
+                  취소
+                </Button>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  theme={theme}
+                  className="askInRegButton"
+                >
+                  수정
+                </Button>
+              </div>
             </form>
           </div>
           <img

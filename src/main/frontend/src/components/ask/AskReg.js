@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField, Button, createTheme } from "@mui/material";
@@ -6,8 +6,21 @@ import Editer from "../Editer";
 
 const AskReg = ({ certNames }) => {
   const [contentValue, setContentValue] = useState("");
+  const [certName, setCertName] = useState("");
+  const [viewCertNames, setViewCertNames] = useState([]);
   const handleContentValue = (value) => {
     setContentValue(value);
+  };
+
+  useEffect(() => {
+    if (certName.length >= 1)
+      setViewCertNames(
+        certNames.filter((cert) => cert.certName.match(certName) !== null)
+      );
+  }, [certName]);
+
+  const handleCertValue = (e) => {
+    setCertName((certName) => e.target.value);
   };
 
   const theme = createTheme({
@@ -23,10 +36,13 @@ const AskReg = ({ certNames }) => {
     <div id="container">
       <div id="RegContainer">
         <div id="certContainer">
-          <form action="" id="searchCertForm">
+          <div id="searchCertForm">
             <TextField
               id="outlined-search"
               label="자격증 검색"
+              name="certName"
+              value={certName}
+              onChange={handleCertValue}
               type="search"
               style={{
                 width: "80%",
@@ -46,10 +62,16 @@ const AskReg = ({ certNames }) => {
                 },
               }}
             />
-          </form>
+          </div>
           <div id="certResultContainer">
-            {certNames.map((cert) => (
-              <div className="certItem">{cert.certName}</div>
+            {viewCertNames.map((cert) => (
+              <div
+                key={cert.certIdx}
+                className="certItem"
+                onClick={() => setCertName(cert.certName)}
+              >
+                {cert.certName}
+              </div>
             ))}
           </div>
         </div>
@@ -70,8 +92,8 @@ const AskReg = ({ certNames }) => {
                 name="askTitle"
                 autoComplete="off"
                 sx={{
-                  "& .MuiInputBase-root": {
-                    "&.Mui-focused fieldset": {
+                  "& .MuiInput-root": {
+                    "&:after": {
                       borderColor: "#8cbf75",
                     },
                   },
@@ -102,7 +124,7 @@ const AskReg = ({ certNames }) => {
                   color="primary"
                   href="/mypage"
                   theme={theme}
-                  className="askRegButton"
+                  className="askInRegButton"
                 >
                   취소
                 </Button>
@@ -111,7 +133,7 @@ const AskReg = ({ certNames }) => {
                   color="primary"
                   variant="contained"
                   theme={theme}
-                  className="askRegButton"
+                  className="askInRegButton"
                 >
                   등록
                 </Button>

@@ -6,17 +6,13 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Table(name="T_CERT")
+@Table(name="T_CERT_FIELD")
 @Entity
 @Data
-public class Cert {
+
+public class CertField {
 	@Id
-	private int certIdx;
-	
-	private String certName;
-	
 	private String certLCat;
 	
 	private String certMCat;
-	
 }

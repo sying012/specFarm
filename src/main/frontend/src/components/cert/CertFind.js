@@ -101,7 +101,16 @@ const CertFind = () => {
           </div>
           <Grid xs={6} style={{ padding: "5px 10px" }}>
             <FormControl sx={{ minWidth: 280 }} style={{ fontSize: "10px" }}>
-              <InputLabel id="certLCat" style={{ fontSize: "14px" }}>
+              <InputLabel
+                id="certLCat"
+                style={{ fontSize: "14px" }}
+                sx={{
+                  "&.Mui-focused": {
+                    color: "#8cbf75",
+                  },
+                  lineHeight: "100%",
+                }}
+              >
                 대분류
               </InputLabel>
               <Select
@@ -112,8 +121,14 @@ const CertFind = () => {
                 onChange={certLCatChange}
                 name="certLCat"
                 style={{
-                  borderRadius: "15px",
                   height: "50px",
+                }}
+                sx={{
+                  "&.MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
                 }}
               >
                 {certLCat.map((certL) => (
@@ -126,7 +141,16 @@ const CertFind = () => {
           </Grid>
           <Grid xs={6} style={{ padding: "5px 10px" }}>
             <FormControl sx={{ minWidth: 280 }}>
-              <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
+              <InputLabel
+                id="certMCat"
+                style={{ fontSize: "14px" }}
+                sx={{
+                  "&.Mui-focused": {
+                    color: "#8cbf75",
+                  },
+                  lineHeight: "100%",
+                }}
+              >
                 중분류
               </InputLabel>
               <Select
@@ -136,7 +160,14 @@ const CertFind = () => {
                 label="중분류"
                 onChange={certMCatChange}
                 name="certMCat"
-                style={{ borderRadius: "15px", height: "50px" }}
+                style={{ height: "50px" }}
+                sx={{
+                  "&.MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                }}
               >
                 {certMCat.map((certM) => (
                   <MenuItem key={certM.id} value={certM.name}>

@@ -15,7 +15,7 @@ import JobSelect from "./JobSelect";
 
 const CourseSelector = () => {
   const [selectedTab, setSeletedTab] = useState(0);
-  const [seletedArea, setSelectedArea] = useState("");
+  const [seletedItem, setSelectedItem] = useState("");
 
   return (
     <div className={styles.courseSelector}>
@@ -49,10 +49,10 @@ const CourseSelector = () => {
           직종선택
         </div>
       </div>
-      {selectedTab ? <JobSelect /> : <AreaSelect setArea={setSelectedArea} />}
+      {selectedTab ? <JobSelect /> : <AreaSelect setArea={setSelectedItem} />}
 
       <div className={styles.selected}>
-        <>{seletedArea}</>
+        <>{seletedItem}</>
       </div>
     </div>
   );

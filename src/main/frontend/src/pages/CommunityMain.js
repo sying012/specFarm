@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import AskListItem from "../components/ask/AskListItem";
 import ShareList from "../components/share/ShareList";
 import StudyCardList from "../components/study/StudyCardList";
 import "../styles/community/CommunityMain.css";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const CommunityMain = () => {
   const [studyList, setStudyList] = useState([
@@ -92,7 +94,10 @@ const CommunityMain = () => {
     <div>
       <div className="titleContainer">
         <div className="titlewrap">마을회관</div>
-        <div className="subtitlewrap">입구</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to=".">
+          <div className="subtitlewrap">입구</div>
+        </NavLink>
       </div>
       <div className="commSubtitle">
         <p>인기 품앗이👨‍👨‍👧‍👧</p>

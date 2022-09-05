@@ -6,5 +6,6 @@ import lombok.Data;
 
 @Data
 public class AskReplyId implements Serializable {
-
+	private int askReplyIdx;
+	private int ask;
 }

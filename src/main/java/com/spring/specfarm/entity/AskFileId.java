@@ -6,5 +6,6 @@ import lombok.Data;
 
 @Data
 public class AskFileId implements Serializable  {
-
+	private int ask;
+	private int askFileIdx;
 }

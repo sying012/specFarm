@@ -1,7 +1,7 @@
 package com.spring.specfarm.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -12,19 +12,16 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="ASK_FILE")
-@IdClass(AskFileId.class)
-public class AskFile {
+@Table(name="T_NOICE_FILE")
+@IdClass(NoticeFileId.class)
+public class NoticeFile {
 	@Id
-	private int askFileIdx;
+	private int noticeFileIdx;
 	
 	@Id
-	@ManyToOne
-	@JoinColumn(name="ASK_IDX")
-	private Ask ask;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="NOTICE_IDX")
+	private Notice notice;
 	
-	@Column(columnDefinition = "varchar(1000)")
-	private String askFileName;
+	private String noticeFileName;
 }
-	
-	

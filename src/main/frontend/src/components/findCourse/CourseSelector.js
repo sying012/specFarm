@@ -1,70 +1,59 @@
-import { borderBottom, display } from "@mui/system";
 import React, { useState } from "react";
-import styles from "../../styles/findcourse/courseSelector.module.css";
+import styles from "../../styles/findcourse/CourseSelector.module.css";
+import AreaSelect from "./AreaSelect";
+import JobSelect from "./JobSelect";
 
-const testList = {
-  11: "서울",
-  246: "부산",
-  227: "대구",
-  2648: "인천",
-  131: "서울",
-  236: "부산",
-  247: "대구",
-  28: "인천",
-  151: "서울",
-  426: "부산",
-  257: "대구",
-  248: "인천",
-};
+// const displayList = (list) => {
+//   const result = [];
 
-const displayList = (list) => {
-  const result = [];
+//   for (const val in list) {
+//     result.push(<li key={val}>{list[val]}</li>);
+//   }
 
-  for (const val in list) {
-    result.push(<li key={val}>{list[val]}</li>);
-  }
-
-  return result;
-};
+//   return result;
+// };
 
 const CourseSelector = () => {
   const [selectedTab, setSeletedTab] = useState(0);
+  const [seletedArea, setSelectedArea] = useState("");
 
   return (
     <div className={styles.courseSelector}>
       <div className={styles.tabWrapper}>
         <div
-          className={styles.regionBtn}
+          className={styles.areaBtn}
           onClick={() => {
             setSeletedTab(0);
           }}
           style={
             selectedTab
-              ? { borderBottom: "1px solid" }
-              : { border: "1px solid", borderBottom: "0" }
+              ? {
+                  borderBottom: "2px solid #0d0d0d",
+                }
+              : { border: "2px solid #0d0d0d", borderBottom: "0" }
           }
         >
           지역선택
         </div>
         <div
-          className={styles.occuBtn}
+          className={styles.jobBtn}
           onClick={() => {
             setSeletedTab(1);
           }}
           style={
             selectedTab
-              ? { border: "1px solid", borderBottom: "0" }
-              : { borderBottom: "1px solid" }
+              ? { border: "2px solid #0d0d0d", borderBottom: "0" }
+              : { borderBottom: "2px solid #0d0d0d" }
           }
         >
           직종선택
         </div>
       </div>
-      <div className={styles.selectListWrapper}>
-        <ul className={styles.upperList}>{displayList(testList)}</ul>
-        <ul className={styles.lowerList}>{displayList(testList)}</ul>
+      {selectedTab ? <JobSelect /> : <AreaSelect setArea={setSelectedArea} />}
+
+      <div className={styles.selected}>
+        <>{seletedArea}</>
       </div>
-      <div className={styles.selected}></div>
     </div>
   );
 };

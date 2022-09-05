@@ -10,19 +10,23 @@
 
 .contentContainer {
   display: flex;
+  width: 100%;
 }
 
 .contentLeft {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 350px;
+  margin-right: 50px;
+  margin-top: 5px;
   /* background-color:blanchedalmond; */
 }
 
 .studyBanner {
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   margin-bottom: 50px;
+  border-radius: 4px;
 }
 
 .topWrapper {
@@ -76,17 +80,9 @@
   margin-left: auto;
 }
 
-.btnWrapper > button {
-  width: 100px;
-  height: 50px;
-  margin-left: 10px;
-  font-size: 17px;
-}
-
 .contentRight {
   /* background-color: aqua; */
-  width: 100%;
-  min-width: 900px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -97,26 +93,28 @@
   /* background-color: aqua; */
   width: 100%;
   min-height: 300px;
-  margin-right: 50px;
+  margin-top: 30px;
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 30px;
+  padding: 20px;
   box-sizing: border-box;
+  border: 1px solid rgb(236, 236, 236);
+  border-radius: 4px;
 }
 
 .content {
   white-space: pre-wrap;
   line-height: 1.5;
   font-size: 18px;
-  max-height: 500px;
-  overflow: auto;
 }
 
 .contactWrapper {
   display: flex;
+  margin-left: 55px;
 }
+
 .contactWrapper > a {
   margin-left: 5px;
 }
@@ -126,8 +124,8 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 300px;
-  margin-right: 50px;
+  width: 100%;
+  border-radius: 4px;
 }
 
 .listName {
@@ -136,9 +134,15 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid;
+  padding: 10px;
   flex-direction: column;
+  background-color: #97be7d;
+  box-sizing: border-box;
+  border-radius: 4px 4px 0 0;
+}
+
+.listName > * {
+  color: white;
 }
 
 .memberCnt {
@@ -148,16 +152,37 @@
   margin-top: 5px;
 }
 
+.joinListToggle {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  padding: 10px;
+  flex-direction: column;
+  background-color: lightgrey;
+  box-sizing: border-box;
+  border-radius: 4px 4px 0 0;
+}
+
+.joinListToggle:hover {
+  cursor: pointer;
+  color: rgb(243, 243, 243);
+}
+
 .joinList {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: rgb(243, 243, 243);
+  padding: 15px 5px;
+  border-radius: 0 0 4px 4px;
 }
 
 .participant {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   margin-left: 10px;
 }
 
@@ -175,4 +200,31 @@
 .byebtn {
   margin-left: auto;
   margin-right: 15px;
+}
+
+.btnWrapper > button {
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reqBtnStyle {
+  background-color: white;
+  border: 1px solid #1d5902;
+  color: #1d5902;
+}
+
+.cancelBtnStyle {
+  background-color: #1d5902;
+  border: none;
+  color: white;
+}
+
+.badge {
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  margin-bottom: 2px;
 }

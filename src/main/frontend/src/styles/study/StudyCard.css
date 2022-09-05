@@ -1,4 +1,4 @@
-.studyContainer {
+.studyCard {
   width: fit-content;
   height: fit-content;
 }
@@ -20,7 +20,7 @@
   white-space: pre-wrap;
 }
 
-.studyContainerBottom {
+.studyCardBottom {
   display: flex;
 }
 

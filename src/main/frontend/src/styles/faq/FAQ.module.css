@@ -5,6 +5,11 @@
   margin-bottom: 50px;
 }
 
+.searchFieldWrapper {
+  display: flex;
+  justify-content: end;
+}
+
 .accordionContainer {
   /* background-color: brown; */
   margin-top: 20px;
@@ -13,10 +18,10 @@
   margin-bottom: 20px;
 }
 
-.pageBtnContainer {
-  width: 100%;
-  height: 50px;
-  display: flex;
+.pageNation {
+  margin: 40px;
+}
+
+.pageNation > div {
   align-items: center;
-  justify-content: center;
 }

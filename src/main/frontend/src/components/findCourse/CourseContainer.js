@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/findcourse/findcourse.module.css";
+import styles from "../../styles/findcourse/Findcourse.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CourseSelector from "../../components/findCourse/CourseSelector";
 import CourseList from "./CourseList";
@@ -9,12 +9,14 @@ const CourseContainer = () => {
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseSearchBar}>
-        <input className={styles.courseinput} placeholder="검색"></input>
-        <SearchIcon
-          fontSize="large"
-          color="action"
-          style={{ position: "absolute", top: "12px", right: "20px" }}
-        />
+        <form>
+          <input className={styles.courseinput} placeholder="검색"></input>
+          <SearchIcon
+            fontSize="large"
+            color="action"
+            style={{ position: "absolute", top: "12px", right: "20px" }}
+          />
+        </form>
       </div>
       <div className={styles.popCourse}>
         <div className={styles.skillsBtns}>
@@ -45,15 +47,9 @@ const CourseContainer = () => {
         </div>
         <div className={styles.selectBox}>
           <CourseList></CourseList>
-          <div className="pageBtnContainer">
+          <div className={styles.pageNation}>
             <Stack spacing={2}>
-              <Pagination
-                count={30}
-                variant="outlined"
-                shape="rounded"
-                siblingCount={3}
-                boundaryCount={1}
-              />
+              <Pagination count={10} />
             </Stack>
           </div>
         </div>

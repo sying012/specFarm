@@ -140,10 +140,6 @@ const Header = () => {
                 // borderBottom: isActive ? "2px solid black" : "",
               })}
               to="/cs"
-              id="noticeid"
-              // onClick={() => {
-              //   setNavActive(1);
-              // }}
             >
               {/* {navActive ? "마을소식" : noticeName} */}
               {noticeName}

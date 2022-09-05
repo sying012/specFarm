@@ -1,22 +1,23 @@
 import React from "react";
-import StudyContainerList from "./StudyContainerList";
+import StudyCardList from "./StudyCardList";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import SearchIcon from "@mui/icons-material/Search";
 
-import "../../styles/study/StudyMain.css";
+import styles from "../../styles/study/StudyMain.module.css";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import { Link } from "react-router-dom";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Pretendard-Regular"],
+  },
+});
 
 const StudyMain = ({ studyList }) => {
-  const theme = createTheme({
-    typography: {
-      fontFamily: ["Hahmlet"],
-    },
-  });
-
   return (
-    <div className="studyMainContainer">
-      <div className="searchFieldWrapper">
+    <div className={styles.studyMainCard}>
+      <div className={styles.searchFieldWrapper}>
         <ThemeProvider theme={theme}>
           <TextField
             id="studySearch"
@@ -26,29 +27,24 @@ const StudyMain = ({ studyList }) => {
             }}
             size="small"
             style={{ width: "300px" }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+              },
+            }}
           ></TextField>
         </ThemeProvider>
-        <button
-          className="studyRegBtn"
-          type="button"
-          onClick={() => {
-            window.location = "/community/study/register";
-          }}
-        >
+        <Link to={"/community/study/register"} className={styles.studyRegBtn}>
           글쓰기
-        </button>
+        </Link>
       </div>
-      <StudyContainerList studyList={studyList}></StudyContainerList>
+      <StudyCardList studyList={studyList}></StudyCardList>
 
-      <div className="pageBtnContainer">
+      <div className={styles.pageNation}>
         <Stack spacing={2}>
-          <Pagination
-            count={30}
-            variant="outlined"
-            shape="rounded"
-            siblingCount={3}
-            boundaryCount={1}
-          />
+          <Pagination count={10} />
         </Stack>
       </div>
     </div>

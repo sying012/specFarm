@@ -5,8 +5,8 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class ShareReReplyId implements Serializable {
-
+public class ShareReReplyId implements Serializable {	
+	private int shareReplyIdx;
 	private int shareReReplyIdx;
-	private String userId;
+	private int shareIdx;
 }

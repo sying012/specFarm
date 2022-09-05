@@ -14,4 +14,7 @@ import lombok.Data;
 public class ShareFile {
 	@Id
 	private int shareFileIdx;
+	
+	@Id
+	private int shareIdx;
 }

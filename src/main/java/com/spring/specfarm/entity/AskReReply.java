@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,12 +23,10 @@ import lombok.Data;
 public class AskReReply {
 	@Id
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="ASK_IDX")
-	private Ask ask;
-	
-	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="ASK_REPLY_IDX")
+	@JoinColumns({
+		@JoinColumn(name = "ASK_IDX", referencedColumnName = "askIdx"),
+		@JoinColumn(name = "ASK_REPLY_IDX", referencedColumnName = "askReplyIdx")
+	})
 	private AskReply askReply;
 	
 	@Id

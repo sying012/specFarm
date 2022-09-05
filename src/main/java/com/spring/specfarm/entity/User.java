@@ -3,6 +3,8 @@ package com.spring.specfarm.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -29,6 +31,8 @@ public class User {
 	
 	private String userNick;
 	
+	@ManyToOne
+	@JoinColumn(name="FAV_FIELD_IDX")
 	private FavField favfield;
 	
 	private String userProfileName;

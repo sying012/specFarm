@@ -24,9 +24,7 @@ public class AskReply {
 	private int askReplyIdx;
 	
 	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="ASK_IDX")
-	private Ask ask;
+	private int askIdx;
 	
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="USER_ID")

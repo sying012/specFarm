@@ -1,19 +1,21 @@
 import React from "react";
-import { Stack, Avatar } from "@mui/material";
 import styles from "../../styles/share/commentReply.module.css";
+import defaultProfile from "../../images/defaultProfile.png";
 
 const CommentReply = () => {
   return (
-    <>
-      <div>
-        <Stack direction="row" spacing={2} className={styles.writer}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          <p>writer</p>
-          <div>2022.00.00 10:00 PM</div>
-        </Stack>
-        <div>댓글 내용</div>
+    <div id="askReReplyBox" className="askReplyBox">
+      <img id="profileImg" src={defaultProfile} alt="프로필사진" />
+      <div id="replyBox">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          답변자
+          <p style={{ fontSize: "0.8rem", color: "rgb(100, 100, 100)" }}>
+            2022.08.29 11:34 PM
+          </p>
+        </div>
+        <div className="askReplyContent">fdnbvn</div>
       </div>
-    </>
+    </div>
   );
 };
 

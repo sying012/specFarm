@@ -10,26 +10,81 @@ const Share = () => {
       id: 1,
       shareTitle: "나눔해요1",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.01",
       content: "aaaa",
       itemImg:
         "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
       shareState: 0,
+      shareReply: [
+        {
+          shareIdx: 1,
+          shareReplyIdx: 1,
+          userId: "감자",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+        {
+          shareIdx: 1,
+          shareReplyIdx: 2,
+          userId: "고구마",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+        {
+          shareIdx: 1,
+          shareReplyIdx: 3,
+          userId: "사과",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+        {
+          shareIdx: 1,
+          shareReplyIdx: 4,
+          userId: "포도",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+      ],
     },
     {
       id: 2,
       shareTitle: "나눔해요2",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.02",
       content: "aaaa",
       itemImg:
         "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
       shareState: 1,
+      shareReply: [
+        {
+          shareIdx: 2,
+          shareReplyIdx: 1,
+          userId: "수박",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+        {
+          shareIdx: 2,
+          shareReplyIdx: 2,
+          userId: "망고",
+          userProfileName: null,
+          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyDate: "2022.01.01",
+        },
+      ],
     },
     {
       id: 3,
       shareTitle: "나눔해요3",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.03",
       content: "aaaa",
       itemImg:
@@ -40,6 +95,7 @@ const Share = () => {
       id: 4,
       shareTitle: "나눔해요4",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.04",
       content: "aaaa",
       itemImg:
@@ -50,6 +106,7 @@ const Share = () => {
       id: 1,
       shareTitle: "나눔해요1",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.01",
       content: "aaaa",
       itemImg:
@@ -60,6 +117,7 @@ const Share = () => {
       id: 2,
       shareTitle: "나눔해요2",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.02",
       content: "aaaa",
       itemImg:
@@ -70,6 +128,7 @@ const Share = () => {
       id: 3,
       shareTitle: "나눔해요3",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.03",
       content: "aaaa",
       itemImg:
@@ -80,6 +139,7 @@ const Share = () => {
       id: 4,
       shareTitle: "나눔해요4",
       userId: "당근",
+      userProfileName: null,
       regDate: "2022.08.04",
       content: "aaaa",
       itemImg:

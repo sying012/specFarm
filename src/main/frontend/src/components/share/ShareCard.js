@@ -16,7 +16,7 @@ const ShareCard = ({ shareItem }) => {
   const theme = createTheme({
     typography: {
       fontFamily: [
-        "Hahmlet",
+        "Pretendard-Regular",
         "Segoe UI",
         "Roboto",
         "Oxygen",
@@ -26,6 +26,7 @@ const ShareCard = ({ shareItem }) => {
         "Droid Sans",
         "Helvetica Neue",
       ].join(","),
+      // fontSize: "15px",
     },
   });
 
@@ -49,15 +50,16 @@ const ShareCard = ({ shareItem }) => {
                 className={styles.state}
                 style={{
                   color: "white",
-                  background: shareState
-                    ? "rgba(187, 205, 110, 0.8)"
-                    : "rgba(107, 83, 67, 0.8)",
+                  background: shareState ? "#1d5902" : "#8cbf75",
                   fontFamily: "Hahmlet",
                 }}
               >
                 {shareState ? "나눔" : "완료"}
               </div>
-              <p className={styles.writer} style={{ fontFamily: "Hahmlet" }}>
+              <p
+                className={styles.writer}
+                style={{ fontFamily: "Pretendard-Regular" }}
+              >
                 {userId}
               </p>
             </div>

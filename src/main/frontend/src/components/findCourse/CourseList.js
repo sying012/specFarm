@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/findcourse/courseList.module.css";
+import styles from "../../styles/findcourse/CourseList.module.css";
 import CourseCard from "./CourseCard";
 
 const CourseList = () => {

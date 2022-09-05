@@ -23,11 +23,13 @@
   height: 40px;
   margin-left: auto;
   margin-right: 10px;
-  background-color: rgba(187, 205, 110, 0.8);
+  background-color: #97be7d;
   border: none;
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  text-align: center;
+  line-height: 40px;
 }
 
 .pageBtnContainer {
@@ -39,5 +41,10 @@
   justify-content: center;
 }
 
-.pageBtnContainer {
+.pageNation {
+  margin: 40px;
+}
+
+.pageNation > div {
+  align-items: center;
 }

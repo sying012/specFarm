@@ -1,3 +1,7 @@
+.faqContent {
+  padding: 10px 20px;
+}
+
 .faqContent > p {
   margin-bottom: 5px;
 }

@@ -68,6 +68,8 @@ export default function FaqAccordion({ test }) {
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
+        className={styles.test}
+        style={{ borderRadius: "4px 4px 0 0" }}
       >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Typography ref={(elem) => (headerRef.current[0] = elem)}>
@@ -356,6 +358,7 @@ export default function FaqAccordion({ test }) {
       <Accordion
         expanded={expanded === "panel9"}
         onChange={handleChange("panel9")}
+        style={{ borderRadius: "0 0 4px 4px" }}
       >
         <AccordionSummary aria-controls="panel9d-content" id="panel9d-header">
           <Typography ref={(elem) => (headerRef.current[8] = elem)}>

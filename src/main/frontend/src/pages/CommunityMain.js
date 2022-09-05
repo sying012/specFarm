@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import AskListItem from "../components/ask/AskListItem";
-import ShareCard from "../components/share/ShareCard";
 import ShareList from "../components/share/ShareList";
-import StudyContainer from "../components/study/StudyContainer";
-import StudyContainerList from "../components/study/StudyContainerList";
+import StudyCardList from "../components/study/StudyCardList";
 import "../styles/community/CommunityMain.css";
 
 const CommunityMain = () => {
@@ -44,18 +42,6 @@ const CommunityMain = () => {
       studyMemCnt: 5,
       studyImg:
         "https://dimg.donga.com/wps/NEWS/IMAGE/2020/03/02/99972437.1.jpg",
-      studyState: 0,
-    },
-    {
-      id: 5,
-      studyTitle: "스터디 제목1",
-      userId: "소방 안전관리 대장",
-      regDate: "2022.08.29",
-      contact: "http://open.kakao/a/dd0dd",
-      studyContent: "어쩌고 저쩌고1",
-      studyMemCnt: 3,
-      studyImg:
-        "https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png",
       studyState: 0,
     },
   ]);
@@ -112,12 +98,51 @@ const CommunityMain = () => {
         <p>인기 품앗이👨‍👨‍👧‍👧</p>
       </div>
       <div className="popStudyContainer">
-        <StudyContainerList studyList={studyList} />
+        <StudyCardList studyList={studyList} />
       </div>
       <div className="commSubtitle">
         <p>물어방 인기글🙋‍♀️</p>
       </div>
       <div className="popAskContainer">
+        <AskListItem
+          id={1}
+          ask={{
+            id: 1,
+            askTitle: "제목11111111",
+            askContent: "내용아러ㅣ너러ㅣㅏ너ㅘㄴsdkhflskjlfsjdf kdhfs",
+            askRegDate: "2022.08.24 10:56 AM",
+            userId: "관리자인 척",
+            aCount: 12,
+            certIdx: "정보처리기사",
+            userProfileName: "/upload/profile/badge.png",
+          }}
+        ></AskListItem>
+        <AskListItem
+          id={1}
+          ask={{
+            id: 1,
+            askTitle: "제목11111111",
+            askContent: "내용아러ㅣ너러ㅣㅏ너ㅘㄴsdkhflskjlfsjdf kdhfs",
+            askRegDate: "2022.08.24 10:56 AM",
+            userId: "관리자인 척",
+            aCount: 12,
+            certIdx: "정보처리기사",
+            userProfileName: "/upload/profile/badge.png",
+          }}
+        ></AskListItem>
+        <AskListItem
+          id={1}
+          ask={{
+            id: 1,
+            askTitle: "제목11111111",
+            askContent: "내용아러ㅣ너러ㅣㅏ너ㅘㄴsdkhflskjlfsjdf kdhfs",
+            askRegDate: "2022.08.24 10:56 AM",
+            userId: "관리자인 척",
+            aCount: 12,
+            certIdx: "정보처리기사",
+            userProfileName: "/upload/profile/badge.png",
+          }}
+        ></AskListItem>
         <AskListItem
           id={1}
           ask={{

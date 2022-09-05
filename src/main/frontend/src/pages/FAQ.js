@@ -25,17 +25,27 @@ const FAQ = () => {
       </div>
       <div className={styles.faqcontainer}>
         <div className={styles.searchFieldWrapper}>
-          <ThemeProvider theme={theme}>
-            <TextField
-              id="studySearch"
-              type="search"
-              InputProps={{
-                startAdornment: <SearchIcon color="inherit" />,
-              }}
-              size="small"
-              style={{ width: "300px" }}
-            ></TextField>
-          </ThemeProvider>
+          <form>
+            <ThemeProvider theme={theme}>
+              <TextField
+                id="studySearch"
+                type="search"
+                InputProps={{
+                  startAdornment: <SearchIcon color="inherit" />,
+                }}
+                size="small"
+                style={{ width: "300px" }}
+                fontFamily="Pretendard-Regular"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                }}
+              ></TextField>
+            </ThemeProvider>
+          </form>
         </div>
         <div className={styles.accordionContainer}>
           <div className={styles.accordionHead}></div>
@@ -43,15 +53,9 @@ const FAQ = () => {
             <FaqAccordion></FaqAccordion>
           </ThemeProvider>
         </div>
-        <div className={styles.pageBtnContainer}>
+        <div className={styles.pageNation}>
           <Stack spacing={2}>
-            <Pagination
-              count={2}
-              variant="outlined"
-              shape="rounded"
-              siblingCount={3}
-              boundaryCount={1}
-            />
+            <Pagination count={10} />
           </Stack>
         </div>
       </div>

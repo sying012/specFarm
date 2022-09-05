@@ -1,0 +1,37 @@
+.selectListWrapper {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  border: 2px solid #0d0d0d;
+  border-top: 0;
+  box-sizing: border-box;
+  border-radius: 0 0 5px 5px;
+}
+
+.selectListWrapper > ul {
+  border: 1px solid rgb(241, 241, 241);
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.upperList button {
+  /* background-color: violet; */
+  font-size: 18px;
+}
+
+.lowerList button {
+  /* background-color: skyblue; */
+  font-size: 17px;
+
+  color: #777;
+}
+
+.selectListWrapper button {
+  width: 100%;
+  line-height: 2;
+  border: none;
+  background-color: unset;
+}

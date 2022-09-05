@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router";
+import { Link } from "react-router-dom";
 
 import StudyContent from "../components/study/StudyContent";
 import StudyMain from "../components/study/StudyMain";
@@ -18,7 +19,7 @@ const Study = () => {
 어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1
 어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1
 어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1어쩌고 저쩌고1`,
-      studyMemCnt: 3,
+      studyMemCnt: 4,
       studyImg:
         "https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png",
       studyState: 0,
@@ -124,22 +125,12 @@ const Study = () => {
   return (
     <div>
       <div className="titleContainer">
-        <div
-          className="titlewrap"
-          onClick={() => {
-            window.location = "/community";
-          }}
-        >
-          마을회관
-        </div>
-        <div
-          className="subtitlewrap"
-          onClick={() => {
-            window.location = "/community/study";
-          }}
-        >
-          지식 품앗이👨‍👧‍👧
-        </div>
+        <Link to={"/community"}>
+          <div className="titlewrap">마을회관</div>
+        </Link>
+        <Link to={"/community/study"}>
+          <div className="subtitlewrap">지식 품앗이👨‍👧‍👧</div>
+        </Link>
       </div>
       <Routes>
         <Route path="/" element={<StudyMain studyList={studyList} />}></Route>

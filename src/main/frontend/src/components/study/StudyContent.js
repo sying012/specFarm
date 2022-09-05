@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
-import "../../styles/study/StudyContent.css";
+import styles from "../../styles/study/StudyContent.module.css";
 import Avatar from "@mui/material/Avatar";
+import { borderRadius } from "@mui/system";
 
 const StudyContent = ({ studyList }) => {
   const { id } = useParams();
+  const [toggleList, setToggleList] = useState(0);
+  const [requestState, setRequestState] = useState(0);
   const study = studyList[id - 1];
   const {
     studyTitle,
@@ -17,94 +20,172 @@ const StudyContent = ({ studyList }) => {
     studyState,
   } = study;
 
-  console.log(study);
-
   return (
-    <div className="studyContent">
-      <div className="contentContainer">
-        <div className="contentLeft">
-          <img className="studyBanner" src={studyImg} alt="스터디 배너"></img>
-          <div className="joinListWrapper">
-            <div className="listName">
-              <p>참가자 목록</p>
-              <p className="memberCnt">참여인원: {studyMemCnt}명</p>
+    <div className={styles.studyContent}>
+      <div className={styles.contentContainer}>
+        <div className={styles.contentLeft}>
+          <img
+            className={styles.studyBanner}
+            src={studyImg}
+            alt="스터디 배너"
+          ></img>
+          <div className={styles.joinListWrapper}>
+            <div className={styles.listName}>
+              <p>신청자 목록</p>
+              <p className={styles.memberCnt}>{studyMemCnt}명 신청중</p>
             </div>
-            <div className="joinList">
-              <div className="participant">
+            <div className={styles.joinList}>
+              <div className={styles.participant}>
                 <img
                   src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
-                  className="partImg"
+                  className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
-                <p className="partId">소방대장</p>
-                <button className="byebtn" type="button">
-                  잘가
+                <p className={styles.partId}>소방대장</p>
+                <button className={styles.byebtn} type="button">
+                  어서와
                 </button>
               </div>
-              <div className="participant">
+              <div className={styles.participant}>
                 <img
                   src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
-                  className="partImg"
+                  className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
-                <p className="partId">소방대장</p>
-                <button className="byebtn" type="button">
-                  잘가
+                <p className={styles.partId}>소방대장</p>
+                <button className={styles.byebtn} type="button">
+                  어서와
                 </button>
               </div>
-              <div className="participant">
+              <div className={styles.participant}>
                 <img
                   src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
-                  className="partImg"
+                  className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
-                <p className="partId">소방대장</p>
-                <button className="byebtn" type="button">
-                  잘가
+                <p className={styles.partId}>소방대장</p>
+                <button className={styles.byebtn} type="button">
+                  어서와
                 </button>
               </div>
             </div>
+            <div
+              className={styles.joinListToggle}
+              style={
+                toggleList
+                  ? { borderRadius: "0" }
+                  : { borderRadius: "0 0 4px 4px" }
+              }
+              onClick={() => {
+                setToggleList(!toggleList);
+              }}
+            >
+              <p>참여자 목록</p>
+              <p className={styles.memberCnt}>{studyMemCnt}명 참여중</p>
+            </div>
+            {toggleList ? (
+              <div className={styles.joinList}>
+                <div className={styles.participant}>
+                  <img
+                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    className={styles.partImg}
+                    alt="참가자 프로필사진"
+                  ></img>
+                  <p className={styles.partId}>{userId}</p>
+                  <img
+                    className={styles.badge}
+                    src="/upload/study/crown.png"
+                    alt="방장표시"
+                  ></img>
+                </div>
+                <div className={styles.participant}>
+                  <img
+                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    className={styles.partImg}
+                    alt="참가자 프로필사진"
+                  ></img>
+                  <p className={styles.partId}>소방대장</p>
+                  <button className={styles.byebtn} type="button">
+                    잘가
+                  </button>
+                </div>
+                <div className={styles.participant}>
+                  <img
+                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    className={styles.partImg}
+                    alt="참가자 프로필사진"
+                  ></img>
+                  <p className={styles.partId}>소방대장</p>
+                  <button className={styles.byebtn} type="button">
+                    잘가
+                  </button>
+                </div>
+                <div className={styles.participant}>
+                  <img
+                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    className={styles.partImg}
+                    alt="참가자 프로필사진"
+                  ></img>
+                  <p className={styles.partId}>소방대장</p>
+                  <button className={styles.byebtn} type="button">
+                    잘가
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
-        <div className="contentRight">
-          <div className="titleWrapper">
+        <div className={styles.contentRight}>
+          <div className={styles.titleWrapper}>
             <div
-              className="studyContentState"
+              className={styles.studyContentState}
               style={{
                 color: "white",
-                background: studyState
-                  ? "rgba(187, 205, 110, 0.8)"
-                  : "rgba(107, 83, 67, 0.8)",
+                background: studyState ? "#1d5902" : "#8cbf75",
               }}
             >
               {studyState ? "모집" : "완료"}
             </div>
-            <p className="studyTitle">{studyTitle}</p>
+            <p className={styles.studyTitle}>{studyTitle}</p>
           </div>
-          <div className="makerNdate">
-            <div className="maker">
+          <div className={styles.makerNdate}>
+            <div className={styles.maker}>
               <img
                 src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
-                className="partImg"
+                className={styles.partImg}
                 alt="참가자 프로필사진"
               ></img>
-              <p className="studyMaker">{userId}</p>
+              <p className={styles.studyMaker}>{userId}</p>
             </div>
-            <p className="studyRegDate">{regDate}</p>
+
+            <p className={styles.studyRegDate}>{regDate}</p>
           </div>
-          <div className="contentWrapper">
-            <pre className="content">{studyContent}</pre>
-          </div>
-          <div className="contactWrapper">
+          <div className={styles.contactWrapper}>
             <p>연락수단 👉</p>
-            <a href="#" className="contact">
+            <a href="#" className={styles.contact}>
               {contact}
             </a>
           </div>
-          <div className="btnWrapper">
+          <div className={styles.contentWrapper}>
+            <pre className={styles.content}>{studyContent}</pre>
+          </div>
+
+          <div className={styles.btnWrapper}>
             {/* <button type="button">신청하기</button> */}
             {/* 여기에 수정이랑 삭제 만들기 */}
-            <button type="button">신청/취소</button>
+            <button
+              type="button"
+              onClick={() => {
+                setRequestState(!requestState);
+              }}
+              className={
+                requestState ? styles.reqBtnStyle : styles.cancelBtnStyle
+              }
+            >
+              {requestState ? "취소" : "신청"}
+            </button>
           </div>
         </div>
       </div>

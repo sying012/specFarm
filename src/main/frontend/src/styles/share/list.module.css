@@ -1,7 +1,7 @@
 .shareCardList {
   display: grid;
   gap: 25px;
-  margin: 2.5% 0px 20px 0px;
+  margin: 0px 0px 20px 0px;
   grid-template-columns: 0.5fr 0.5fr 0.5fr;
 }
 

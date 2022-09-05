@@ -1,4 +1,4 @@
-import { Button, createTheme, Grid, TextField } from "@mui/material";
+import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import styles from "../../styles/findUser/FindUser.module.css";
 
@@ -8,12 +8,23 @@ const theme = createTheme({
   },
   palette: {
     green: {
-      main: "rgb(159, 182, 72)",
+      main: "#1d5902",
       contrastText: "#fff",
     },
-    brown: {
-      main: "rgb(107, 83, 67)",
+    lightgreen: {
+      main: "#F2C335",
       contrastText: "#fff",
+    },
+  },
+});
+
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#8cbf75",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#8cbf75",
     },
   },
 });
@@ -248,7 +259,7 @@ const PwReset = () => {
     <form onSubmit={PwResetNext}>
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userId"
             variant="outlined"
             id="pwReset_userId"
@@ -258,10 +269,21 @@ const PwReset = () => {
             error={IdError}
             helperText={IdErrorText}
             onFocus={idErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userName"
             variant="outlined"
             id="pwReset_userName"
@@ -271,10 +293,21 @@ const PwReset = () => {
             error={nameError}
             helperText={nameErrorText}
             onFocus={nameErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={9}>
-          <TextField
+          <CssTextField
             name="userTel"
             variant="outlined"
             id="pwReset_userTel"
@@ -283,25 +316,38 @@ const PwReset = () => {
             error={telError}
             helperText={telErrorText}
             onFocus={telErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
-        <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
+        <Grid item xs={3} style={{ paddingLeft: "14px" }}>
           <Button
             variant="contained"
             theme={theme}
-            color="brown"
+            color="lightgreen"
             style={{
               fontSize: "14px",
               lineHeight: "18px",
-              padding: "14px 10px",
+              height: "45px",
+              padding: "7px",
             }}
+            // className={styles.buttonSmall}
             onClick={telAuth}
           >
             인증번호 받기
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userTelAuthNumber"
             variant="outlined"
             id="pwReset_userTelAuthNumber"
@@ -315,6 +361,17 @@ const PwReset = () => {
             sx={{
               "& .MuiInputBase-input.Mui-disabled": {
                 backgroundColor: "#F5F5F5",
+              },
+            }}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
               },
             }}
           />
@@ -343,7 +400,7 @@ const PwReset = () => {
     <form className={styles.pwResetResultDiv} onSubmit={pwResetSubmit}>
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userPw"
             type="password"
             variant="outlined"
@@ -354,10 +411,21 @@ const PwReset = () => {
             error={pwValidationError}
             helperText={pwValidationErrorText}
             onFocus={pwValidationErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userPwCheck"
             type="password"
             variant="outlined"
@@ -368,6 +436,17 @@ const PwReset = () => {
             error={pwError}
             helperText={pwErrorText}
             onFocus={pwErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -381,6 +460,17 @@ const PwReset = () => {
               fontSize: "15px",
               lineHeight: "18px",
               padding: "14px 16px",
+            }}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
             }}
           >
             비밀번호 재설정

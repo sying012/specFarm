@@ -44,7 +44,13 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ pr: 3, pt: 3, pl: 3, pb: 2 }}>
-          <div>{children}</div>
+          <div
+            style={{
+              height: "250px",
+            }}
+          >
+            {children}
+          </div>
           <MobileStepper
             variant="dots"
             steps={6}
@@ -137,13 +143,13 @@ const Plan = ({ acceptances, tests }) => {
               <Tab
                 label="접수 일정"
                 sx={{
-                  borderTopLeftRadius: "15px",
+                  borderTopLeftRadius: "10px",
                 }}
               />
               <Tab
                 label="시험 일정"
                 sx={{
-                  borderTopRightRadius: "15px",
+                  borderTopRightRadius: "10px",
                 }}
               />
             </Tabs>
@@ -153,8 +159,8 @@ const Plan = ({ acceptances, tests }) => {
             index={0}
             style={{
               background: "rgba(255, 255, 255, 0.05)",
-              borderBottomLeftRadius: "15px",
-              borderBottomRightRadius: "15px",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
             }}
           >
             {acceptances.map((accept) => (
@@ -170,8 +176,8 @@ const Plan = ({ acceptances, tests }) => {
             index={1}
             style={{
               background: "rgba(255, 255, 255, 0.05)",
-              borderBottomLeftRadius: "15px",
-              borderBottomRightRadius: "15px",
+              borderBottomLeftRadius: "10px",
+              borderBottomRightRadius: "10px",
             }}
           >
             {tests.map((test) => (

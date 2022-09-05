@@ -28,6 +28,18 @@ const RegNotice = () => {
           variant="standard"
           autoComplete="off"
           fullWidth
+          sx={{
+            "& .MuiInput-root": {
+              "&:after": {
+                borderColor: "#8cbf75",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              "&.Mui-focused": {
+                color: "#1d5902",
+              },
+            },
+          }}
         />
         <Editer
           placeholder={"내용"}
@@ -39,7 +51,7 @@ const RegNotice = () => {
             type="button"
             variant="outlined"
             color="primary"
-            href="/mypage"
+            href="/cs"
             theme={theme}
             className="noticeRegButton"
           >

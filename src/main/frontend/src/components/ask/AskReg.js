@@ -122,7 +122,7 @@ const AskReg = ({ certNames }) => {
                   type="button"
                   variant="outlined"
                   color="primary"
-                  href="/mypage"
+                  href="/community/ask"
                   theme={theme}
                   className="askInRegButton"
                 >

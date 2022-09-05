@@ -2,34 +2,39 @@
     width: 300px;
     min-height: calc(100vh - 130px);
     box-shadow: 5px 6px 22px lightgray;
+    margin-top: 40px;
   } 
   .certfindinput {
     width: 200px;
     height: 40px;
     margin-left: 8%;
     margin-top: 60px;  
-    border: 3px solid lightgray;
-    border-radius: 20px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
     font-size: 14px;
+    padding: 0 5px;
   }
   .smallFindCert {
     font-size: 14px;
     margin: 5px;
-    height: 30px;
+    height: 40px;
     border-radius: 30px;
     background: #eee;
     line-height: 20px;
-    
-    border: 1px solid lightgray;
+    border: none;
     cursor: pointer;
-    
-    
-    
   }
+
+  .smallFindCert:hover {
+    background-color: black;
+    color: white
+  }
+
   .certFind {
   width: 850px;
   height: 500px;
   color: black;
+  margin-top: 40px;
   
 
   }
@@ -44,32 +49,33 @@
   }
 
   .infoHead {
-  text-align: center; 
-  width: 90px;
-  font-size: 14px;
+  padding: 10px
+ 
   }
 
   .infoBody {
     text-align: center;
     font-size: 12px;
     width: 50px;
+    
   }
 
   .infoTable {
     width: 100%;
     height: max-content;
     border-collapse: collapse;
-    border-top: 2px solid #bdbdbd;
-    border-bottom: 2px solid #bdbdbd;
-    text-align: center;
+    border-radius: 10px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px rgba(150, 150, 150, 0.3);
   }
 
   .infoTable > thead > tr > th {
-    background-color: #eeeeee;
-    border-top: 1px solid #bdbdbd;
+    background-color: rgba(150, 150, 150, 0.3);
+    border-top: 1px solid rgba(150, 150, 150, 0.3);
     padding: 15px 5px;
     text-align: center;
   }
+
   
   .infoTable > tbody > tr > td {
     margin-left: 100px;
@@ -79,8 +85,15 @@
   }
 
   .infoButton {
-    text-align: center;
-    padding: 20px 5px;
+    font-size: 14px;
+    height: 40px;
+    border-radius: 30px;
+    background: #eee;
+    line-height: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 30px;
+    margin: 40px 330px;
   }
   .appInfoTitle {
     font-size: 18px;
@@ -88,9 +101,8 @@
 
   }
   .appInfoCon {
-   padding-top: 10px;
-   list-style: none;
-   color: lightgray
+   
+   color: black
   }
 
   .testInfo {
@@ -100,6 +112,13 @@
   .certFindSearchBar {
     padding: 0 15px;
   }
+  
+  .certFindName {
+    font-size: 14px;
+    float: right;
+    margin: 20px 5px;
+  }
+
 
   
   

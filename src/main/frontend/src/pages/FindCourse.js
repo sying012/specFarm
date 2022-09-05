@@ -1,19 +1,19 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import CourseContainer from "../components/findCourse/CourseContainer";
 import CourseDetail from "../components/findCourse/CourseDetail";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const FindCourse = () => {
   return (
     <div>
       <div className="titleContainer">
-        <Link to={"/skills"}>
-          <div className="titlewrap">Skills</div>
-        </Link>
-        <Link to={"/skills/findcourse"}>
+        <div className="titlewrap">Skills</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to="/skills/findcourse">
           <div className="subtitlewrap">직업훈련탐색</div>
-        </Link>
+        </NavLink>
       </div>
       <Routes>
         <Route path="/" element={<CourseContainer />} />

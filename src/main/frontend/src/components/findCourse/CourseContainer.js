@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/findcourse/Findcourse.module.css";
+import styles from "../../styles/findcourse/CourseContainer.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CourseSelector from "../../components/findCourse/CourseSelector";
 import CourseList from "./CourseList";

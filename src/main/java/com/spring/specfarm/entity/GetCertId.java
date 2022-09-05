@@ -5,6 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class SeminarFileId implements Serializable {
-
+public class GetCertId implements Serializable {
+	private int certIdx;
+	private String userId;
 }

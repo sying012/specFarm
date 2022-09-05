@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../../styles/share/newShare.module.css";
-import { Stack, Button, createTheme, Box } from "@mui/material";
+import { Stack, Box, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const NewShare = () => {
   // shareData를 백으로 전달
@@ -34,35 +35,6 @@ const NewShare = () => {
   //   this.props.addNewShare(shareData);
   // }
 
-  const theme = createTheme({
-    palette: {
-      brown: {
-        main: "rgb(107, 83, 67)",
-        contrastText: "#fff",
-      },
-      primary: {
-        main: "rgb(187, 205, 110)",
-        contrastText: "#fff",
-      },
-      secondary: {
-        main: "#555",
-      },
-    },
-    typography: {
-      fontFamily: [
-        "Hahmlet",
-        "Segoe UI",
-        "Roboto",
-        "Oxygen",
-        "Ubuntu",
-        "Cantarell",
-        "Fira Sans",
-        "Droid Sans",
-        "Helvetica Neue",
-      ].join(","),
-    },
-  });
-
   const readImage = (file) => {
     // 인풋 태그에 파일이 있는 경우
     if (file) {
@@ -93,6 +65,7 @@ const NewShare = () => {
             src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
             alt="img"
             id="shareImgPreview"
+            title="사진을 추가하려면 클릭하세요."
             onClick={() => {
               document.getElementById("fileInput").click();
             }}
@@ -130,57 +103,56 @@ const NewShare = () => {
         </div>
 
         <div className={styles.shareForm}>
-          <form
-          //onSubmit={submitHandler}
-          >
-            <input
-              className={styles.title}
-              placeholder="제목"
-              //id="title"
-              required
-              //ref={titleInputRef}
-            ></input>
-            <textarea
-              className={styles.content}
-              placeholder="무엇을 나눔하고 싶으신가요?"
-              style={{ fontSize: 15 }}
-              // id="content"
-              required
-              // ref={contentInputRef}
-            ></textarea>
-            <div className={styles.shareBtn}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                href="/community/share"
-                theme={theme}
-                className={styles.cancelBtn}
-              >
-                취소
-              </Button>
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                // /:id로 변경 예정
-                onClick={() => (
-                  (window.location = "./"), alert("등록되었습니다.")
-                )}
-                theme={theme}
-                className={styles.RegBtn}
-              >
-                등록
-              </Button>
-            </div>
-          </form>
           <Box
             component="form"
             sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              "& > :not(style)": { m: 1, width: "750px" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField id="shareTitleInput" label="제목" variant="outlined" />
+          </Box>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "750px" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="shareContentInput"
+              label="내용"
+              multiline
+              rows={15}
+            />
+          </Box>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "750px" },
             }}
             noValidate
             autoComplete="off"
           ></Box>
+
+          <div className={styles.shareBtns}>
+            <Link to="../share">
+              <button className={styles.cancelBtn} type="button">
+                취소
+              </button>
+            </Link>
+            <Link to="/:id">
+              <button
+                className={styles.RegBtn}
+                type="submit"
+                onClick={() => alert("등록되었습니다.")}
+              >
+                등록
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </>

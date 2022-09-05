@@ -8,7 +8,7 @@
   height: 395px;
   display: flex;
   flex-direction: column;
-
+  color: black;
   box-sizing: border-box;
   margin-top: 36px;
   border-radius: 14px;
@@ -25,7 +25,7 @@
 
 .cardTop {
   height: 180px;
-  padding: 25px 24px 0 24px;
+  padding: 20px 24px 0 24px;
 }
 
 .cafeName {
@@ -47,6 +47,6 @@
 
 .cafeImg {
   width: 100%;
-  max-height: 190px;
+  max-height: 195px;
   border-radius: 0 0 14px 14px;
 }

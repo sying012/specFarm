@@ -16,6 +16,7 @@ import TestSchedule from "./TestSchedule";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
 import "../../styles/cert/info.css";
 
 function TabPanel(props) {
@@ -70,21 +71,36 @@ const CertFind = () => {
 
   return (
     <div>
-      <div className="titleContainer">
-        <div className="titlewrap">자격증 찾기</div>
-      </div>
       <div className={styles.certFindInfo}>
         <div className={styles.certContainer}>
-          <div className={styles.certFindSearchBar}>
-            <input className={styles.certfindinput} placeholder="검색"></input>
-            <SearchIcon
-              fontSize="large"
-              color="action"
-              style={{ position: "absolute", top: "305px", right: "1120px" }}
-            />
+          <div className={styles.certfindSearch}>
+            <TextField
+              id="outlined-search"
+              type="search"
+              InputProps={{
+                startAdornment: <SearchIcon color="action" />,
+
+                style: {
+                  width: "280px",
+                  borderRadius: "10px",
+                  margin: "20px 10px",
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                  "&.MuiInputBase-sizeSmall": {
+                    paddingLeft: "14px",
+                  },
+                },
+              }}
+              size="small"
+            ></TextField>
           </div>
-          <Grid xs={6} style={{ width: "150px", padding: "20px 40px" }}>
-            <FormControl sx={{ minWidth: 200 }} style={{ fontSize: "10px" }}>
+          <Grid xs={6} style={{ padding: "5px 10px" }}>
+            <FormControl sx={{ minWidth: 280 }} style={{ fontSize: "10px" }}>
               <InputLabel id="certLCat" style={{ fontSize: "14px" }}>
                 대분류
               </InputLabel>
@@ -95,7 +111,10 @@ const CertFind = () => {
                 label="대분류"
                 onChange={certLCatChange}
                 name="certLCat"
-                style={{ borderRadius: "15px" }}
+                style={{
+                  borderRadius: "15px",
+                  height: "50px",
+                }}
               >
                 {certLCat.map((certL) => (
                   <MenuItem key={certL.id} value={certL.name}>
@@ -105,8 +124,8 @@ const CertFind = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid xs={6} style={{ width: "150px", padding: "10px 40px" }}>
-            <FormControl sx={{ minWidth: 200 }}>
+          <Grid xs={6} style={{ padding: "5px 10px" }}>
+            <FormControl sx={{ minWidth: 280 }}>
               <InputLabel id="certMCat" style={{ fontSize: "14px" }}>
                 중분류
               </InputLabel>
@@ -117,7 +136,7 @@ const CertFind = () => {
                 label="중분류"
                 onChange={certMCatChange}
                 name="certMCat"
-                style={{ borderRadius: "15px" }}
+                style={{ borderRadius: "15px", height: "50px" }}
               >
                 {certMCat.map((certM) => (
                   <MenuItem key={certM.id} value={certM.name}>
@@ -161,14 +180,16 @@ const CertFind = () => {
           </div>
         </div>
         <div className={styles.certFind}>
+          <div className={styles.certFindName}>관심등록</div>
           <div className={styles.certFindTitle}>
-            사회조사분석사1급{" "}
+            사회조사분석사1급
             <Checkbox
               {...label}
               icon={<FavoriteBorder />}
               checkedIcon={<Favorite />}
               classes={{ root: "custom-checkbox-root" }}
-            />{" "}
+              style={{ float: "right", marginTop: "-10px" }}
+            />
           </div>
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 0, borderColor: "divider" }}>

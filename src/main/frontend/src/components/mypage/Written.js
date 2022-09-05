@@ -5,7 +5,6 @@ import styles from "../../styles/mypage/Written.module.css";
 import { NavLink } from "react-router-dom";
 
 function Written({ asks, shares }) {
-  console.log(asks);
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = (e) => {

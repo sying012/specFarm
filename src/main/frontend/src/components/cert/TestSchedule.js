@@ -33,13 +33,13 @@ const TestSchedule = () => {
       <table className={styles.infoTable}>
         <thead className={styles.infoHead}>
           <tr>
-            <th>회차</th>
+            <th style={{ borderTopLeftRadius: "10px" }}>회차</th>
             <th>필기원서 접수</th>
             <th>필기시험</th>
             <th>필기합격 발표</th>
             <th>실기원서 접수</th>
             <th>실기시험</th>
-            <th>합격자발표</th>
+            <th style={{ borderTopRightRadius: "10px" }}>합격자발표</th>
           </tr>
         </thead>
         <tbody className={styles.infoBody}>
@@ -57,9 +57,11 @@ const TestSchedule = () => {
         </tbody>
       </table>
       <div className={styles.testInfo}>여기에 시험정보 들어가야함요</div>
-      <div className={styles.infoButton}>
+      <div>
         <a href="https://www.q-net.or.kr/">
-          <button type="button">원서접수</button>
+          <button type="button" className={styles.infoButton}>
+            원서접수
+          </button>
         </a>
       </div>
     </div>

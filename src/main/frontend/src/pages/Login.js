@@ -1,7 +1,8 @@
-import { Button, createTheme, Grid, TextField } from "@mui/material";
+import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "../styles/login/Login.module.css";
+import { useBeforeRender } from "../utils";
 
 const theme = createTheme({
   status: {
@@ -15,7 +16,22 @@ const theme = createTheme({
   },
 });
 
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#8cbf75",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#8cbf75",
+    },
+  },
+});
+
 const Login = () => {
+  useBeforeRender(() => {
+    document.getElementsByTagName("body")[0].style.overflowY = "auto";
+  }, []);
+
   const [idError, setIdError] = useState(false);
   const [pwError, setPwError] = useState(false);
 
@@ -89,7 +105,7 @@ const Login = () => {
         <form onSubmit={loginSubmit}>
           <Grid container spacing={3} className={styles.padding}>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userId"
                 variant="outlined"
                 id="userId"
@@ -98,10 +114,21 @@ const Login = () => {
                 onBlur={idCheck}
                 error={idError}
                 onFocus={idErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userPw"
                 type="password"
                 variant="outlined"
@@ -111,6 +138,17 @@ const Login = () => {
                 onBlur={pwCheck}
                 error={pwError}
                 onFocus={pwErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,9 +161,8 @@ const Login = () => {
                 fullWidth
                 style={{
                   fontSize: "16px",
-                  fontWeight: "bold",
                   lineHeight: "18px",
-                  padding: "18px 16px",
+                  padding: "11px 16px",
                 }}
               >
                 로그인

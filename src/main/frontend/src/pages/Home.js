@@ -8,6 +8,9 @@ import SkillsMain from "./SkillsMain";
 import CommunityMain from "./CommunityMain";
 import NoticeMain from "./NoticeMain";
 import { useNavigate } from "react-router";
+import Header from "../layouts/Header";
+import HomeNavAfter from "../components/home/HomeNavAfter";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,11 +19,12 @@ const Home = () => {
 
   useEffect(() => {
     return () => {
-      for (let i = 0; i < scrollInterval; i++) {
+      for (let i = 0; i < 10000; i++) {
         clearInterval(i);
       }
     };
   }, []);
+
   // Application acceptance schedule
   const [acceptances, setAcceptance] = useState([
     {
@@ -68,12 +72,16 @@ const Home = () => {
   let scrollInterval;
 
   // body scroll
-  document.getElementsByTagName("body")[0].style.overflowY = "scroll";
+  document.getElementsByTagName("body")[0].style.overflowY = "hidden";
 
+  const [show, setShow] = useState(true);
   // wheel event
+  let count = 1;
   const wheelEvent = (e) => {
-    if (e.deltaY >= 0) {
+    if (e.deltaY >= 0 && count === 1) {
+      count++;
       fnScrollInterval();
+      setShow(false);
     }
   };
 
@@ -90,24 +98,26 @@ const Home = () => {
 
   // home nav click event
   const goClickPage = (click) => {
-    console.log(click.target.id);
     switch (click.target.id) {
       case "1":
         setPage("/cert");
         setPageComponent(<CertMain />);
+        setShow(false);
         break;
       case "2":
         setPage("/skills");
         setPageComponent(<SkillsMain />);
+        setShow(false);
         break;
       case "3":
         setPage("/community");
         setPageComponent(<CommunityMain />);
-        console.log("dkdkd");
+        setShow(false);
         break;
       case "4":
         setPage("/cs");
         setPageComponent(<NoticeMain />);
+        setShow(false);
         break;
       default:
         break;
@@ -119,6 +129,11 @@ const Home = () => {
 
   // scroll event
   window.onscroll = () => {
+    if (window.scrollY >= window.innerHeight - 105) {
+      document.getElementById("logoLink").style.color = "#1d5902";
+      document.getElementById("loginLink").style.color = "black";
+      document.getElementById("joinLink").style.color = "black";
+    }
     if (window.scrollY >= window.innerHeight - 71) {
       clearInterval(scrollInterval);
       navigate(page);
@@ -129,6 +144,27 @@ const Home = () => {
   return (
     <>
       <div className={styles.outer} onWheel={wheelEvent}>
+        <header className={styles.header} style={{ position: "fixed" }}>
+          <div className="innerheader">
+            <Link to="/">
+              <div className={styles.logo} id="logoLink">
+                specFarm
+              </div>
+            </Link>
+            <div className={styles.tailwrap}>
+              <div className="loginbtn">
+                <Link to="/login" id="loginLink">
+                  로그인
+                </Link>
+              </div>
+              <div className="joinbtn">
+                <Link to="/join" id="joinLink">
+                  회원가입
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
         <Main
           className={styles.content}
           acceptances={acceptances}
@@ -140,7 +176,8 @@ const Home = () => {
           className="layout"
           style={{ background: "rgba(255, 255, 255, 0.15)" }}
         >
-          <HomeNav goClickPage={goClickPage} id="homeNav" />
+          {show && <HomeNav goClickPage={goClickPage} show={show} />}
+          {!show && <HomeNavAfter />}
           <main className="main">{pageComponent}</main>
           <Footer />
         </div>

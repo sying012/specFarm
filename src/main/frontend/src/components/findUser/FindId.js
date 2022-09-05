@@ -1,4 +1,11 @@
-import { createTheme, Grid, TextField, Button, Link } from "@mui/material";
+import {
+  createTheme,
+  Grid,
+  TextField,
+  Button,
+  Link,
+  styled,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "../../styles/findUser/FindUser.module.css";
@@ -13,8 +20,19 @@ const theme = createTheme({
       contrastText: "#fff",
     },
     lightgreen: {
-      main: "#8cbf75",
+      main: "#F2C335",
       contrastText: "#fff",
+    },
+  },
+});
+
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#8cbf75",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#8cbf75",
     },
   },
 });
@@ -147,7 +165,7 @@ const FindId = () => {
     <form onSubmit={findIdSubmit}>
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userName"
             variant="outlined"
             id="findId_userName"
@@ -157,10 +175,21 @@ const FindId = () => {
             error={nameError}
             helperText={nameErrorText}
             onFocus={nameErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
         <Grid item xs={9}>
-          <TextField
+          <CssTextField
             name="userTel"
             variant="outlined"
             id="findId_userTel"
@@ -169,9 +198,20 @@ const FindId = () => {
             error={telError}
             helperText={telErrorText}
             onFocus={telErrorReset}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
+              },
+            }}
           />
         </Grid>
-        <Grid item xs={3} style={{ paddingLeft: "10px", paddingTop: "28px" }}>
+        <Grid item xs={3} style={{ paddingLeft: "14px" }}>
           <Button
             variant="contained"
             theme={theme}
@@ -179,15 +219,17 @@ const FindId = () => {
             style={{
               fontSize: "14px",
               lineHeight: "18px",
-              padding: "14px 10px",
+              height: "45px",
+              padding: "7px",
             }}
+            // className={styles.buttonSmall}
             onClick={telAuth}
           >
             인증번호 받기
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <CssTextField
             name="userTelAuthNumber"
             variant="outlined"
             id="findId_userTelAuthNumber"
@@ -201,6 +243,17 @@ const FindId = () => {
             sx={{
               "& .MuiInputBase-input.Mui-disabled": {
                 backgroundColor: "#F5F5F5",
+              },
+            }}
+            inputProps={{
+              style: {
+                paddingTop: "11px",
+                paddingBottom: "11px",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                lineHeight: "100%",
               },
             }}
           />

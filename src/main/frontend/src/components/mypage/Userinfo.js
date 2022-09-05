@@ -1,4 +1,4 @@
-import { AddCircle, ArrowForwardIos, HighlightOff } from "@mui/icons-material";
+import { AddCircle, ArrowForwardIos, Close } from "@mui/icons-material";
 import {
   Button,
   createTheme,
@@ -21,11 +21,11 @@ function Userinfo({ certs, user }) {
     },
     palette: {
       brown: {
-        main: "rgb(107, 83, 67)",
+        main: "#F2C335",
         contrastText: "#fff",
       },
       primary: {
-        main: "rgb(187, 205, 110)",
+        main: "#1d5902",
         contrastText: "#fff",
       },
       secondary: {
@@ -248,9 +248,9 @@ function Userinfo({ certs, user }) {
                   color="primary"
                   component="label"
                   style={{
-                    fontSize: "1.1em",
-                    color: "gray",
-                    fontWeight: 500,
+                    fontSize: "1em",
+                    color: "#1d5902",
+                    fontWeight: 700,
                     paddingTop: "13px",
                   }}
                 >
@@ -275,9 +275,22 @@ function Userinfo({ certs, user }) {
                 id="userTel"
                 label="휴대폰 번호"
                 defaultValue={user.userTel}
+                className={styles.TextField}
                 fullWidth
                 error={telError}
                 helperText={telErrorText}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid
@@ -314,6 +327,16 @@ function Userinfo({ certs, user }) {
                   "& .MuiInputBase-input.Mui-disabled": {
                     backgroundColor: "#F5F5F5",
                   },
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
                 }}
               />
             </Grid>
@@ -328,6 +351,18 @@ function Userinfo({ certs, user }) {
                 onChange={emailCheck}
                 error={emailError}
                 helperText={emailErrorText}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={5.9}>
@@ -336,7 +371,18 @@ function Userinfo({ certs, user }) {
                 fullWidth
                 style={{ fontSize: "14px" }}
               >
-                <InputLabel id="demo-select-small">관심분야(대분류)</InputLabel>
+                <InputLabel
+                  id="demo-select-small"
+                  sx={{
+                    "&.MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
+                >
+                  관심분야(대분류)
+                </InputLabel>
                 <Select
                   labelId="certLCat"
                   id="certLCatSelect"
@@ -344,9 +390,29 @@ function Userinfo({ certs, user }) {
                   label="관심분야(대분류)"
                   onChange={certLCatChange}
                   name="certLCat"
+                  sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                  }}
                 >
                   {certLCat.map((certL) => (
-                    <MenuItem key={certL.id} value={certL.name}>
+                    <MenuItem
+                      key={certL.id}
+                      value={certL.name}
+                      sx={{
+                        "&.MuiMenuItem-root": {
+                          "&.Mui-selected": {
+                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                          },
+                          "&.Mui-selected:hover": {
+                            backgroundColor: "rgba(140, 191, 117, 0.3)",
+                          },
+                        },
+                      }}
+                    >
                       {certL.name}
                     </MenuItem>
                   ))}
@@ -371,7 +437,18 @@ function Userinfo({ certs, user }) {
                 fullWidth
                 style={{ fontSize: "14px" }}
               >
-                <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
+                <InputLabel
+                  id="certMCat"
+                  sx={{
+                    "&.MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
+                >
+                  관심분야(중분류)
+                </InputLabel>
                 <Select
                   labelId="certMCat"
                   id="certMCatSelect"
@@ -379,9 +456,34 @@ function Userinfo({ certs, user }) {
                   label="관심분야(중분류)"
                   onChange={certMCatChange}
                   name="certMCat"
+                  sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
                 >
                   {certMCat.map((certM) => (
-                    <MenuItem key={certM.id} value={certM.name}>
+                    <MenuItem
+                      key={certM.id}
+                      value={certM.name}
+                      sx={{
+                        "&.MuiMenuItem-root": {
+                          "&.Mui-selected": {
+                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                          },
+                          "&.Mui-selected:hover": {
+                            backgroundColor: "rgba(140, 191, 117, 0.3)",
+                          },
+                        },
+                      }}
+                    >
                       {certM.name}
                     </MenuItem>
                   ))}
@@ -392,7 +494,7 @@ function Userinfo({ certs, user }) {
           <div className={styles.userInfoBtns}>
             <Button
               variant="outlined"
-              color="secondary"
+              color="primary"
               href="/mypage"
               theme={theme}
               className={styles.profileCancelBtn}
@@ -428,6 +530,19 @@ function Userinfo({ certs, user }) {
                 value={cert.certName || ""}
                 onChange={(e) => handleChange(cert.id, e)}
                 name="certName"
+                style={{ marginBottom: "5px" }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
               <TextField
                 variant="outlined"
@@ -435,12 +550,26 @@ function Userinfo({ certs, user }) {
                 value={cert.earnedDate || ""}
                 onChange={(e) => handleChange(cert.id, e)}
                 name="earnedDate"
+                style={{ marginLeft: "5px", marginBottom: "5px" }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
               />
               <IconButton
                 aria-label="details"
                 onClick={() => deleteCertDiv(cert.id)}
+                style={{ padding: 0, height: "min-content" }}
               >
-                <HighlightOff fontSize="large" style={{ color: "red" }} />
+                <Close fontSize="medium" style={{ color: "#666" }} />
               </IconButton>
             </div>
           ))}
@@ -464,7 +593,7 @@ function Userinfo({ certs, user }) {
         <div className={styles.addCertBtns}>
           <Button
             variant="outlined"
-            color="secondary"
+            color="primary"
             href="/mypage"
             theme={theme}
             style={{ margin: "10px", fontWeight: "bold" }}

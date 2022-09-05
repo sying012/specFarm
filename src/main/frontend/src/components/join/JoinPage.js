@@ -10,7 +10,7 @@ import {
   createTheme,
   Checkbox,
   MenuItem,
-  Link,
+  styled,
 } from "@mui/material";
 import styles from "../../styles/join/Join.module.css";
 import { ArrowForwardIos } from "@mui/icons-material";
@@ -26,6 +26,10 @@ const theme = createTheme({
       main: "#1d5902",
       contrastText: "#fff",
     },
+    lightgreen: {
+      main: "#F2C335",
+      contrastText: "#fff",
+    },
   },
   typography: {
     fontFamily: [
@@ -39,6 +43,17 @@ const theme = createTheme({
       "Droid Sans",
       "Helvetica Neue",
     ].join(","),
+  },
+});
+
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#1d5902",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#8cbf75",
+    },
   },
 });
 
@@ -322,7 +337,7 @@ const JoinPage = () => {
           <p className={styles.title}>회원가입</p>
           <Grid container spacing={3} className={styles.padding}>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userId"
                 variant="outlined"
                 id="userId"
@@ -332,10 +347,21 @@ const JoinPage = () => {
                 error={idError}
                 helperText={idErrorText}
                 onFocus={idErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userPw"
                 type="password"
                 variant="outlined"
@@ -346,10 +372,21 @@ const JoinPage = () => {
                 error={pwValidationError}
                 helperText={pwValidationErrorText}
                 onFocus={pwValidationErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userPwCheck"
                 type="password"
                 variant="outlined"
@@ -360,10 +397,21 @@ const JoinPage = () => {
                 error={pwError}
                 helperText={pwErrorText}
                 onFocus={pwErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userName"
                 variant="outlined"
                 id="userName"
@@ -373,10 +421,21 @@ const JoinPage = () => {
                 error={nameError}
                 helperText={nameErrorText}
                 onFocus={nameErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={9}>
-              <TextField
+              <CssTextField
                 name="userTel"
                 variant="outlined"
                 id="userTel"
@@ -385,21 +444,29 @@ const JoinPage = () => {
                 error={telError}
                 helperText={telErrorText}
                 onFocus={telErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
-            <Grid
-              item
-              xs={3}
-              style={{ paddingLeft: "10px", paddingTop: "28px" }}
-            >
+            <Grid item xs={3} style={{ paddingLeft: "14px" }}>
               <Button
                 variant="contained"
                 theme={theme}
-                color="green"
+                color="lightgreen"
                 style={{
                   fontSize: "14px",
                   lineHeight: "18px",
-                  padding: "14px 10px",
+                  height: "45px",
+                  padding: "8px",
                 }}
                 // className={styles.buttonSmall}
                 onClick={telAuth}
@@ -408,7 +475,7 @@ const JoinPage = () => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userTelAuthNumber"
                 variant="outlined"
                 id="userTelAuthNumber"
@@ -424,10 +491,21 @@ const JoinPage = () => {
                     backgroundColor: "#F5F5F5",
                   },
                 }}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CssTextField
                 name="userEmail"
                 variant="outlined"
                 id="userEmail"
@@ -437,15 +515,38 @@ const JoinPage = () => {
                 error={emailError}
                 helperText={emailErrorText}
                 onFocus={emailErrorReset}
+                inputProps={{
+                  style: {
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    lineHeight: "100%",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={5.8}>
               <FormControl
                 sx={{ minWidth: 120 }}
                 fullWidth
-                style={{ fontSize: "14px" }}
+                style={{
+                  fontSize: "14px",
+                }}
               >
-                <InputLabel id="certLCat">관심분야(대분류)</InputLabel>
+                <InputLabel
+                  id="certLCat"
+                  sx={{
+                    "&.Mui-focused": {
+                      color: "#8cbf75",
+                    },
+                    lineHeight: "100%",
+                  }}
+                >
+                  관심분야(대분류)
+                </InputLabel>
                 <Select
                   labelId="certLCat"
                   id="certLCatSelect"
@@ -453,9 +554,30 @@ const JoinPage = () => {
                   label="관심분야(대분류)"
                   onChange={certLCatChange}
                   name="certLCat"
+                  style={{ height: "45px" }}
+                  sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                  }}
                 >
                   {certLCat.map((certL) => (
-                    <MenuItem key={certL.id} value={certL.name}>
+                    <MenuItem
+                      key={certL.id}
+                      value={certL.name}
+                      sx={{
+                        "&.MuiMenuItem-root": {
+                          "&.Mui-selected": {
+                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                          },
+                          "&.Mui-selected:hover": {
+                            backgroundColor: "rgba(140, 191, 117, 0.3)",
+                          },
+                        },
+                      }}
+                    >
                       {certL.name}
                     </MenuItem>
                   ))}
@@ -481,7 +603,17 @@ const JoinPage = () => {
                 fullWidth
                 style={{ fontSize: "14px" }}
               >
-                <InputLabel id="certMCat">관심분야(중분류)</InputLabel>
+                <InputLabel
+                  id="certMCat"
+                  sx={{
+                    "&.Mui-focused": {
+                      color: "#8cbf75",
+                    },
+                    lineHeight: "100%",
+                  }}
+                >
+                  관심분야(중분류)
+                </InputLabel>
                 <Select
                   labelId="certMCat"
                   id="certMCatSelect"
@@ -489,9 +621,30 @@ const JoinPage = () => {
                   label="관심분야(중분류)"
                   onChange={certMCatChange}
                   name="certMCat"
+                  style={{ height: "45px" }}
+                  sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                  }}
                 >
                   {certMCat.map((certM) => (
-                    <MenuItem key={certM.id} value={certM.name}>
+                    <MenuItem
+                      key={certM.id}
+                      value={certM.name}
+                      sx={{
+                        "&.MuiMenuItem-root": {
+                          "&.Mui-selected": {
+                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                          },
+                          "&.Mui-selected:hover": {
+                            backgroundColor: "rgba(140, 191, 117, 0.3)",
+                          },
+                        },
+                      }}
+                    >
                       {certM.name}
                     </MenuItem>
                   ))}

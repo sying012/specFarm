@@ -117,6 +117,7 @@
   padding: 20px;
   text-decoration: none;
   color: black;
+  width: 85%;
 }
 
 /* Title */
@@ -145,6 +146,31 @@
   padding-bottom: 4px;
 }
 
-.subtitlewrap:hover {
-  text-decoration: underline;
+.itemDivB > div > p {
+  padding: 20px;
+  width: 50px;
+}
+
+.otherItem {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* detail button */
+.detailListBtn {
+  width: 100px;
+  padding: 15px 20px;
+  border-radius: 24px;
+  background-color: rgb(230, 230, 230);
+  font-weight: 700;
+  margin: 50px auto 0;
+  font-size: 18px;
+  text-align: center;
+  color: black;
+}
+
+.detailListBtn:hover {
+  background-color: #000;
+  color: white;
 }

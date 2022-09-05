@@ -37,7 +37,7 @@ const StudyContent = ({ studyList }) => {
             <div className={styles.joinList}>
               <div className={styles.participant}>
                 <img
-                  src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                  src="/upload/study/ms.png"
                   className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
@@ -48,7 +48,7 @@ const StudyContent = ({ studyList }) => {
               </div>
               <div className={styles.participant}>
                 <img
-                  src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                  src="/upload/study/ms.png"
                   className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
@@ -59,7 +59,7 @@ const StudyContent = ({ studyList }) => {
               </div>
               <div className={styles.participant}>
                 <img
-                  src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                  src="/upload/study/ms.png"
                   className={styles.partImg}
                   alt="참가자 프로필사진"
                 ></img>
@@ -87,7 +87,7 @@ const StudyContent = ({ studyList }) => {
               <div className={styles.joinList}>
                 <div className={styles.participant}>
                   <img
-                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    src="/upload/study/ms.png"
                     className={styles.partImg}
                     alt="참가자 프로필사진"
                   ></img>
@@ -100,7 +100,7 @@ const StudyContent = ({ studyList }) => {
                 </div>
                 <div className={styles.participant}>
                   <img
-                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    src="/upload/study/ms.png"
                     className={styles.partImg}
                     alt="참가자 프로필사진"
                   ></img>
@@ -111,7 +111,7 @@ const StudyContent = ({ studyList }) => {
                 </div>
                 <div className={styles.participant}>
                   <img
-                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    src="/upload/study/ms.png"
                     className={styles.partImg}
                     alt="참가자 프로필사진"
                   ></img>
@@ -122,7 +122,7 @@ const StudyContent = ({ studyList }) => {
                 </div>
                 <div className={styles.participant}>
                   <img
-                    src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                    src="/upload/study/ms.png"
                     className={styles.partImg}
                     alt="참가자 프로필사진"
                   ></img>
@@ -153,7 +153,7 @@ const StudyContent = ({ studyList }) => {
           <div className={styles.makerNdate}>
             <div className={styles.maker}>
               <img
-                src="https://mediahub.seoul.go.kr/wp-content/uploads/2016/06/6dd54989ccc82438d6aaf955c5fa8fbb.jpg"
+                src="/upload/study/ms.png"
                 className={styles.partImg}
                 alt="참가자 프로필사진"
               ></img>

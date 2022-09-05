@@ -106,12 +106,33 @@ const NewShare = () => {
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { m: 1, width: "750px" },
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+              },
             }}
             noValidate
             autoComplete="off"
           >
-            <TextField id="shareTitleInput" label="제목" variant="outlined" />
+            <TextField
+              id="shareTitleInput"
+              label="제목"
+              variant="outlined"
+              style={{ marginLeft: "9px", width: "100%" }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
+                },
+              }}
+            />
           </Box>
           <Box
             component="form"
@@ -126,6 +147,19 @@ const NewShare = () => {
               label="내용"
               multiline
               rows={15}
+              style={{ marginLeft: "9px", width: "100%" }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
+                },
+              }}
             />
           </Box>
           <Box

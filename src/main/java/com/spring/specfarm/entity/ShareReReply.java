@@ -8,4 +8,6 @@ import lombok.Data;
 @Data
 public class ShareReReply {
 
+	private int shareReplyIdx;
+	private String userId;
 }

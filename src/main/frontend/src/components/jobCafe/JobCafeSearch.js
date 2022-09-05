@@ -11,9 +11,17 @@ const JobCafeSearch = () => {
           id="outlined-search"
           type="search"
           InputProps={{
-            startAdornment: <SearchIcon color="inherit" />,
+            startAdornment: <SearchIcon color="action" />,
           }}
           size="small"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": {
+                borderColor: "#8cbf75",
+              },
+            },
+          }}
+          style={{ width: "250px" }}
         ></TextField>
       </div>
     </div>

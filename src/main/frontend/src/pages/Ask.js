@@ -69,7 +69,7 @@ const Ask = (props) => {
       askRegDate: "2022.08.24 10:56",
       userId: "관리자인 척",
       aCount: 12,
-      certIdx: "정보처리기사",
+      certName: "정보처리기사",
       userProfileName: "/upload/profile/badge.png",
       askReply: [
         {
@@ -135,7 +135,7 @@ const Ask = (props) => {
       askRegDate: "2022.08.24 10:50",
       userId: "관리자인 아닌척",
       aCount: 32,
-      certIdx: "용접기능사",
+      certName: "용접기능사",
       userProfileName: null,
       askReply: [
         {
@@ -161,15 +161,15 @@ const Ask = (props) => {
   ]);
 
   const [certNames, setcertNames] = useState([
-    { certName: "화공기사" },
-    { certName: "화공기술사" },
-    { certName: "정밀화학기사" },
-    { certName: "화학분석기사" },
-    { certName: "화학분석기능사" },
-    { certName: "화약류제조기사" },
-    { certName: "화약류제조산업기사" },
-    { certName: "바이오화학제품제조기사" },
-    { certName: "바이오화학제품제조산업기사" },
+    { certIdx: 1, certName: "화공기사" },
+    { certIdx: 2, certName: "화공기술사" },
+    { certIdx: 3, certName: "정밀화학기사" },
+    { certIdx: 4, certName: "화학분석기사" },
+    { certIdx: 5, certName: "화학분석기능사" },
+    { certIdx: 6, certName: "화약류제조기사" },
+    { certIdx: 7, certName: "화약류제조산업기사" },
+    { certIdx: 8, certName: "바이오화학제품제조기사" },
+    { certIdx: 9, certName: "바이오화학제품제조산업기사" },
   ]);
 
   return (
@@ -182,14 +182,17 @@ const Ask = (props) => {
         </NavLink>
       </div>
       <Routes>
-        <Route path="/" element={<AskContent asks={asks}></AskContent>}></Route>
+        <Route
+          path="/"
+          element={<AskContent asks={asks} certNames={certNames}></AskContent>}
+        ></Route>
         <Route
           path="/:askId"
           element={<AskDetail asks={asks}></AskDetail>}
         ></Route>
         <Route
           path="/edit/:askId"
-          element={<AskEdit asks={asks}></AskEdit>}
+          element={<AskEdit asks={asks} certNames={certNames}></AskEdit>}
         ></Route>
         <Route path="/edit" element={<Editer></Editer>}></Route>
         <Route path="/write" element={<AskReg certNames={certNames} />}></Route>

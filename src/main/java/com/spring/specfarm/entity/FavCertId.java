@@ -6,5 +6,8 @@ import lombok.Data;
 
 @Data
 public class FavCertId implements Serializable  {
-
+	
+	private int certIdx;
+	
+	private String userId;
 }

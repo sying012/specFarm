@@ -35,10 +35,10 @@ const CertMain = () => {
         justifyContent: "center",
       }}
     >
-      <h1 className={styles.certtitle}>
-        재배할 자격증을 찾아보세요.{" "}
+      <div className={styles.certTitle1}>
+        <h1 className={styles.certtitle}>재배할 자격증을 찾아보세요.</h1>
         <img className={styles.certTitleImg} src={sprout} alt="새싹" />
-      </h1>
+      </div>
 
       <div className={styles.certSearchBar}>
         <TextField
@@ -77,7 +77,17 @@ const CertMain = () => {
       >
         <Grid xs={3} style={{ width: "200px", padding: "0" }}>
           <FormControl sx={{ minWidth: 200 }} style={{ fontSize: "14px" }}>
-            <InputLabel id="certLCat">대분류</InputLabel>
+            <InputLabel
+              id="certLCat"
+              sx={{
+                "&.Mui-focused": {
+                  color: "#8cbf75",
+                },
+                lineHeight: "100%",
+              }}
+            >
+              대분류
+            </InputLabel>
             <Select
               labelId="certLCat"
               id="certLCatSelect"
@@ -85,7 +95,13 @@ const CertMain = () => {
               label="대분류"
               onChange={certLCatChange}
               name="certLCat"
-              style={{ borderRadius: "15px" }}
+              sx={{
+                "&.MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+              }}
             >
               {certLCat.map((certL) => (
                 <MenuItem key={certL.id} value={certL.name}>
@@ -109,7 +125,17 @@ const CertMain = () => {
         </Grid>
         <Grid xs={3} style={{ width: "200px", padding: "0" }}>
           <FormControl sx={{ minWidth: 200 }} style={{ fontSize: "14px" }}>
-            <InputLabel id="certMCat">중분류</InputLabel>
+            <InputLabel
+              id="certMCat"
+              sx={{
+                "&.Mui-focused": {
+                  color: "#8cbf75",
+                },
+                lineHeight: "100%",
+              }}
+            >
+              중분류
+            </InputLabel>
             <Select
               labelId="certMCat"
               id="certMCatSelect"
@@ -117,7 +143,13 @@ const CertMain = () => {
               label="중분류"
               onChange={certMCatChange}
               name="certMCat"
-              style={{ borderRadius: "15px" }}
+              sx={{
+                "&.MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+              }}
             >
               {certMCat.map((certM) => (
                 <MenuItem key={certM.id} value={certM.name}>
@@ -136,7 +168,7 @@ const CertMain = () => {
               className={styles.smallcert}
               type="button"
               onClick={() => {
-                window.location = "/CertFind";
+                window.location = "/certfind";
               }}
             >
               거푸집기능사

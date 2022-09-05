@@ -14,7 +14,7 @@
 .title > p {
   margin-right: 15px;
   margin-left: 8px;
-  background-color: rgba(187, 205, 110, 0.8);
+  background-color: #1d5902;
   width: 80px;
   height: 40px;
   border-radius: 5px;
@@ -39,8 +39,8 @@
 }
 
 .deleteBtn {
-  border: 2px solid rgba(187, 205, 110, 0.8);
-  color: rgba(187, 205, 110, 0.8);
+  border: 1px solid #1d5902;
+  color: #1d5902;
 }
 
 .detailBoxTop {

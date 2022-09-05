@@ -5,6 +5,14 @@
   height: 340px;
 }
 
+.cardbody:hover {
+  transition: all 0.3s ease;
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  -ms-transform: translateY(-5px);
+  box-shadow: 4px 12px 20px 6px rgb(0 0 0 / 18%);
+}
+
 .img {
   height: 250px;
 }

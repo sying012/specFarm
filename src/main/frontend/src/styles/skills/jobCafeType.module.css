@@ -5,27 +5,10 @@
   height: 50px;
 }
 
-.allTypeBtn {
-  font-size: 13px;
-  border-radius: 15px;
-  background-color: black;
-  margin: 5px;
-  width: 58px;
-  height: 37px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.allTypeBtn > a {
-  font-size: 14px;
-  padding: 2px 13px;
-  color: white;
-}
-
+.allTypeBtn,
 .typeBtns {
   font-size: 13px;
-  border-radius: 15px;
+  border-radius: 30px;
   background-color: lightgray;
   margin: 5px;
   width: 95px;
@@ -35,6 +18,22 @@
   justify-content: center;
 }
 
+.allTypeBtn {
+  width: 60px;
+}
+
+.allTypeBtn:active,
+.typeBtns:active {
+  background-color: black;
+  color: white;
+}
+
+.allTypeBtn:hover,
+.typeBtns:hover {
+  background-color: #999;
+}
+
+.allTypeBtn > a,
 .typeBtns > a {
   font-size: 14px;
   padding: 2px 13px;

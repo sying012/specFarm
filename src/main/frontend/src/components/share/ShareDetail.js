@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useParams, NavLink } from "react-router";
+import { useParams } from "react-router";
+import { NavLink } from "react-router-dom";
 import styles from "../../styles/share/detail.module.css";
 import { Stack, Button, Avatar } from "@mui/material";
 import defaultProfile from "../../images/defaultProfile.png";

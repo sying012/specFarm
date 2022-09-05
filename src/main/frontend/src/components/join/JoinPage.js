@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import logo from "../../images/logo_green1.png";
 import {
   TextField,
   Grid,
@@ -86,22 +85,24 @@ const JoinPage = () => {
     if (userId === null || userId === "") {
       setIdError(true);
       setIdErrorText("필수 정보입니다.");
-    } else if (userId === "jkj2564") {
-      setIdError(true);
-      setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
     } else {
-      setIdError(false);
-      setIdErrorText("");
-    }
+      // axios({
+      //   method: "get",
+      //   url: "/user/join",
+      //   data: userId,
+      // }).then((response) => {
+      //   if (response) {
+      //   }
+      // });
 
-    // axios({
-    //   method: "post",
-    //   url: "/user/join",
-    //   data: userId,
-    // }).then((response) => {
-    //   if (response) {
-    //   }
-    // });
+      if (userId === "jkj2564") {
+        setIdError(true);
+        setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
+      } else {
+        setIdError(false);
+        setIdErrorText("");
+      }
+    }
   }, []);
 
   const idErrorReset = useCallback((e) => {
@@ -322,8 +323,9 @@ const JoinPage = () => {
       !emailError &&
       checked
     ) {
-      console.log("join success!!");
-      window.location.replace("/");
+      // join({ data }).then((response) => {
+      //   window.location.replace("/");
+      // });
     }
   };
 

@@ -20,7 +20,7 @@
   font-weight: bold;
   line-height: 150%;
   color: #fff;
-  margin-top: 70px;
+  margin-top: 10%;
 }
 
 .contentText {
@@ -34,7 +34,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-top: 150px;
+  padding-top: 15%;
 }
 
 /* main left content - plan */
@@ -47,7 +47,7 @@
 .certPlan {
   width: 500px;
   height: 400px;
-  margin-top: 50px;
+  margin-top: 20px;
   border: none;
   color: white;
 }
@@ -160,5 +160,5 @@
   z-index: 2;
   display: flex;
   justify-content: flex-end;
-  right: 20%;
+  max-width: 1200px;
 }

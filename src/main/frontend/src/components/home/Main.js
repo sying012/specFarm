@@ -11,21 +11,6 @@ const Main = ({ acceptances, tests, open }) => {
   return (
     <>
       <div className={styles.homeBackground}>
-        <header className={styles.header} style={{ position: "fixed" }}>
-          <div className="innerheader">
-            <Link to="/">
-              <div className={styles.logo}>specFarm</div>
-            </Link>
-            <div className={styles.tailwrap}>
-              <div className="loginbtn">
-                <Link to="/login">로그인</Link>
-              </div>
-              <div className="joinbtn">
-                <Link to="/join">회원가입</Link>
-              </div>
-            </div>
-          </div>
-        </header>
         <Container>
           {/* <Alerts open={open} /> */}
           <div className={styles.homeContent} style={{ position: "relative" }}>

@@ -7,6 +7,7 @@ import { useBeforeRender } from "../utils";
 const Layout = () => {
   useBeforeRender(() => {
     window.scrollTo({ top: 0 });
+    document.getElementsByTagName("body")[0].style.overflowY = "auto";
   }, []);
 
   return (

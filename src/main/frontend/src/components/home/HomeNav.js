@@ -52,7 +52,7 @@ const HomeNav = ({ goClickPage }) => {
               id="2"
               onClick={(e) => goClickPage(e)}
             >
-              세미나
+              Skills(미정)
             </a>
           </div>
 

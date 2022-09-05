@@ -1,37 +1,8 @@
 import { Button, createTheme } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "../../styles/lost/Lost.module.css";
-
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    green: {
-      main: "#8cbf75",
-      contrastText: "#fff",
-    },
-    brown: {
-      main: "rgb(107, 83, 67)",
-      contrastText: "#fff",
-    },
-  },
-  typography: {
-    fontFamily: [
-      "Hahmlet",
-      "Segoe UI",
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-    ].join(","),
-  },
-});
 
 const LostItem = ({ losts }) => {
   const { lostsId } = useParams();
@@ -95,7 +66,7 @@ const LostItem = ({ losts }) => {
           {prev === undefined ? null : (
             <div>
               <p>이전글</p>
-              <NavLink to={`/cs/lost/${prev.id}`}>
+              <NavLink to={`/cs/lost/${prev.id}`} className={styles.otherItem}>
                 [{prev.lostCat}] {prev.lostItem},&nbsp;
                 {prev.lostLoc}
               </NavLink>
@@ -104,7 +75,7 @@ const LostItem = ({ losts }) => {
           {next === undefined ? null : (
             <div>
               <p>다음글</p>
-              <NavLink to={`/cs/lost/${next.id}`}>
+              <NavLink to={`/cs/lost/${next.id}`} className={styles.otherItem}>
                 [{next.lostCat}] {next.lostItem},&nbsp;
                 {next.lostLoc}
               </NavLink>
@@ -113,23 +84,9 @@ const LostItem = ({ losts }) => {
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <NavLink to="/cs/lost">
-          <Button
-            variant="contained"
-            theme={theme}
-            color="green"
-            style={{
-              fontSize: "16px",
-              lineHeight: "18px",
-              padding: "14px 16px",
-              width: "100px",
-              marginTop: "30px",
-            }}
-            sx={{ borderRadius: "25px" }}
-          >
-            목록
-          </Button>
-        </NavLink>
+        <Link to="/cs/lost" className={styles.detailListBtn}>
+          목록 보기
+        </Link>
       </div>
     </>
   );

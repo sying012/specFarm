@@ -1,6 +1,8 @@
 import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
+import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { API_BASE_URL } from "../app-config";
 import styles from "../styles/login/Login.module.css";
 import { useBeforeRender } from "../utils";
 
@@ -45,15 +47,6 @@ const Login = () => {
     } else {
       setIdError(false);
     }
-
-    // axios({
-    //   method: "post",
-    //   url: "/user/join",
-    //   data: userId,
-    // }).then((response) => {
-    //   if (response) {
-    //   }
-    // });
   }, []);
 
   const idErrorReset = useCallback((e) => {
@@ -91,7 +84,16 @@ const Login = () => {
     }
 
     if (!idError && userId !== "" && !pwError && userPw !== "") {
-      console.log("join success!!");
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/login",
+        data: { userId: userId, userPw: userPw },
+      }).then((response) => {
+        if (response.data.token) {
+          sessionStorage.setItem("ACCESS_TOKEN", response.data.token);
+          window.location.href = "/";
+        }
+      });
     }
   };
 

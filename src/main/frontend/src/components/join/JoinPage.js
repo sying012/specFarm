@@ -13,8 +13,10 @@ import {
 } from "@mui/material";
 import styles from "../../styles/join/Join.module.css";
 import { ArrowForwardIos } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
+import { join } from "../../service/ApiService";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const theme = createTheme({
   status: {
@@ -57,6 +59,7 @@ const CssTextField = styled(TextField)({
 });
 
 const JoinPage = () => {
+  const navigate = useNavigate();
   const [idError, setIdError] = useState(false);
   const [idErrorText, setIdErrorText] = useState("");
   const [pwValidationError, setPwValidationError] = useState(false);
@@ -86,22 +89,19 @@ const JoinPage = () => {
       setIdError(true);
       setIdErrorText("필수 정보입니다.");
     } else {
-      // axios({
-      //   method: "get",
-      //   url: "/user/join",
-      //   data: userId,
-      // }).then((response) => {
-      //   if (response) {
-      //   }
-      // });
-
-      if (userId === "jkj2564") {
-        setIdError(true);
-        setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
-      } else {
-        setIdError(false);
-        setIdErrorText("");
-      }
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/idCheck",
+        data: { userId: userId },
+      }).then((response) => {
+        if (response.data === "success") {
+          setIdError(false);
+          setIdErrorText("");
+        } else {
+          setIdError(true);
+          setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
+        }
+      });
     }
   }, []);
 
@@ -270,7 +270,8 @@ const JoinPage = () => {
     const userName = data.get("userName");
     const userTel = data.get("userTel");
     const userTelAuthNumber = data.get("userTelAuthNumber");
-    console.log(checked);
+    const userEmail = data.get("userEmail");
+
     if (userId === null || userId === "") {
       setIdError(true);
       setIdErrorText("필수 정보입니다.");
@@ -323,9 +324,17 @@ const JoinPage = () => {
       !emailError &&
       checked
     ) {
-      // join({ data }).then((response) => {
-      //   window.location.replace("/");
-      // });
+      join({
+        userId: userId,
+        userPw: userPw,
+        userName: userName,
+        userTel: userTel,
+        userEmail: userEmail,
+        favFieldL: certL,
+        favFieldM: certM,
+      }).then((response) => {
+        navigate("/login");
+      });
     }
   };
 

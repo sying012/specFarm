@@ -26,8 +26,21 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@PostMapping("/idCheck")
+	public ResponseEntity<?> idCheck(@RequestBody User user) {
+		User idCheck= userService.idCheck(user);
+		
+		if(idCheck == null) {
+			return ResponseEntity.ok().body("success");
+		} else {
+			return ResponseEntity.ok().body("failed");
+		}
+		
+	}
+	
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user) {
+		System.out.println(user);
 		try {
 			user.setUserPw(passwordEncoder.encode(user.getUserPw()));
 						

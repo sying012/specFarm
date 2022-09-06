@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "../../styles/home/Home.module.css";
 
 const HomeNav = ({ goClickPage }) => {
-  const commRef = useRef();
-  const noticeRef = useRef();
-
   const [commHover, setcommHover] = useState(0);
   const [commName, setCommName] = useState("커뮤니티");
   const [noticeHover, setnoticeHover] = useState(0);

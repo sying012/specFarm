@@ -10,8 +10,10 @@ import NoticeMain from "./NoticeMain";
 import { useNavigate } from "react-router";
 import HomeNavAfter from "../components/home/HomeNavAfter";
 import { Link } from "react-router-dom";
+import { logout } from "../service/ApiService";
 
 const Home = () => {
+  const isAuthenticated = sessionStorage.getItem("ACCESS_TOKEN") !== "null";
   const navigate = useNavigate();
   const [page, setPage] = useState("/cert");
   const [pageComponent, setPageComponent] = useState(<CertMain />);
@@ -152,14 +154,26 @@ const Home = () => {
             </Link>
             <div className={styles.tailwrap}>
               <div className="loginbtn">
-                <Link to="/login" id="loginLink">
-                  로그인
-                </Link>
+                {isAuthenticated ? (
+                  <Link to="/" id="logoutLink" onClick={logout}>
+                    로그아웃
+                  </Link>
+                ) : (
+                  <Link to="/login" id="loginLink">
+                    로그인
+                  </Link>
+                )}
               </div>
               <div className="joinbtn">
-                <Link to="/join" id="joinLink">
-                  회원가입
-                </Link>
+                {isAuthenticated ? (
+                  <Link to="/mypage" id="mypageLink">
+                    마이페이지
+                  </Link>
+                ) : (
+                  <Link to="/join" id="joinLink">
+                    회원가입
+                  </Link>
+                )}
               </div>
             </div>
           </div>

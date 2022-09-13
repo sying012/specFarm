@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,6 +9,11 @@ import Grid from "@mui/system/Unstable_Grid";
 import TextField from "@mui/material/TextField";
 import { ArrowForwardIos } from "@mui/icons-material";
 import sprout from "../images/cert_sprout1.png";
+import { API_BASE_URL } from "../app-config";
+import axios from "axios";
+import CertFind from "../components/cert/CertFind";
+import { Route, Routes } from "react-router";
+import { Link } from "react-router-dom";
 
 const CertMain = () => {
   const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
@@ -25,6 +30,58 @@ const CertMain = () => {
     console.log(e.target.value);
     setCertM(e.target.value);
   };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/test/cert",
+      method: "get",
+    }).then((response) => {
+      certL = response.data;
+      console.log(response.data);
+      // console.log(response.data.response.body.items.item);
+    });
+  }, []);
+
+  const response = {
+    data: {
+      response: {
+        body: {
+          items: {
+            item: [
+              {
+                jmcd: "0752",
+                jmfldnm: "가스기술사",
+                qualgbcd: "T",
+                qualgbnm: "국가기술자격",
+                seriescd: "01",
+                seriesnm: "기술사",
+                obligfldcd: "25",
+                obligfldnm: "안전관리",
+                mdobligfldcd: "251",
+                mdobligfldnm: "안전관리",
+              },
+              {
+                jmcd: "0752",
+                jmfldnm: "가스기술사2",
+                qualgbcd: "T",
+                qualgbnm: "국가기술자격2",
+                seriescd: "01",
+                seriesnm: "기술사2",
+                obligfldcd: "25",
+                obligfldnm: "안전관리2",
+                mdobligfldcd: "251",
+                mdobligfldnm: "안전관리2",
+              },
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  const gTempData = new Array();
+  gTempData.push(response.data.response.body.items.item[0]);
+  gTempData.push(response.data.response.body.items.item[1]);
 
   return (
     <div
@@ -112,7 +169,6 @@ const CertMain = () => {
           </FormControl>
         </Grid>
         <Grid
-          item
           xs={1}
           style={{
             paddingLeft: "15px",
@@ -164,42 +220,41 @@ const CertMain = () => {
       <div className={styles.certMainCard}>
         <div className={styles.certMainBody}>
           <div>
-            <button
-              className={styles.smallcert}
-              type="button"
-              onClick={() => {
-                window.location = "/certfind";
-              }}
-            >
-              거푸집기능사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축구조기술사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallcert}>
-              건축기사
-            </button>
+            <Link to="/cert/certfind">
+              <button type="button" className={styles.smallcert}>
+                거푸집기능사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축구조기술사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+              <button type="button" className={styles.smallcert}>
+                건축기사
+              </button>
+            </Link>
           </div>
         </div>
       </div>
+      <Routes>
+        <Route path="/:id" element={<CertMain CertFind={CertFind} />}></Route>
+      </Routes>
     </div>
   );
 };

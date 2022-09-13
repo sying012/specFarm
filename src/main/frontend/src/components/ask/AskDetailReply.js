@@ -1,26 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import defaultProfile from "../../images/defaultProfile.png";
 import AskReReply from "./AskReReply";
 import AskReplyRegBox from "./AskReplyRegBox";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const AskDetailReply = ({ reply }) => {
+  console.log(reply.askIdx);
+  const [reReplyList, setReReplyList] = useState([]);
   function toggleRereply() {
     let rereplyContainer = document.querySelector(
       ".rereplyContainer" + reply.askReplyIdx
     );
     if (rereplyContainer.style.display === "none") {
+      axios({
+        method: "get",
+        url: API_BASE_URL + "/community/ask/" + reply.askIdx + "/rereply",
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+        params: { replyIdx: reply.askReplyIdx },
+      }).then((response) => {
+        setReReplyList(response.data.data);
+        console.log(response.data.data);
+      });
+
       rereplyContainer.style.display = "block";
     } else {
       rereplyContainer.style.display = "none";
     }
   }
 
+  const insertAskReReply = (askReReply) => {
+    console.log(askReReply);
+    axios({
+      method: "post",
+      url: API_BASE_URL + `/community/ask/${reply.askIdx}/insertReReply`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: askReReply,
+    }).then((response) => {
+      console.log(response);
+      setReReplyList(response.data.askReReplyList);
+    });
+  };
+
   return (
     <>
       <div id="askReplyBox" className="askReplyBox">
         <img
           id="profileImg"
-          src={reply.userProfileName || defaultProfile}
+          src={reply.user.userProfileName || defaultProfile}
           alt="프로필사진"
         />
         <div id="replyBox">
@@ -41,11 +73,18 @@ const AskDetailReply = ({ reply }) => {
         style={{ display: "none", marginLeft: "50px" }}
       >
         <div>
-          <AskReplyRegBox style={{ maxWidth: "410px" }} />
+          <AskReplyRegBox
+            style={{ maxWidth: "410px" }}
+            insertAskReReply={insertAskReReply}
+            askReplyIdx={reply.askReplyIdx}
+            askIdx={reply.askIdx}
+          />
         </div>
-        <div style={{ display: "flex" }}>
-          <AskReReply />
-        </div>
+        {reReplyList.map((reReply) => (
+          <div key={reReply.askReReplyIdx} style={{ display: "flex" }}>
+            <AskReReply reReply={reReply} />
+          </div>
+        ))}
       </div>
     </>
   );

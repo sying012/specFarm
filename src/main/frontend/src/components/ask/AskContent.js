@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AskListItem from "./AskListItem";
-import { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Button,
   FormControl,
@@ -14,13 +13,41 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/lost/Lost.module.css";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
-const AskContent = ({ asks, certNames }) => {
-  const certList = useRef();
+const AskContent = ({ certNames }) => {
+  const navigate = useNavigate();
+  const [count, setCount] = useState(1);
+  const [page, setPage] = useState(1);
   const [searchType, setSearchType] = useState("자격증");
+  const [asks, setAsks] = useState([]);
   const handleChange = (e) => {
     setSearchType(e.target.value);
   };
+
+  // 리스폰스롤 받아온 데이터를 사용하기위한 state, ask엔티티가 아닌 받변개수가 추가된 DTO로 응답
+
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "/community/ask", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+        params: {
+          page: page - 1,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.askList);
+        setAsks(response.data.askList.content);
+        setCount(response.data.askList.totalPages);
+        window.scrollTo(0, 0);
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
+  }, [page]);
 
   const [searchTypeItem, setSearchTypeItem] = useState([
     {
@@ -138,24 +165,31 @@ const AskContent = ({ asks, certNames }) => {
             {searchBar}
           </div>
         </div>
-        <Button
-          className="askRegButton"
-          variant="contained"
-          onClick={() => (window.location = "./ask/write")}
-        >
-          글쓰기
-        </Button>
+        <Link to="./write">
+          <Button className="askRegButton" variant="contained">
+            글쓰기
+          </Button>
+        </Link>
       </div>
       <div id="askList" style={{ marginTop: "20px" }}>
         {asks.map((ask) => (
-          <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
+          <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
             <AskListItem ask={ask}></AskListItem>
           </NavLink>
         ))}
       </div>
       <div className="noticePageNation">
         <Stack spacing={2}>
-          <Pagination count={5} />
+          <Pagination
+            count={count} //총 페이지 수
+            size="large"
+            page={page} //현재 페이지
+            variant="outlined"
+            shape="rounded"
+            onChange={(e, p) => {
+              setPage(p);
+            }}
+          />
         </Stack>
       </div>
     </div>

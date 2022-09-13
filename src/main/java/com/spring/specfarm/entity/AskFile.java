@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="ASK_FILE")
+@Table(name="T_ASK_FILE")
 @IdClass(AskFileId.class)
 public class AskFile {
 	@Id

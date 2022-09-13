@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField, Button, createTheme } from "@mui/material";
 import Editer from "../Editer";
-
-const AskReg = ({ certNames }) => {
+const AskReg = ({ certNames, insertAsk }) => {
   const [contentValue, setContentValue] = useState("");
   const [certName, setCertName] = useState("");
   const [viewCertNames, setViewCertNames] = useState([]);
@@ -19,9 +18,12 @@ const AskReg = ({ certNames }) => {
       );
   }, [certName]);
 
-  const handleCertValue = (e) => {
-    setCertName((certName) => e.target.value);
-  };
+  const handleCertValue = useCallback(
+    (e) => {
+      setCertName(e.target.value);
+    },
+    [certName]
+  );
 
   const theme = createTheme({
     palette: {
@@ -32,6 +34,14 @@ const AskReg = ({ certNames }) => {
     },
   });
 
+  const handleSubmit = (e) => {
+    let ask = new FormData(e.target);
+    console.log(ask.get("askTitle"));
+    ask.set("askCert", certName);
+    insertAsk(ask);
+
+    e.preventDefault();
+  };
   return (
     <div id="container">
       <div id="RegContainer">
@@ -41,7 +51,7 @@ const AskReg = ({ certNames }) => {
               id="outlined-search"
               label="자격증 검색"
               name="certName"
-              value={certName}
+              value={certName || ""}
               onChange={handleCertValue}
               type="search"
               style={{
@@ -82,7 +92,11 @@ const AskReg = ({ certNames }) => {
             style={{ display: "block", maxWidth: "800px", width: "100%" }}
           />
           <div id="writeContent">
-            <form action="#" id="regAskForm" method="post">
+            <form
+              onSubmit={handleSubmit}
+              id="regAskForm"
+              encType="multipary/form-data"
+            >
               <TextField
                 id="standard-basic"
                 label="제목"
@@ -109,12 +123,12 @@ const AskReg = ({ certNames }) => {
                 type="hidden"
                 id="askContent"
                 name="askContent"
-                value={contentValue}
+                value={contentValue || ""}
                 required={true}
               />
               <Editer
                 placeholder="내용을 입력하세요"
-                value={contentValue}
+                value={contentValue || ""}
                 onChange={handleContentValue}
               ></Editer>
               <div className="askbtnBox">

@@ -1,6 +1,6 @@
 .selectListWrapper {
   width: 100%;
-  height: fit-content;
+  height: 708px;
   display: flex;
   border: 2px solid #0d0d0d;
   border-top: 0;
@@ -14,17 +14,27 @@
   width: 50%;
   height: 100%;
   background-color: white;
-  padding: 10px 20px;
+  padding: 10px 0;
+  overflow: auto;
+}
+
+.selectListWrapper > ul > li {
+  margin: 10px 0;
+}
+
+.selectListWrapper > ul > li > button:hover {
+  background-color: #8cbf75;
+  color: white;
 }
 
 .upperList button {
   /* background-color: violet; */
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .lowerList button {
   /* background-color: skyblue; */
-  font-size: 17px;
+  font-size: 16px;
 
   color: #777;
 }

@@ -8,3 +8,9 @@
   margin: 2.5% 0px 20px 0px;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
+.pageNation {
+  margin: 40px;
+  display: flex;
+  justify-content: center;
+}

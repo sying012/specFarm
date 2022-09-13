@@ -1,0 +1,18 @@
+.selectedItem {
+  background-color: lightgray;
+  /* width: 90px; */
+  height: 37px;
+  text-align: center;
+  line-height: 37px;
+  border-radius: 30px;
+  color: #0d0d0d;
+  border-width: 0;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.selectedItem > div {
+  width: 100%;
+  text-align: center;
+}

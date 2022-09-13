@@ -1,5 +1,4 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,16 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styles from "../../styles/findcourse/CourseCard.module.css";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
-const CourseCard = () => {
+const CourseCard = ({ card }) => {
   return (
     <Card
       sx={{
@@ -31,31 +21,30 @@ const CourseCard = () => {
     >
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          (주)맘편한세상
+          {card.subTitle}
         </Typography>
         <Typography
           className={styles.courseCardTitle}
           sx={{ mb: 2.5 }}
-          variant="h5"
+          variant="h6"
           component="div"
         >
-          아이돌봄 플랫폼 시터교육과정 아이돌봄 플랫폼 시터교육과정아이돌봄
-          플랫폼 시터교육과정아이돌봄 플랫폼 시터교육과정
+          {card.title}
         </Typography>
         {/* <Typography sx={{ mb: 1.5 }} color="text.secondary" fontSize="13px">
           훈련유형 : 플랫폼 특화훈련
         </Typography> */}
         <Typography sx={{ mb: 1.0 }} variant="body2" fontSize="13px">
-          훈련유형 : 플랫폼 특화훈련
+          위치 : {card.address}
         </Typography>
         <Typography sx={{ mb: 1.0 }} variant="body2" fontSize="13px">
-          훈련기간 : 2022-09-13 ~ 2022-09-16
+          훈련기간 : {card.traStartDate} ~ {card.traEndDate}
         </Typography>
         <Typography sx={{ mb: 1.0 }} variant="body2" fontSize="13px">
-          훈련시간 : 4일, 총20시간
+          정원 : {card.yardMan} 명
         </Typography>
         <Typography sx={{ mb: 1.0 }} variant="body2" fontSize="13px">
-          훈련비 : 124,420 원
+          훈련비 : {card.courseMan} 원
         </Typography>
       </CardContent>
       <CardActions>

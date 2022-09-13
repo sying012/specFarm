@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "../../styles/findcourse/CourseSelector.module.css";
 import AreaSelect from "./AreaSelect";
 import JobSelect from "./JobSelect";
+import InsertItem from "./InsertItem";
 
-// const displayList = (list) => {
-//   const result = [];
-
-//   for (const val in list) {
-//     result.push(<li key={val}>{list[val]}</li>);
-//   }
-
-//   return result;
-// };
-
-const CourseSelector = () => {
+const CourseSelector = ({ areaItems, setAreaItems, jobItems, setJobItems }) => {
   const [selectedTab, setSeletedTab] = useState(0);
-  const [seletedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  let getSelectedItem = (item) => {
+    if (selectedItem.length < 6) {
+      setSelectedItem(selectedItem.concat(item));
+
+      if (item.which === "area") {
+        // 선택된 검색조건이 지역일 경우 지역 배열에 분류
+        setAreaItems(areaItems.concat(item));
+      } else {
+        // 선택된 검색조건이 직종일 경우 직종 배열에 분류
+        setJobItems(jobItems.concat(item));
+      }
+    } else {
+      alert("그만");
+    }
+  };
+
+  const deleteItem = useCallback(
+    (code, which) => {
+      setSelectedItem(
+        selectedItem.filter((selectedItem) => selectedItem.code !== code)
+      );
+
+      if (which === "area") {
+        // 선택된 검색조건이 지역일 경우 지역 배열에 분류
+        setAreaItems(areaItems.filter((areaItems) => areaItems.code !== code));
+      } else {
+        // 선택된 검색조건이 직종일 경우 직종 배열에 분류
+        setJobItems(jobItems.filter((jobItems) => jobItems.code !== code));
+      }
+    },
+    [selectedItem]
+  );
 
   return (
     <div className={styles.courseSelector}>
@@ -46,13 +70,23 @@ const CourseSelector = () => {
               : { borderBottom: "2px solid #0d0d0d" }
           }
         >
-          직종선택
+          직무선택
         </div>
       </div>
-      {selectedTab ? <JobSelect /> : <AreaSelect setArea={setSelectedItem} />}
+      {selectedTab ? (
+        <JobSelect
+          selectedItem={selectedItem}
+          getSelectedItem={getSelectedItem}
+        />
+      ) : (
+        <AreaSelect
+          selectedItem={selectedItem}
+          getSelectedItem={getSelectedItem}
+        />
+      )}
 
       <div className={styles.selected}>
-        <>{seletedItem}</>
+        <InsertItem selectedItem={selectedItem} deleteItem={deleteItem} />
       </div>
     </div>
   );

@@ -1,16 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/findcourse/CourseContainer.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CourseSelector from "../../components/findCourse/CourseSelector";
 import CourseList from "./CourseList";
-import { Pagination, Stack } from "@mui/material";
+import { useCallback } from "react";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const CourseContainer = () => {
+  const [areaItems, setAreaItems] = useState([]);
+  const [jobItems, setJobItems] = useState([]);
+  const [value, setValue] = useState("");
+  const [searchList, setSearchList] = useState([]);
+
+  const changeValue = useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      searchCourse(areaItems, jobItems, value);
+      setValue("");
+      e.preventDefault();
+    },
+    [areaItems, jobItems, value]
+  );
+
+  useEffect(() => {
+    searchCourse(areaItems, jobItems, value);
+  }, []);
+
+  const searchCourse = useCallback((areaItems, jobItems, text) => {
+    // console.log(areaItems);
+    // console.log(jobItems);
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/skills/listRequest",
+      // 대분류 코드 스프링에 전달
+      data: {
+        areaItems: areaItems,
+        jobItems: jobItems,
+        searchText: text,
+      },
+    }).then((response) => {
+      // 요청한 상위 리스트를 스프링에서 받아 리스트 State에 저장
+      setSearchList(response.data.scn_list);
+      // console.log(response.data);
+    });
+  }, []);
+
   return (
     <div className={styles.courseContainer}>
       <div className={styles.courseSearchBar}>
-        <form>
-          <input className={styles.courseinput} placeholder="검색"></input>
+        <form className={styles.courseSearch} onSubmit={handleSubmit}>
+          <input
+            className={styles.courseinput}
+            value={value}
+            placeholder="검색"
+            onChange={changeValue}
+          ></input>
           <SearchIcon
             fontSize="large"
             color="action"
@@ -43,15 +91,15 @@ const CourseContainer = () => {
       </div>
       <div className={styles.selectContainer}>
         <div className={styles.selectWrapper}>
-          <CourseSelector></CourseSelector>
+          <CourseSelector
+            areaItems={areaItems}
+            setAreaItems={setAreaItems}
+            jobItems={jobItems}
+            setJobItems={setJobItems}
+          ></CourseSelector>
         </div>
         <div className={styles.selectBox}>
-          <CourseList></CourseList>
-          <div className={styles.pageNation}>
-            <Stack spacing={2}>
-              <Pagination count={10} />
-            </Stack>
-          </div>
+          <CourseList searchList={searchList}></CourseList>
         </div>
       </div>
     </div>

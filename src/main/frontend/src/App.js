@@ -26,6 +26,7 @@ import CertFind from "./components/cert/CertFind";
 function App() {
   return (
     <Routes>
+      <Route exact path="/oauth2/code/*" element={<Login />} />
       <Route path="/" element={<Home />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/join" element={<Join />}></Route>

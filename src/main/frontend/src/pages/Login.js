@@ -1,8 +1,9 @@
 import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../app-config";
+import SocialLogin from "../components/login/SocialLogin";
 import styles from "../styles/login/Login.module.css";
 import { useBeforeRender } from "../utils";
 
@@ -34,6 +35,7 @@ const Login = () => {
     document.getElementsByTagName("body")[0].style.overflowY = "auto";
   }, []);
 
+  const navigate = useNavigate();
   const [idError, setIdError] = useState(false);
   const [pwError, setPwError] = useState(false);
 
@@ -90,8 +92,12 @@ const Login = () => {
         data: { userId: userId, userPw: userPw },
       }).then((response) => {
         if (response.data.token) {
+          document.getElementById("loginFailAlert").hidden = true;
           sessionStorage.setItem("ACCESS_TOKEN", response.data.token);
-          window.location.href = "/";
+          sessionStorage.setItem("userId", userId);
+          navigate("/");
+        } else {
+          document.getElementById("loginFailAlert").hidden = false;
         }
       });
     }
@@ -153,6 +159,24 @@ const Login = () => {
                 }}
               />
             </Grid>
+            <Grid item xs={12} style={{ textAlign: "center", paddingTop: "0" }}>
+              <p
+                className={styles.font15}
+                style={{
+                  color: "#e53e3e",
+                  background: "rgba(229, 62, 62, 0.1)",
+                  padding: "10px",
+                  lineHeight: "150%",
+                  marginTop: "24px",
+                }}
+                id="loginFailAlert"
+                hidden
+              >
+                아이디 혹은 비밀번호가 일치하지 않습니다.
+                <br />
+                입력한 내용을 다시 확인해 주세요.
+              </p>
+            </Grid>
             <Grid item xs={12}>
               <Button
                 variant="contained"
@@ -164,7 +188,7 @@ const Login = () => {
                 style={{
                   fontSize: "16px",
                   lineHeight: "18px",
-                  padding: "11px 16px",
+                  padding: "12px 16px",
                 }}
               >
                 로그인
@@ -184,35 +208,7 @@ const Login = () => {
             <div className={styles.snsLogin}>
               <p>SNS계정으로 간편 로그인/회원가입</p>
               <div className={styles.snsLoginIcon}>
-                <div>
-                  <img
-                    src="https://clova-phinf.pstatic.net/MjAxODAzMjlfOTIg/MDAxNTIyMjg3MzM3OTAy.WkiZikYhauL1hnpLWmCUBJvKjr6xnkmzP99rZPFXVwgg.mNH66A47eL0Mf8G34mPlwBFKP0nZBf2ZJn5D4Rvs8Vwg.PNG/image.png"
-                    style={{ width: "48px", height: "48px" }}
-                  ></img>
-                </div>
-                <div
-                  style={{
-                    background: "#f9e000",
-                  }}
-                >
-                  <img
-                    src="https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/5f9c58c2017800001.png"
-                    style={{
-                      width: "45px",
-                      height: "45px",
-                      borderRadius: "90px",
-                    }}
-                  ></img>
-                </div>
-                <div>
-                  <img
-                    src="https://lh3.googleusercontent.com/VWRekWMbjk5jyypsXd_V_w2FKlauEWNDh-v-eEIjhHjxtNUoZrRFSQKb1HHIo-77FP8XUcXtdsSKS8V_K-6-1GX0vDni1xexKMaq=w64-l90-sg-rj-c0xffffff"
-                    style={{
-                      width: "43px",
-                      height: "43px",
-                    }}
-                  ></img>
-                </div>
+                <SocialLogin />
               </div>
             </div>
           </div>

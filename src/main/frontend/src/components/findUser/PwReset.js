@@ -1,5 +1,8 @@
 import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
+import axios from "axios";
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
+import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findUser/FindUser.module.css";
 
 const theme = createTheme({
@@ -30,14 +33,14 @@ const CssTextField = styled(TextField)({
 });
 
 const PwReset = () => {
-  const [IdError, setIdError] = useState(false);
-  const [IdErrorText, setIdErrorText] = useState("");
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorText, setNameErrorText] = useState("");
-  const [telError, setTelError] = useState(false);
-  const [telErrorText, setTelErrorText] = useState("");
-  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const navigate = useNavigate();
+  const [idError, setIdError] = useState({ error: false, text: "" });
+  const [nameError, setNameError] = useState({ error: false, text: "" });
+  const [telError, setTelError] = useState({ error: false, text: "" });
+  const [telAuthNumberError, setTelAuthNumberError] = useState({
+    error: false,
+    text: "",
+  });
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
   const [pwValidationError, setPwValidationError] = useState(false);
   const [pwValidationErrorText, setPwValidationErrorText] = useState("");
@@ -49,49 +52,41 @@ const PwReset = () => {
     const userId = e.target.value;
 
     if (userId === null || userId === "") {
-      setIdError(true);
-      setIdErrorText("필수 정보입니다.");
-    } else if (userId === "jkj2564") {
-      setIdError(true);
-      setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
+      setIdError({
+        error: true,
+        text: "필수 정보입니다.",
+      });
     } else {
-      setIdError(false);
-      setIdErrorText("");
+      setIdError({
+        error: false,
+        text: "",
+      });
     }
-
-    // axios({
-    //   method: "post",
-    //   url: "/user/join",
-    //   data: userId,
-    // }).then((response) => {
-    //   if (response) {
-    //   }
-    // });
   }, []);
 
   const idErrorReset = useCallback((e) => {
-    setIdError(false);
-    setIdErrorText("");
+    setIdError({
+      ...idError,
+      text: "aaa",
+    });
   });
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
     if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+      setNameError({ error: true, text: "필수 정보입니다." });
     } else {
-      setNameError(false);
-      setNameErrorText("");
+      setNameError({ error: false, text: "" });
     }
   }, []);
 
   const nameErrorReset = useCallback((e) => {
-    setNameError(false);
-    setNameErrorText("");
+    setNameError({ error: false, text: "" });
   });
 
   // Phone number authentication
+  // let telAuthNumberDisabled = true;
   const telAuth = useCallback((e) => {
     const userTel = document.getElementById("pwReset_userTel").value;
     // remove Hyphen
@@ -100,49 +95,51 @@ const PwReset = () => {
 
     const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     if (newUserTel === null || newUserTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
     } else if (!TelRegex.test(newUserTel)) {
-      setTelError(true);
-      setTelErrorText("형식에 맞지 않는 번호입니다.");
+      setTelError({ error: true, text: "형식에 맞지 않는 번호입니다." });
     } else {
-      setTelError(false);
-      setTelErrorText("");
+      setTelError({ error: false, text: "" });
       setTelAuthNumberDisabled(false);
-
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
+      setTelAuthNumberError({
+        error: false,
+        text: "",
+      });
     }
   }, []);
 
   const telErrorReset = useCallback((e) => {
-    setTelError(false);
-    setTelErrorText("");
+    setTelError({ error: false, text: "" });
   });
 
   // Phone number authentication Number Check
   const telAuthNumberCheck = useCallback((e) => {
     const userTelAuthNumber = e.target.value;
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
+      setTelAuthNumberError({
+        error: true,
+        text: "인증이 필요합니다.",
+      });
     } else {
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
+      setTelAuthNumberError({
+        error: false,
+        text: "",
+      });
     }
     // 인증번호 비교 후 인증 성공 실패 관련
   }, []);
 
   const telAuthNumberErrorReset = useCallback((e) => {
-    setTelAuthNumberError(false);
-    setTelAuthNumberErrorText("");
+    setTelAuthNumberError({
+      error: false,
+      text: "",
+    });
   });
 
   // Password Validation Check
   const pwValidationCheck = useCallback((e) => {
     const userPw = e.target.value;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/;
-    console.log(userPw);
     if (userPw === null || userPw === "") {
       setPwValidationError(true);
       setPwValidationErrorText("필수 정보입니다.");
@@ -186,6 +183,7 @@ const PwReset = () => {
 
   // next step
   const [identifyCheck, setIdentifyCheck] = useState(false);
+  const [userInfoA, setUserInfoA] = useState("");
   const PwResetNext = (e) => {
     e.preventDefault();
 
@@ -196,39 +194,57 @@ const PwReset = () => {
     const userTelAuthNumber = data.get("userTelAuthNumber");
 
     if (userId === null || userId === "") {
-      setIdError(true);
-      setIdErrorText("필수 정보입니다.");
+      setIdError({
+        error: true,
+        text: "필수 정보입니다.",
+      });
     }
 
     if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+      setNameError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTel === null || userTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
+      setTelAuthNumberError({
+        error: true,
+        text: "인증이 필요합니다.",
+      });
     }
 
     if (
-      !IdError &&
+      !idError.error &&
       userId !== "" &&
-      !nameError &&
+      !nameError.error &&
       userName !== "" &&
-      !telError &&
+      !telError.error &&
       userTel !== "" &&
-      !telAuthNumberError &&
+      !telAuthNumberError.error &&
       userTelAuthNumber !== ""
     ) {
-      console.log(identifyCheck);
-      setIdentifyCheck(true);
-      e.target.reset();
-      console.log(document.getElementById("pwReset_userTel").value);
+      console.log("뭐지...");
+      const userInfo = {
+        userId: userId,
+        userName: userName,
+        userTel: userTel,
+      };
+
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/findUser",
+        data: userInfo,
+      }).then((response) => {
+        if (response.data === "fail") {
+          document.getElementById("findPwFailAlert").hidden = false;
+        } else if (response.data !== null || response.data !== "") {
+          e.target.reset();
+          setIdentifyCheck(true);
+          setUserInfoA(response.data);
+        }
+      });
     }
   };
 
@@ -250,8 +266,20 @@ const PwReset = () => {
     }
 
     if (!pwValidationError && userPw !== "" && !pwError && userPwCheck !== "") {
-      console.log("password reset");
-      window.location.replace("/login");
+      const userInfo = {
+        ...userInfoA,
+        userPw: userPw,
+      };
+
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/pwReset",
+        data: userInfo,
+      }).then((response) => {
+        if (response.data === "success") {
+          navigate("/login");
+        }
+      });
     }
   };
 
@@ -266,8 +294,8 @@ const PwReset = () => {
             label="아이디"
             fullWidth
             onBlur={idCheck}
-            error={IdError}
-            helperText={IdErrorText}
+            error={idError.error}
+            helperText={idError.text}
             onFocus={idErrorReset}
             inputProps={{
               style: {
@@ -290,8 +318,8 @@ const PwReset = () => {
             label="이름"
             fullWidth
             onBlur={nameCheck}
-            error={nameError}
-            helperText={nameErrorText}
+            error={nameError.error}
+            helperText={nameError.text}
             onFocus={nameErrorReset}
             inputProps={{
               style: {
@@ -313,8 +341,8 @@ const PwReset = () => {
             id="pwReset_userTel"
             label="휴대폰 번호"
             fullWidth
-            error={telError}
-            helperText={telErrorText}
+            error={telError.error}
+            helperText={telError.text}
             onFocus={telErrorReset}
             inputProps={{
               style: {
@@ -355,8 +383,8 @@ const PwReset = () => {
             fullWidth
             onBlur={telAuthNumberCheck}
             onFocus={telAuthNumberErrorReset}
-            error={telAuthNumberError}
-            helperText={telAuthNumberErrorText}
+            error={telAuthNumberError.error}
+            helperText={telAuthNumberError.text}
             disabled={telAuthNumberDisabled}
             sx={{
               "& .MuiInputBase-input.Mui-disabled": {
@@ -375,6 +403,21 @@ const PwReset = () => {
               },
             }}
           />
+        </Grid>
+        <Grid item xs={12} style={{ textAlign: "center", paddingTop: "0" }}>
+          <p
+            className={styles.font15}
+            style={{
+              color: "#e53e3e",
+              background: "rgba(229, 62, 62, 0.1)",
+              padding: "10px",
+              marginTop: "24px",
+            }}
+            id="findPwFailAlert"
+            hidden
+          >
+            일치하는 정보가 없습니다.
+          </p>
         </Grid>
         <Grid item xs={12} style={{ paddingBottom: "30px" }}>
           <Button

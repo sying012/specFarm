@@ -39,7 +39,7 @@ public class JwtTokenProvider {
 			    //토큰의 주체
 			    .setSubject(user.getUserId()) //sub 
 			    //토큰 발행 주체
-			    .setIssuer("todo app") //iss
+			    .setIssuer("specFarm") //iss
 			    //토큰 발행 일자
 			    .setIssuedAt(new Date()) //isa
 			    //토큰 만료 일자
@@ -60,4 +60,5 @@ public class JwtTokenProvider {
 		//일치하면 토큰의 주체 즉 username 리턴
 		return claims.getSubject();
 	}
+
 }

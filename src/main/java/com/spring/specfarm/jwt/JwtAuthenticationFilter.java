@@ -32,9 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		try {
 			//request에서 token 꺼내오기
 			String token = parseBearerToken(request);
-			
-			System.out.println(token);
-			
+
 			//토큰 검사 및 시큐리티 등록
 			if(token != null && !token.equalsIgnoreCase("null")) {
 				System.out.println(token);

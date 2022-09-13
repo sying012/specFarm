@@ -49,10 +49,5 @@ export function call(api, method, request) {
 
 // logout
 export function logout() {
-  sessionStorage.setItem("ACCESS_TOKEN", null);
-}
-
-// join
-export function join(user) {
-  return call("/user/join", "POST", user);
+  sessionStorage.clear();
 }

@@ -1,14 +1,14 @@
-import { Button, createTheme } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router";
 import { Link, NavLink } from "react-router-dom";
 import styles from "../../styles/lost/Lost.module.css";
 
-const LostItem = ({ losts }) => {
-  const { lostsId } = useParams();
-  const lost = losts[lostsId - 1];
-  const prev = losts[lostsId - 2];
-  const next = losts[lostsId];
+const LostItem = ({ parentLostList, parentBrchs }) => {
+  const { index } = useParams();
+  const lost = parentLostList[index];
+  const prev = parentLostList[index * 1 - 1];
+  const next = parentLostList[index * 1 + 1];
+  const brch = parentBrchs.find((b) => b.brchName === lost.brchName);
 
   return (
     <>
@@ -17,7 +17,7 @@ const LostItem = ({ losts }) => {
           <strong>
             [{lost.lostCat}] {lost.lostItem}, {lost.lostLoc}
           </strong>
-          <p>{lost.lostDate}</p>
+          <p>{lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}</p>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
@@ -36,20 +36,8 @@ const LostItem = ({ losts }) => {
                 <td>{lost.brchName}</td>
               </tr>
               <tr>
-                <th>지사</th>
-                <td>{lost.brchTrthNm}</td>
-              </tr>
-              <tr>
-                <th>장소</th>
+                <th>분실 장소</th>
                 <td>{lost.lostLoc}</td>
-              </tr>
-              <tr>
-                <th>전화번호</th>
-                <td>{lost.brchTel}</td>
-              </tr>
-              <tr>
-                <th>주소</th>
-                <td>{lost.brchAddr}</td>
               </tr>
               <tr>
                 <th>분실물</th>
@@ -57,7 +45,21 @@ const LostItem = ({ losts }) => {
               </tr>
               <tr>
                 <th>분실일자</th>
-                <td>{lost.lostDate}</td>
+                <td>
+                  {lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
+                </td>
+              </tr>
+              <tr>
+                <th>지사</th>
+                <td>{brch.brchTrthName}</td>
+              </tr>
+              <tr>
+                <th>지사 전화번호</th>
+                <td>{brch.brchTel}</td>
+              </tr>
+              <tr>
+                <th>지사 주소</th>
+                <td>{brch.brchAddr}</td>
               </tr>
             </tbody>
           </table>
@@ -66,7 +68,10 @@ const LostItem = ({ losts }) => {
           {prev === undefined ? null : (
             <div>
               <p>이전글</p>
-              <NavLink to={`/cs/lost/${prev.id}`} className={styles.otherItem}>
+              <NavLink
+                to={`/cs/lost/${index - 1}`}
+                className={styles.otherItem}
+              >
                 [{prev.lostCat}] {prev.lostItem},&nbsp;
                 {prev.lostLoc}
               </NavLink>
@@ -75,7 +80,10 @@ const LostItem = ({ losts }) => {
           {next === undefined ? null : (
             <div>
               <p>다음글</p>
-              <NavLink to={`/cs/lost/${next.id}`} className={styles.otherItem}>
+              <NavLink
+                to={`/cs/lost/${parseInt(index) + 1}`}
+                className={styles.otherItem}
+              >
                 [{next.lostCat}] {next.lostItem},&nbsp;
                 {next.lostLoc}
               </NavLink>

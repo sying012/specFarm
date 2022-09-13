@@ -14,21 +14,23 @@ import lombok.Data;
 @Entity
 @Table(name = "T_LOST")
 @Data
-@SequenceGenerator(name = "T_LOST_SEQ_GENERATOR", sequenceName = "T_LOST_SEQ", initialValue = 1, allocationSize = 1)
+//@SequenceGenerator(name = "T_LOST_SEQ_GENERATOR", sequenceName = "T_LOST_SEQ", initialValue = 1, allocationSize = 1)
 public class Lost {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "T_LOST_SEQ_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int lostIdx;
 	
-	@ManyToOne
-	@JoinColumn(name="BRCH_NAME")
-	private Brch brch;
+//	@ManyToOne
+//	@JoinColumn(name="BRCH_NAME")
+//	private Brch brch;
+	
+	private String BrchName;
 	
 	private String lostCat;
 	
 	private String lostItem;
 	
-	private String lostLcc;
+	private String lostLoc;
 	
 	private String lostDate;
 }

@@ -1,8 +1,11 @@
 package com.spring.specfarm.controller.user;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,66 +22,112 @@ import com.spring.specfarm.service.user.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@PostMapping("/idCheck")
-	public ResponseEntity<?> idCheck(@RequestBody User user) {
-		User idCheck= userService.idCheck(user);
-		
-		if(idCheck == null) {
-			return ResponseEntity.ok().body("success");
+	public String idCheck(@RequestBody User user) {
+		User idCheck = userService.idCheck(user);
+
+		if (idCheck == null) {
+			return "success";
 		} else {
-			return ResponseEntity.ok().body("failed");
+			return "exist";
 		}
-		
+
 	}
-	
+
+	@PostMapping("/telCheck")
+	public String telCheck(@RequestBody User user) {
+		User telCheck = userService.telCheck(user);
+
+		if (telCheck == null) {
+			return "success";
+		} else {
+			return "exist";
+		}
+	}
+
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user) {
-		System.out.println(user);
 		try {
 			user.setUserPw(passwordEncoder.encode(user.getUserPw()));
-						
 			User joinUser = userService.join(user);
-			
-			UserDTO userDTO = new UserDTO();
-			userDTO.setUserId(joinUser.getUserId());
-			userDTO.setUserName(joinUser.getUserName());
-			userDTO.setRole(joinUser.getRole());
-			
-			return ResponseEntity.ok().body(userDTO);
+			return ResponseEntity.ok().body("success");
 		} catch (Exception e) {
 			ResponseDTO<UserDTO> response = new ResponseDTO<>();
 			response.setError("join failed");
 			return ResponseEntity.badRequest().body(response);
 		}
 	}
-	
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody User user) {
 		User loginUser = userService.login(user.getUserId(), user.getUserPw());
-		
-		if(loginUser != null) {
+
+		if (loginUser != null) {
 			final String token = jwtTokenProvider.create(loginUser);
-			
+
 			final UserDTO userDTO = new UserDTO();
 			userDTO.setUserId(loginUser.getUserId());
 			userDTO.setUserPw(loginUser.getUserPw());
 			userDTO.setRole(loginUser.getRole());
 			userDTO.setToken(token);
-			
+
 			return ResponseEntity.ok().body(userDTO);
 		} else {
-			ResponseDTO<UserDTO> response = new ResponseDTO<>();
-			response.setError("login failed");
-			return ResponseEntity.badRequest().body(response);
+			return ResponseEntity.ok().body("fail");
 		}
+	}
+
+	@PostMapping("/findUser")
+	public ResponseEntity<?> findUser(@RequestBody User user) {
+		User findUser = userService.findUser(user);
+
+		if (findUser != null) {
+			final UserDTO userDTO = new UserDTO();
+			userDTO.setUserName(findUser.getUserName());
+			userDTO.setUserId(findUser.getUserId());
+			userDTO.setUserTel(findUser.getUserTel());
+
+			return ResponseEntity.ok().body(userDTO);
+		} else {
+			return ResponseEntity.ok().body("fail");
+		}
+	}
+
+	@PostMapping("/pwReset")
+	public String pwReset(@RequestBody User user) {
+		try {
+			user.setUserPw(passwordEncoder.encode(user.getUserPw()));
+			userService.pwReset(user);
+			return "success";
+		} catch (Exception e) {
+			return "fail";
+		}
+
+	}
+
+	// coolsms
+	@PostMapping("/check/sendSMS")
+	public String sendSMS(@RequestBody String phoneNumber) {
+		System.out.println(phoneNumber);
+
+		Random rand = new Random();
+		String numStr = "";
+		for (int i = 0; i < 4; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			numStr += ran;
+		}
+
+		System.out.println("수신자 번호 : " + phoneNumber);
+		System.out.println("인증번호 : " + numStr);
+		userService.certifiedPhoneNumber(phoneNumber, numStr);
+		return numStr;
 	}
 
 }

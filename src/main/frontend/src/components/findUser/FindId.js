@@ -6,8 +6,10 @@ import {
   Link,
   styled,
 } from "@mui/material";
+import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findUser/FindUser.module.css";
 
 const theme = createTheme({
@@ -47,12 +49,6 @@ const FindId = () => {
   const [telAuthNumberError, setTelAuthNumberError] = useState(false);
   const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
-
-  //   const callAxios = () => {
-  //     axios({}).then((response) => {
-  //       setFindId(response.data);
-  //     });
-  //   };
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
@@ -94,6 +90,14 @@ const FindId = () => {
 
       setTelAuthNumberError(false);
       setTelAuthNumberErrorText("");
+
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/check/sendSMS",
+        data: { userTel: newUserTel },
+      }).then((response) => {
+        console.log(response);
+      });
     }
   }, []);
 
@@ -153,11 +157,20 @@ const FindId = () => {
       !telAuthNumberError &&
       userTelAuthNumber !== ""
     ) {
-      setUserName(userName);
-      setFindId("user1234");
-      const id = "user1234";
-      const newid = id.replace(/.$/, "*");
-      console.log(newid);
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/findUser",
+        data: { userName: userName, userTel: userTel },
+      }).then((response) => {
+        console.log(response);
+        if (response.data === "fail") {
+          document.getElementById("findIdFailAlert").hidden = false;
+        } else if (response.data !== null || response.data !== "") {
+          const id = response.data.userId.substr(0, 3) + "****";
+          setUserName(userName);
+          setFindId(id);
+        }
+      });
     }
   };
 
@@ -258,6 +271,21 @@ const FindId = () => {
             }}
           />
         </Grid>
+        <Grid item xs={12} style={{ textAlign: "center", paddingTop: "0" }}>
+          <p
+            className={styles.font15}
+            style={{
+              color: "#e53e3e",
+              background: "rgba(229, 62, 62, 0.1)",
+              padding: "10px",
+              marginTop: "24px",
+            }}
+            id="findIdFailAlert"
+            hidden
+          >
+            일치하는 정보가 없습니다.
+          </p>
+        </Grid>
         <Grid item xs={12}>
           <Button
             variant="contained"
@@ -293,7 +321,6 @@ const FindId = () => {
   let content = findIdPage;
 
   if (findId !== "" && findId !== null) {
-    console.log(findId);
     content = findIdResultPage;
   }
 

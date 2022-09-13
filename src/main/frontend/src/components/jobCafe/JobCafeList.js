@@ -6,8 +6,8 @@ const JobCafeList = ({ jobCafeList }) => {
   return (
     <>
       <div className={styles.jobCafeList}>
-        {jobCafeList.map((jobCafe) => (
-          <JobCafeCard key={jobCafe.id} jobCafeItem={jobCafe} />
+        {jobCafeList.map((jobCafe, index) => (
+          <JobCafeCard key={index} index={index} jobCafeItem={jobCafe} />
         ))}
       </div>
     </>

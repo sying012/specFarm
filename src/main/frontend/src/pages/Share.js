@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import NewShare from "../components/share/NewShare";
 import ShareDetail from "../components/share/ShareDetail";
 import ShareContainer from "../components/share/ShareContainer";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Share = () => {
   const [shareList, setShareList] = useState([
     {
       id: 1,
-      shareTitle: "나눔해요1",
+      shareTitle: "나눔해요1111111111111111111111111111111111111",
       userId: "당근",
       userProfileName: null,
       regDate: "2022.08.01",
@@ -22,7 +23,7 @@ const Share = () => {
           shareReplyIdx: 1,
           userId: "감자",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
         {
@@ -30,7 +31,7 @@ const Share = () => {
           shareReplyIdx: 2,
           userId: "고구마",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
         {
@@ -38,7 +39,7 @@ const Share = () => {
           shareReplyIdx: 3,
           userId: "사과",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
         {
@@ -46,7 +47,7 @@ const Share = () => {
           shareReplyIdx: 4,
           userId: "포도",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
       ],
@@ -67,7 +68,7 @@ const Share = () => {
           shareReplyIdx: 1,
           userId: "수박",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
         {
@@ -75,7 +76,7 @@ const Share = () => {
           shareReplyIdx: 2,
           userId: "망고",
           userProfileName: null,
-          userReplyContent: "저요 저요 저요 저요 저요 저요 저요",
+          shareReplyContent: "저요 저요 저요 저요 저요 저요 저요",
           shareReplyDate: "2022.01.01",
         },
       ],
@@ -151,7 +152,10 @@ const Share = () => {
     <div>
       <div className="titleContainer">
         <div className="titlewrap">마을회관</div>
-        <div className="subtitlewrap">나눔 장터🤝</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to="/community/share">
+          <div className="subtitlewrap">나눔 장터🤝</div>
+        </NavLink>
       </div>
       <Routes>
         <Route

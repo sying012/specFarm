@@ -1,33 +1,17 @@
-import React from "react";
-import { createTheme, Stack, Pagination } from "@mui/material";
+import { Stack, Pagination } from "@mui/material";
 import styles from "../../styles/skills/jobCafeContainer.module.css";
 import JobCafeSearch from "./JobCafeSearch";
 import JobCafeList from "./JobCafeList";
 import JobCafeType from "./JobCafeType";
 
-const JobCafeContainer = ({ jobCafeList }) => {
-  //   const theme = createTheme({
-  //     status: {
-  //       danger: "#e53e3e",
-  //     },
-  //     palette: {
-  //       brown: {
-  //         main: "rgb(107, 83, 67)",
-  //         contrastText: "#fff",
-  //       },
-  //       primary: {
-  //         main: "rgb(187, 205, 110)",
-  //         contrastText: "#fff",
-  //       },
-  //       secondary: {
-  //         main: "#555",
-  //       },
-  //     },
-  //   });
+const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   return (
     <>
       <div>
-        <JobCafeType />
+        <JobCafeType
+          categories={categories}
+          onSelectCategory={onSelectCategory}
+        />
       </div>
       <JobCafeSearch />
       <JobCafeList jobCafeList={jobCafeList} />

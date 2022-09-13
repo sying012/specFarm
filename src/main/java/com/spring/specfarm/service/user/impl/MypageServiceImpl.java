@@ -25,7 +25,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public User getUser(String userId) {
-		User loginedUser = userRepository.findByUserId(userId);
+		User loginedUser = userRepository.findById(userId).get();
 		return loginedUser;
 	}
 
@@ -54,7 +54,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public boolean pwCheck(String userId, String pastPw) {
-		User loginUser = userRepository.findByUserId(userId);
+		User loginUser = userRepository.findById(userId).get();
 		if(passwordEncoder.matches(pastPw, loginUser.getUserPw())) {
 			return true;
 		} else {

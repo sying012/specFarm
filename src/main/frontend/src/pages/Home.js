@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
 
 const Home = () => {
-  const isAuthenticated = sessionStorage.getItem("ACCESS_TOKEN") !== "null";
+  const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
   const [page, setPage] = useState("/cert");
   const [pageComponent, setPageComponent] = useState(<CertMain />);
@@ -154,24 +154,24 @@ const Home = () => {
             </Link>
             <div className={styles.tailwrap}>
               <div className="loginbtn">
-                {isAuthenticated ? (
-                  <Link to="/" id="logoutLink" onClick={logout}>
-                    로그아웃
-                  </Link>
-                ) : (
+                {!isAuthenticated ? (
                   <Link to="/login" id="loginLink">
                     로그인
+                  </Link>
+                ) : (
+                  <Link to="/" id="loginLink" onClick={logout}>
+                    로그아웃
                   </Link>
                 )}
               </div>
               <div className="joinbtn">
-                {isAuthenticated ? (
-                  <Link to="/mypage" id="mypageLink">
-                    마이페이지
-                  </Link>
-                ) : (
+                {!isAuthenticated ? (
                   <Link to="/join" id="joinLink">
                     회원가입
+                  </Link>
+                ) : (
+                  <Link to="/mypage" id="joinLink">
+                    마이페이지
                   </Link>
                 )}
               </div>

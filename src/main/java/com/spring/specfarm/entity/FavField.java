@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "T_LOST")
+@Table(name = "T_FAV_FIELD")
 @Data
 public class FavField {
 	@Id

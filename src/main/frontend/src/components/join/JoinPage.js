@@ -189,12 +189,23 @@ const JoinPage = () => {
       setTelError(true);
       setTelErrorText("형식에 맞지 않는 번호입니다.");
     } else {
-      setTelError(false);
-      setTelErrorText("");
-      setTelAuthNumberDisabled(false);
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/telCheck",
+        data: { userTel: newUserTel },
+      }).then((response) => {
+        if (response.data === "success") {
+          setTelError(false);
+          setTelErrorText("");
+          setTelAuthNumberDisabled(false);
 
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
+          setTelAuthNumberError(false);
+          setTelAuthNumberErrorText();
+        } else {
+          setTelError(true);
+          setTelErrorText("이미 사용중인 전화번호입니다.");
+        }
+      });
     }
   }, []);
 
@@ -324,7 +335,7 @@ const JoinPage = () => {
       !emailError &&
       checked
     ) {
-      join({
+      const userInfo = {
         userId: userId,
         userPw: userPw,
         userName: userName,
@@ -332,6 +343,13 @@ const JoinPage = () => {
         userEmail: userEmail,
         favFieldL: certL,
         favFieldM: certM,
+        nickname: userId,
+      };
+
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/join",
+        data: userInfo,
       }).then((response) => {
         navigate("/login");
       });

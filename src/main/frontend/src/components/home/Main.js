@@ -6,17 +6,21 @@ import Alerts from "./Alerts";
 import Plan from "./Plan";
 
 const Main = ({ acceptances, tests, open }) => {
-  // const [alertH, setAlertH] = useState("-50");
+  const isUser = sessionStorage.getItem("userId");
 
   return (
     <>
       <div className={styles.homeBackground}>
         <Container style={{ position: "relative", boxSizing: "content-box" }}>
-          <Grid container className={styles.alert}>
-            <Stack sx={{ width: "510px" }} spacing={1}>
-              <Alerts open={open} />
-            </Stack>
-          </Grid>
+          {isUser ? (
+            <Grid container className={styles.alert}>
+              <Stack sx={{ width: "510px" }} spacing={1}>
+                <Alerts open={open} />
+              </Stack>
+            </Grid>
+          ) : (
+            ""
+          )}
           <div className={styles.homeContent} style={{ position: "relative" }}>
             <div>
               <p className={styles.subTitle}>

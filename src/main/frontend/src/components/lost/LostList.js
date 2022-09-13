@@ -2,86 +2,142 @@ import {
   Autocomplete,
   createTheme,
   FormControl,
-  Link,
   MenuItem,
   Pagination,
   Select,
   Stack,
-  styled,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/lost/Lost.module.css";
 import SearchIcon from "@mui/icons-material/Search";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
-const theme = createTheme({
-  status: {
-    danger: "#e53e3e",
-  },
-  palette: {
-    green: {
-      main: "#8cbf75",
-      contrastText: "#fff",
-    },
-    brown: {
-      main: "rgb(107, 83, 67)",
-      contrastText: "#fff",
-    },
-  },
-  typography: {
-    fontFamily: [
-      "Hahmlet",
-      "Segoe UI",
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-    ].join(","),
-  },
-});
+const LostList = ({ searchType, changeParentState }) => {
+  const [losts, setLots] = useState([]);
+  const [lostList, setLostList] = useState([]);
+  const [page, setPage] = useState(1); // firstPage = 1
+  const [data, setData] = useState(lostList.slice(0, 10)); // firstPage data
+  const [brchs, setBrchs] = useState([]);
 
-const LostList = ({ searchTypeItem, losts, brchNames }) => {
-  const [searchType, setSearchType] = useState("전체");
-  console.log(searchType);
   // search type select
+  const [selectSearchType, setSelectSearchType] = useState("전체");
+  const [searchText, setSearchText] = useState();
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/getLosts",
+    }).then((response) => {
+      setLots(response.data.lostList);
+      setBrchs(response.data.brchList);
+    });
+  }, []);
+
   const handleChange = (e) => {
-    setSearchType(e.target.value);
+    setSelectSearchType(e.target.value);
+    setSearchText("");
   };
 
   // tr click => lostItem
   const navigate = useNavigate();
-  const goLostItem = (id) => {
-    navigate(`./${id}`);
+  const goLostItem = (index) => {
+    navigate(`./${index}`);
   };
 
+  useEffect(() => {
+    switch (selectSearchType) {
+      case "전체":
+        setLostList(
+          losts.filter((lost) => {
+            if (lost.brchName.includes(searchText)) {
+              return lost;
+            } else if (lost.lostItem.includes(searchText)) {
+              return lost;
+            } else if (lost.lostLoc.includes(searchText)) {
+              return lost;
+            } else if (lost.lostDate.includes(searchText)) {
+              return lost;
+            }
+          })
+        );
+        break;
+
+      case "지사":
+        setLostList(
+          losts.filter((lost) => {
+            return lost.brchName.includes(searchText);
+          })
+        );
+        break;
+
+      case "분실물 목록":
+        setLostList(
+          losts.filter((lost) => {
+            return lost.lostItem.includes(searchText);
+          })
+        );
+        break;
+
+      case "분실 장소":
+        setLostList(
+          losts.filter((lost) => {
+            return lost.lostLoc.includes(searchText);
+          })
+        );
+        break;
+
+      case "분실 일자":
+        setLostList(
+          losts.filter((lost) => {
+            return lost.lostDate.includes(searchText);
+          })
+        );
+        break;
+    }
+  }, [searchText]);
+
+  const test = (e) => {
+    e.preventDefault();
+    const dataa = new FormData(e.target);
+    const searchsss = dataa.get("searchInput");
+    setSearchText(dataa.get("searchInput"));
+  };
+
+  // searchBar type Brch => change
   let searchBar =
-    searchType !== "지사" ? (
-      <TextField
-        id="outlined-search"
-        type="search"
-        InputProps={{
-          startAdornment: <SearchIcon color="action" />,
-        }}
-        size="small"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": {
-              borderColor: "#8cbf75",
+    selectSearchType !== "지사" ? (
+      <form onSubmit={test}>
+        <TextField
+          name="searchInput"
+          id="searchInput"
+          type="search"
+          InputProps={{
+            startAdornment: <SearchIcon color="action" />,
+          }}
+          size="small"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": {
+                borderColor: "#8cbf75",
+              },
             },
-          },
-        }}
-        style={{ width: "250px" }}
-      ></TextField>
+          }}
+          style={{ width: "250px" }}
+        ></TextField>
+      </form>
     ) : (
       <Autocomplete
         freeSolo
-        id="free-solo-2-demo"
+        id="searchBrch"
         disableClearable
-        options={brchNames.map((option) => option.title)}
+        options={brchs.map((option) => option.brchName)}
+        value={searchText || ""}
+        onChange={(e, newText) => {
+          setSearchText(newText);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -107,6 +163,27 @@ const LostList = ({ searchTypeItem, losts, brchNames }) => {
       />
     );
 
+  // pagenation
+  const LAST_PAGE =
+    lostList.length % 10 === 0
+      ? parseInt(lostList.length / 10)
+      : parseInt(lostList.length / 10) + 1; // lastPage
+
+  useEffect(() => {
+    if (lostList.length !== 0) {
+      if (page === LAST_PAGE) {
+        setData(lostList.slice(10 * (page - 1)));
+      } else {
+        setData(lostList.slice(10 * (page - 1), 10 * (page - 1) + 10));
+      }
+    }
+  }, [lostList]);
+
+  useEffect(() => {
+    setLostList(losts);
+    changeParentState(losts, brchs);
+  }, [losts]);
+
   return (
     <div>
       <div className={styles.search}>
@@ -114,7 +191,7 @@ const LostList = ({ searchTypeItem, losts, brchNames }) => {
           <Select
             displayEmpty
             id="searchTypeSelect"
-            value={searchType}
+            value={selectSearchType}
             onChange={handleChange}
             sx={{
               "&.MuiOutlinedInput-root": {
@@ -124,7 +201,7 @@ const LostList = ({ searchTypeItem, losts, brchNames }) => {
               },
             }}
           >
-            {searchTypeItem.map((item) => (
+            {searchType.map((item) => (
               <MenuItem
                 key={item.id}
                 value={item.name}
@@ -166,21 +243,29 @@ const LostList = ({ searchTypeItem, losts, brchNames }) => {
           </tr>
         </thead>
         <tbody>
-          {losts.map((lost) => (
-            <tr key={lost.id} onClick={() => goLostItem(lost.id)}>
+          {data.map((lost, index) => (
+            <tr key={index} onClick={() => goLostItem(index)}>
               <td className={styles.brchName}>{lost.brchName}</td>
-              <td>
+              <td className={styles.lostItem}>
                 [{lost.lostCat}] {lost.lostItem}
               </td>
               <td className={styles.lostLoc}>{lost.lostLoc}</td>
-              <td className={styles.lostDate}>{lost.lostDate}</td>
+              <td className={styles.lostDate}>
+                {lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       <div className={styles.pageNation}>
         <Stack spacing={2}>
-          <Pagination count={10} />
+          <Pagination
+            count={LAST_PAGE}
+            page={page}
+            onChange={(e, value) => {
+              setPage(value);
+            }}
+          />
         </Stack>
       </div>
     </div>

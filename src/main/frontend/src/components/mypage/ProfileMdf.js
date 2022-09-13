@@ -7,20 +7,33 @@ import {
   InputAdornment,
   OutlinedInput,
 } from "@mui/material";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../app-config";
 
 import styles from "../../styles/mypage/ProfileMdf.module.css";
 
 function ProfileMdf() {
-  const [user, setUser] = useState({
-    userId: "thisisId",
-    userPw: "dd",
-    userName: "조유미",
-    userTel: "010-0000-0000",
-    userEmail: "801@bitcamp.com",
-    nickname: "박대리",
-    profilePath: "",
-  });
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/mypage/modify",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    })
+      .then((response) => {
+        if (response.data) {
+          setUser(response.data);
+        }
+      })
+      .catch((e) => {
+        console.log("catch문" + e);
+        window.location.href = "/login";
+      });
+  }, []);
 
   // mui button 테마 지정
   const theme = createTheme({
@@ -40,6 +53,12 @@ function ProfileMdf() {
 
   const [imageSrc, setImageSrc] = useState("");
 
+  useEffect(() => {
+    if (Object.keys(user).length !== 0) {
+      setImageSrc(user.userProfileName);
+    }
+  }, [user]);
+
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
     e.target.value = "";
@@ -58,31 +77,46 @@ function ProfileMdf() {
     setImageSrc(null);
   }
 
-  const [nicknameValue, setNicknameValue] = useState(user.nickname);
+  const [nicknameValue, setNicknameValue] = useState("");
+  useEffect(() => {
+    if (Object.keys(user).length !== 0) {
+      setNicknameValue(user.userNick);
+    }
+  }, [user]);
 
-  // 닉네임 x버튼 클릭시 입력창 초기화
-  function resetNicknameHandler() {
-    setNicknameValue("");
-  }
-  // 닉네임 새로 입력
-  const onChangeNickname = (e) => {
-    setNicknameValue(e.target.value);
-  };
-
+  useEffect(() => {
+    setUser({
+      ...user,
+      userNick: nicknameValue,
+    });
+    console.log(user);
+  }, [nicknameValue]);
+  
   // form submit 시 닉네임 공란이면 에러 창 띄움
   const [nicknameError, setNicknameError] = useState(false);
-
   const userProfileEdit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const userNickname = data.get("nickname");
-    console.log(userNickname);
 
     if (userNickname === null || userNickname === "") {
       setNicknameError(true);
     } else {
-      alert("변경되었습니다.");
-      window.location.replace("/mypage");
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/mypage/modify",
+        data: user,
+      })
+        .then((response) => {
+          if (response.data) {
+            console.log(response);
+            alert("변경되었습니다.");
+            window.location.replace("/mypage");
+          }
+        })
+        .catch((e) => {
+          console.log("catch문 " + e);
+        });
     }
   };
 
@@ -109,7 +143,7 @@ function ProfileMdf() {
               사진 올리기
               <input
                 hidden
-                id="miribogi"
+                id="userProfileName"
                 accept="image/*"
                 type="file"
                 onChange={(e) => {
@@ -138,7 +172,9 @@ function ProfileMdf() {
             theme={theme}
             color="lightgreen"
             value={nicknameValue}
-            onChange={onChangeNickname}
+            onChange={(e) => {
+              setNicknameValue(e.target.value);
+            }}
             placeholder="닉네임을 입력해주세요."
             className={styles.nicknameInput}
             error={nicknameError}
@@ -147,7 +183,9 @@ function ProfileMdf() {
                 <IconButton
                   aria-label="delete"
                   className={styles.nicknameCleanBtn}
-                  onClick={resetNicknameHandler}
+                  onClick={() => {
+                    setNicknameValue("");
+                  }}
                 >
                   <Close fontSize="small" />
                 </IconButton>

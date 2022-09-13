@@ -1,10 +1,33 @@
 import { Check } from "@mui/icons-material";
 import { Button, createTheme, IconButton } from "@mui/material";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../app-config";
 
 import styles from "../../styles/mypage/Deactivate.module.css";
 
 function Deactivate() {
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/mypage/modify",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    })
+      .then((response) => {
+        if (response.data) {
+          setUserId(response.data.userId);
+        }
+      })
+      .catch((e) => {
+        console.log("catch문 " + e);
+        window.location.href = "/login";
+      });
+  }, []);
+
   // mui button 테마 지정
   const theme = createTheme({
     palette: {
@@ -42,8 +65,8 @@ function Deactivate() {
           </IconButton>
           <div>
             <p>
-              사용하고 계신 아이디(<span>username</span>)는 탈퇴할 경우 재사용
-              및 복구가 불가능합니다.
+              사용하고 계신 아이디({userId})는 탈퇴할 경우 재사용 및 복구가
+              불가능합니다.
             </p>
             <p className={styles.fontColorGray}>
               <span className={styles.fontColorRed}>
@@ -99,7 +122,7 @@ function Deactivate() {
         <div className={styles.fontWeightBold}>
           <p className={styles.fontColorRed}>
             탈퇴 후에는 아이디{" "}
-            <span className={styles.fontColorGreen}>username</span>로 다시
+            <span className={styles.fontColorGreen}>{userId}</span>로 다시
             가입할 수 없으며 아이디와 데이터는 복구할 수 없습니다.
           </p>
           <p className={styles.fontColorRed}>

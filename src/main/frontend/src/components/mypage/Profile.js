@@ -1,4 +1,4 @@
-import { Avatar, Badge, TextField } from "@mui/material";
+import { Avatar, Badge } from "@mui/material";
 
 import { Link } from "react-router-dom";
 
@@ -26,9 +26,9 @@ function Profile({ certs, user }) {
                 title="프로필 사진을 수정하려면 클릭하세요."
                 alt="profile image"
                 src={
-                  user.profilePath === ""
+                  !user.userProfileName
                     ? "/upload/profile/farmer.png"
-                    : user.profilePath
+                    : user.userProfileName
                 }
                 sx={{ width: 140, height: 140 }}
               />
@@ -36,8 +36,10 @@ function Profile({ certs, user }) {
           </Link>
         </div>
         <div className={styles.profileInfo}>
-          <h1 className={styles.nickname}>{user.nickname}</h1>
-          <p className={styles.email}>{user.userEmail}</p>
+          <h1 className={styles.nickname}>{user.userNick}</h1>
+          <p className={styles.email}>
+            {user.userEmail || "이메일을 등록해주세요."}
+          </p>
         </div>
         <div>
           <div className={styles.badgeLabel}>
@@ -46,8 +48,8 @@ function Profile({ certs, user }) {
           <div className={styles.badges}>
             {certs.map((cert) => (
               <img
-                key={cert.id}
-                src={badgeArr[cert.id - 1]}
+                key={cert.getCertIdx}
+                src={badgeArr[cert.getCertIdx]}
                 title={cert.certName}
                 alt={cert.certName}
               />

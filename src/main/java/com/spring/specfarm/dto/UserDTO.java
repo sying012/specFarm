@@ -16,6 +16,10 @@ public class UserDTO {
 	
 	private String userNick;
 	
+	private String favFieldL;
+	
+	private String favFieldM;
+	
 	private String userProfileName;
 	
 	private String userYn;

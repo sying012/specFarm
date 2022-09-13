@@ -13,12 +13,12 @@ import lombok.Data;
 @IdClass(GetCertId.class)
 public class GetCert {
 	@Id
-	private int certIdx;
+	private int getCertIdx;
 	
 	@Id
 	private String userId;
 	
-	private int getCertIdx;
+	private String certName;
 	
 	private String getCertDate;
 }

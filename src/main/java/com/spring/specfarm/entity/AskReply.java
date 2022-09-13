@@ -1,6 +1,7 @@
 package com.spring.specfarm.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,23 +22,24 @@ import lombok.Data;
 @IdClass(AskReplyId.class)
 public class AskReply {
 	@Id
+	@Column(name="ASK_REPLY_IDX")
 	private int askReplyIdx;
 	
 	@Id
+	@Column(name="ASK_IDX")
 	private int askIdx;
 	
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
 	@Column(columnDefinition = "varchar(1000)")
 	private String askReplyContent;
 	
-	private String askReplyRegDate = LocalDateTime.now().toString();
+	private String askReplyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	
 	
 	@Column(columnDefinition = "char(1)")
-	@ColumnDefault("'y'")
-	private String askReplyYn;
+	private char askReplyYn = 'Y';
 	
 }

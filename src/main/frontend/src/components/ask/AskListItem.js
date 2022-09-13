@@ -7,17 +7,17 @@ const AskListItem = ({ ask }) => {
       <div id="profile">
         <img
           id="profileImg"
-          src={ask.userProfileName || defaultProfile}
+          src={ask.user.userProfileName || defaultProfile}
           alt="프로필사진"
         />
       </div>
       <div id="contentBox">
         <div id="title">
           <span>
-            [{ask.certName}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
+            [{ask.askCert}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
           </span>
         </div>
-        <div id="writer"> {ask.userId} </div>
+        <div id="writer"> {ask.user.userId} </div>
       </div>
       <div id="contentInfo">
         <div id="regdate">{ask.askRegDate}</div>
@@ -30,7 +30,7 @@ const AskListItem = ({ ask }) => {
               borderRadius: "10px",
             }}
           >
-            {ask.aCount}
+            {ask.countReply}
           </p>
         </div>
       </div>

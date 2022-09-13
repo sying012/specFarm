@@ -5,7 +5,7 @@ import {
   PhoneIphone,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AskListItem from "../ask/AskListItem";
 
@@ -13,9 +13,21 @@ import styles from "../../styles/mypage/Frames.module.css";
 import { NavLink } from "react-router-dom";
 
 function Frames({ certs, asks, shares, user, attrCerts }) {
+  const [userInfo, setUserInfo] = useState({});
   function deleteHandler() {
     // DB에서 날리기
   }
+
+  useEffect(() => {
+    console.log(user);
+    if (Object.keys(user).length !== 0)
+      setUserInfo({
+        ...user,
+        userTel: user.userTel
+          .replace(/-/g, "")
+          .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***"),
+      });
+  }, [user]);
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -41,17 +53,19 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
             </div>
             <div className={styles.userContent}>
               <PhoneIphone color="action" inheritViewBox />
-              <p className={styles.userDetail}>{user.userTel}</p>
+              <p className={styles.userDetail} id="userTel">
+                {userInfo.userTel}
+              </p>
             </div>
           </div>
           <div className={styles.earned}>
             <h5>취득한 자격증</h5>
 
             {certs.map((cert) => (
-              <div className={styles.earnedContent} key={cert.id}>
+              <div className={styles.earnedContent} key={cert.getCertIdx}>
                 <p className={styles.earnedCertName}>{cert.certName}</p>
                 <p className={styles.earnedCertDate}>
-                  취득일: {cert.earnedDate}
+                  취득일: {cert.getCertDate}
                 </p>
               </div>
             ))}
@@ -106,7 +120,8 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
                 (ask) =>
                   ask.id === 1 && (
                     <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
-                      <AskListItem key={ask.id} ask={ask} />
+                      {<AskListItem key={ask.id} ask={ask} /> ||
+                        "작성한 글이 없습니다."}
                     </NavLink>
                   )
               )}
@@ -119,24 +134,28 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
                 (share) =>
                   share.id === 1 && (
                     <NavLink key={share.id} to={`/community/share/${share.id}`}>
-                      <div className={styles.shareList} key={share.id}>
-                        <img
-                          src={share.itemImg}
-                          alt="나눔이미지 파일"
-                          className={styles.shareFile}
-                        />
-                        <div className={styles.shareContainer}>
-                          <div className={styles.shareListHeader}>
-                            <h1 className={styles.writtenTitle}>
-                              {share.shareTitle}
-                            </h1>
-                            <p className={styles.shareRegDate}>
-                              {share.regDate}
+                      {(
+                        <div className={styles.shareList} key={share.id}>
+                          <img
+                            src={share.itemImg}
+                            alt="나눔이미지 파일"
+                            className={styles.shareFile}
+                          />
+                          <div className={styles.shareContainer}>
+                            <div className={styles.shareListHeader}>
+                              <h1 className={styles.writtenTitle}>
+                                {share.shareTitle}
+                              </h1>
+                              <p className={styles.shareRegDate}>
+                                {share.regDate}
+                              </p>
+                            </div>
+                            <p className={styles.shareContent}>
+                              {share.content}
                             </p>
                           </div>
-                          <p className={styles.shareContent}>{share.content}</p>
                         </div>
-                      </div>
+                      ) || "작성한 글이 없습니다."}
                     </NavLink>
                   )
               )}

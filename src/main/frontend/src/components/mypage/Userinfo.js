@@ -10,8 +10,10 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/mypage/Userinfo.module.css";
 
 function Userinfo({ certs, user }) {
@@ -34,6 +36,33 @@ function Userinfo({ certs, user }) {
     },
   });
 
+  const [userInfo, setUserInfo] = useState({
+    ...user,
+    userEmail: "",
+    userId: "",
+    userName: "",
+    userTel: "",
+    favFieldL: "",
+    favFieldM: "",
+  });
+  const [checkedUserInfoChanged, setCheckedUserInfoChanged] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(user).length !== 0) {
+      setUserInfo(user);
+    }
+  }, [user]);
+
+  const handleInfoChange = (e) => {
+    const newUserInfo = {
+      ...userInfo,
+      [e.target.name]: e.target.value,
+    };
+
+    setUserInfo(newUserInfo);
+    setCheckedUserInfoChanged(true);
+  };
+
   const [telError, setTelError] = useState(false);
   const [telErrorText, setTelErrorText] = useState("");
   const [telAuthNumberError, setTelAuthNumberError] = useState(false);
@@ -41,9 +70,15 @@ function Userinfo({ certs, user }) {
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [emailErrorText, setEmailErrorText] = useState("");
-  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certLCat, setCertLCat] = useState([
+    { id: 1, name: "사업관리1" },
+    { id: 2, name: "썸띵스페셜1" },
+  ]);
   const [certL, setCertL] = useState("");
-  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certMCat, setCertMCat] = useState([
+    { id: 1, name: "사업관리2" },
+    { id: 2, name: "썸띵스페셜2" },
+  ]);
   const [certM, setCertM] = useState("");
 
   // Phone number authentication
@@ -74,6 +109,9 @@ function Userinfo({ certs, user }) {
     if (usertelAuthNumber === null || usertelAuthNumber === "") {
       setTelAuthNumberError(true);
       setTelAuthNumberErrorText("인증이 필요합니다.");
+    } else if (usertelAuthNumber !== "0000") {
+      setTelAuthNumberError(true);
+      setTelAuthNumberErrorText("인증번호가 일치하지 않습니다.");
     } else {
       setTelAuthNumberError(false);
       setTelAuthNumberErrorText("");
@@ -82,10 +120,10 @@ function Userinfo({ certs, user }) {
 
   // email Validation Check
   const emailCheck = useCallback((e) => {
-    const useremail = e.target.value;
+    const userEmail = e.target.value;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!emailRegex.test(useremail)) {
+    if (!emailRegex.test(userEmail)) {
       setEmailError(true);
       setEmailErrorText("이메일 주소를 다시 확인해주세요.");
     } else {
@@ -97,20 +135,24 @@ function Userinfo({ certs, user }) {
   // Cert Large Category
   const certLCatChange = (e) => {
     setCertL(e.target.value);
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    setCheckedUserInfoChanged(true);
   };
 
   // Cert Middle Category
   const certMCatChange = (e) => {
     setCertM(e.target.value);
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    setCheckedUserInfoChanged(true);
   };
 
+  // 수정된 유저정보 보내기
   const userInfoEdit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const userTel = data.get("userTel");
     const usertelAuthNumber = data.get("usertelAuthNumber");
 
-    if (userTel !== user.userTel) {
+    if (userInfo.userTel !== user.userTel) {
       if (usertelAuthNumber === null || usertelAuthNumber === "") {
         setTelAuthNumberError(true);
         setTelAuthNumberErrorText("인증이 필요합니다.");
@@ -120,32 +162,65 @@ function Userinfo({ certs, user }) {
       }
 
       if (!telAuthNumberError && usertelAuthNumber === "0000") {
-        alert("변경되었습니다.");
-        window.location = "/mypage";
+        axios({
+          method: "post",
+          url: API_BASE_URL + "/mypage/modify",
+          data: userInfo,
+        })
+          .then((response) => {
+            if (response.data) {
+              alert("변경되었습니다.");
+              window.location.replace("/mypage");
+            }
+          })
+          .catch((e) => {
+            console.log("catch문 " + e);
+          });
       }
+    } else if (!checkedUserInfoChanged) {
+      alert("변경된 정보가 없습니다.");
     } else {
-      alert("변경되었습니다.");
-      window.location = "/mypage";
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/mypage/modify",
+        data: userInfo,
+      })
+        .then((response) => {
+          if (response.data) {
+            alert("변경되었습니다.");
+            window.location.replace("/mypage");
+          }
+        })
+        .catch((e) => {
+          console.log("catch문 " + e);
+        });
     }
   };
 
   // 자격증 추가 버튼 클릭시 div 추가
-  const [countList, setCountList] = useState(certs);
+  const [countList, setCountList] = useState([]);
   const [visible, setVisible] = useState(true);
   const [singleCert, setSingleCert] = useState({});
+  const addCertCount = [...countList];
+
+  useEffect(() => {
+    if (Object.keys(certs).length !== 0) {
+      setCountList(certs);
+    }
+  }, [certs]);
 
   const addCert = (e) => {
-    const addCertCount = [...countList];
-
     const counter = {
-      id: addCertCount.length + 1,
+      getCertIdx: addCertCount.length,
+      userId: userInfo.userId,
       certName: "",
-      earnedDate: "",
+      getCertDate: "",
     };
 
     addCertCount.push(counter);
     setCountList(addCertCount);
     setVisible(true);
+    console.log(addCertCount);
     if (addCertCount.length > 9) {
       setVisible(false);
     }
@@ -154,22 +229,22 @@ function Userinfo({ certs, user }) {
   // 자격증 삭제 버튼 클릭시 div 삭제
   const deleteCertDiv = useCallback(
     (i) => {
-      setCountList(countList.filter((cert) => cert.id !== i));
+      setCountList(countList.filter((cert) => cert.getCertIdx !== i));
       setVisible(true);
     },
     [countList]
   );
 
-  // 취득한 자격증란 onChnage
-  const handleChange = (id, e) => {
+  // 취득한 자격증란 onChange
+  const handleChange = (getCertIdx, e) => {
     const addCert =
-      singleCert.id === id
+      singleCert.getCertIdx === getCertIdx
         ? {
             ...singleCert,
             [e.target.name]: e.target.value,
           }
         : {
-            id: id,
+            getCertIdx: getCertIdx,
             [e.target.name]: e.target.value,
           };
 
@@ -177,38 +252,69 @@ function Userinfo({ certs, user }) {
 
     setCountList(
       countList.map((cer) =>
-        cer.id === id
+        cer.getCertIdx === getCertIdx
           ? {
               ...cer,
               certName: addCert.certName,
-              earnedDate: addCert.earnedDate,
+              getCertDate: addCert.getCertDate,
             }
           : cer
       )
     );
   };
 
+  const [certNameError, setCertNameError] = useState(false);
+  const [certDateError, setCertDateError] = useState(false);
+
   const handleCertSubmit = (e) => {
     e.preventDefault();
     const certNameInput = document.getElementsByName("certName");
-    const earnedDateInput = document.getElementsByName("earnedDate");
+    const getCertDateInput = document.getElementsByName("getCertDate");
     let error = false;
+    // ^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$
+    const dateRegex = /^\d{4}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])$/;
     for (let i = 0; i < certNameInput.length; i++) {
+      getCertDateInput[i].value.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3");
+      console.log(
+        certNameInput[i].value + "///////" + getCertDateInput[i].value
+      );
       if (
         certNameInput[i].value === null ||
         certNameInput[i].value === "" ||
-        earnedDateInput[i].value === null ||
-        earnedDateInput[i].value === ""
+        getCertDateInput[i].value === null ||
+        getCertDateInput[i].value === ""
       ) {
         error = true;
+        setCertNameError(true);
+      } else if (!dateRegex.test(getCertDateInput[i].value)) {
+        error = true;
+        setCertDateError(true);
+      } else {
+        setCertNameError(false);
+        setCertDateError(false);
       }
     }
-
-    if (error === true) {
+    if (certNameError) {
       alert("빈칸을 입력해주세요.");
-    } else {
-      alert("변경되었습니다.");
-      window.location.replace("/mypage/userinfo");
+    } else if (certDateError) {
+      alert("날짜형식에 맞지 않습니다.");
+    }
+
+    if (!error) {
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/mypage/earnedcert",
+        data: addCertCount,
+      })
+        .then((response) => {
+          if (response.data) {
+            alert("변경되었습니다.");
+            window.location.replace("/mypage");
+          }
+        })
+        .catch((e) => {
+          console.log("catch문 " + e);
+        });
     }
   };
 
@@ -236,7 +342,8 @@ function Userinfo({ certs, user }) {
                 name="userId"
                 variant="outlined"
                 id="userId"
-                defaultValue={user.userId}
+                value={userInfo.userId}
+                onChange={handleInfoChange}
                 fullWidth
                 disabled
               />
@@ -263,9 +370,10 @@ function Userinfo({ certs, user }) {
                 name="userName"
                 variant="outlined"
                 id="userName"
-                defaultValue={user.userName}
-                disabled
+                value={userInfo.userName}
+                onChange={handleInfoChange}
                 fullWidth
+                disabled
               />
             </Grid>
             <Grid item xs={9}>
@@ -274,7 +382,8 @@ function Userinfo({ certs, user }) {
                 variant="outlined"
                 id="userTel"
                 label="휴대폰 번호"
-                defaultValue={user.userTel}
+                value={userInfo.userTel}
+                onChange={handleInfoChange}
                 className={styles.TextField}
                 fullWidth
                 error={telError}
@@ -342,13 +451,14 @@ function Userinfo({ certs, user }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="useremail"
+                name="userEmail"
                 variant="outlined"
-                id="useremail"
+                id="userEmail"
                 label="이메일(선택)"
-                defaultValue={user.userEmail}
+                value={userInfo.userEmail}
                 fullWidth
-                onChange={emailCheck}
+                onBlur={emailCheck}
+                onChange={handleInfoChange}
                 error={emailError}
                 helperText={emailErrorText}
                 sx={{
@@ -386,10 +496,10 @@ function Userinfo({ certs, user }) {
                 <Select
                   labelId="certLCat"
                   id="certLCatSelect"
-                  value={certL}
+                  value={userInfo.favFieldL}
                   label="관심분야(대분류)"
                   onChange={certLCatChange}
-                  name="certLCat"
+                  name="favFieldL"
                   sx={{
                     "&.MuiOutlinedInput-root": {
                       "&.Mui-focused fieldset": {
@@ -402,6 +512,7 @@ function Userinfo({ certs, user }) {
                     <MenuItem
                       key={certL.id}
                       value={certL.name}
+                      name="favFieldL"
                       sx={{
                         "&.MuiMenuItem-root": {
                           "&.Mui-selected": {
@@ -424,9 +535,9 @@ function Userinfo({ certs, user }) {
               xs={1}
               style={{
                 paddingLeft: "0px",
-                paddingTop: "35px",
                 display: "flex",
                 justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <ArrowForwardIos color="action" />
@@ -452,10 +563,10 @@ function Userinfo({ certs, user }) {
                 <Select
                   labelId="certMCat"
                   id="certMCatSelect"
-                  value={certM}
+                  value={userInfo.favFieldM}
                   label="관심분야(중분류)"
                   onChange={certMCatChange}
-                  name="certMCat"
+                  name="favFieldM"
                   sx={{
                     "&.MuiOutlinedInput-root": {
                       "&.Mui-focused fieldset": {
@@ -473,6 +584,7 @@ function Userinfo({ certs, user }) {
                     <MenuItem
                       key={certM.id}
                       value={certM.name}
+                      name="favFieldM"
                       sx={{
                         "&.MuiMenuItem-root": {
                           "&.Mui-selected": {
@@ -521,15 +633,16 @@ function Userinfo({ certs, user }) {
           countList.map((cert, i) => (
             <div
               className={styles.certContainer}
-              id={"newCertContainer" + cert.id}
+              id={"newCertContainer" + cert.getCertIdx}
               key={i}
             >
               <TextField
                 variant="outlined"
                 label="자격증 명"
                 value={cert.certName || ""}
-                onChange={(e) => handleChange(cert.id, e)}
+                onChange={(e) => handleChange(cert.getCertIdx, e)}
                 name="certName"
+                key={"자격증명" + i}
                 style={{ marginBottom: "5px" }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -547,9 +660,10 @@ function Userinfo({ certs, user }) {
               <TextField
                 variant="outlined"
                 label="취득 일자(YYYY.MM.DD)"
-                value={cert.earnedDate || ""}
-                onChange={(e) => handleChange(cert.id, e)}
-                name="earnedDate"
+                value={cert.getCertDate || ""}
+                onChange={(e) => handleChange(cert.getCertIdx, e)}
+                name="getCertDate"
+                key={"취득일자" + i}
                 style={{ marginLeft: "5px", marginBottom: "5px" }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -566,7 +680,7 @@ function Userinfo({ certs, user }) {
               />
               <IconButton
                 aria-label="details"
-                onClick={() => deleteCertDiv(cert.id)}
+                onClick={() => deleteCertDiv(cert.getCertIdx)}
                 style={{ padding: 0, height: "min-content" }}
               >
                 <Close fontSize="medium" style={{ color: "#666" }} />

@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class GetCertId implements Serializable {
-	private int certIdx;
+	private int getCertIdx;
 	private String userId;
 }

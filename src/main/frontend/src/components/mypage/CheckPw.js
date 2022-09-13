@@ -1,8 +1,32 @@
 import { Button, createTheme, Grid, TextField } from "@mui/material";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../app-config";
+import { logout } from "../../service/ApiService";
 import styles from "../../styles/mypage/CheckPw.module.css";
 
 function CheckPw() {
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/mypage/modify",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    })
+      .then((response) => {
+        if (response.data) {
+          setUserId(response.data.userId);
+        }
+      })
+      .catch((e) => {
+        console.log("catch문 " + e);
+        window.location.href = "/login";
+      });
+  }, []);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -30,15 +54,33 @@ function CheckPw() {
   const deactivate = (e) => {
     const userPw = document.getElementById("userPw").value;
     e.preventDefault();
-    if (userPw !== "dd") {
-      setPwValidationError(true);
-      setPwValidationErrorText("비밀번호가 일치하지 않습니다.");
-    } else {
-      setPwValidationError(false);
-      setPwValidationErrorText("");
-      alert("탈퇴가 정상적으로 처리되었습니다.");
-      window.location.replace("/");
-    }
+    // if (userPw !== "dd") {
+    //   setPwValidationError(true);
+    //   setPwValidationErrorText("비밀번호가 일치하지 않습니다.");
+    // } else {
+    //   setPwValidationError(false);
+    //   setPwValidationErrorText("");
+
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/mypage/deactivate",
+      data: [userId, userPw],
+    })
+      .then((response) => {
+        if (response.data === "correctPassword") {
+          console.log(response);
+          logout();
+          alert("탈퇴가 정상적으로 처리되었습니다.");
+          window.location.replace("/");
+        } else {
+          setPwValidationError(true);
+          setPwValidationErrorText("비밀번호가 일치하지 않습니다.");
+        }
+      })
+      .catch((e) => {
+        console.log("catch문 " + e);
+      });
+    // }
   };
 
   return (

@@ -42,24 +42,32 @@ const ShareCard = ({ shareItem }) => {
             alt="itemImg"
           />
           <CardContent theme={theme} style={{ paddingTop: 10 }}>
-            <Typography theme={theme} gutterBottom variant="h6" component="div">
+            <Typography
+              theme={theme}
+              gutterBottom
+              variant="h6"
+              component="div"
+              style={{
+                width: "220px",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+            >
               {shareTitle}
             </Typography>
             <div className={styles.bottom}>
               <div
+                theme={theme}
                 className={styles.state}
                 style={{
                   color: "white",
-                  background: shareState ? "#1d5902" : "#8cbf75",
-                  fontFamily: "Hahmlet",
+                  background: shareState ? "#1d5902" : "#777",
                 }}
               >
                 {shareState ? "나눔" : "완료"}
               </div>
-              <p
-                className={styles.writer}
-                style={{ fontFamily: "Pretendard-Regular" }}
-              >
+              <p className={styles.writer} theme={theme}>
                 {userId}
               </p>
             </div>

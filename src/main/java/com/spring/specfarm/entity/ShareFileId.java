@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ShareFileId implements Serializable {
 	
+	private int share;
+	
 	private int shareFileIdx;
-	private int shareIdx;
+	
 }

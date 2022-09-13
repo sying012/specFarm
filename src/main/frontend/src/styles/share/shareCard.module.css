@@ -18,7 +18,7 @@
 }
 
 .writer {
-  padding-top: 6px;
+  padding: 6px;
 }
 
 .bottom {
@@ -29,8 +29,8 @@
 
 .state {
   background-color: rgba(187, 205, 110, 0.8);
-  width: 60px;
-  height: 30px;
+  width: 45px;
+  height: 25px;
   border-radius: 5px;
   color: white;
   display: flex;

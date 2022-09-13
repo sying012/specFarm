@@ -1,31 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "../../styles/skills/jobCafeType.module.css";
 
-const JobCafeType = () => {
+//onSelectCategory: 카테고리별로 분류된 리스트 반환
+const JobCafeType = ({ categories, onSelectCategory }) => {
+  const onClickCategory = (category, e) => {
+    e.preventDefault();
+    onSelectCategory(category);
+    //category === CAFE_TYPE_NM list 생성(id 생성 후)
+  };
+
   return (
     <>
       <div className={styles.typeBox}>
         <div className={styles.allTypeBtn}>
-          <a href="/">전체</a>
+          <a href={"/"} onClick={(e) => onClickCategory("전체", e)}>
+            전체
+          </a>
         </div>
-        <div className={styles.typeBtns}>
-          <a href="/">공공시설</a>
-        </div>
-        <div className={styles.typeBtns}>
-          <a href="/">도서관</a>
-        </div>
-        <div className={styles.typeBtns}>
-          <a href="/">대학교</a>
-        </div>
-        <div className={styles.typeBtns}>
-          <a href="/">스터디 카페</a>
-        </div>
-        <div className={styles.typeBtns}>
-          <a href="/">일반 카페</a>
-        </div>
-        <div className={styles.typeBtns}>
-          <a href="/">기타</a>
-        </div>
+        {categories.map((category, index) => (
+          <div key={category + index} className={styles.typeBtns}>
+            <a href={"/"} onClick={(e) => onClickCategory(category, e)}>
+              {category}
+            </a>
+          </div>
+        ))}
       </div>
     </>
   );

@@ -1,98 +1,67 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
 import JobCafeContainer from "../components/jobCafe/JobCafeContainer";
 import JobCafeDetail from "../components/jobCafe/JobCafeDetail";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import axios from "axios";
+import { API_BASE_URL } from "../app-config.js";
 
 const JobCafe = () => {
-  const [jobCafeList, setJobCafeList] = useState([
-    {
-      id: 1,
-      cafeName: "서울시청년일자리센터",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 2,
-      cafeName: "한겨레교육문화센터 신촌",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 3,
-      cafeName: "해커스어학원 강남역캠퍼스",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 4,
-      cafeName: "동대문도서관",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 1,
-      cafeName: "서울시청년일자리센터",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 2,
-      cafeName: "한겨레교육문화센터 신촌",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 3,
-      cafeName: "해커스어학원 강남역캠퍼스",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-    {
-      id: 4,
-      cafeName: "동대문도서관",
-      smplIntro: "우리 카페는~~~~~~~~~~~~~~~~~~",
-      useDate: "평일 10시 ~ 18시",
-      guGun: "서울시 강남구",
-      cafeImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-    },
-  ]);
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [jobCafeList, setJobCafeList] = useState([]);
+
+  const onSelectCategory = (cate) => {
+    setCategory(cate);
+  };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/skills/jobCafe",
+      method: "get",
+    }).then((response) => {
+      setJobCafeList(response.data.jobCafeOpenInfo.row);
+      const typeArr = new Set();
+      for (let i = 0; i < response.data.jobCafeOpenInfo.row.length; i++) {
+        typeArr.add(response.data.jobCafeOpenInfo.row[i].CAFE_TYPE_NM);
+      }
+      setCategories(Array.from(typeArr));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (category !== "") {
+      const newJobCafeList = jobCafeList.filter(
+        (jobCafeItem) => jobCafeItem.CAFE_TYPE_NM === category
+      );
+
+      setJobCafeList(newJobCafeList);
+    }
+  }, [category]);
 
   return (
     <div>
       <div className="titleContainer">
         <div className="titlewrap">Skills</div>
-        <div className="subtitlewrap">일자리 카페</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        <NavLink to="/skills/jobcafe">
+          <div className="subtitlewrap">일자리 카페</div>
+        </NavLink>
       </div>
       <h1>취업에 필요한 서비스 무료 제공</h1>
       <Routes>
         <Route
           path="/"
-          element={<JobCafeContainer jobCafeList={jobCafeList} />}
+          element={
+            <JobCafeContainer
+              jobCafeList={jobCafeList}
+              categories={categories}
+              onSelectCategory={onSelectCategory}
+            />
+          }
         ></Route>
         <Route
-          path="/:id"
+          path="/:index"
           element={<JobCafeDetail jobCafeList={jobCafeList} />}
         ></Route>
       </Routes>

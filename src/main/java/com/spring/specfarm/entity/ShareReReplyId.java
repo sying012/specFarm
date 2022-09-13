@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class ShareReReplyId implements Serializable {	
-	private int shareReplyIdx;
+	private ShareReply shareReply;
 	private int shareReReplyIdx;
-	private int shareIdx;
 }

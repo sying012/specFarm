@@ -1,17 +1,13 @@
 .inputContainer {
   display: flex;
-  justify-content: center;
+  padding: 15px;
   align-items: center;
-  width: 100%;
   height: -moz-fit-content;
   height: fit-content;
-  box-shadow: 5px 5px 15px rgb(0 0 0 / 15%);
-  border-radius: 15px;
-  background: white;
 }
 
 .containerTop {
-  width: 80%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

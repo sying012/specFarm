@@ -27,13 +27,17 @@
   justify-content: center;
 }
 
+.cafeImg > img {
+  width: 70%;
+}
+
 .smplIntro {
   font-size: 20px;
   border-bottom: none;
   width: 60%;
   display: flex;
   justify-content: center;
-  margin: 50px auto 60px;
+  margin: 50px auto 50px;
 }
 
 .detailContent {
@@ -54,6 +58,23 @@
   font-size: 18px;
   text-align: right;
   margin-right: 20px;
+}
+
+.spaceInfo {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  line-height: 28px;
+  margin-bottom: 40px;
+}
+
+.spaceInfo > h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.spaceInfo > p {
+  font-size: 1rem;
 }
 
 .rsrvCard {

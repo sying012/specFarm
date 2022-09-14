@@ -1,28 +1,11 @@
 import React from "react";
-import { createTheme, TextField, Stack, Pagination } from "@mui/material";
+import { TextField, Stack, Pagination, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/share/container.module.css";
 import ShareList from "./ShareList";
+import { Link } from "react-router-dom";
 
 const ShareContainer = ({ shareList }) => {
-  const theme = createTheme({
-    status: {
-      danger: "#e53e3e",
-    },
-    palette: {
-      brown: {
-        main: "rgb(107, 83, 67)",
-        contrastText: "#fff",
-      },
-      primary: {
-        main: "rgb(187, 205, 110)",
-        contrastText: "#fff",
-      },
-      secondary: {
-        main: "#555",
-      },
-    },
-  });
   return (
     <>
       <div className={styles.search}>
@@ -40,18 +23,13 @@ const ShareContainer = ({ shareList }) => {
               },
             },
           }}
-          style={{ width: "250px" }}
+          style={{ width: "280px" }}
         ></TextField>
-        <button
-          theme={theme}
-          type="button"
-          className={styles.newshareBtn}
-          onClick={() => {
-            window.location = "./share/newShare";
-          }}
-        >
-          글쓰기
-        </button>
+        <Link to="./newShare">
+          <Button className={styles.newshareBtn} variant="contained">
+            글쓰기
+          </Button>
+        </Link>
       </div>
       <ShareList shareList={shareList}></ShareList>
       <div className={styles.pageNation}>

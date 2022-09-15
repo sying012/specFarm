@@ -3,38 +3,7 @@ import styles from "../../styles/share/newShare.module.css";
 import { Stack, Box, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const NewShare = () => {
-  // shareData를 백으로 전달
-  // function addNewShareHandler(shateData) {
-  //   fetch함수를 통해 http request 전달
-  //   fetch('url', {
-  //    method: 'POST',
-  //    body: JSON.stringfy(shateData) JSON으로 변환하여 전달
-  //    });
-  // }
-
-  // //useRef - ref 연결
-  // const imageInputRef = useRef();
-  // const titleInputRef = useRef();
-  // const contentInputRef = useRef();
-
-  // function submitHandler(event) {
-  //   event.preventDefault();
-
-  //   //사용자 입력값 받아옴
-  //   const enteredTitle = titleInputRef.current.value;
-  //   const enteredImage = imageInputRef.current.value;
-  //   const enteredContent = contentInputRef.current.value;
-
-  //   const shareData = {
-  //     image: enteredImage,
-  //     title: enteredTitle,
-  //     content: enteredContent,
-  //   };
-
-  //   this.props.addNewShare(shareData);
-  // }
-
+const NewShare = ({ inserShare }) => {
   const readImage = (file) => {
     // 인풋 태그에 파일이 있는 경우
     if (file) {

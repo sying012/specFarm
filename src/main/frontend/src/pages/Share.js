@@ -1,11 +1,31 @@
 import React, { useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import NewShare from "../components/share/NewShare";
 import ShareDetail from "../components/share/ShareDetail";
 import ShareContainer from "../components/share/ShareContainer";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import axios from "axios";
+import { API_BASE_URL } from "../app-config";
+import PrivateRoute from "../lib/PrivateRoute";
 
 const Share = () => {
+  const navigate = useNavigate();
+
+  const insertShare = (share) => {
+    console.log(share, "test");
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/community/share/write",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer" + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: share,
+    }).then((response) => {
+      navigate(`${response.data.shareIdx}`);
+    });
+  };
+
   const [shareList, setShareList] = useState([
     {
       id: 1,
@@ -162,11 +182,13 @@ const Share = () => {
           path="/"
           element={<ShareContainer shareList={shareList} />}
         ></Route>
-        <Route path="/newShare" element={<NewShare />}></Route>
         <Route
-          path="/:id"
-          element={<ShareDetail shareList={shareList} />}
+          path="/newShare"
+          element={
+            <PrivateRoute component={NewShare} insertShare={insertShare} />
+          }
         ></Route>
+        <Route path="/:shareIdx" element={<ShareDetail />}></Route>
       </Routes>
     </div>
   );

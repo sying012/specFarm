@@ -1,20 +1,33 @@
 package com.spring.specfarm.entity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.Table;
+
 
 import lombok.Data;
 
 @Entity
-@Table(name="T_SHARE_REPLY")
 @Data
 @IdClass(ShareReplyId.class)
 public class ShareReply {
 	@Id
-	private int shareIdx;
+	private int shareReplyIdx;
 	
 	@Id
-	private int shareReplyIdx;
+	private int shareIdx;
+	
+	private String shareReplyContent;
+	
+	private String shareReplyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
+	
+	
+	private char shareReplyYn = 'Y';
+	
+	
+	
+	
+	
 }

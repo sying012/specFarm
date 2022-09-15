@@ -1,8 +1,44 @@
 package com.spring.specfarm.controller.community;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class ShareController {
+import com.spring.specfarm.entity.User;
+import com.spring.specfarm.service.community.ShareService;
 
+@RestController
+@RequestMapping("/community/share")
+public class ShareController {
+	@Autowired
+	ShareService shareService;
+	
+	@GetMapping("/getUser")
+	public Map<String, Object> getUser(@AuthenticationPrincipal String userId){
+		try {
+			User user = shareService.getUser(userId);
+			
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("user", user);
+			
+			return resultMap;
+		} catch(Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 }
+ 

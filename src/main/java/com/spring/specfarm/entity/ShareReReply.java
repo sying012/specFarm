@@ -1,10 +1,10 @@
 package com.spring.specfarm.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -21,7 +21,7 @@ import lombok.Data;
 @IdClass(ShareReReplyId.class)
 public class ShareReReply {
 	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name = "SHARE_IDX", referencedColumnName = "shareIdx"),
 		@JoinColumn(name = "SHARE_REPLY_IDX", referencedColumnName = "shareReplyIdx")
@@ -31,13 +31,15 @@ public class ShareReReply {
 	@Id
 	private int shareReReplyIdx;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
 	@Column(columnDefinition = "varchar(1000)")
 	private String shareReReplyContent;
 	
-	private String shareReReplyRegDate = LocalDateTime.now().toString();
+	private String shareReReplyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
 	
+	@Column(columnDefinition = "char(1)")
+	private char shareReReplyYn = 'y';
 }

@@ -40,7 +40,7 @@ const CourseList = ({ searchList }) => {
       <div className={styles.courseList}>
         {data !== undefined
           ? data.map((card, index) => {
-              return <CourseCard key={index} card={card} />;
+              return <CourseCard key={index} index={index} card={card} />;
             })
           : null}
       </div>

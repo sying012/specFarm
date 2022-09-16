@@ -4,21 +4,88 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.entity.Lost;
+import com.spring.specfarm.entity.Notice;
 import com.spring.specfarm.service.notice.NoticeService;
 
 @RestController
+@RequestMapping("/cs")
 public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
+	
+	//공지사항시작
+	//NoticeList 반환
+	@GetMapping("")
+	public Map<String, Object> getNoticeList(@PageableDefault(page = 0, size = 8, sort="noticeIdx" ,direction=Direction.DESC) Pageable pageable){
+		try {
+			Page<Notice> noticeList = noticeService.getNoticeList(pageable);
+			
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("noticeList", noticeList);
+			
+			return response;
+			
+		}catch(Exception e){
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
 
+	//Notice 작성
+	@PostMapping("/write")
+	public Map<String, Object> insertNoice(@ModelAttribute Notice notice){
+		try {
+			int noticeIdx = noticeService.insertNotice(notice);
+
+			
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("noticeIdx", noticeIdx);
+			
+			return response;
+			
+		}catch(Exception e){
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+
+	//Notice 반환
+	@GetMapping("/{noticeId}")
+	public Map<String, Object> getNotice(@PathVariable int noticeId){
+		try {
+			Notice notice = noticeService.getNotice(noticeId);
+			
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("notice", notice);
+			
+			return response;
+			
+		}catch(Exception e){
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
 	// 분실물
 //	@GetMapping("/getLosts")
 //	public ResponseEntity<?> callApiWithXml() {

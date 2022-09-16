@@ -3,9 +3,12 @@ import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField, Button, createTheme } from "@mui/material";
 import Editer from "../Editer";
+import { useNavigate } from "react-router";
 const AskReg = ({ certNames, insertAsk }) => {
+  const navigate = useNavigate();
   const [contentValue, setContentValue] = useState("");
   const [certName, setCertName] = useState("");
+  const [askCert, setAskCert] = useState(null);
   const [viewCertNames, setViewCertNames] = useState([]);
   const handleContentValue = (value) => {
     setContentValue(value);
@@ -37,7 +40,7 @@ const AskReg = ({ certNames, insertAsk }) => {
   const handleSubmit = (e) => {
     let ask = new FormData(e.target);
     console.log(ask.get("askTitle"));
-    ask.set("askCert", certName);
+    ask.set("askCert", askCert);
     insertAsk(ask);
 
     e.preventDefault();
@@ -78,7 +81,7 @@ const AskReg = ({ certNames, insertAsk }) => {
               <div
                 key={cert.certIdx}
                 className="certItem"
-                onClick={() => setCertName(cert.certName)}
+                onClick={() => setAskCert(cert.certName)}
               >
                 {cert.certName}
               </div>
@@ -119,6 +122,35 @@ const AskReg = ({ certNames, insertAsk }) => {
                 }}
               />
 
+              <TextField
+                id="standard-basic"
+                label="자격종목"
+                variant="standard"
+                required
+                onClick={() => {
+                  document.querySelector("#outlined-search").focus();
+                }}
+                onFocus={() => {
+                  document.querySelector("#outlined-search").focus();
+                }}
+                value={askCert}
+                style={{ width: "100%", marginTop: "10px" }}
+                name="askCert"
+                autoComplete="off"
+                sx={{
+                  "& .MuiInput-root": {
+                    "&:after": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
+              />
+
               <input
                 type="hidden"
                 id="askContent"
@@ -136,7 +168,9 @@ const AskReg = ({ certNames, insertAsk }) => {
                   type="button"
                   variant="outlined"
                   color="primary"
-                  href="/community/ask"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
                   theme={theme}
                   className="askInRegButton"
                 >

@@ -57,7 +57,7 @@ const AskDetailReply = ({ reply }) => {
         />
         <div id="replyBox">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {reply.userId}
+            {reply.user.userNick}
             <p style={{ fontSize: "0.8rem", color: "rgb(100, 100, 100)" }}>
               {reply.askReplyRegDate}
             </p>
@@ -74,7 +74,7 @@ const AskDetailReply = ({ reply }) => {
       >
         <div>
           <AskReplyRegBox
-            style={{ maxWidth: "410px" }}
+            style={{ maxWidth: "450px" }}
             insertAskReReply={insertAskReReply}
             askReplyIdx={reply.askReplyIdx}
             askIdx={reply.askIdx}

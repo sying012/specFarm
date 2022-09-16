@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,17 +54,20 @@ public class AskController {
 	
 	//Ask 리스트 반환
 	@GetMapping("")
-	public Map<String, Object> getAsk(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable) {
+	public Map<String, Object> getAsk(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchType, @RequestParam String searchKeyword ) {
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
+			System.out.println(searchType);
+			System.out.println(searchKeyword);
 			
-			Page<Ask> askList = askService.getAskList(pageable);
+			Page<Ask> askList = askService.getAskList(searchType, searchKeyword, pageable);
 			
 			for(Ask ask: askList) {	
 				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
 			}
 			
-		
+			//findByBoardTitleContainingOrBoardWriterContainingOrBoardContentContaining
+			
 			resultMap.put("askList", askList);
 			
 			return resultMap;
@@ -147,7 +151,7 @@ public class AskController {
 	}
 	
 	//Ask에 댓글 작성
-	@PostMapping("{askIdx}/insertReply")
+	@PostMapping("/{askIdx}/insertReply")
 	public Map<String, Object> insertReply(@PathVariable int askIdx, @RequestBody AskReply askReply, @AuthenticationPrincipal String userId) {
 		try {
 			askReply.setUser(askService.getUser(userId));
@@ -169,7 +173,7 @@ public class AskController {
 	}
 	
 	//Ask에 대댓글 작성
-		@PostMapping("{askIdx}/insertReReply")
+		@PostMapping("/{askIdx}/insertReReply")
 		public Map<String, Object> insertReReply(@PathVariable int askIdx, @RequestBody AskReReply askReReply, @AuthenticationPrincipal String userId) {
 			try {
 				User user = new User();
@@ -183,6 +187,23 @@ public class AskController {
 				Map<String, Object> response = new HashMap<String, Object>();
 				
 				response.put("askReReplyList", askReReplyList);
+			
+				return response;
+			} catch (Exception e) {
+				Map<String, Object> errorMap = new HashMap<String, Object>();
+				errorMap.put("error",e.getMessage());
+				return errorMap;
+			}
+		}
+		
+		//Ask 삭제
+		@DeleteMapping("/delete")
+		public Map<String, Object> deleteAsk(@RequestParam int askIdx){
+			try {
+				askService.deleteAsk(askIdx);
+				Map<String, Object> response = new HashMap<String, Object>();
+				
+				response.put("data", "success");
 			
 				return response;
 			} catch (Exception e) {

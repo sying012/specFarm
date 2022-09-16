@@ -16,7 +16,7 @@ const AskReReply = ({ reReply }) => {
             {reReply.askReReplyRegDate}
           </p>
         </div>
-        <div className="askReplyContent"> {reReply.askReReplyContent}</div>
+        <div className="askReplyContent">{reReply.askReReplyContent}</div>
       </div>
     </div>
   );

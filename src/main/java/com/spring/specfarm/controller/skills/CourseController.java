@@ -160,92 +160,116 @@ public class CourseController {
 		System.out.println(urlBuilder);
         // 3. URL 객체 생성.
         URL url = new URL(urlBuilder.toString());
-        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // 5. 통신을 위한 메소드 SET.
-        conn.setRequestMethod("GET");
-        // 6. 통신을 위한 Content-type SET. 
-        conn.setRequestProperty("Content-type", "application/json");
-        // 7. 통신 응답 코드 확인.
-//        System.out.println("Response code: " + conn.getResponseCode());
-        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        // 10. 객체 해제.
-        rd.close();
-        conn.disconnect();
-        // 11. 전달받은 데이터 확인.
-//        System.out.println(sb.toString());
         
-        // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
-        String xmlStr = sb.toString();
-        // 13. json 객체로 변환하여 저장
-        JSONObject json = XML.toJSONObject(xmlStr);
+        String objChk;
+        JSONObject json;
+        do {
+	        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        // 5. 통신을 위한 메소드 SET.
+	        conn.setRequestMethod("GET");
+	        // 6. 통신을 위한 Content-type SET. 
+	        conn.setRequestProperty("Content-type", "application/json");
+	        // 7. 통신 응답 코드 확인.
         
-        if (json.getJSONObject("HRDNet").getInt("scn_cnt") > 0) {
-			
-        	return json.getJSONObject("HRDNet").getJSONObject("srchList");
-//        	System.out.println(json.getJSONObject("HRDNet").getJSONObject("srchList"));
-		} else {
-			return null;
-		}
-        
+//        	System.out.println("Response code: " + conn.getResponseCode());
+	        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
+	        BufferedReader rd;
+	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+	        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
+	        StringBuilder sb = new StringBuilder();
+	        String line;
+	        while ((line = rd.readLine()) != null) {
+	            sb.append(line);
+	        }
+	        // 10. 객체 해제.
+	        rd.close();
+	        conn.disconnect();
+	        // 11. 전달받은 데이터 확인.
+	//        System.out.println(sb.toString());
+	        
+	        // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
+	        String xmlStr = sb.toString();
+	        // 13. json 객체로 변환하여 저장
+	        json = XML.toJSONObject(xmlStr);
+	        
+	        String jsonStr = json.toString(4);
+//	        System.out.println(json);
+	        objChk = jsonStr;
+	        
+	        
+	        if (json.has("HRDNet")) {
+	        	if (json.getJSONObject("HRDNet").getInt("scn_cnt") > 0) {
+	        		break;
+	        	} 
+			}
+	        
+//          System.out.println(jsonStr);
+          
+		} while (objChk.contains("HRDNet") == false);
         // 14. indent 4를 넣어 문자열의 개행과 공백을 분리하여 보기 좋게 변환
 //        String jsonStr = json.toString(4);
 //        System.out.println(jsonStr);
 //		return jsonStr;
+        return json.getJSONObject("HRDNet").getJSONObject("srchList");
 	}
 	
 	public String makeCatList(StringBuilder urlBuilder) throws IOException, JSONException{
 		System.out.println(urlBuilder);
         // 3. URL 객체 생성.
         URL url = new URL(urlBuilder.toString());
-        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // 5. 통신을 위한 메소드 SET.
-        conn.setRequestMethod("GET");
-        // 6. 통신을 위한 Content-type SET. 
-        conn.setRequestProperty("Content-type", "application/json");
-        // 7. 통신 응답 코드 확인.
-//        System.out.println("Response code: " + conn.getResponseCode());
-        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        // 10. 객체 해제.
-        rd.close();
-        conn.disconnect();
-        // 11. 전달받은 데이터 확인.
-//        System.out.println(sb.toString());
+        String objChk;
+        do {
+	        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        // 5. 통신을 위한 메소드 SET.
+	        conn.setRequestMethod("GET");
+	        // 6. 통신을 위한 Content-type SET. 
+	        conn.setRequestProperty("Content-type", "application/json");
+	        // 7. 통신 응답 코드 확인.
+	        
+//        	System.out.println("Response code: " + conn.getResponseCode());
+            // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
+            BufferedReader rd;
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+            // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            // 10. 객체 해제.
+            rd.close();
+            conn.disconnect();
+            // 11. 전달받은 데이터 확인.
+//            System.out.println(sb.toString());
+            
+            // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
+            String xmlStr = sb.toString();
+            // 13. json 객체로 변환하여 저장
+            JSONObject json = XML.toJSONObject(xmlStr);
+            
+            // 14. indent 4를 넣어 문자열의 개행과 공백을 분리하여 보기 좋게 변환
+            String jsonStr = json.toString(4);
+            
+            objChk = jsonStr;
+//            System.out.println(objChk);
+            
+            if (json.has("HRDNet")) {
+        		break;
+			}
+            
+		} while (objChk.contains("HRDNet") == false);
         
-        // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
-        String xmlStr = sb.toString();
-        // 13. json 객체로 변환하여 저장
-        JSONObject json = XML.toJSONObject(xmlStr);
-        
-        // 14. indent 4를 넣어 문자열의 개행과 공백을 분리하여 보기 좋게 변환
-        String jsonStr = json.toString(4);
-//        System.out.println(jsonStr);
-		return jsonStr;
+		return objChk;
 	}
 	
 }

@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/share/newShare.module.css";
 import { Stack, Box, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const NewShare = ({ inserShare }) => {
+const NewShare = ({ insertShare }) => {
+  const [shareContent, setShareContent] = useState("");
+  const handleShareContent = (value) => {
+    setShareContent(value);
+  };
+
+  const handleSubmit = (e) => {
+    let share = new FormData(e.target);
+    insertShare(share);
+
+    e.preventDefault();
+  };
+
   const readImage = (file) => {
     // 인풋 태그에 파일이 있는 경우
     if (file) {
@@ -72,90 +84,93 @@ const NewShare = ({ inserShare }) => {
         </div>
 
         <div className={styles.shareForm}>
-          <Box
-            component="form"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
-                },
-              },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="shareTitleInput"
-              label="제목"
-              variant="outlined"
-              style={{ marginLeft: "9px", width: "100%" }}
+          <form onSubmit={handleSubmit} encType="multipary/form-data">
+            <Box
+              component="form"
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {
                     borderColor: "#8cbf75",
                   },
                 },
-                "& .MuiInputLabel-root": {
-                  "&.Mui-focused": {
-                    color: "#1d5902",
-                  },
-                },
               }}
-            />
-          </Box>
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "750px" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="shareContentInput"
-              label="내용"
-              multiline
-              rows={15}
-              style={{ marginLeft: "9px", width: "100%" }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                id="shareTitleInput"
+                label="제목"
+                variant="outlined"
+                style={{ marginLeft: "9px", width: "100%" }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box
+              component="form"
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#8cbf75",
-                  },
-                },
-                "& .MuiInputLabel-root": {
-                  "&.Mui-focused": {
-                    color: "#1d5902",
-                  },
-                },
+                "& .MuiTextField-root": { m: 1, width: "750px" },
               }}
-            />
-          </Box>
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "750px" },
-            }}
-            noValidate
-            autoComplete="off"
-          ></Box>
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                id="shareContentInput"
+                onChange={handleShareContent}
+                label="내용"
+                multiline
+                rows={15}
+                style={{ marginLeft: "9px", width: "100%" }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#8cbf75",
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    "&.Mui-focused": {
+                      color: "#1d5902",
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "750px" },
+              }}
+              noValidate
+              autoComplete="off"
+            ></Box>
 
-          <div className={styles.shareBtns}>
-            <Link to="../share">
-              <button className={styles.cancelBtn} type="button">
-                취소
-              </button>
-            </Link>
-            <Link to="/:id">
-              <button
-                className={styles.RegBtn}
-                type="submit"
-                onClick={() => alert("등록되었습니다.")}
-              >
-                등록
-              </button>
-            </Link>
-          </div>
+            <div className={styles.shareBtns}>
+              <Link to="../share">
+                <button className={styles.cancelBtn} type="button">
+                  취소
+                </button>
+              </Link>
+              <Link to="/:id">
+                <button
+                  className={styles.RegBtn}
+                  type="submit"
+                  onClick={() => alert("등록되었습니다.")}
+                >
+                  등록
+                </button>
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
     </>

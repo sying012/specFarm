@@ -12,10 +12,9 @@ const Share = () => {
   const navigate = useNavigate();
 
   const insertShare = (share) => {
-    console.log(share, "test");
     axios({
       method: "post",
-      url: API_BASE_URL + "/community/share/write",
+      url: API_BASE_URL + "/community/share/newShare",
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: "Bearer" + sessionStorage.getItem("ACCESS_TOKEN"),
@@ -174,7 +173,7 @@ const Share = () => {
         <div className="titlewrap">마을회관</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
         <NavLink to="/community/share">
-          <div className="subtitlewrap">나눔 장터🤝</div>
+          <div className="subtitlewrap">나눔 장터</div>
         </NavLink>
       </div>
       <Routes>

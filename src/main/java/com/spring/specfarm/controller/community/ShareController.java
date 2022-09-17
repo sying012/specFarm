@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction;
 import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.ShareService;

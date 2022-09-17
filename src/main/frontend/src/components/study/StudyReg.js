@@ -24,7 +24,7 @@ const StudyReg = () => {
 
   const navigate = useNavigate();
 
-  const insertStudy = (newStudy) => {
+  const insertStudy = (study) => {
     axios({
       method: "post",
       url: API_BASE_URL + "/community/study/register",
@@ -32,7 +32,7 @@ const StudyReg = () => {
         "Content-Type": "multipart/form-data",
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
-      data: newStudy,
+      data: study,
     }).then((response) => {
       navigate(`../${response.data.studyIdx}`);
     });
@@ -40,7 +40,11 @@ const StudyReg = () => {
 
   const handleSubmit = (e) => {
     let study = new FormData(e.target);
-    console.log(study.get("askTitle"));
+    console.log(study.get("studyTitle"));
+    console.log(study.get("studyContent"));
+    console.log(study.get("studyMaxMember"));
+    console.log(study.get("studyTel"));
+    console.log(study.get("studyImgName"));
 
     insertStudy(study);
 
@@ -142,6 +146,7 @@ const StudyReg = () => {
                 <Select
                   labelId="maxSelectLabel"
                   id="maxSelect"
+                  name="studyMaxMember"
                   value={maxMemberCnt}
                   label="MaxMemberCnt"
                   onChange={handleChange}
@@ -157,6 +162,7 @@ const StudyReg = () => {
             type="file"
             className={styles.uploadImg}
             id="uploadImg"
+            // name="studyImgName"
             onChange={(e) => {
               readImage(e.target.files[0]);
             }}
@@ -164,7 +170,7 @@ const StudyReg = () => {
         </div>
         <div className={styles.rightContainer}>
           <Box
-            component="form"
+            // component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "750px" },
             }}
@@ -175,6 +181,7 @@ const StudyReg = () => {
               id="studyTitleInput"
               label="제목"
               variant="outlined"
+              name="studyTitle"
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {
@@ -190,7 +197,7 @@ const StudyReg = () => {
             />
           </Box>
           <Box
-            component="form"
+            // component="form"
             sx={{
               "& .MuiTextField-root": { m: 1, width: "750px" },
             }}
@@ -200,6 +207,7 @@ const StudyReg = () => {
             <TextField
               id="studyContentInput"
               label="내용"
+              name="studyContent"
               multiline
               rows={15}
               defaultValue={defaultContentValue}
@@ -218,7 +226,7 @@ const StudyReg = () => {
             />
           </Box>
           <Box
-            component="form"
+            // component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "750px" },
             }}
@@ -228,6 +236,7 @@ const StudyReg = () => {
             <TextField
               id="studyContactInput"
               label="연락수단"
+              name="studyTel"
               variant="outlined"
               sx={{
                 "& .MuiOutlinedInput-root": {

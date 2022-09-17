@@ -49,8 +49,8 @@ function Written({ asks, shares }) {
         {isVisible && (
           <div className={styles.askList}>
             {asks.map((ask) => (
-              <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
-                <AskListItem key={ask.id} ask={ask} />
+              <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                <AskListItem ask={ask} />
               </NavLink>
             ))}
           </div>
@@ -59,8 +59,11 @@ function Written({ asks, shares }) {
         {!isVisible && (
           <div>
             {shares.map((share) => (
-              <NavLink key={share.id} to={`/community/share/${share.id}`}>
-                <div className={styles.shareList} key={share.id}>
+              <NavLink
+                key={share.shareIdx}
+                to={`/community/share/${share.shareIdx}`}
+              >
+                <div className={styles.shareList}>
                   <img
                     src={share.itemImg}
                     alt="나눔이미지 파일"

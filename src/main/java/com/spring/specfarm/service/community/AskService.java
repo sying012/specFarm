@@ -14,7 +14,7 @@ public interface AskService {
 
 	int insertAsk(Ask ask);
 
-	Page<Ask> getAskList(Pageable pageable);
+	Page<Ask> getAskList(String searchType, String searchKeyword, Pageable pageable);
 
 	List<AskReply> getAskReplyList(int id);
 
@@ -34,6 +34,5 @@ public interface AskService {
 
 	List<AskReReply> insertAskReReply(AskReReply askReReply);
 
-
-
+	void deleteAsk(int askIdx);
 }

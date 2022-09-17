@@ -13,7 +13,7 @@ const JobCafeCard = ({ index, jobCafeItem }) => {
               <p className={styles.smplIntro}>{jobCafeItem.SMPL_INTRO}</p>
               <p className={styles.useDate}>이용시간: {jobCafeItem.USE_DT}</p>
               <p className={styles.holiDate}>휴무일: {jobCafeItem.HOLI_DD}</p>
-              <p className={styles.guGun}>{jobCafeItem.GUGUN}</p>
+              <p className={styles.guGun}>서울시 {jobCafeItem.GUGUN}</p>
             </div>
             <img
               src={jobCafeItem.FILE_NM}

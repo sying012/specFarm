@@ -13,7 +13,7 @@ const JobCafeType = ({ categories, onSelectCategory }) => {
   return (
     <>
       <div className={styles.typeBox}>
-        <div className={styles.allTypeBtn}>
+        <div className={styles.allTypeBtn} active={true}>
           <a href={"/"} onClick={(e) => onClickCategory("전체", e)}>
             전체
           </a>

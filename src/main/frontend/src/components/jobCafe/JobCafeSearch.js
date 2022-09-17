@@ -21,7 +21,7 @@ const JobCafeSearch = () => {
               },
             },
           }}
-          style={{ width: "250px" }}
+          style={{ width: "288px" }}
         ></TextField>
       </div>
     </div>

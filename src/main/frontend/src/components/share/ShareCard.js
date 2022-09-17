@@ -11,7 +11,7 @@ import styles from "../../styles/share/shareCard.module.css";
 import { Link } from "react-router-dom";
 
 const ShareCard = ({ shareItem }) => {
-  const { id, shareTitle, userId, itemImg, shareState, content } = shareItem;
+  const { id, shareTitle, userId, itemImg, shareState } = shareItem;
 
   const theme = createTheme({
     typography: {

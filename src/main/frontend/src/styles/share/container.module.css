@@ -5,16 +5,15 @@
   margin-bottom: 35px;
 }
 
-.newshareBtn {
-  cursor: pointer;
-  width: 65px;
-  height: 40px;
-  color: aliceblue;
+button.newshareBtn {
+  font-family: Pretendard-Regular;
   font-size: 1rem;
-  border-radius: 5px;
-  border: none;
-  margin-right: 10px;
-  background-color: #8cbf75;
+  color: white;
+  background: #8cbf75;
+}
+
+button.newshareBtn:hover {
+  background: #8cbf75;
 }
 
 .pageNation {

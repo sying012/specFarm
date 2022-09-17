@@ -101,6 +101,8 @@ const NewShare = ({ insertShare }) => {
                 id="shareTitleInput"
                 label="제목"
                 variant="outlined"
+                name="shareTitle"
+                value={shareContent}
                 style={{ marginLeft: "9px", width: "100%" }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
@@ -126,10 +128,12 @@ const NewShare = ({ insertShare }) => {
             >
               <TextField
                 id="shareContentInput"
+                value={shareContent}
                 onChange={handleShareContent}
                 label="내용"
                 multiline
                 rows={15}
+                name="shareContent"
                 style={{ marginLeft: "9px", width: "100%" }}
                 sx={{
                   "& .MuiOutlinedInput-root": {

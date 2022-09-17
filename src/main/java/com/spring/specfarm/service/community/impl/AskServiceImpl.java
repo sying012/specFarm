@@ -39,8 +39,22 @@ public class AskServiceImpl implements AskService {
 	}
 
 	@Override
-	public Page<Ask> getAskList(Pageable pageable) {
-		return askRepository.findAll(pageable);
+	public Page<Ask> getAskList(String searchType, String searchKeyword, Pageable pageable) {
+		if (searchKeyword != null && !searchKeyword.equals("")) {
+			if (searchType.equals("자격증")) {
+				return askRepository.findByAskCertContaining(searchKeyword,pageable);
+			} else if (searchType.equals("제목")) {
+				return askRepository.findByAskTitleContaining(searchKeyword,pageable);
+			} else if (searchType.equals("내용")) {
+				return askRepository.findByAskContentContaining(searchKeyword,pageable);
+			} else if (searchType.equals("제목+내용")) {
+				return askRepository.findByAskTitleContainingOrAskContentContaining(searchKeyword,searchKeyword,pageable);
+			} else {
+				return null;
+			}
+		}else {
+			return askRepository.findAll(pageable);
+		}
 	}
 
 	@Override
@@ -95,17 +109,21 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public List<AskReReply> insertAskReReply(AskReReply askReReply) {
-		System.out.println(-1);
+
 		askReReplyRepository.save(askReReply);
-		System.out.println(0);
+
 		AskReply askReply = new AskReply();
-		System.out.println(1);
+
 		askReply.setAskIdx(askReReply.getAskReply().getAskIdx());
-		System.out.println(2);
+
 		askReply.setAskReplyIdx(askReReply.getAskReply().getAskReplyIdx());
-		System.out.println(3);
 		
 		return askReReplyRepository.findByAskReply(askReply);
 	}
 
+	@Override
+	public void deleteAsk(int askIdx) {
+		askRepository.deleteById(askIdx);
+		askReplyRepository.deleteByAskIdx(askIdx);
+	}
 }

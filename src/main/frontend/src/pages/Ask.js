@@ -9,6 +9,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 import PrivateRoute from "../lib/PrivateRoute";
+import { AskContext } from "../context/AskContext";
 
 const Ask = () => {
   const navigate = useNavigate();
@@ -50,10 +51,12 @@ const Ask = () => {
         </NavLink>
       </div>
       <Routes>
+        {/* <AskContext.Provider> */}
         <Route
           path="/"
           element={<AskContent certNames={certNames}></AskContent>}
         ></Route>
+        {/* </AskContext.Provider> */}
         <Route path="/:askIdx" element={<AskDetail></AskDetail>}></Route>
         <Route
           path="/:askIdx/edit"

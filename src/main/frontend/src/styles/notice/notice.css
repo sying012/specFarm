@@ -1,3 +1,12 @@
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+
 /* NoticeList */
 #noticeTable {
   width: 100%;
@@ -46,7 +55,7 @@
 
 #noticeTable .noticeTitle a {
   cursor: pointer;
-  color: rgb(82, 42, 0);
+  color: #0d0d0d;
 }
 
 #noticeTable .noticeDate {
@@ -156,6 +165,7 @@
 
 .noticeContent{
   padding: 30px;
+  line-height: 1.2;
 }
 
 .noticeBottom .detailListBtn {

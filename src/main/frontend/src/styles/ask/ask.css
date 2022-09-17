@@ -310,6 +310,7 @@ form#certSearchBar input#searchCert {
   margin-left: 20px;
   height: fit-content;
 }
+
 #regAskForm .ql-editor {
   min-height: 300px;
 }
@@ -361,14 +362,22 @@ form#certSearchBar input#searchCert {
   margin-right: 5px;
 }
 
+#askDetailContainer #detailContentBox .detailLink span {
+  color: rgb(100, 100, 100);
+  font-size: 0.9rem;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
 /*AskDetailReply*/
 #askDetailContainer #detailReply .askReplyBox {
   min-height: 40px;
   padding: 20px;
   display: flex;
   align-items: flex-start;
-  max-width: 460px;
+  max-width: 500px;
   width: 100%;
+  box-sizing: border-box;
 }
 #askDetailContainer #detailReply .askReplyBox #profileImg {
   width: 40px;
@@ -388,12 +397,13 @@ form#certSearchBar input#searchCert {
   width: 100%;
 }
 
-#askReplyBox #replyBox .askReplyContent {
+.askReplyBox #replyBox .askReplyContent {
   white-space: normal;
-  margin-top: 10px;
+  margin-top: 5px;
   color: #0d0d0d;
   padding-bottom: 10px;
   word-break: break-all;
+  white-space: pre;
 }
 
 .rereplyOpen {
@@ -406,4 +416,38 @@ form#certSearchBar input#searchCert {
   display: flex;
   font-size: 0.7rem;
   margin-right: 5px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  #askDetailContainer {
+    flex-direction: column;
+  }
+
+  #askDetailContainer #detailContentBox {
+    position: static;
+    top: 0;
+    background: white;
+    padding: 20px;
+    max-width: 100%;
+    min-height: 400px;
+    width: 100%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+    height: fit-content;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 20px;
+  }
+
+  #askDetailContainer #detailReply {
+    max-width: 100%;
+    width: 100%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    background: white;
+    margin: 20px 20px;
+    height: fit-content;
+  }
 }

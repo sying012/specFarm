@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import Editer from "../Editer";
 import { TextField, Button, createTheme } from "@mui/material";
 
-const RegNotice = () => {
+const RegNotice = ({ insertNotice }) => {
   const [noticeContent, setNoticeContent] = useState("");
   const handleContent = (value) => {
     setNoticeContent(value);
   };
 
+  const submitNotice = (e) => {
+    let noticeForm = new FormData(e.target);
+    console.log(noticeForm.get("noticeContent"));
+    e.preventDefault();
+    insertNotice(noticeForm);
+  };
   const theme = createTheme({
     palette: {
       primary: {
@@ -19,7 +25,7 @@ const RegNotice = () => {
 
   return (
     <div id="noticeRegContainer">
-      <form action="" method="post">
+      <form onSubmit={submitNotice}>
         <input type="hidden" name="noticeContent" value={noticeContent} />
         <TextField
           id="standard-basic"
@@ -28,6 +34,7 @@ const RegNotice = () => {
           variant="standard"
           autoComplete="off"
           fullWidth
+          required
           sx={{
             "& .MuiInput-root": {
               "&:after": {

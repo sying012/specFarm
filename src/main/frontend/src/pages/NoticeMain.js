@@ -4,10 +4,14 @@ import NoticeList from "../components/notice/NoticeList";
 import RegNotice from "../components/notice/RegNotice";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import PrivateRoute from "../lib/PrivateRoute";
+import { API_BASE_URL } from "../app-config";
 
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const NoticeMain = () => {
+  const navigate = useNavigate();
   const noticeData = [
     {
       id: 1,
@@ -32,6 +36,19 @@ const NoticeMain = () => {
       noticeRegDate: "2022.08.04 22:36",
     },
   ];
+
+  const insertNotice = (notice) => {
+    axios
+      .post(API_BASE_URL + "/cs/write", notice, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      })
+      .then((response) => {
+        navigate(`${response.data.noticeIdx}`);
+      });
+  };
   return (
     <div id="content">
       <div className="titleContainer">
@@ -46,11 +63,13 @@ const NoticeMain = () => {
           path="/"
           element={<NoticeList noticeData={noticeData} />}
         ></Route>
+        <Route path="/:noticeId" element={<NoticeDetail />}></Route>
         <Route
-          path="/:noticeId"
-          element={<NoticeDetail noticeData={noticeData} />}
+          path="/write"
+          element={
+            <PrivateRoute component={RegNotice} insertNotice={insertNotice} />
+          }
         ></Route>
-        <Route path="/write" element={<RegNotice />}></Route>
       </Routes>
     </div>
   );

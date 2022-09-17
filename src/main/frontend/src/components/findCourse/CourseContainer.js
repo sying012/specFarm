@@ -59,11 +59,13 @@ const CourseContainer = () => {
             placeholder="검색"
             onChange={changeValue}
           ></input>
-          <SearchIcon
-            fontSize="large"
-            color="action"
-            style={{ position: "absolute", top: "12px", right: "20px" }}
-          />
+          <div onClick={handleSubmit} style={{ cursor: "pointer" }}>
+            <SearchIcon
+              fontSize="large"
+              color="action"
+              style={{ position: "absolute", top: "12px", right: "20px" }}
+            />
+          </div>
         </form>
       </div>
       <div className={styles.popCourse}>

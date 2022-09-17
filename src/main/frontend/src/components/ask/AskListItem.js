@@ -2,6 +2,7 @@ import React from "react";
 import defaultProfile from "../../images/defaultProfile.png";
 
 const AskListItem = ({ ask }) => {
+  console.log(ask);
   return (
     <div id="askListItem">
       <div id="profile">

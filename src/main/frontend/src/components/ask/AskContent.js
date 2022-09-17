@@ -15,20 +15,30 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/lost/Lost.module.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import { useCallback, useContext } from "react";
 
 const AskContent = ({ certNames }) => {
-  const navigate = useNavigate();
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [searchType, setSearchType] = useState("자격증");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [asks, setAsks] = useState([]);
-  const handleChange = (e) => {
+  const handleSearchType = (e) => {
     setSearchType(e.target.value);
+    console.log(e.target.value);
+    setSearchKeyword("");
+    // sessionStorage.setItem("searchType", e.target.value);
   };
 
-  // 리스폰스롤 받아온 데이터를 사용하기위한 state, ask엔티티가 아닌 받변개수가 추가된 DTO로 응답
+  const handleSearchKeyword = (e, text) => {
+    searchType === "자격증"
+      ? setSearchKeyword(text)
+      : setSearchKeyword(e.target.value);
 
-  useEffect(() => {
+    // sessionStorage.setItem("searchKeyword", e.target.value);
+  };
+
+  const getAksList = useCallback(() => {
     axios
       .get(API_BASE_URL + "/community/ask", {
         headers: {
@@ -36,18 +46,42 @@ const AskContent = ({ certNames }) => {
         },
         params: {
           page: page - 1,
+          searchKeyword: searchKeyword,
+          searchType: searchType,
         },
       })
       .then((response) => {
-        console.log(response.data.askList);
         setAsks(response.data.askList.content);
         setCount(response.data.askList.totalPages);
+        sessionStorage.setItem("count", response.data.askList.totalPages);
         window.scrollTo(0, 0);
       })
       .catch((e) => {
         console.log(e.data.error);
       });
+  }, [page, searchKeyword, searchType]);
+
+  useEffect(() => {
+    getAksList();
   }, [page]);
+
+  useEffect(() => {
+    sessionStorage.getItem("searchType") === null
+      ? setSearchType("자격증")
+      : setSearchType(sessionStorage.getItem("searchType"));
+
+    sessionStorage.getItem("searchKeyword") === null
+      ? setSearchKeyword("")
+      : setSearchKeyword(sessionStorage.getItem("searchKeyword"));
+
+    setSearchKeyword(sessionStorage.getItem("searchKeyword"));
+  }, []);
+
+  const submitSearch = (e) => {
+    setPage(1);
+    e.preventDefault();
+    getAksList();
+  };
 
   const [searchTypeItem, setSearchTypeItem] = useState([
     {
@@ -70,60 +104,68 @@ const AskContent = ({ certNames }) => {
 
   let searchBar =
     searchType !== "자격증" ? (
-      <TextField
-        name="searchKeyword"
-        id="outlined-search"
-        type="search"
-        InputProps={{
-          startAdornment: <SearchIcon color="action" />,
-        }}
-        size="small"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            "&.Mui-focused fieldset": {
-              borderColor: "#8cbf75",
-            },
-          },
-        }}
-        style={{ width: "250px" }}
-      ></TextField>
-    ) : (
-      <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={certNames.map((option) => option.certName)}
-        renderInput={(params) => (
-          <TextField
-            name="searchKeyword"
-            {...params}
-            InputProps={{
-              ...params.InputProps,
-              type: "search",
-              startAdornment: <SearchIcon color="action" />,
-            }}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
-                },
-                "&.MuiInputBase-sizeSmall": {
-                  paddingLeft: "14px",
-                },
+      <form onSubmit={submitSearch}>
+        <TextField
+          name="searchKeyword"
+          id="outlined-search"
+          type="search"
+          value={searchKeyword || ""}
+          onChange={handleSearchKeyword}
+          InputProps={{
+            startAdornment: <SearchIcon color="action" />,
+          }}
+          size="small"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": {
+                borderColor: "#8cbf75",
               },
-            }}
-            size="small"
-            style={{ width: "250px" }}
-          />
-        )}
-      />
+            },
+          }}
+          style={{ width: "250px" }}
+        ></TextField>
+      </form>
+    ) : (
+      <form onSubmit={submitSearch}>
+        <Autocomplete
+          freeSolo
+          id="free-solo-2-demo"
+          disableClearable
+          options={certNames.map((option) => option.certName)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+                startAdornment: <SearchIcon color="action" />,
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                  "&.MuiInputBase-sizeSmall": {
+                    paddingLeft: "14px",
+                  },
+                },
+              }}
+              size="small"
+              style={{ width: "250px" }}
+            />
+          )}
+          name="searchKeyword"
+          value={searchKeyword}
+          onChange={handleSearchKeyword}
+        />
+      </form>
     );
 
   return (
     <div id="container">
       <div id="boardTop">
         <div id="searchBar">
-          <div className={styles.search}>
+          <div className={styles.search} onSubmit={submitSearch}>
             <FormControl
               sx={{ width: "150px", marginRight: "10px" }}
               size="small"
@@ -133,7 +175,7 @@ const AskContent = ({ certNames }) => {
                 id="searchTypeSelect"
                 name="searchType"
                 value={searchType}
-                onChange={handleChange}
+                onChange={handleSearchType}
                 sx={{
                   "&.MuiOutlinedInput-root": {
                     "&.Mui-focused fieldset": {
@@ -184,8 +226,6 @@ const AskContent = ({ certNames }) => {
             count={count} //총 페이지 수
             size="large"
             page={page} //현재 페이지
-            variant="outlined"
-            shape="rounded"
             onChange={(e, p) => {
               setPage(p);
             }}

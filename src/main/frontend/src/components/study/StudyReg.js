@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "../../styles/study/StudyReg.module.css";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -6,7 +6,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const StudyReg = () => {
   const ITEM_HEIGHT = 48;
@@ -18,6 +20,35 @@ const StudyReg = () => {
         width: 120,
       },
     },
+  };
+
+  const navigate = useNavigate();
+
+  const insertStudy = (study) => {
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/community/study/register",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: study,
+    }).then((response) => {
+      navigate(`../${response.data.studyIdx}`);
+    });
+  };
+
+  const handleSubmit = (e) => {
+    let study = new FormData(e.target);
+    console.log(study.get("studyTitle"));
+    console.log(study.get("studyContent"));
+    console.log(study.get("studyMaxMember"));
+    console.log(study.get("studyTel"));
+    console.log(study.get("studyImgName"));
+
+    insertStudy(study);
+
+    e.preventDefault();
   };
 
   const [maxMemberCnt, setMaxMemberCnt] = React.useState("");
@@ -69,163 +100,170 @@ const StudyReg = () => {
   };
 
   return (
-    <div className={styles.studyRegContainer}>
-      <div className={styles.leftContainer}>
-        <img
-          className={styles.studyImgPreview}
-          src="https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png"
-          alt="미리보기"
-          id="studyImgPreview"
-          title="사진을 추가하려면 클릭하세요."
-          onClick={() => {
-            document.getElementById("uploadImg").click();
-          }}
-          style={{ cursor: "pointer" }}
-        ></img>
-        <div className={styles.selectorWrapper}>
+    <form onSubmit={handleSubmit} id="regStudyForm">
+      <div className={styles.studyRegContainer}>
+        <div className={styles.leftContainer}>
+          <img
+            className={styles.studyImgPreview}
+            src="https://velog.velcdn.com/images/kshired/post/d8a48a1f-4106-480f-8307-d20eae1f9486/image.png"
+            alt="미리보기"
+            id="studyImgPreview"
+            title="사진을 추가하려면 클릭하세요."
+            onClick={() => {
+              document.getElementById("uploadImg").click();
+            }}
+            style={{ cursor: "pointer" }}
+          ></img>
+          <div className={styles.selectorWrapper}>
+            <Box
+              sx={{
+                minWidth: 120,
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+              }}
+            >
+              <FormControl fullWidth>
+                <InputLabel
+                  id="maxSelectLabel"
+                  sx={{
+                    "&.MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                    "&.MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
+                >
+                  최대인원
+                </InputLabel>
+                <Select
+                  labelId="maxSelectLabel"
+                  id="maxSelect"
+                  name="studyMaxMember"
+                  value={maxMemberCnt}
+                  label="MaxMemberCnt"
+                  onChange={handleChange}
+                  MenuProps={MenuProps}
+                >
+                  {menuItemList()}
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+          <input
+            hidden
+            type="file"
+            className={styles.uploadImg}
+            id="uploadImg"
+            // name="studyImgName"
+            onChange={(e) => {
+              readImage(e.target.files[0]);
+            }}
+          ></input>
+        </div>
+        <div className={styles.rightContainer}>
           <Box
+            // component="form"
             sx={{
-              minWidth: 120,
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
-                },
-              },
+              "& > :not(style)": { m: 1, width: "750px" },
             }}
+            noValidate
+            autoComplete="off"
           >
-            <FormControl fullWidth>
-              <InputLabel
-                id="maxSelectLabel"
-                sx={{
-                  "&.MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
+            <TextField
+              id="studyTitleInput"
+              label="제목"
+              variant="outlined"
+              name="studyTitle"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
                   },
-                  "&.MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
                   },
-                }}
-              >
-                최대인원
-              </InputLabel>
-              <Select
-                labelId="maxSelectLabel"
-                id="maxSelect"
-                value={maxMemberCnt}
-                label="MaxMemberCnt"
-                onChange={handleChange}
-                MenuProps={MenuProps}
-              >
-                {menuItemList()}
-              </Select>
-            </FormControl>
+                },
+              }}
+            />
           </Box>
-        </div>
-        <input
-          hidden
-          type="file"
-          className={styles.uploadImg}
-          id="uploadImg"
-          onChange={(e) => {
-            readImage(e.target.files[0]);
-          }}
-        ></input>
-      </div>
-      <div className={styles.rightContainer}>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "750px" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="studyTitleInput"
-            label="제목"
-            variant="outlined"
+          <Box
+            // component="form"
             sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                "&.Mui-focused": {
-                  color: "#1d5902",
-                },
-              },
+              "& .MuiTextField-root": { m: 1, width: "750px" },
             }}
-          />
-        </Box>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1, width: "750px" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="studyContentInput"
-            label="내용"
-            multiline
-            rows={15}
-            defaultValue={defaultContentValue}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="studyContentInput"
+              label="내용"
+              name="studyContent"
+              multiline
+              rows={15}
+              defaultValue={defaultContentValue}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
+                },
+              }}
+            />
+          </Box>
+          <Box
+            // component="form"
             sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                "&.Mui-focused": {
-                  color: "#1d5902",
-                },
-              },
+              "& > :not(style)": { m: 1, width: "750px" },
             }}
-          />
-        </Box>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "750px" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="studyContactInput"
-            label="연락수단"
-            variant="outlined"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "#8cbf75",
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="studyContactInput"
+              label="연락수단"
+              name="studyTel"
+              variant="outlined"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
+                  },
                 },
-              },
-              "& .MuiInputLabel-root": {
-                "&.Mui-focused": {
-                  color: "#1d5902",
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
                 },
-              },
-            }}
-          />
-        </Box>
-        <div className={styles.submitBtnWrapper}>
-          <Link to={".."}>
-            <button className={styles.studyRegCancel}>취소</button>
-          </Link>
+              }}
+            />
+          </Box>
+          <div className={styles.submitBtnWrapper}>
+            <Link to={".."}>
+              <button className={styles.studyRegCancel}>취소</button>
+            </Link>
 
-          <button type="submit" className={styles.studyRegBtn}>
-            등록
-          </button>
+            <button type="submit" className={styles.studyRegBtn}>
+              등록
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

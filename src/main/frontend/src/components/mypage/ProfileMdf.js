@@ -51,14 +51,13 @@ function ProfileMdf() {
     },
   });
 
-  const [imageSrc, setImageSrc] = useState("");
-
   useEffect(() => {
     if (Object.keys(user).length !== 0) {
       setImageSrc(user.userProfileName);
     }
   }, [user]);
 
+  const [imageSrc, setImageSrc] = useState("");
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
     e.target.value = "";
@@ -71,6 +70,10 @@ function ProfileMdf() {
       };
     });
   };
+
+  useEffect(() => {
+    console.log(document.getElementById("userProfileName"));
+  }, [imageSrc]);
 
   // 프로필 삭제 버튼 클릭시 avatar src기본값으로 변경
   function profilePicDeleteHandler() {
@@ -91,7 +94,7 @@ function ProfileMdf() {
     });
     console.log(user);
   }, [nicknameValue]);
-  
+
   // form submit 시 닉네임 공란이면 에러 창 띄움
   const [nicknameError, setNicknameError] = useState(false);
   const userProfileEdit = (e) => {

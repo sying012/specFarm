@@ -11,11 +11,14 @@ import styles from "../styles/mypage/MypageMain.module.css";
 function MypageMain() {
   const [user, setUser] = useState({});
   const [certs, setCerts] = useState([]);
+  const [asks, setAsks] = useState([]);
+  const [shares, setShares] = useState([]);
+  const [attrCerts, setAttrCerts] = useState([]);
 
   useEffect(() => {
     axios({
       method: "get",
-      url: API_BASE_URL + "/mypage/",
+      url: API_BASE_URL + "/mypage",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
@@ -25,6 +28,9 @@ function MypageMain() {
           console.log(response);
           setUser(response.data.user);
           setCerts(response.data.earnedCert);
+          setAsks(response.data.writtenAsks);
+          setShares(response.data.writtenShares);
+          setAttrCerts(response.data.favCerts);
         }
       })
       .catch((e) => {
@@ -32,76 +38,6 @@ function MypageMain() {
         window.location.href = "/login";
       });
   }, []);
-
-  const [asks, setAsks] = useState([
-    {
-      id: 1,
-      askTitle: "제목11111111",
-      askContent: "내용아러ㅣ너러ㅣㅏ너ㅘㄴsdkhflskjlfsjdf kdhfs",
-      askRegDate: "2022.08.24 10:56 AM",
-      aCount: 12,
-      certIdx: "정보처리기사",
-    },
-    {
-      id: 2,
-      askTitle: "제목11111111",
-      askContent: "내용아러ㅣ너러ㅣㅏ너ㅘㄴsdkhflskjlfsjdf kdhfs",
-      askRegDate: "2022.08.24 10:56 AM",
-      aCount: 12,
-      certIdx: "정보처리기사",
-    },
-  ]);
-
-  const [shares, setShares] = useState([
-    {
-      id: 1,
-      shareTitle: "나눔해요1",
-      userId: "당근",
-      regDate: "2022.08.01",
-      content: "aaaa",
-      itemImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-      shareState: 0,
-    },
-    {
-      id: 2,
-      shareTitle: "나눔해요2",
-      userId: "당근",
-      regDate: "2022.08.02",
-      content:
-        "aaaaㅇㅇㅇㅇㅇㅇㅇ아아아앙아아아아아아아아아아ㅏ앙아ㅏㅇ아아아아아아아아아아앙아아ㅏ아아앙ㅇ닫러재ㅑㄷ뤄마뎌ㅣㄱㅎㅍㄷ구 판어푸냎 아앙ㅇ닫러재ㅑㄷ뤄마뎌ㅣㄱㅎㅍㄷ구 판어푸냎ㄷ잘채ㅔㅈ긍파ㅡㄴㅇ",
-      itemImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-      shareState: 1,
-    },
-    {
-      id: 3,
-      shareTitle: "나눔해요3",
-      userId: "당근",
-      regDate: "2022.08.03",
-      content: "aaaa",
-      itemImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-      shareState: 0,
-    },
-    {
-      id: 4,
-      shareTitle: "나눔해요4",
-      userId: "당근",
-      regDate: "2022.08.04",
-      content: "aaaa",
-      itemImg:
-        "https://cdn.pixabay.com/photo/2021/07/29/11/59/ocean-6507058__340.jpg",
-      shareState: 1,
-    },
-  ]);
-
-  const [attrCerts, setAttrCerts] = useState([
-    { id: 1, certId: "1122", certName: "사회복지사1급" },
-    { id: 2, certId: "1234", certName: "전기어쩌구자격증" },
-    { id: 3, certId: "1452", certName: "정보처리기사" },
-    { id: 4, certId: "1172", certName: "전기어쩌구자격증" },
-  ]);
 
   return (
     <div className={styles.mypageMain}>
@@ -138,6 +74,7 @@ function MypageMain() {
                 asks={asks}
                 shares={shares}
                 attrCerts={attrCerts}
+                setAttrCerts={setAttrCerts}
               />
             }
           />

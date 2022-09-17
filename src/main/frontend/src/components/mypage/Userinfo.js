@@ -1,10 +1,9 @@
-import { AddCircle, ArrowForwardIos, Close } from "@mui/icons-material";
+import { AddCircle, ArrowForwardIos } from "@mui/icons-material";
 import {
   Button,
   createTheme,
   FormControl,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -14,7 +13,9 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../app-config";
+
 import styles from "../../styles/mypage/Userinfo.module.css";
+import EarnedCert from "./EarnedCert";
 
 function Userinfo({ certs, user }) {
   const theme = createTheme({
@@ -82,26 +83,35 @@ function Userinfo({ certs, user }) {
   const [certM, setCertM] = useState("");
 
   // Phone number authentication
-  const telAuth = useCallback((e) => {
-    const userTel = document.getElementById("userTel").value;
-    // remove Hyphen
-    const newUserTel = userTel.replace(/-/g, "");
-    document.getElementById("userTel").value = newUserTel;
+  const telAuth = useCallback(
+    (e) => {
+      const userTel = document.getElementById("userTel").value;
+      // remove Hyphen
+      const newUserTel = userTel.replace(/-/g, "");
+      document.getElementById("userTel").value = newUserTel;
 
-    const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+      const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 
-    if (newUserTel === null || newUserTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
-    } else if (!TelRegex.test(newUserTel)) {
-      setTelError(true);
-      setTelErrorText("형식에 맞지 않는 번호입니다.");
-    } else {
-      setTelError(false);
-      setTelErrorText("");
-      setTelAuthNumberDisabled(false);
-    }
-  }, []);
+      console.log(userInfo.userTel);
+      console.log(userTel);
+
+      if (userInfo.userTel === userTel) {
+        setTelError(true);
+        setTelErrorText("변경된 내용이 없습니다.");
+      } else if (newUserTel === null || newUserTel === "") {
+        setTelError(true);
+        setTelErrorText("필수 정보입니다.");
+      } else if (!TelRegex.test(newUserTel)) {
+        setTelError(true);
+        setTelErrorText("형식에 맞지 않는 번호입니다.");
+      } else {
+        setTelError(false);
+        setTelErrorText("");
+        setTelAuthNumberDisabled(false);
+      }
+    },
+    [userInfo]
+  );
 
   // Phone number authentication Number Check
   const telAuthNumberCheck = useCallback((e) => {
@@ -199,9 +209,6 @@ function Userinfo({ certs, user }) {
 
   // 자격증 추가 버튼 클릭시 div 추가
   const [countList, setCountList] = useState([]);
-  const [visible, setVisible] = useState(true);
-  const [singleCert, setSingleCert] = useState({});
-  const addCertCount = [...countList];
 
   useEffect(() => {
     if (Object.keys(certs).length !== 0) {
@@ -209,7 +216,8 @@ function Userinfo({ certs, user }) {
     }
   }, [certs]);
 
-  const addCert = (e) => {
+  const addNewCert = (e) => {
+    const addCertCount = [...countList];
     const counter = {
       getCertIdx: addCertCount.length,
       userId: userInfo.userId,
@@ -219,92 +227,49 @@ function Userinfo({ certs, user }) {
 
     addCertCount.push(counter);
     setCountList(addCertCount);
-    setVisible(true);
-    console.log(addCertCount);
-    if (addCertCount.length > 9) {
-      setVisible(false);
-    }
   };
 
   // 자격증 삭제 버튼 클릭시 div 삭제
   const deleteCertDiv = useCallback(
     (i) => {
-      setCountList(countList.filter((cert) => cert.getCertIdx !== i));
-      setVisible(true);
+      let newCountList = countList.filter((cert) => cert.getCertIdx !== i);
+      if (newCountList[0].getCertIdx !== 0) {
+        newCountList[0].getCertIdx = 0;
+      }
+      for (let i = 1; i < newCountList.length; i++) {
+        if (newCountList[i].getCertIdx !== newCountList[i - 1].getCertIdx) {
+          newCountList[i].getCertIdx = i;
+        }
+      }
+      setCountList(newCountList);
+      console.log(newCountList);
     },
     [countList]
   );
 
-  // 취득한 자격증란 onChange
-  const handleChange = (getCertIdx, e) => {
-    const addCert =
-      singleCert.getCertIdx === getCertIdx
-        ? {
-            ...singleCert,
-            [e.target.name]: e.target.value,
-          }
-        : {
-            getCertIdx: getCertIdx,
-            [e.target.name]: e.target.value,
-          };
-
-    setSingleCert(addCert);
-
-    setCountList(
-      countList.map((cer) =>
-        cer.getCertIdx === getCertIdx
-          ? {
-              ...cer,
-              certName: addCert.certName,
-              getCertDate: addCert.getCertDate,
-            }
-          : cer
-      )
-    );
-  };
-
-  const [certNameError, setCertNameError] = useState(false);
-  const [certDateError, setCertDateError] = useState(false);
-
   const handleCertSubmit = (e) => {
     e.preventDefault();
-    const certNameInput = document.getElementsByName("certName");
-    const getCertDateInput = document.getElementsByName("getCertDate");
-    let error = false;
-    // ^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$
-    const dateRegex = /^\d{4}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])$/;
-    for (let i = 0; i < certNameInput.length; i++) {
-      getCertDateInput[i].value.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3");
+    let blankError = false;
+    for (let i = 0; i < countList.length; i++) {
       console.log(
-        certNameInput[i].value + "///////" + getCertDateInput[i].value
+        countList[i].certName + "//////////" + countList[i].getCertDate
       );
+
       if (
-        certNameInput[i].value === null ||
-        certNameInput[i].value === "" ||
-        getCertDateInput[i].value === null ||
-        getCertDateInput[i].value === ""
+        countList[i].certName === null ||
+        countList[i].certName === "" ||
+        countList[i].getCertDate === null ||
+        countList[i].getCertDate === ""
       ) {
-        error = true;
-        setCertNameError(true);
-      } else if (!dateRegex.test(getCertDateInput[i].value)) {
-        error = true;
-        setCertDateError(true);
-      } else {
-        setCertNameError(false);
-        setCertDateError(false);
+        blankError = true;
       }
     }
-    if (certNameError) {
-      alert("빈칸을 입력해주세요.");
-    } else if (certDateError) {
-      alert("날짜형식에 맞지 않습니다.");
-    }
 
-    if (!error) {
+    if (!blankError) {
       axios({
         method: "post",
         url: API_BASE_URL + "/mypage/earnedcert",
-        data: addCertCount,
+        data: countList,
       })
         .then((response) => {
           if (response.data) {
@@ -315,6 +280,8 @@ function Userinfo({ certs, user }) {
         .catch((e) => {
           console.log("catch문 " + e);
         });
+    } else {
+      alert("빈 칸을 입력해주세요.");
     }
   };
 
@@ -421,34 +388,36 @@ function Userinfo({ certs, user }) {
                 인증번호 받기
               </Button>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="usertelAuthNumber"
-                variant="outlined"
-                id="usertelAuthNumber"
-                label="인증번호"
-                fullWidth
-                onChange={telAuthNumberCheck}
-                error={telAuthNumberError}
-                helperText={telAuthNumberErrorText}
-                disabled={telAuthNumberDisabled}
-                sx={{
-                  "& .MuiInputBase-input.Mui-disabled": {
-                    backgroundColor: "#F5F5F5",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
+            {!telAuthNumberDisabled && (
+              <Grid item xs={12}>
+                <TextField
+                  name="usertelAuthNumber"
+                  variant="outlined"
+                  id="usertelAuthNumber"
+                  label="인증번호"
+                  fullWidth
+                  onChange={telAuthNumberCheck}
+                  error={telAuthNumberError}
+                  helperText={telAuthNumberErrorText}
+                  // disabled={telAuthNumberDisabled}
+                  sx={{
+                    "& .MuiInputBase-input.Mui-disabled": {
+                      backgroundColor: "#F5F5F5",
                     },
-                  },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
+                    "& .MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
                     },
-                  },
-                }}
-              />
-            </Grid>
+                    "& .MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 name="userEmail"
@@ -631,71 +600,23 @@ function Userinfo({ certs, user }) {
 
         {countList &&
           countList.map((cert, i) => (
-            <div
-              className={styles.certContainer}
-              id={"newCertContainer" + cert.getCertIdx}
+            <EarnedCert
               key={i}
-            >
-              <TextField
-                variant="outlined"
-                label="자격증 명"
-                value={cert.certName || ""}
-                onChange={(e) => handleChange(cert.getCertIdx, e)}
-                name="certName"
-                key={"자격증명" + i}
-                style={{ marginBottom: "5px" }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
-                  },
-                }}
-              />
-              <TextField
-                variant="outlined"
-                label="취득 일자(YYYY.MM.DD)"
-                value={cert.getCertDate || ""}
-                onChange={(e) => handleChange(cert.getCertIdx, e)}
-                name="getCertDate"
-                key={"취득일자" + i}
-                style={{ marginLeft: "5px", marginBottom: "5px" }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
-                  },
-                }}
-              />
-              <IconButton
-                aria-label="details"
-                onClick={() => deleteCertDiv(cert.getCertIdx)}
-                style={{ padding: 0, height: "min-content" }}
-              >
-                <Close fontSize="medium" style={{ color: "#666" }} />
-              </IconButton>
-            </div>
+              countList={countList}
+              setCountList={setCountList}
+              deleteCertDiv={deleteCertDiv}
+              cert={cert}
+            />
           ))}
 
-        {visible && (
+        {countList.length < 10 && (
           <Button
             variant="outlined"
             color="secondary"
             component="label"
             id="addCertBtn"
             className={styles.addCert}
-            onClick={addCert}
+            onClick={addNewCert}
             theme={theme}
             style={{ margin: "0 auto" }}
             startIcon={<AddCircle theme={theme} color="primary" />}

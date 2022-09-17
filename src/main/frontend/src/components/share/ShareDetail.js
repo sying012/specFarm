@@ -1,14 +1,39 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../../styles/share/detail.module.css";
 import { Button } from "@mui/material";
 import defaultProfile from "../../images/defaultProfile.png";
 import CommentContainer from "./CommentContainer";
 import Comment from "./Comment";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
-const ShareDetail = ({ shareList }) => {
-  const { id } = useParams();
-  const share = shareList[id - 1];
+const ShareDetail = () => {
+  const [share, setShare] = useState({});
+  const [shareIdx] = useParams();
+  const [user, setUser] = useState({});
+
+  // const insertShareReply = (shareReply) => {
+
+  // }
+
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "/community/share/getShare?shareIdx=" + shareIdx)
+      .then((response) => {
+        setShare(response.data);
+      });
+
+    axios
+      .get(API_BASE_URL + "/community/share/getUser", {
+        headers: {
+          Authorization: "Bearer" + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      })
+      .then((response) => {
+        if (response.data.user);
+      });
+  }, [shareIdx]);
 
   return (
     <div className={styles.detailBox}>

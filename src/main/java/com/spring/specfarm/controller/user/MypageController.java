@@ -1,5 +1,6 @@
 package com.spring.specfarm.controller.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.specfarm.dto.FavCertDTO;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.dto.UserDTO;
+import com.spring.specfarm.entity.Ask;
+import com.spring.specfarm.entity.FavCert;
 import com.spring.specfarm.entity.GetCert;
+import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.User;
+import com.spring.specfarm.service.community.AskService;
 import com.spring.specfarm.service.user.MypageService;
 
 @RestController
@@ -27,9 +33,12 @@ public class MypageController {
 	private MypageService mypageService;
 	
 	@Autowired
+	private AskService askService;
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public Map<String, Object> getUserData(@AuthenticationPrincipal String userId) {
 		try {
 			Map<String, Object> responseMap = new HashMap<String, Object>();
@@ -39,19 +48,18 @@ public class MypageController {
 			
 			List<GetCert> earnedCert = mypageService.getEarnedCert(userId);
 			responseMap.put("earnedCert", earnedCert);
-//			UserDTO userDTO = new UserDTO();
-//			userDTO.setUserId(loginedUser.getUserId());
-//			userDTO.setUserPw(loginedUser.getUserPw());
-//			userDTO.setUserName(loginedUser.getUserName());
-//			userDTO.setUserTel(loginedUser.getUserTel());
-//			userDTO.setUserEmail(loginedUser.getUserEmail());
-//			userDTO.setUserNick(loginedUser.getUserNick() == null ? loginedUser.getUserId() : loginedUser.getUserNick());
-//			userDTO.setFavFieldL(loginedUser.getFavFieldL());
-//			userDTO.setFavFieldM(loginedUser.getFavFieldM());
-//			userDTO.setUserProfileName(loginedUser.getUserProfileName());
-//			userDTO.setRole(loginedUser.getRole());
-//			
-//			System.out.println("유저디티오: " + userDTO);
+			
+			List<Ask> writtenAsks = mypageService.getWrittenAsks(loginedUser);
+			for(Ask ask: writtenAsks) {
+				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
+			}
+			responseMap.put("writtenAsks", writtenAsks);
+			
+			List<Share> writtenShares = mypageService.getWrittenShares(loginedUser);
+			responseMap.put("writtenShares", writtenShares);
+			
+			List<FavCertDTO> favCerts = mypageService.getFavCerts(userId);
+			responseMap.put("favCerts", favCerts);
 			
 			return responseMap;
 		} catch (Exception e) {
@@ -94,6 +102,8 @@ public class MypageController {
 		try {
 			mypageService.editUserMdf(user);
 			
+			
+			
 			return ResponseEntity.ok().body("렛츠 수정");
 		} catch (Exception e) {
 			ResponseDTO<UserDTO> response = new ResponseDTO<>();
@@ -106,15 +116,31 @@ public class MypageController {
 	@PostMapping("/earnedcert")
 	public ResponseEntity<?> editUserInfo(@RequestBody List<GetCert> earnedCert) {
 		try {
-			System.out.println("11111111111111");
 			if(earnedCert.isEmpty() || !mypageService.getEarnedCert(earnedCert.get(0).getUserId()).isEmpty()) {
-				System.out.println("3333333333333333");
 				mypageService.resetEarnedCert(earnedCert.get(0).getUserId());
 			}
+			System.out.println(earnedCert);
 			mypageService.editUserGetCert(earnedCert);
-			System.out.println("취득자격증리스트" + earnedCert);
 			
 			return ResponseEntity.ok().body("유저자격증 렛츠 수정");
+		} catch (Exception e) {
+			ResponseDTO<UserDTO> response = new ResponseDTO<>();
+			response.setError(e.getMessage());
+			
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
+	@PostMapping("/deletefavcert")
+	public ResponseEntity<?> deleteFavCert(@RequestBody String[] favCert) {
+		try {
+			String certIdx = favCert[0];
+			String userId = favCert[1];
+			mypageService.deleteFavCert(certIdx, userId);
+			
+			List<FavCertDTO> favCerts = mypageService.getFavCerts(userId);
+			
+			return ResponseEntity.ok().body(favCerts);
 		} catch (Exception e) {
 			ResponseDTO<UserDTO> response = new ResponseDTO<>();
 			response.setError(e.getMessage());

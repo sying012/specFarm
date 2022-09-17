@@ -11,11 +11,31 @@ import AskListItem from "../ask/AskListItem";
 
 import styles from "../../styles/mypage/Frames.module.css";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
-function Frames({ certs, asks, shares, user, attrCerts }) {
+function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
   const [userInfo, setUserInfo] = useState({});
-  function deleteHandler() {
+  const [ask, setAsk] = useState({});
+  const [share, setShare] = useState({});
+
+  function deleteHandler(certIdx, userId) {
     // DB에서 날리기
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/mypage/deletefavcert",
+      data: [certIdx, userId],
+    })
+      .then((response) => {
+        if (response.data) {
+          alert("삭제되었습니다.");
+          // window.location.replace("/mypage");
+          setAttrCerts(response.data);
+        }
+      })
+      .catch((e) => {
+        console.log("catch문 " + e);
+      });
   }
 
   useEffect(() => {
@@ -27,7 +47,15 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
           .replace(/-/g, "")
           .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***"),
       });
-  }, [user]);
+  }, [user, attrCerts]);
+
+  useEffect(() => {
+    if (asks.length !== 0) setAsk(asks[0]);
+  }, [asks]);
+
+  useEffect(() => {
+    if (shares.length !== 0) setShare(shares[0]);
+  }, [shares]);
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -114,52 +142,45 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
             </div>
           </div>
 
-          {isVisible && (
-            <div className={styles.askList}>
-              {asks.map(
-                (ask) =>
-                  ask.id === 1 && (
-                    <NavLink key={ask.id} to={`/community/ask/${ask.id}`}>
-                      {<AskListItem key={ask.id} ask={ask} /> ||
-                        "작성한 글이 없습니다."}
-                    </NavLink>
-                  )
-              )}
-            </div>
+          {Object.keys(ask).length !== 0 ? (
+            isVisible && (
+              <div className={styles.askList}>
+                <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                  {<AskListItem ask={ask} /> || "작성한 글이 없습니다."}
+                </NavLink>
+              </div>
+            )
+          ) : (
+            <></>
           )}
 
-          {!isVisible && (
-            <div>
-              {shares.map(
-                (share) =>
-                  share.id === 1 && (
-                    <NavLink key={share.id} to={`/community/share/${share.id}`}>
-                      {(
-                        <div className={styles.shareList} key={share.id}>
-                          <img
-                            src={share.itemImg}
-                            alt="나눔이미지 파일"
-                            className={styles.shareFile}
-                          />
-                          <div className={styles.shareContainer}>
-                            <div className={styles.shareListHeader}>
-                              <h1 className={styles.writtenTitle}>
-                                {share.shareTitle}
-                              </h1>
-                              <p className={styles.shareRegDate}>
-                                {share.regDate}
-                              </p>
-                            </div>
-                            <p className={styles.shareContent}>
-                              {share.content}
-                            </p>
-                          </div>
+          {Object.keys(share).length !== 0 ? (
+            !isVisible && (
+              <div>
+                <NavLink key={share.shareIdx} to={`/community/share/${share.shareIdx}`}>
+                  {(
+                    <div className={styles.shareList}>
+                      <img
+                        src={share.itemImg}
+                        alt="나눔이미지 파일"
+                        className={styles.shareFile}
+                      />
+                      <div className={styles.shareContainer}>
+                        <div className={styles.shareListHeader}>
+                          <h1 className={styles.writtenTitle}>
+                            {share.shareTitle}
+                          </h1>
+                          <p className={styles.shareRegDate}>{share.regDate}</p>
                         </div>
-                      ) || "작성한 글이 없습니다."}
-                    </NavLink>
-                  )
-              )}
-            </div>
+                        <p className={styles.shareContent}>{share.content}</p>
+                      </div>
+                    </div>
+                  ) || "작성한 글이 없습니다."}
+                </NavLink>
+              </div>
+            )
+          ) : (
+            <></>
           )}
         </div>
       </div>
@@ -171,12 +192,14 @@ function Frames({ certs, asks, shares, user, attrCerts }) {
         <div className={styles.frameContent}>
           <div className={styles.attactive}>
             {attrCerts.map((attrCert) => (
-              <div key={attrCert.id} className={styles.attractiveCert}>
-                <a href={`/cert/${attrCert.certId}`}>{attrCert.certName}</a>
+              <div key={attrCert.favCertIdx} className={styles.attractiveCert}>
+                <a href={`/cert/${attrCert.certIdx}`}>{attrCert.certName}</a>
                 <IconButton
                   aria-label="delete"
                   className="deleteBtn"
-                  onClick={deleteHandler}
+                  onClick={() =>
+                    deleteHandler(attrCert.certIdx, attrCert.userId)
+                  }
                 >
                   <Close fontSize="small" className={styles.deleteBtn} />
                 </IconButton>

@@ -16,7 +16,9 @@ const AreaSelect = ({ selectedItem, getSelectedItem }) => {
     }).then((response) => {
       // 제주 코드가 49, 50 두가지로 들어와서 필요없는 49 리스트는
       // 제외하고 지역들을 리스트에 추가
-      response.data.HRDNet.srchList.scn_list.forEach((element) => {
+      console.log(response.data);
+      let responsedList = response.data.HRDNet.srchList.scn_list;
+      responsedList.forEach((element) => {
         if (element.rsltCode !== 49) {
           // console.log(element.rsltCode);
           setUpperList((prevList) => [...prevList, element]);
@@ -31,16 +33,18 @@ const AreaSelect = ({ selectedItem, getSelectedItem }) => {
       method: "get",
       params: { code: "01" },
     }).then((response) => {
-      setLowerList(response.data.HRDNet.srchList.scn_list);
+      let responsedList = response.data.HRDNet.srchList.scn_list;
+      responsedList = responsedList.reverse();
+      setLowerList(responsedList);
     });
   };
 
   useEffect(() => {
-    reqUpperList();
+    if (upperList !== undefined) reqUpperList();
   }, []);
 
   useEffect(() => {
-    if (upperList.length > 0) reqLowerList();
+    if (upperList !== undefined && lowerList !== undefined) reqLowerList();
   }, [upperList, selState]);
 
   return (

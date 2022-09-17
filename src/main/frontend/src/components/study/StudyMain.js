@@ -26,7 +26,7 @@ const StudyMain = ({ studyList }) => {
               startAdornment: <SearchIcon color="inherit" />,
             }}
             size="small"
-            style={{ width: "300px" }}
+            style={{ width: "280px" }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {

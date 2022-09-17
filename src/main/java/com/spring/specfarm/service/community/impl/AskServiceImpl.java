@@ -126,6 +126,4 @@ public class AskServiceImpl implements AskService {
 		askRepository.deleteById(askIdx);
 		askReplyRepository.deleteByAskIdx(askIdx);
 	}
-
-
 }

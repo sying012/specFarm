@@ -56,13 +56,20 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Page<Notice> getNoticeList(Pageable pageable) {	
-		return noticeRepository.findAll(pageable);
+	public Page<Notice> getNoticeList(String searchKeyword, Pageable pageable) {	
+		return noticeRepository.findByNoticeTitleContaining(searchKeyword,pageable);
 	}
 
 	@Override
 	public Notice getNotice(int noticeId) {
 		return noticeRepository.findById(noticeId).get();
+	}
+
+	@Override
+	public List<Notice> getPrevNext(int i) {
+		System.out.println("kfhdfh");
+		return null;
+//		return noticeRepository.getPrevNext(i);
 	}
 
 }

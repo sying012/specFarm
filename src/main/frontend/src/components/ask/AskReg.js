@@ -40,7 +40,7 @@ const AskReg = ({ certNames, insertAsk }) => {
   const handleSubmit = (e) => {
     let ask = new FormData(e.target);
     console.log(ask.get("askTitle"));
-    ask.set("askCert", askCert);
+
     insertAsk(ask);
 
     e.preventDefault();

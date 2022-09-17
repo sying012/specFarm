@@ -21,8 +21,10 @@ public interface NoticeService {
 
 	int insertNotice(Notice notice);
 
-	Page<Notice> getNoticeList(Pageable pageable);
+	Page<Notice> getNoticeList(String searchKeyword, Pageable pageable);
 
 	Notice getNotice(int noticeId);
+
+	List<Notice> getPrevNext(int i);
 
 }

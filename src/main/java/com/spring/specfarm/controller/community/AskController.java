@@ -60,6 +60,7 @@ public class AskController {
 			System.out.println(searchType);
 			System.out.println(searchKeyword);
 			
+			
 			Page<Ask> askList = askService.getAskList(searchType, searchKeyword, pageable);
 			
 			for(Ask ask: askList) {	

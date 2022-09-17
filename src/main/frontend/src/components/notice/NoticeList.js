@@ -4,12 +4,15 @@ import { Stack, Pagination, Button, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { API_BASE_URL } from "../../app-config";
 import axios from "axios";
+import { useCallback } from "react";
 
 const NoticeList = () => {
   const [noticeList, setNoticeList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
-  useEffect(() => {
+
+  const getNoticeList = useCallback(() => {
     axios
       .get(API_BASE_URL + "/cs", {
         headers: {
@@ -17,6 +20,7 @@ const NoticeList = () => {
         },
         params: {
           page: page - 1,
+          searchKeyword: searchKeyword,
         },
       })
       .then((response) => {
@@ -24,6 +28,10 @@ const NoticeList = () => {
         setCount(response.data.noticeList.totalPages);
         window.scrollTo(0, 0);
       });
+  }, [page, searchKeyword]);
+
+  useEffect(() => {
+    getNoticeList();
   }, [page]);
   return (
     <>
@@ -35,11 +43,21 @@ const NoticeList = () => {
         >
           글쓰기
         </Button>
-        <form id="keywordSearchBar">
+        <form
+          id="keywordSearchBar"
+          onSubmit={(e) => {
+            e.preventDefault();
+            getNoticeList();
+          }}
+        >
           <TextField
             name="searchKeyword"
             id="outlined-search"
             type="search"
+            value={searchKeyword}
+            onChange={(e) => {
+              setSearchKeyword(e.target.value);
+            }}
             InputProps={{
               startAdornment: <SearchIcon color="action" />,
             }}

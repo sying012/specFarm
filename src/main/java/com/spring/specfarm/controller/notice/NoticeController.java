@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.dto.ResponseDTO;
+import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.entity.Lost;
 import com.spring.specfarm.entity.Notice;
@@ -31,12 +31,18 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	//공지사항시작
+	//공지사항
 	//NoticeList 반환
 	@GetMapping("")
-	public Map<String, Object> getNoticeList(@PageableDefault(page = 0, size = 8, sort="noticeIdx" ,direction=Direction.DESC) Pageable pageable){
+	public Map<String, Object> getNoticeList(@PageableDefault(page = 0, size = 8, sort="noticeIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchKeyword){
 		try {
-			Page<Notice> noticeList = noticeService.getNoticeList(pageable);
+			Page<Notice> noticeList = noticeService.getNoticeList(searchKeyword,pageable);
+			//
+			//
+			List<Notice> sss = noticeService.getPrevNext(8);
+			System.out.println(sss);
+			//
+			//
 			
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("noticeList", noticeList);

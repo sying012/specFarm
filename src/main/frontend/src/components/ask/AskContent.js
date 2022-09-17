@@ -76,6 +76,7 @@ const AskContent = ({ certNames }) => {
 
     setSearchKeyword(sessionStorage.getItem("searchKeyword"));
   }, []);
+
   const submitSearch = (e) => {
     setPage(1);
     e.preventDefault();

@@ -2,6 +2,7 @@ import "../styles/layouts/Header.css";
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { boxSizing, display } from "@mui/system";
+import { logout } from "../service/ApiService";
 
 const Header = () => {
   const [commHover, setcommHover] = useState(0);
@@ -9,6 +10,8 @@ const Header = () => {
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
   const [skillsHover, setSkillsHover] = useState(0);
+
+  const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
 
   return (
     <header className="header">
@@ -180,12 +183,28 @@ const Header = () => {
           ></div>
         </nav>
         <div className="tailwrap">
-          <div className="loginbtn">
-            <Link to="/login">로그인</Link>
-          </div>
-          <div className="joinbtn">
-            <Link to="/join">회원가입</Link>
-          </div>
+        <div className="loginbtn">
+                {!isAuthenticated ? (
+                  <Link to="/login" id="loginLink">
+                    로그인
+                  </Link>
+                ) : (
+                  <Link to="/" id="loginLink" onClick={logout}>
+                    로그아웃
+                  </Link>
+                )}
+              </div>
+              <div className="joinbtn">
+                {!isAuthenticated ? (
+                  <Link to="/join" id="joinLink">
+                    회원가입
+                  </Link>
+                ) : (
+                  <Link to="/mypage" id="joinLink">
+                    마이페이지
+                  </Link>
+                )}
+              </div>
         </div>
       </div>
     </header>

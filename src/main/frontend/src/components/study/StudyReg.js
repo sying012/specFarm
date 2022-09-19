@@ -162,7 +162,7 @@ const StudyReg = () => {
             type="file"
             className={styles.uploadImg}
             id="uploadImg"
-            // name="studyImgName"
+            name="studyImgName"
             onChange={(e) => {
               readImage(e.target.files[0]);
             }}

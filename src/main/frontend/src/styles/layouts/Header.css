@@ -68,26 +68,52 @@
 }
 
 .tailwrap {
-  width: 135px;
-  height: 15px;
+  width: 300px;
+  height: 100%;
   margin-left: auto;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.tailwrap > div {
-  width: 60px;
+.joinbtn {
+  display: flex;
+  width: fit-content;
+  height: 100%;
+  align-items: center;
+}
+
+#mypageLink {
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 
 .tailwrap > div > a {
-  width: 20px;
   color: black;
-  font-size: small;
+
   text-decoration: none;
+  display: flex;
+}
+
+.tailwrap > div:first-child {
+  font-size: 17px;
+}
+
+.tailwrap > div:nth-child(2) {
+  font-size: 12px;
 }
 
 .tailwrap > div > a:hover {
   font-weight: bold;
+}
+
+.loginedProfileImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin-right: 10px;
+  border: solid black 1px;
 }
 
 .communityMenu {

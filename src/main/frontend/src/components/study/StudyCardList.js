@@ -7,7 +7,7 @@ const StudyCardList = ({ studyList }) => {
     <>
       <div className="studyList">
         {studyList.map((study) => (
-          <StudyCard key={study.id} studyItem={study} />
+          <StudyCard key={study.studyIdx} studyItem={study} />
         ))}
       </div>
     </>

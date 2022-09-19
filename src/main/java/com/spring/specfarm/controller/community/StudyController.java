@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +56,26 @@ public class StudyController {
 
 	}
 
+	@GetMapping("")
+	public Map<String, Object> getStudy(
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable) {
+		try {
+			
+			System.out.println("!!!!!!!!");
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			Page<Study> studyList = studyService.getStudyList(pageable);
+
+			resultMap.put("studyList", studyList);
+
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
 	@PostMapping("/register")
 	public Map<String, Object> insertStudy(@ModelAttribute Study study, @AuthenticationPrincipal String userId,
 			HttpSession session, @RequestParam("imgFile") MultipartFile multipartFile) throws IOException {
@@ -62,7 +86,6 @@ public class StudyController {
 			User user = new User();
 			user.setUserId(userId);
 			study.setUser(user);
-			
 
 			String rootPath = session.getServletContext().getRealPath("/");
 
@@ -78,7 +101,7 @@ public class StudyController {
 			// 실제 서버에 저장되는 파일명
 			String uuid = UUID.randomUUID().toString();
 			study.setStudyImgName(uuid + multipartFile.getOriginalFilename());
-			
+
 			int studyIdx = studyService.insertStudy(study);
 			// 파일 업로드 처리
 			File file = new File(rootPath + attachPath + uuid + multipartFile.getOriginalFilename());

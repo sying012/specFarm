@@ -1,7 +1,5 @@
 package com.spring.specfarm.service.community.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +37,17 @@ public class StudyServiceImpl implements StudyService {
 
 	@Override
 	public Page<Study> getStudyList(Pageable pageable) {
+		return studyRepository.findAll(pageable);
+	}
+
+	@Override
+	public Study getStudy(int studyIdx) {
+		return studyRepository.findById(studyIdx);
+	}
+
+	@Override
+	public Page<Study> deleteStudy(int studyIdx, Pageable pageable) {
+		studyRepository.deleteById(studyIdx);
 		return studyRepository.findAll(pageable);
 	}
 }

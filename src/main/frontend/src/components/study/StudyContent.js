@@ -1,18 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styles from "../../styles/study/StudyContent.module.css";
 import { API_BASE_URL } from "../../app-config";
 
-const StudyContent = ({ studyList }) => {
+const StudyContent = ({ studyList, setStudyList }) => {
   const { id } = useParams();
   const [toggleList, setToggleList] = useState(0);
   const [requestState, setRequestState] = useState(0);
   const [loginUserId, setLoginUserId] = useState("");
-  const study = studyList[id - 1];
+  const study = studyList[studyList.length - id];
+  // const [studyss, setStudyss] = useState(null);
+  // console.log(studyList);
 
-  console.log(studyList);
-  console.log(study);
   const {
     studyTitle,
     user,
@@ -34,13 +34,52 @@ const StudyContent = ({ studyList }) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        setLoginUserId(response.data.userId);
+        // console.log(response.data);
+        setLoginUserId(response.data.user.userId);
       })
       .catch((e) => {
         console.log(e.data.error);
       });
   }, []);
+
+  const navigate = useNavigate();
+
+  const deleteStudy = (studyIdx) => {
+    axios({
+      method: "delete",
+      url: API_BASE_URL + "/community/study/delete",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      params: { id: studyIdx },
+    })
+      .then((response) => {
+        console.log(response);
+        setStudyList(response.data.studyList.content);
+        navigate(`..`);
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(API_BASE_URL + "/community/study/getStudy", {
+  //       headers: {
+  //         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+  //       },
+  //       params: { id: id },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data.study);
+  //       setStudyss(response.data.study);
+  //       console.log(studyss);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e.data.error);
+  //     });
+  // }, []);
 
   return (
     <div className={styles.studyContent}>
@@ -131,6 +170,9 @@ const StudyContent = ({ studyList }) => {
                 color: "white",
                 background: studyYn === "Y" ? "#1d5902" : "#8cbf75",
               }}
+              onClick={() => {
+                // user.userId === loginUserId ?  :
+              }}
             >
               {studyYn === "Y" ? "모집" : "완료"}
             </div>
@@ -159,10 +201,26 @@ const StudyContent = ({ studyList }) => {
           </div>
 
           <div className={styles.btnWrapper}>
-            {/* <button type="button">신청하기</button> */}
-            {/* 여기에 수정이랑 삭제 만들기 */}
             {user.userId === loginUserId ? (
-              <></>
+              <>
+                <button
+                  type="button"
+                  onClick={() => {}}
+                  className={styles.reqBtnStyle}
+                  style={{ marginRight: "10px" }}
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    deleteStudy(studyIdx);
+                  }}
+                  className={styles.cancelBtnStyle}
+                >
+                  삭제
+                </button>
+              </>
             ) : (
               <button
                 type="button"

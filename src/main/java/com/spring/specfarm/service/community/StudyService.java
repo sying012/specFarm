@@ -16,4 +16,8 @@ public interface StudyService {
 
 	Page<Study> getStudyList(Pageable pageable);
 
+	Study getStudy(int studyIdx);
+
+	Page<Study> deleteStudy(int studyIdx, Pageable pageable);
+
 }

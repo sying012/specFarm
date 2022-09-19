@@ -24,7 +24,7 @@ const Study = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setStudyList(response.data.studyList.content);
         // setCount(response.data.askList.totalPages);
         // window.scrollTo(0, 0);
@@ -51,7 +51,9 @@ const Study = () => {
         <Route path="/" element={<StudyMain studyList={studyList} />}></Route>
         <Route
           path="/:id"
-          element={<StudyContent studyList={studyList} />}
+          element={
+            <StudyContent studyList={studyList} setStudyList={setStudyList} />
+          }
         ></Route>
 
         <Route

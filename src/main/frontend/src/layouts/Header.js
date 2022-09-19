@@ -60,7 +60,7 @@ const Header = () => {
               })}
               to="/skills"
             >
-              Skills(미정)
+              성장창고
             </NavLink>
             {skillsHover ? (
               <div
@@ -71,10 +71,10 @@ const Header = () => {
               >
                 <div className="skillsCat">
                   <Link className="skillsItem" to="/skills/jobcafe">
-                    일자리 CaFe
+                    일자리카페
                   </Link>
                   <Link className="skillsItem" to="/skills/findcourse">
-                    직Up훈련탐색
+                    직업훈련탐색
                   </Link>
                 </div>
               </div>
@@ -183,28 +183,28 @@ const Header = () => {
           ></div>
         </nav>
         <div className="tailwrap">
-        <div className="loginbtn">
-                {!isAuthenticated ? (
-                  <Link to="/login" id="loginLink">
-                    로그인
-                  </Link>
-                ) : (
-                  <Link to="/" id="loginLink" onClick={logout}>
-                    로그아웃
-                  </Link>
-                )}
-              </div>
-              <div className="joinbtn">
-                {!isAuthenticated ? (
-                  <Link to="/join" id="joinLink">
-                    회원가입
-                  </Link>
-                ) : (
-                  <Link to="/mypage" id="joinLink">
-                    마이페이지
-                  </Link>
-                )}
-              </div>
+          <div className="loginbtn">
+            {!isAuthenticated ? (
+              <Link to="/login" id="loginLink">
+                로그인
+              </Link>
+            ) : (
+              <Link to="/" id="loginLink" onClick={logout}>
+                로그아웃
+              </Link>
+            )}
+          </div>
+          <div className="joinbtn">
+            {!isAuthenticated ? (
+              <Link to="/join" id="joinLink">
+                회원가입
+              </Link>
+            ) : (
+              <Link to="/mypage" id="joinLink">
+                마이페이지
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>

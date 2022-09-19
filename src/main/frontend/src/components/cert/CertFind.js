@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 import Grid from "@mui/system/Unstable_Grid";
 import FormControl from "@mui/material/FormControl";
@@ -18,6 +18,8 @@ import Favorite from "@mui/icons-material/Favorite";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import "../../styles/cert/info.css";
+import { API_BASE_URL } from "../../app-config";
+import axios from "axios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,6 +70,24 @@ const CertFind = () => {
   };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/testList",
+      method: "get",
+    }).then((response) => {
+      console.log(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/testContent",
+      method: "get",
+    }).then((response) => {
+      console.log(response.data);
+    });
+  }, []);
 
   return (
     <div>
@@ -229,12 +249,12 @@ const CertFind = () => {
                 onChange={handleChange}
                 textColor="inherit"
                 TabIndicatorProps={{
-                  style: { background: "rgb(159, 182, 72)" },
+                  style: { background: "rgb(140, 191, 117)" },
                 }}
                 aria-label="cert plan"
                 variant="fullWidth"
                 sx={{
-                  "& button": { background: "rgba(159, 182, 72, 0.5)" },
+                  "& button": { background: "rgba(140, 191, 117, 0.5)" },
                 }}
               >
                 <Tab label="시험 일정" {...a11yProps(0)} />

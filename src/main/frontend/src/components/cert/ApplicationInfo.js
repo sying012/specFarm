@@ -17,7 +17,9 @@ const ApplicationInfo = () => {
             id="panel1a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>접수확인 및 수험표 출력기간</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              접수확인 및 수험표 출력기간
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}
@@ -40,7 +42,7 @@ const ApplicationInfo = () => {
             id="panel2a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>
+            <Typography style={{ fontSize: "18px" }}>
               접수상태(접수완료, 수험표출력, 미결제)를 클릭하면 각 접수상태에
               따라 다음 단계화면으로 이동합니다.
             </Typography>
@@ -66,7 +68,7 @@ const ApplicationInfo = () => {
             id="panel3a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>
+            <Typography style={{ fontSize: "18px" }}>
               접수 수수료 결제마감 시한(국가기술자격만 해당) : 원서접수 마감일
               18:00시까지 단, 원서작성 완료후 접수수수료 미결제상태인 다음의
               경우는 결제가능.

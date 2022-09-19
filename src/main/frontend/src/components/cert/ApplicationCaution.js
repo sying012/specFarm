@@ -17,7 +17,9 @@ const ApplicationCaution = () => {
             id="panel1a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>원서접수시 유의사항</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              원서접수시 유의사항
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}
@@ -40,7 +42,9 @@ const ApplicationCaution = () => {
             id="panel2a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>접수가능한 사진 범위 등 변경사항</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              접수가능한 사진 범위 등 변경사항
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}
@@ -68,7 +72,9 @@ const ApplicationCaution = () => {
             id="panel3a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>국가자격검정 전자통신기기 관리운영 기준</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              국가자격검정 전자통신기기 관리운영 기준
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}

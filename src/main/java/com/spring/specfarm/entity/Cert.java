@@ -1,5 +1,6 @@
 package com.spring.specfarm.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,13 +11,38 @@ import lombok.Data;
 @Entity
 @Data
 public class Cert {
+	
 	@Id
 	private int certIdx;
 	
-	private String certName;
+	@Column(name="obligfldcd")
+	private String obligfldcd;
 	
-	private String certLCat;
+	@Column(name="seriescd")
+	private String seriescd;
 	
-	private String certMCat;
+	@Column(name="jmcd")
+	private String jmcd;
+	
+	@Column(name="mdobligfldnm")
+	private String mdobligfldnm;
+	
+	@Column(name="seriesnm")
+	private String seriesnm;
+	
+	@Column(name="mdobligfldcd")
+	private String mdobligfldcd;
+	
+	@Column(name="obligfldnm")
+	private String obligfldnm;
+	
+	@Column(name="qualgbcd")
+	private String qualgbcd;
+	
+	@Column(name="CertName")
+	private String CertName;
+	
+	@Column(name="qualgbnm")
+	private String qualgbnm;
 	
 }

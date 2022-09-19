@@ -17,7 +17,9 @@ const BasicsInfo = () => {
             id="panel1a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>필기시험 시험자 유의사항</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              필기시험 시험자 유의사항
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}
@@ -63,7 +65,9 @@ const BasicsInfo = () => {
             id="panel2a-header"
             style={{ background: "#eee", borderRadius: "15px" }}
           >
-            <Typography>실기시험 시험자 유의사항</Typography>
+            <Typography style={{ fontSize: "18px" }}>
+              실기시험 시험자 유의사항
+            </Typography>
           </AccordionSummary>
           <AccordionDetails
             style={{ background: "#eee", borderRadius: "15px" }}

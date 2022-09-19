@@ -74,7 +74,7 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
         </div>
         <div className={styles.frameContent}>
           <div className={styles.userInfo}>
-            <h5>회원정보</h5>
+            <h5>농부 정보</h5>
             <div className={styles.userContent}>
               <Person color="action" inheritViewBox />
               <p className={styles.userDetail}>{user.userName}</p>
@@ -87,16 +87,20 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
             </div>
           </div>
           <div className={styles.earned}>
-            <h5>취득한 자격증</h5>
+            <h5>수확한 자격증</h5>
 
-            {certs.map((cert) => (
-              <div className={styles.earnedContent} key={cert.getCertIdx}>
-                <p className={styles.earnedCertName}>{cert.certName}</p>
-                <p className={styles.earnedCertDate}>
-                  취득일: {cert.getCertDate}
-                </p>
+            {Object.keys(certs).length !== 0 ? (
+              certs.map((cert) => (
+                <div className={styles.earnedContent} key={cert.getCertIdx}>
+                  <p>{cert.certName}</p>
+                  <p>{cert.getCertDate}</p>
+                </div>
+              ))
+            ) : (
+              <div className={styles.nothingEarnedCerts}>
+                수확한 자격증을 등록해주세요.
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
@@ -142,23 +146,28 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
             </div>
           </div>
 
-          {Object.keys(ask).length !== 0 ? (
-            isVisible && (
-              <div className={styles.askList}>
-                <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
-                  {<AskListItem ask={ask} /> || "작성한 글이 없습니다."}
-                </NavLink>
-              </div>
-            )
-          ) : (
-            <></>
-          )}
+          {Object.keys(ask).length !== 0
+            ? isVisible && (
+                <div className={styles.askList}>
+                  <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                    <AskListItem ask={ask} />
+                  </NavLink>
+                </div>
+              )
+            : isVisible && (
+                <div className={styles.nothingWritten}>
+                  작성한 물어방글이 없습니다.
+                </div>
+              )}
 
-          {Object.keys(share).length !== 0 ? (
-            !isVisible && (
-              <div>
-                <NavLink key={share.shareIdx} to={`/community/share/${share.shareIdx}`}>
-                  {(
+          {Object.keys(share).length !== 0
+            ? !isVisible && (
+                <div>
+                  <NavLink
+                    key={share.shareIdx}
+                    to={`/community/share/${share.shareIdx}`}
+                  >
+                    (
                     <div className={styles.shareList}>
                       <img
                         src={share.itemImg}
@@ -175,13 +184,15 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
                         <p className={styles.shareContent}>{share.content}</p>
                       </div>
                     </div>
-                  ) || "작성한 글이 없습니다."}
-                </NavLink>
-              </div>
-            )
-          ) : (
-            <></>
-          )}
+                    )
+                  </NavLink>
+                </div>
+              )
+            : !isVisible && (
+                <div className={styles.nothingWritten}>
+                  작성한 나눔글이 없습니다.
+                </div>
+              )}
         </div>
       </div>
 
@@ -191,20 +202,29 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
         </div>
         <div className={styles.frameContent}>
           <div className={styles.attactive}>
-            {attrCerts.map((attrCert) => (
-              <div key={attrCert.favCertIdx} className={styles.attractiveCert}>
-                <a href={`/cert/${attrCert.certIdx}`}>{attrCert.certName}</a>
-                <IconButton
-                  aria-label="delete"
-                  className="deleteBtn"
-                  onClick={() =>
-                    deleteHandler(attrCert.certIdx, attrCert.userId)
-                  }
+            {Object.keys(attrCerts).length !== 0 ? (
+              attrCerts.map((attrCert) => (
+                <div
+                  key={attrCert.favCertIdx}
+                  className={styles.attractiveCert}
                 >
-                  <Close fontSize="small" className={styles.deleteBtn} />
-                </IconButton>
+                  <a href={`/cert/${attrCert.certIdx}`}>{attrCert.certName}</a>
+                  <IconButton
+                    aria-label="delete"
+                    className="deleteBtn"
+                    onClick={() =>
+                      deleteHandler(attrCert.certIdx, attrCert.userId)
+                    }
+                  >
+                    <Close fontSize="small" className={styles.deleteBtn} />
+                  </IconButton>
+                </div>
+              ))
+            ) : (
+              <div className={styles.nothingattrCerts}>
+                관심자격증을 등록해주세요.
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

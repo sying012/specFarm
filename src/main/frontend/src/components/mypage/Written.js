@@ -46,43 +46,55 @@ function Written({ asks, shares }) {
           </div>
         </div>
 
-        {isVisible && (
-          <div className={styles.askList}>
-            {asks.map((ask) => (
-              <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
-                <AskListItem ask={ask} />
-              </NavLink>
-            ))}
-          </div>
-        )}
+        {Object.keys(asks).length !== 0
+          ? isVisible && (
+              <div className={styles.askList}>
+                {asks.map((ask) => (
+                  <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                    <AskListItem ask={ask} />
+                  </NavLink>
+                ))}
+              </div>
+            )
+          : isVisible && (
+              <div className={styles.nothingWritten}>
+                작성한 물어방글이 없습니다.
+              </div>
+            )}
 
-        {!isVisible && (
-          <div>
-            {shares.map((share) => (
-              <NavLink
-                key={share.shareIdx}
-                to={`/community/share/${share.shareIdx}`}
-              >
-                <div className={styles.shareList}>
-                  <img
-                    src={share.itemImg}
-                    alt="나눔이미지 파일"
-                    className={styles.shareFile}
-                  />
-                  <div className={styles.shareContainer}>
-                    <div className={styles.shareListHeader}>
-                      <h1 className={styles.writtenTitle}>
-                        {share.shareTitle}
-                      </h1>
-                      <p className={styles.shareRegDate}>{share.regDate}</p>
+        {Object.keys(shares).length !== 0
+          ? !isVisible && (
+              <div>
+                {shares.map((share) => (
+                  <NavLink
+                    key={share.shareIdx}
+                    to={`/community/share/${share.shareIdx}`}
+                  >
+                    <div className={styles.shareList}>
+                      <img
+                        src={share.itemImg}
+                        alt="나눔이미지 파일"
+                        className={styles.shareFile}
+                      />
+                      <div className={styles.shareContainer}>
+                        <div className={styles.shareListHeader}>
+                          <h1 className={styles.writtenTitle}>
+                            {share.shareTitle}
+                          </h1>
+                          <p className={styles.shareRegDate}>{share.regDate}</p>
+                        </div>
+                        <p className={styles.shareContent}>{share.content}</p>
+                      </div>
                     </div>
-                    <p className={styles.shareContent}>{share.content}</p>
-                  </div>
-                </div>
-              </NavLink>
-            ))}
-          </div>
-        )}
+                  </NavLink>
+                ))}
+              </div>
+            )
+          : !isVisible && (
+              <div className={styles.nothingWritten}>
+                작성한 나눔글이 없습니다.
+              </div>
+            )}
       </div>
     </div>
   );

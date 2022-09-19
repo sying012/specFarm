@@ -9,7 +9,7 @@ import com.spring.specfarm.entity.GetCert;
 
 @Transactional
 public interface GetCertRepository extends JpaRepository<GetCert, Integer> {
-	List<GetCert> findAllByUserId(String userId);
+	List<GetCert> findAllByUserIdOrderByGetCertDate(String userId);
 	
 	void deleteByUserId(String userId);
 }

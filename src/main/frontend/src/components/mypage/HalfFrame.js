@@ -9,7 +9,7 @@ import Written from "./Written";
 function HalfFrame({ text, certs, asks, shares, user }) {
   let content;
 
-  if (text === "회원정보 수정") {
+  if (text === "농부정보 수정") {
     content = <Userinfo certs={certs} user={user} />;
   } else if (text === "내가 쓴 글") {
     content = <Written asks={asks} shares={shares} user={user} />;

@@ -4,14 +4,17 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import styles from "../../styles/findcourse/CourseCard.module.css";
 import { NavLink } from "react-router-dom";
+
+import styles from "../../styles/findcourse/CourseCard.module.css";
 
 const CourseCard = ({ index, card }) => {
   let cost = card.courseMan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
+  console.log(card);
   return (
-    <NavLink to={"../" + index}>
+    <NavLink
+      to={"../srchTrprId=" + card.trprId + "&srchTrprDegr=" + card.trprDegr + "&srchTorgId=" + card.trainstCstId}
+    >
       <Card
         sx={{
           width: 260,

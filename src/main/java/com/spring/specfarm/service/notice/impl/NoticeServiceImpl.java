@@ -64,12 +64,15 @@ public class NoticeServiceImpl implements NoticeService {
 	public Notice getNotice(int noticeId) {
 		return noticeRepository.findById(noticeId).get();
 	}
+	
+	@Override
+	public Notice getPrev(int noticeId) {
+		return noticeRepository.findTopByNoticeIdxGreaterThanOrderByNoticeIdxAsc(noticeId);
+	}
 
 	@Override
-	public List<Notice> getPrevNext(int i) {
-		System.out.println("kfhdfh");
-		return null;
-//		return noticeRepository.getPrevNext(i);
+	public Notice getNext(int noticeId) {
+		return noticeRepository.findTopByNoticeIdxLessThanOrderByNoticeIdxDesc(noticeId);
 	}
 
 }

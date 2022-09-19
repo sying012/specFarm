@@ -2,7 +2,6 @@ import React from "react";
 import defaultProfile from "../../images/defaultProfile.png";
 
 const AskListItem = ({ ask }) => {
-  console.log(ask);
   return (
     <div id="askListItem">
       <div id="profile">
@@ -18,7 +17,7 @@ const AskListItem = ({ ask }) => {
             [{ask.askCert}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
           </span>
         </div>
-        <div id="writer"> {ask.user.userId} </div>
+        <div id="writer"> {ask.user.userNick} </div>
       </div>
       <div id="contentInfo">
         <div id="regdate">{ask.askRegDate}</div>

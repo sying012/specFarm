@@ -54,7 +54,7 @@ public class AskController {
 	
 	//Ask 리스트 반환
 	@GetMapping("")
-	public Map<String, Object> getAsk(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchType, @RequestParam String searchKeyword ) {
+	public Map<String, Object> getAsk(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchType, @RequestParam(required = false) String searchKeyword ) {
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			System.out.println(searchType);
@@ -67,7 +67,6 @@ public class AskController {
 				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
 			}
 			
-			//findByBoardTitleContainingOrBoardWriterContainingOrBoardContentContaining
 			
 			resultMap.put("askList", askList);
 			

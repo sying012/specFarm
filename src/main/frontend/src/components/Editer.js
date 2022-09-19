@@ -2,12 +2,16 @@ import React, { useEffect, useRef } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
+import { API_BASE_URL } from "../app-config";
+import Loading from "../images/loading.gif";
+import { useLocation } from "react-router";
 
 Quill.register("modules/imageResize", ImageResize);
 
 const Editer = ({ placeholder, value, ...rest }) => {
   const quillRef = useRef(null);
-
+  const testUrl = useLocation();
   const toolbarOptions = [
     ["link", "image", "video"],
     [{ header: [1, 2, 3, false] }],
@@ -21,52 +25,70 @@ const Editer = ({ placeholder, value, ...rest }) => {
   const modules = {
     toolbar: {
       container: toolbarOptions,
+      // handlers: {
+      //   image: handleImage,
+      // },
     },
   };
 
-  /*useEffect(() => {
+  useEffect(() => {
     const handleImage = () => {
-      const input = document.createElement("input"); 
+      const input = document.createElement("input");
+      const formData = new FormData();
       input.setAttribute("type", "file");
       input.setAttribute("accept", "image/*");
       input.click();
       input.onchange = async () => {
-        const file = input.files[0];
+        const file = input.files;
+        if (file !== null) {
+          formData.append("image", file[0]);
+        }
 
         // 현재 커서 위치 저장
-        const range = getEditor().getSelection(true);
+        const range = quillRef.current?.getEditor().getSelection();
+
+        //컴포넌트 언마운트시 실행될 소스코드
+        // useEffect(() => {
+        //   return () => {
+
+        //   }
+        // }, []);
 
         // 서버에 올려질때까지 표시할 로딩 placeholder 삽입
-        getEditor().insertEmbed(range.index, "image", `/images/loading.gif`);
+        quillRef.current
+          ?.getEditor()
+          .insertEmbed(range.index, "image", `/images/loading.gif`);
 
-        try {
-          // 필자는 파이어 스토어에 저장하기 때문에 이런식으로 유틸함수를 따로 만들어줬다
-          // 이런식으로 서버에 업로드 한뒤 이미지 태그에 삽입할 url을 반환받도록 구현하면 된다
-          const filePath = `contents/temp/${Date.now()}`;
-          const url = await uploadImage(file, filePath);
+        await axios
+          .post(API_BASE_URL + "/cs/upload/images", formData)
+          .then((response) => {
+            console.log(response.data);
+            const url =
+              "/upload/notice/" + response.data.noticeFile.noticeFileName;
+            console.log(url);
 
-          // 정상적으로 업로드 됐다면 로딩 placeholder 삭제
-          getEditor().deleteText(range.index, 1);
-          // 받아온 url을 이미지 태그에 삽입
-          getEditor().insertEmbed(range.index, "image", url);
+            // 정상적으로 업로드 됐다면 로딩 placeholder 삭제
+            quillRef.current?.getEditor().deleteText(range.index, 1);
+            // 받아온 url을 이미지 태그에 삽입
+            quillRef.current
+              ?.getEditor()
+              .insertEmbed(range.index, "image", url);
 
-          // 사용자 편의를 위해 커서 이미지 오른쪽으로 이동
-          getEditor().setSelection(range.index + 1);
-        } catch (e) {
-          getEditor().deleteText(range.index, 1);
-        } 
+            // 사용자 편의를 위해 커서 이미지 오른쪽으로 이동
+            quillRef.current?.getEditor().setSelection(range.index + 1);
+          });
+        quillRef.current
+          ?.getEditor()
+          .insertEmbed(range.index, "image", testUrl);
       };
     };
 
-    
-
-    const { getEditor } = quillRef.current;
     if (quillRef.current) {
       const toolbar = quillRef.current.getEditor().getModule("toolbar");
       toolbar.addHandler("image", handleImage);
     }
-  }, []);*/
-  //백엔드 연동 후 구현
+  }, []);
+
   return (
     <ReactQuill
       {...rest}

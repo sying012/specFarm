@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.ResponseDTO;
-import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.entity.Lost;
 import com.spring.specfarm.entity.Notice;
+import com.spring.specfarm.entity.NoticeFile;
 import com.spring.specfarm.service.notice.NoticeService;
 
 @RestController
@@ -34,21 +38,14 @@ public class NoticeController {
 	//공지사항
 	//NoticeList 반환
 	@GetMapping("")
-	public Map<String, Object> getNoticeList(@PageableDefault(page = 0, size = 8, sort="noticeIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchKeyword){
+	public Map<String, Object> getNoticeList(@PageableDefault(page = 0, size = 15, sort="noticeIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchKeyword){
 		try {
 			Page<Notice> noticeList = noticeService.getNoticeList(searchKeyword,pageable);
-			//
-			//
-			List<Notice> sss = noticeService.getPrevNext(8);
-			System.out.println(sss);
-			//
-			//
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("noticeList", noticeList);
-			
+				
 			return response;
-			
 		}catch(Exception e){
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error",e.getMessage());
@@ -80,9 +77,15 @@ public class NoticeController {
 	public Map<String, Object> getNotice(@PathVariable int noticeId){
 		try {
 			Notice notice = noticeService.getNotice(noticeId);
-			
+			System.out.println("1");
+			Notice prev = noticeService.getPrev(noticeId);
+			System.out.println(prev);
+			Notice next = noticeService.getNext(noticeId);
+			System.out.println(next);
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("notice", notice);
+			response.put("prev", prev);
+			response.put("next", next);
 			
 			return response;
 			
@@ -92,6 +95,27 @@ public class NoticeController {
 			return errorMap;
 		}
 	}
+	
+	//Notice 이미지 업로드
+		@PostMapping("/upload/images")
+		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
+			try {
+					
+				FileUtils fileUtils = new FileUtils();
+				NoticeFile noticeFile  = new NoticeFile();
+				noticeFile.setNoticeFileName(fileUtils.parseFileInfo(session, image, "notice").get("fileName"));
+				
+				Map<String, Object> response = new HashMap<String, Object>();
+				response.put("noticeFile", noticeFile);
+				
+				return response;
+				
+			}catch(Exception e){
+				Map<String, Object> errorMap = new HashMap<String, Object>();
+				errorMap.put("error",e.getMessage());
+				return errorMap;
+			}
+		}
 	// 분실물
 //	@GetMapping("/getLosts")
 //	public ResponseEntity<?> callApiWithXml() {

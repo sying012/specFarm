@@ -25,6 +25,8 @@ public interface NoticeService {
 
 	Notice getNotice(int noticeId);
 
-	List<Notice> getPrevNext(int i);
+	Notice getNext(int noticeId);
+
+	Notice getPrev(int noticeId);
 
 }

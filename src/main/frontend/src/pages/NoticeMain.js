@@ -50,7 +50,7 @@ const NoticeMain = () => {
       });
   };
   return (
-    <div id="content">
+    <div id="content" className="noticeContents">
       <div className="titleContainer">
         <div className="titlewrap">마을소식</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />

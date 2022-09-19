@@ -4,6 +4,10 @@
   justify-content: flex-end;
 }
 
+.tableDiv {
+  height: 500px;
+}
+
 .table {
   width: 100%;
   height: max-content;
@@ -11,6 +15,7 @@
   border-radius: 10px;
   border-style: hidden;
   box-shadow: 0 0 0 1px rgba(150, 150, 150, 0.3);
+  table-layout: fixed;
 }
 
 .table > thead > tr > th {
@@ -40,17 +45,17 @@
 }
 
 .lostItem {
-  /* overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; */
+  white-space: nowrap;
 }
 
 .lostLoc {
   text-align: center;
   width: 22%;
-  /* overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; */
+  white-space: nowrap;
 }
 
 .lostDate {

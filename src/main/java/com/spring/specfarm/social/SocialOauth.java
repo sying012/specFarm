@@ -9,11 +9,11 @@ public interface SocialOauth {
 
 	default SocialLoginType type() {
 		if (this instanceof GoogleOauth) {
-			return SocialLoginType.google;
+			return SocialLoginType.GOOGLE;
 		} else if (this instanceof NaverOauth) {
-			return SocialLoginType.naver;
+			return SocialLoginType.NAVER;
 		} else if (this instanceof KakaoOauth) {
-			return SocialLoginType.kakao;
+			return SocialLoginType.KAKAO;
 		} else {
 			return null;
 		}

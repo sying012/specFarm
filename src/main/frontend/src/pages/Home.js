@@ -46,24 +46,18 @@ const Home = () => {
       startDate: "2022.08.29",
       endDate: "2022.09.02",
     },
+    {
+      id: 4,
+      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
+      startDate: "2022.08.29",
+      endDate: "2022.09.02",
+    },
   ]);
 
   // test schedule
   const [tests, setTests] = useState([
     {
       id: 1,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-    {
-      id: 2,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-    {
-      id: 3,
       title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
       startDate: "2022.08.29",
       endDate: "2022.09.02",
@@ -191,7 +185,12 @@ const Home = () => {
         >
           {show && <HomeNav goClickPage={goClickPage} show={show} />}
           {!show && <HomeNavAfter />}
-          <main className="main">{pageComponent}</main>
+          <main
+            className="main"
+            style={{ background: "rgb(250, 250, 250)", height: "90vh" }}
+          >
+            {pageComponent}
+          </main>
           <Footer />
         </div>
       </div>

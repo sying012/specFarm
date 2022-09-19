@@ -89,3 +89,8 @@
   font-size: 0.9rem;
   color: gray;
 }
+
+.nothingWritten {
+  padding: 40px 20px;
+  color: #555;
+}

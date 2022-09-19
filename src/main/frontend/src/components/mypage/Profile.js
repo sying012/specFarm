@@ -46,14 +46,19 @@ function Profile({ certs, user }) {
             <p>수확 현황</p>
           </div>
           <div className={styles.badges}>
-            {certs.map((cert) => (
+            {Object.keys(certs).length !== 0
+            ?certs.map((cert) => (
               <img
                 key={cert.getCertIdx}
                 src={badgeArr[cert.getCertIdx]}
                 title={cert.certName}
                 alt={cert.certName}
               />
-            ))}
+            )):(
+              <div className={styles.nothingCerts}>
+                자격증 수확하러 갈까요?!
+              </div>
+            )}
           </div>
         </div>
       </div>

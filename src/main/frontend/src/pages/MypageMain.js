@@ -47,7 +47,7 @@ function MypageMain() {
           <Route
             path="/userinfo"
             element={
-              <HalfFrame text="회원정보 수정" certs={certs} user={user} />
+              <HalfFrame text="농부정보 수정" certs={certs} user={user} />
             }
           />
           <Route

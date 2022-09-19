@@ -17,7 +17,7 @@ const FindCourse = () => {
       </div>
       <Routes>
         <Route path="/" element={<CourseContainer />} />
-        <Route path="/:id" element={<CourseDetail />} />
+        <Route path="/srchTrprId=:srchTrprId&srchTrprDegr=:srchTrprDegr&srchTorgId=:srchTorgId" element={<CourseDetail />} />
       </Routes>
     </div>
   );

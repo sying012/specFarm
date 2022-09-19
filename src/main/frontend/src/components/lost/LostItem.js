@@ -1,14 +1,36 @@
-import React from "react";
-import { useParams } from "react-router";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router";
 import { Link, NavLink } from "react-router-dom";
 import styles from "../../styles/lost/Lost.module.css";
 
-const LostItem = ({ parentLostList, parentBrchs }) => {
-  const { index } = useParams();
-  const lost = parentLostList[index];
-  const prev = parentLostList[index * 1 - 1];
-  const next = parentLostList[index * 1 + 1];
-  const brch = parentBrchs.find((b) => b.brchName === lost.brchName);
+const LostItem = () => {
+  let { rownum } = useParams();
+  const [losts, setLosts] = useState(useLocation().state);
+  const [lost, setLost] = useState({});
+  const [prev, setPrev] = useState({});
+  const [next, setNext] = useState({});
+
+  const [map, setMap] = useState(null);
+
+  const { kakao } = window;
+
+  useEffect(() => {
+    setLost(losts[rownum * 1 - 1]);
+    setPrev(losts[rownum * 1 - 2]);
+    setNext(losts[rownum * 1]);
+  }, [rownum]);
+
+  // useEffect(() => {
+  //   const node = document.getElementById("map");
+  //   const options = {
+  //     center: new kakao.maps.LatLng(33.450701, 126.570667),
+  //     level: 3,
+  //   };
+
+  //   const map = new kakao.maps.Map(node, options);
+  //   console.log("loading kakaomap");
+  // }, []);
 
   return (
     <>
@@ -17,7 +39,10 @@ const LostItem = ({ parentLostList, parentBrchs }) => {
           <strong>
             [{lost.lostCat}] {lost.lostItem}, {lost.lostLoc}
           </strong>
-          <p>{lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}</p>
+          <p>
+            {lost.lostDate &&
+              lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
+          </p>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
@@ -28,7 +53,9 @@ const LostItem = ({ parentLostList, parentBrchs }) => {
               margin: "auto 0",
               marginLeft: "20px",
             }}
-          ></div>
+          >
+            <div id="map"></div>
+          </div>
           <table className={styles.itemtable}>
             <tbody>
               <tr>
@@ -46,20 +73,21 @@ const LostItem = ({ parentLostList, parentBrchs }) => {
               <tr>
                 <th>분실일자</th>
                 <td>
-                  {lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
+                  {lost.lostDate &&
+                    lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
                 </td>
               </tr>
               <tr>
                 <th>지사</th>
-                <td>{brch.brchTrthName}</td>
+                <td>{lost.brchTrthName}</td>
               </tr>
               <tr>
                 <th>지사 전화번호</th>
-                <td>{brch.brchTel}</td>
+                <td>{lost.brchTel}</td>
               </tr>
               <tr>
                 <th>지사 주소</th>
-                <td>{brch.brchAddr}</td>
+                <td>{lost.brchAddr}</td>
               </tr>
             </tbody>
           </table>
@@ -69,7 +97,7 @@ const LostItem = ({ parentLostList, parentBrchs }) => {
             <div>
               <p>이전글</p>
               <NavLink
-                to={`/cs/lost/${index - 1}`}
+                to={`/cs/lost/${parseInt(rownum) - 1}`}
                 className={styles.otherItem}
               >
                 [{prev.lostCat}] {prev.lostItem},&nbsp;
@@ -81,7 +109,7 @@ const LostItem = ({ parentLostList, parentBrchs }) => {
             <div>
               <p>다음글</p>
               <NavLink
-                to={`/cs/lost/${parseInt(index) + 1}`}
+                to={`/cs/lost/${parseInt(rownum) + 1}`}
                 className={styles.otherItem}
               >
                 [{next.lostCat}] {next.lostItem},&nbsp;

@@ -53,7 +53,6 @@ const AskContent = ({ certNames }) => {
       .then((response) => {
         setAsks(response.data.askList.content);
         setCount(response.data.askList.totalPages);
-        sessionStorage.setItem("count", response.data.askList.totalPages);
         window.scrollTo(0, 0);
       })
       .catch((e) => {

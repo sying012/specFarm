@@ -6,17 +6,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -268,7 +268,7 @@ public class CourseController {
             rd.close();
             conn.disconnect();
             // 11. 전달받은 데이터 확인.
-//            System.out.println(sb.toString());
+//            System.out.println(sb);
             
             // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
             String xmlStr = sb.toString();
@@ -288,6 +288,49 @@ public class CourseController {
 		} while (objChk.contains("HRDNet") == false);
         
 		return objChk;
+	}
+	
+	@GetMapping("/findcourse/srchTrprId={srchTrprId}&srchTrprDegr={srchTrprDegr}&srchTorgId={srchTorgId}")
+	// 직업훈련과정 상세 데이터를 API에 요청
+	public Map<String, Object> requestDetail(@PathVariable("srchTrprId") String srchTrprId, @PathVariable("srchTrprDegr") String srchTrprDegr, @PathVariable("srchTorgId") String srchTorgId) throws IOException, JSONException {
+//		System.out.println(srchTrprId + "///////////////////" + srchTrprDegr + "////////////////" + srchTorgId);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 1. URL을 만들기 위한 StringBuilder.
+        StringBuilder urlBuilder = new StringBuilder("https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_2.jsp"); /*URL*/
+        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
+        urlBuilder.append("?authKey=iuetUvIPndgwsAJkxuhhvEb7GdhK6wvV"); /*Service Key*/
+        urlBuilder.append("&returnType=XML"); /*XML 또는 JSON*/
+        urlBuilder.append("&outType=2"); /*Out Type 1: 리스트, 2: 상세*/
+        urlBuilder.append("&srchTrprId=" + URLEncoder.encode(srchTrprId, "UTF-8")); /* 훈련과정ID */
+        urlBuilder.append("&srchTrprDegr=" + URLEncoder.encode(srchTrprDegr, "UTF-8")); /* 훈련과정 회차 */
+        urlBuilder.append("&srchTorgId=" + URLEncoder.encode(srchTorgId, "UTF-8")); /* 훈련기관ID */
+        
+//        System.out.println(makeCatList(urlBuilder));
+        resultMap.put("courseDetail", makeCatList(urlBuilder));
+        
+     // 1. URL을 만들기 위한 StringBuilder.
+        StringBuilder urlBuilder2 = new StringBuilder("https://www.hrd.go.kr/jsp/HRDP/HRDPO00/HRDPOA60/HRDPOA60_1.jsp"); /*URL*/
+        
+        LocalDateTime dateTime = LocalDateTime.now();
+        String today = dateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		String plusMonth = dateTime.plusMonths(3).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
+        urlBuilder2.append("?" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("XML", "UTF-8")); /*XML 또는 JSON*/
+        urlBuilder2.append("&" + URLEncoder.encode("authKey","UTF-8") + "=iuetUvIPndgwsAJkxuhhvEb7GdhK6wvV"); /*Service Key*/
+        urlBuilder2.append("&" + URLEncoder.encode("pageNum","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /* 요청 페이지 개수 */
+        urlBuilder2.append("&" + URLEncoder.encode("pageSize","UTF-8") + "=" + URLEncoder.encode("30", "UTF-8")); /* 한 페이지에 몇 개씩 */
+        urlBuilder2.append("&" + URLEncoder.encode("srchTraStDt","UTF-8") + "=" + URLEncoder.encode(today, "UTF-8")); /* 훈련 시작일 */
+        urlBuilder2.append("&" + URLEncoder.encode("srchTraEndDt","UTF-8") + "=" + URLEncoder.encode(plusMonth, "UTF-8")); /* 훈련 종료일 */
+        urlBuilder2.append("&" + URLEncoder.encode("srchTraProcessNm","UTF-8") + "=" + URLEncoder.encode(srchTrprId, "UTF-8")); /* 훈련과정ID */
+        urlBuilder2.append("&" + URLEncoder.encode("srchTraOrganNm","UTF-8") + "=" + URLEncoder.encode(srchTorgId, "UTF-8")); /* 훈련기관ID */
+        urlBuilder2.append("&" + URLEncoder.encode("outType","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*Out Type 1: 리스트, 2: 상세*/
+        urlBuilder2.append("&" + URLEncoder.encode("sort","UTF-8") + "=" + URLEncoder.encode("ASC", "UTF-8")); /* 정렬 방식 */
+        urlBuilder2.append("&" + URLEncoder.encode("sortCol","UTF-8") + "=" + URLEncoder.encode("TR_STT_DT", "UTF-8")); /* 정렬 기준 */
+        
+        System.out.println("urlBuilder2 : ////////////  " + urlBuilder2);
+        
+        return resultMap;
+        
 	}
 	
 }

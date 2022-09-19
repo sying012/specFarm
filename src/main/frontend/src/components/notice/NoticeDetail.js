@@ -9,11 +9,14 @@ import "react-quill/dist/quill.snow.css";
 const NoticeDetail = () => {
   const { noticeId } = useParams();
   const [notice, setNotice] = useState({});
-  const [prev, setPrev] = useState(undefined);
-  const [next, setNext] = useState(undefined);
+  const [prev, setPrev] = useState(null);
+  const [next, setNext] = useState(null);
   useEffect(() => {
     axios.get(`${API_BASE_URL}/cs/${noticeId}`).then((response) => {
       setNotice(response.data.notice);
+      setPrev(response.data.prev);
+      setNext(response.data.next);
+      window.scrollTo(0, 0);
     });
   }, [noticeId]);
 
@@ -30,18 +33,18 @@ const NoticeDetail = () => {
             dangerouslySetInnerHTML={{ __html: notice.noticeContent }}
           ></div>
           <div className="noticeDetailDivB">
-            {prev === undefined ? null : (
+            {prev === null ? null : (
               <div>
                 <p>이전글</p>
-                <Link className="otherNotice" to={`/cs/${prev.id}`}>
+                <Link className="otherNotice" to={`/cs/${prev.noticeIdx}`}>
                   {prev.noticeTitle}
                 </Link>
               </div>
             )}
-            {next === undefined ? null : (
+            {next === null ? null : (
               <div>
                 <p>다음글</p>
-                <Link className="otherNotice" to={`/cs/${next.id}`}>
+                <Link className="otherNotice" to={`/cs/${next.noticeIdx}`}>
                   {next.noticeTitle}
                 </Link>
               </div>

@@ -69,7 +69,7 @@ public class GoogleOauth implements SocialOauth {
 		User user = new User();
 		
 		if (userRepository.findByUserEmail(profile.getEmail()) == null) {
-			user.setUserId(profile.getSub());
+			user.setUserId("G" + profile.getSub());
 			user.setUserName(profile.getName());
 			user.setUserNick(profile.getSub());
 			user.setUserEmail(profile.getEmail());

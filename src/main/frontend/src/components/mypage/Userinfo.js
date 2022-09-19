@@ -288,7 +288,7 @@ function Userinfo({ certs, user }) {
   return (
     <div>
       <div className={styles.userinfo}>
-        <h1 className={styles.smallTitle}>회원 정보</h1>
+        <h1 className={styles.smallTitle}>농부 정보</h1>
         <Link to="/mypage/deactivate">
           <Button
             color="secondary"
@@ -596,7 +596,7 @@ function Userinfo({ certs, user }) {
       </div>
       <hr />
       <div className={styles.earnedCert}>
-        <h1 className={styles.smallTitle}>취득한 자격증</h1>
+        <h1 className={styles.smallTitle}>수확한 자격증</h1>
 
         {countList &&
           countList.map((cert, i) => (

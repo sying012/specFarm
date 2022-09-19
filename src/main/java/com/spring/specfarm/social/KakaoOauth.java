@@ -70,8 +70,8 @@ public class KakaoOauth implements SocialOauth {
 
 		if (userRepository.findByUserEmail(profile.getKakao_account().getEmail()) == null) {
 			user.setUserEmail(profile.getKakao_account().getEmail());
-			user.setUserId(profile.getId().toString());
-			user.setUserName(null);
+			user.setUserId("K" + profile.getId().toString());
+			user.setUserName(profile.getId().toString());
 			user.setUserNick(profile.getKakao_account().getProfile().getNickname());
 			user.setUserProfileName(profile.getKakao_account().getProfile().getProfile_image_url());
 			user.setUserTel(null);
@@ -104,7 +104,7 @@ public class KakaoOauth implements SocialOauth {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(kakaoProfile);
 		return kakaoProfile;
 	}
 

@@ -1,6 +1,7 @@
 package com.spring.specfarm.service.notice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,13 +12,15 @@ import com.spring.specfarm.entity.Notice;
 
 public interface NoticeService {
 
-	void saveBrch(List<Brch> brchList);
+	void saveBrchs(List<Brch> brchList);
 
-	List<Brch> getBrch();
+	List<Brch> getBrchs();
 
 	void saveLosts(List<Lost> lostList);
 
-	List<Lost> getLosts();
+	List<Map<String, Object>> getLosts();
+
+	List<Map<String, Object>> getSearchLosts(String searchType, String searchText);
 
 	int insertNotice(Notice notice);
 
@@ -25,6 +28,8 @@ public interface NoticeService {
 
 	Notice getNotice(int noticeId);
 
-	List<Notice> getPrevNext(int i);
+	Notice getNext(int noticeId);
+
+	Notice getPrev(int noticeId);
 
 }

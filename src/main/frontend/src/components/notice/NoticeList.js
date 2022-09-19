@@ -26,7 +26,6 @@ const NoticeList = () => {
       .then((response) => {
         setNoticeList(response.data.noticeList.content);
         setCount(response.data.noticeList.totalPages);
-        window.scrollTo(0, 0);
       });
   }, [page, searchKeyword]);
 
@@ -104,6 +103,7 @@ const NoticeList = () => {
             page={page} //현재 페이지
             onChange={(e, p) => {
               setPage(p);
+              window.scrollTo(0, 0);
             }}
           />
         </Stack>

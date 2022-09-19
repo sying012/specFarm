@@ -6,6 +6,30 @@
   text-align: right;
 }
 
+.noticeContent ol {
+  list-style: auto;
+  padding-left: 1.5em;
+}
+.noticeContent ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+
+.noticeContent h1{
+  font-size: 2em;
+}
+
+.noticeContent h2{
+  font-size: 1.5em;
+}
+
+.noticeContent h3{
+  font-size: 1.17em;
+}
+
+.noticeContent img{
+  max-width: 1140px;
+}
 
 /* NoticeList */
 #noticeTable {
@@ -109,7 +133,7 @@
 /* RegNotice */
 #noticeRegContainer {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 1172px;
 }
 
 #noticeRegContainer .ql-editor {

@@ -201,9 +201,9 @@ const Header = () => {
           ></div>
         </nav>
         <div className="tailwrap">
-          <div className="joinbtn">
+          <div className="loginbtn">
             {!isAuthenticated ? (
-              <Link to="/login" id="loginLink">
+              <Link to="/login" id="loginLink" style={{ fontSize: "14px" }}>
                 로그인
               </Link>
             ) : (
@@ -217,7 +217,7 @@ const Header = () => {
               </Link>
             )}
           </div>
-          <div className="loginbtn">
+          <div className="joinbtn">
             {!isAuthenticated ? (
               <Link to="/join" id="joinLink">
                 회원가입

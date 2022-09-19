@@ -58,6 +58,11 @@
   margin-right: 20px;
 }
 
+.priceDesc {
+  color: #666;
+  font-size: 12px;
+}
+
 .applyCard {
   width: 700px;
   height: 230px;
@@ -78,7 +83,7 @@
   padding: 12px 22px;
   border-radius: 24px;
   background-color: black;
-  color: white;
+  /* color: white; */
   font-weight: 700;
   margin-top: 26px;
   font-size: 14px;
@@ -86,6 +91,10 @@
 
 .applyCardBtn:hover {
   background-color: #444;
+}
+
+.applyCardBtn > a {
+  color: white;
 }
 
 .detailListBtn {

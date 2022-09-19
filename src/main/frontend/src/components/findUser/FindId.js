@@ -1,11 +1,4 @@
-import {
-  createTheme,
-  Grid,
-  TextField,
-  Button,
-  Link,
-  styled,
-} from "@mui/material";
+import { createTheme, Grid, TextField, Button, styled } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -42,127 +35,136 @@ const CssTextField = styled(TextField)({
 const FindId = () => {
   const [userName, setUserName] = useState("");
   const [findId, setFindId] = useState("");
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorText, setNameErrorText] = useState("");
-  const [telError, setTelError] = useState(false);
-  const [telErrorText, setTelErrorText] = useState("");
-  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const [nameError, setNameError] = useState({ error: false, text: "" });
+  const [telError, setTelError] = useState({ error: false, text: "" });
+  const [telAuthNumberError, setTelAuthNumberError] = useState({
+    error: false,
+    text: "",
+  });
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
+  const [telAuthNumber, setTelAuthNumber] = useState("");
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
-    if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+    const nameRegex = /[a-z0-9]|[ []{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+
+    if (nameRegex.test(userName)) {
+      setNameError({ error: true, text: "한글만 사용하세요." });
+    } else if (userName === null || userName === "") {
+      setNameError({ error: true, text: "필수 정보입니다." });
     } else {
-      setNameError(false);
-      setNameErrorText("");
+      setNameError({ error: false, text: "" });
     }
   }, []);
 
   const nameErrorReset = useCallback((e) => {
-    setNameError(false);
-    setNameErrorText("");
+    setNameError({ error: false, text: "" });
   });
 
   // Phone number authentication
   const telAuth = useCallback((e) => {
     const userTel = document.getElementById("findId_userTel").value;
+    document.getElementById("findId_authAlert").hidden = false;
 
     // remove Hyphen
     const newUserTel = userTel.replace(/-/g, "");
     document.getElementById("findId_userTel").value = newUserTel;
 
     const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-
     if (newUserTel === null || newUserTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
     } else if (!TelRegex.test(newUserTel)) {
-      setTelError(true);
-      setTelErrorText("형식에 맞지 않는 번호입니다.");
+      setTelError({ error: true, text: "형식에 맞지 않는 번호입니다." });
     } else {
-      setTelError(false);
-      setTelErrorText("");
+      setTelError({ error: false, text: "" });
       setTelAuthNumberDisabled(false);
-
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
+      setTelAuthNumberError({
+        error: false,
+        text: "",
+      });
 
       axios({
         method: "post",
         url: API_BASE_URL + "/user/check/sendSMS",
         data: { userTel: newUserTel },
       }).then((response) => {
-        console.log(response);
+        setTelAuthNumber(response.data);
       });
     }
   }, []);
 
   const telErrorReset = useCallback((e) => {
-    setTelError(false);
-    setTelErrorText("");
+    setTelError({ error: false, text: "" });
   });
 
   // Phone number authentication Number Check
-  const telAuthNumberCheck = useCallback((e) => {
-    const userTelAuthNumber = e.target.value;
-
-    if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
-    } else {
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
-    }
-    // 인증번호 비교 후 인증 성공 실패 관련
-  }, []);
+  const telAuthNumberCheck = useCallback(
+    (e) => {
+      const userTelAuthNumber = e.target.value;
+      if (userTelAuthNumber === null || userTelAuthNumber === "") {
+        setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
+      } else if (parseInt(userTelAuthNumber) !== telAuthNumber) {
+        setTelAuthNumberError({
+          error: true,
+          text: "인증번호를 다시 확인해주세요.",
+        });
+      } else {
+        setTelAuthNumberError({ error: false, text: "" });
+        document.getElementById("findId_authAlert").hidden = true;
+      }
+    },
+    [telAuthNumber]
+  );
 
   const telAuthNumberErrorReset = useCallback((e) => {
-    setTelAuthNumberError(false);
-    setTelAuthNumberErrorText("");
+    setTelAuthNumberError({ error: false, text: "" });
   });
 
   // find id identify check
   const findIdIdentifyCheck = false;
   const findIdSubmit = (e) => {
     e.preventDefault();
+    document.getElementById("findIdFailAlert").hidden = true;
     const data = new FormData(e.target);
     const userName = data.get("userName");
     const userTel = data.get("userTel");
     const userTelAuthNumber = data.get("userTelAuthNumber");
 
     if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+      setNameError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTel === null || userTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
+      setTelAuthNumberError({
+        error: true,
+        text: "인증이 필요합니다.",
+      });
+    } else if (parseInt(userTelAuthNumber) !== telAuthNumber) {
+      setTelAuthNumberError({
+        error: true,
+        text: "인증번호를 다시 확인해주세요.",
+      });
     }
 
     if (
-      !nameError &&
+      !nameError.error &&
       userName !== "" &&
-      !telError &&
+      !telError.error &&
       userTel !== "" &&
-      !telAuthNumberError &&
-      userTelAuthNumber !== ""
+      !telAuthNumberError.error &&
+      userTelAuthNumber !== "" &&
+      parseInt(userTelAuthNumber) === telAuthNumber
     ) {
       axios({
         method: "post",
         url: API_BASE_URL + "/user/findUser",
         data: { userName: userName, userTel: userTel },
       }).then((response) => {
-        console.log(response);
         if (response.data === "fail") {
           document.getElementById("findIdFailAlert").hidden = false;
         } else if (response.data !== null || response.data !== "") {
@@ -185,8 +187,8 @@ const FindId = () => {
             label="이름"
             fullWidth
             onBlur={nameCheck}
-            error={nameError}
-            helperText={nameErrorText}
+            error={nameError.error}
+            helperText={nameError.text}
             onFocus={nameErrorReset}
             inputProps={{
               style: {
@@ -208,8 +210,8 @@ const FindId = () => {
             id="findId_userTel"
             label="휴대폰 번호"
             fullWidth
-            error={telError}
-            helperText={telErrorText}
+            error={telError.error}
+            helperText={telError.text}
             onFocus={telErrorReset}
             inputProps={{
               style: {
@@ -250,8 +252,8 @@ const FindId = () => {
             fullWidth
             onBlur={telAuthNumberCheck}
             onFocus={telAuthNumberErrorReset}
-            error={telAuthNumberError}
-            helperText={telAuthNumberErrorText}
+            error={telAuthNumberError.error}
+            helperText={telAuthNumberError.text}
             disabled={telAuthNumberDisabled}
             sx={{
               "& .MuiInputBase-input.Mui-disabled": {
@@ -270,6 +272,20 @@ const FindId = () => {
               },
             }}
           />
+          <p
+            id="findId_authAlerts"
+            style={{
+              fontSize: "14px",
+              lineHeight: "120%",
+              color: "rgb(9, 9, 9)",
+              padding: "3px 14px 0px 14px",
+            }}
+            hidden
+          >
+            인증번호를 발송했습니다. (유효시간 30분)
+            <br />
+            인증번호가 오지않으면 입력하신 정보가 정확한지 확인하여 주세요.
+          </p>
         </Grid>
         <Grid item xs={12} style={{ textAlign: "center", paddingTop: "0" }}>
           <p

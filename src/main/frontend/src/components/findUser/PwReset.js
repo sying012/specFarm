@@ -42,20 +42,21 @@ const PwReset = () => {
     text: "",
   });
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
-  const [pwValidationError, setPwValidationError] = useState(false);
-  const [pwValidationErrorText, setPwValidationErrorText] = useState("");
-  const [pwError, setPwError] = useState(false);
-  const [pwErrorText, setPwErrorText] = useState("");
+  const [telAuthNumber, setTelAuthNumber] = useState("");
+  const [pwValidationError, setPwValidationError] = useState({
+    error: false,
+    text: "",
+  });
+  const [pwError, setPwError] = useState({ error: false, text: "" });
+  const [identifyCheck, setIdentifyCheck] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
 
   // Id Check
   const idCheck = useCallback((e) => {
     const userId = e.target.value;
 
     if (userId === null || userId === "") {
-      setIdError({
-        error: true,
-        text: "필수 정보입니다.",
-      });
+      setIdError({ error: true, text: "필수 정보입니다." });
     } else {
       setIdError({
         error: false,
@@ -65,16 +66,24 @@ const PwReset = () => {
   }, []);
 
   const idErrorReset = useCallback((e) => {
+    // setIdError({
+    //   ...idError,
+    //   text: "aaa",
+    // });
     setIdError({
-      ...idError,
-      text: "aaa",
+      error: false,
+      text: "",
     });
   });
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
-    if (userName === null || userName === "") {
+    const nameRegex = /[a-z0-9]|[ []{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+
+    if (nameRegex.test(userName)) {
+      setNameError({ error: true, text: "한글만 사용하세요." });
+    } else if (userName === null || userName === "") {
       setNameError({ error: true, text: "필수 정보입니다." });
     } else {
       setNameError({ error: false, text: "" });
@@ -89,6 +98,8 @@ const PwReset = () => {
   // let telAuthNumberDisabled = true;
   const telAuth = useCallback((e) => {
     const userTel = document.getElementById("pwReset_userTel").value;
+    document.getElementById("pwReset_authAlert").hidden = false;
+
     // remove Hyphen
     const newUserTel = userTel.replace(/-/g, "");
     document.getElementById("pwReset_userTel").value = newUserTel;
@@ -101,9 +112,14 @@ const PwReset = () => {
     } else {
       setTelError({ error: false, text: "" });
       setTelAuthNumberDisabled(false);
-      setTelAuthNumberError({
-        error: false,
-        text: "",
+      setTelAuthNumberError({ error: false, text: "" });
+
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/user/check/sendSMS",
+        data: { userTel: newUserTel },
+      }).then((response) => {
+        setTelAuthNumber(response.data);
       });
     }
   }, []);
@@ -113,27 +129,26 @@ const PwReset = () => {
   });
 
   // Phone number authentication Number Check
-  const telAuthNumberCheck = useCallback((e) => {
-    const userTelAuthNumber = e.target.value;
-    if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError({
-        error: true,
-        text: "인증이 필요합니다.",
-      });
-    } else {
-      setTelAuthNumberError({
-        error: false,
-        text: "",
-      });
-    }
-    // 인증번호 비교 후 인증 성공 실패 관련
-  }, []);
+  const telAuthNumberCheck = useCallback(
+    (e) => {
+      const userTelAuthNumber = e.target.value;
+      if (userTelAuthNumber === null || userTelAuthNumber === "") {
+        setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
+      } else if (parseInt(userTelAuthNumber) != telAuthNumber) {
+        setTelAuthNumberError({
+          error: true,
+          text: "인증번호를 다시 확인해주세요.",
+        });
+      } else {
+        setTelAuthNumberError({ error: false, text: "" });
+        document.getElementById("pwReset_authAlert").hidden = true;
+      }
+    },
+    [telAuthNumber]
+  );
 
   const telAuthNumberErrorReset = useCallback((e) => {
-    setTelAuthNumberError({
-      error: false,
-      text: "",
-    });
+    setTelAuthNumberError({ error: false, text: "" });
   });
 
   // Password Validation Check
@@ -141,22 +156,19 @@ const PwReset = () => {
     const userPw = e.target.value;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/;
     if (userPw === null || userPw === "") {
-      setPwValidationError(true);
-      setPwValidationErrorText("필수 정보입니다.");
+      setPwValidationError({ error: true, text: "필수 정보입니다." });
     } else if (!passwordRegex.test(userPw)) {
-      setPwValidationError(true);
-      setPwValidationErrorText(
-        "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
-      );
+      setPwValidationError({
+        error: true,
+        text: "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.",
+      });
     } else {
-      setPwValidationError(false);
-      setPwValidationErrorText("");
+      setPwValidationError({ error: false, text: "" });
     }
   }, []);
 
   const pwValidationErrorReset = useCallback((e) => {
-    setPwValidationError(false);
-    setPwValidationErrorText("");
+    setPwValidationError({ error: false, text: "" });
   });
 
   // Password Check
@@ -165,25 +177,19 @@ const PwReset = () => {
     const userPwCheck = e.target.value;
 
     if (userPwCheck === null || userPwCheck === "") {
-      setPwError(true);
-      setPwErrorText("필수 정보입니다.");
+      setPwError({ error: true, text: "필수 정보입니다." });
     } else if (userPw !== userPwCheck) {
-      setPwError(true);
-      setPwErrorText("비밀번호가 일치하지 않습니다.");
+      setPwError({ error: true, text: "비밀번호가 일치하지 않습니다." });
     } else {
-      setPwError(false);
-      setPwErrorText("");
+      setPwError({ error: false, text: "" });
     }
   }, []);
 
   const pwErrorReset = useCallback((e) => {
-    setPwError(false);
-    setPwErrorText("");
+    setPwError({ error: false, text: "" });
   });
 
-  // next step
-  const [identifyCheck, setIdentifyCheck] = useState(false);
-  const [userInfoA, setUserInfoA] = useState("");
+  // find user => next step
   const PwResetNext = (e) => {
     e.preventDefault();
 
@@ -194,10 +200,7 @@ const PwReset = () => {
     const userTelAuthNumber = data.get("userTelAuthNumber");
 
     if (userId === null || userId === "") {
-      setIdError({
-        error: true,
-        text: "필수 정보입니다.",
-      });
+      setIdError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userName === null || userName === "") {
@@ -209,9 +212,11 @@ const PwReset = () => {
     }
 
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
+      setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
+    } else if (parseInt(userTelAuthNumber) != telAuthNumber) {
       setTelAuthNumberError({
         error: true,
-        text: "인증이 필요합니다.",
+        text: "인증번호를 다시 확인해주세요.",
       });
     }
 
@@ -223,9 +228,9 @@ const PwReset = () => {
       !telError.error &&
       userTel !== "" &&
       !telAuthNumberError.error &&
-      userTelAuthNumber !== ""
+      userTelAuthNumber !== "" &&
+      parseInt(userTelAuthNumber) === telAuthNumber
     ) {
-      console.log("뭐지...");
       const userInfo = {
         userId: userId,
         userName: userName,
@@ -242,12 +247,13 @@ const PwReset = () => {
         } else if (response.data !== null || response.data !== "") {
           e.target.reset();
           setIdentifyCheck(true);
-          setUserInfoA(response.data);
+          setUserInfo(response.data);
         }
       });
     }
   };
 
+  // password reset
   const pwResetSubmit = (e) => {
     e.preventDefault();
 
@@ -256,20 +262,18 @@ const PwReset = () => {
     const userPwCheck = data.get("userPwCheck");
 
     if (userPw === null || userPw === "") {
-      setPwValidationError(true);
-      setPwValidationErrorText("필수 정보입니다.");
+      setPwValidationError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userPwCheck === null || userPwCheck === "") {
-      setPwError(true);
-      setPwErrorText("필수 정보입니다.");
+      setPwError({ error: true, text: "필수 정보입니다." });
     }
 
     if (!pwValidationError && userPw !== "" && !pwError && userPwCheck !== "") {
-      const userInfo = {
-        ...userInfoA,
+      setUserInfo({
+        ...userInfo,
         userPw: userPw,
-      };
+      });
 
       axios({
         method: "post",
@@ -403,6 +407,20 @@ const PwReset = () => {
               },
             }}
           />
+          <p
+            id="pwReset_authAlert"
+            style={{
+              fontSize: "14px",
+              lineHeight: "120%",
+              color: "rgb(9, 9, 9)",
+              padding: "3px 14px 0px 14px",
+            }}
+            hidden
+          >
+            인증번호를 발송했습니다. (유효시간 30분)
+            <br />
+            인증번호가 오지않으면 입력하신 정보가 정확한지 확인하여 주세요.
+          </p>
         </Grid>
         <Grid item xs={12} style={{ textAlign: "center", paddingTop: "0" }}>
           <p
@@ -451,8 +469,8 @@ const PwReset = () => {
             label="비밀번호"
             fullWidth
             onBlur={pwValidationCheck}
-            error={pwValidationError}
-            helperText={pwValidationErrorText}
+            error={pwValidationError.error}
+            helperText={pwValidationError.text}
             onFocus={pwValidationErrorReset}
             inputProps={{
               style: {
@@ -476,8 +494,8 @@ const PwReset = () => {
             label="비밀번호 확인"
             fullWidth
             onBlur={pwCheck}
-            error={pwError}
-            helperText={pwErrorText}
+            error={pwError.error}
+            helperText={pwError.text}
             onFocus={pwErrorReset}
             inputProps={{
               style: {

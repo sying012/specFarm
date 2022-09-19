@@ -7,7 +7,7 @@ import {
   Tabs,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/home/Home.module.css";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -21,97 +21,115 @@ const buttonTheme = createTheme({
   },
 });
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pr: 3, pt: 3, pl: 3, pb: 2 }}>
-          <div
-            style={{
-              height: "250px",
-            }}
-          >
-            {children}
-          </div>
-          <MobileStepper
-            variant="dots"
-            steps={6}
-            position="static"
-            activeStep={activeStep}
-            sx={{
-              maxWidth: 500,
-              flexGrow: 1,
-              background: "none",
-              "& .MuiMobileStepper-dotActive": {
-                backgroundColor: "#8cbf75",
-              },
-            }}
-            nextButton={
-              <Button
-                size="small"
-                onClick={handleNext}
-                disabled={activeStep === 5}
-                theme={buttonTheme}
-                color="green"
-              >
-                Next
-                {theme.direction === "rtl" ? (
-                  <KeyboardArrowLeft />
-                ) : (
-                  <KeyboardArrowRight />
-                )}
-              </Button>
-            }
-            backButton={
-              <Button
-                size="small"
-                onClick={handleBack}
-                disabled={activeStep === 0}
-                theme={buttonTheme}
-                color="green"
-              >
-                {theme.direction === "rtl" ? (
-                  <KeyboardArrowRight theme={theme} color="green" />
-                ) : (
-                  <KeyboardArrowLeft theme={theme} color="green" />
-                )}
-                Back
-              </Button>
-            }
-          />
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const Plan = ({ acceptances, tests }) => {
+  const [data, setData] = useState(acceptances.slice(0, 3));
   const [value, setValue] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    if (value === 0) {
+      setData(acceptances.slice(0, 3));
+    } else {
+      setData(tests.slice(0, 3));
+    }
+  }, [value]);
+
+  // tab content
+  function TabPanel(props) {
+    const { children, value, index, dataList, ...other } = props;
+    const theme = useTheme();
+    const LAST_STEP =
+      dataList.length % 3 === 0
+        ? parseInt(dataList.length / 3)
+        : parseInt(dataList.length / 3) + 1;
+
+    const handleNext = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      handleData(activeStep + 1);
+    };
+
+    const handleBack = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+      handleData(activeStep - 1);
+    };
+
+    const handleData = (step) => {
+      console.log(step);
+      if (dataList.length !== 0) {
+        setData(dataList.slice(3 * step, 3 * step + 3));
+      } else {
+        setData([]);
+      }
+    };
+
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ pr: 3, pt: 3, pl: 3, pb: 2 }}>
+            <div
+              style={{
+                height: "250px",
+              }}
+            >
+              {children}
+            </div>
+            <MobileStepper
+              variant="dots"
+              steps={LAST_STEP}
+              position="static"
+              activeStep={activeStep}
+              sx={{
+                maxWidth: 500,
+                flexGrow: 1,
+                background: "none",
+                "& .MuiMobileStepper-dotActive": {
+                  backgroundColor: "#8cbf75",
+                },
+              }}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === LAST_STEP - 1}
+                  theme={buttonTheme}
+                  color="green"
+                >
+                  Next
+                  {theme.direction === "rtl" ? (
+                    <KeyboardArrowLeft />
+                  ) : (
+                    <KeyboardArrowRight />
+                  )}
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  theme={buttonTheme}
+                  color="green"
+                >
+                  {theme.direction === "rtl" ? (
+                    <KeyboardArrowRight theme={theme} color="green" />
+                  ) : (
+                    <KeyboardArrowLeft theme={theme} color="green" />
+                  )}
+                  Back
+                </Button>
+              }
+            />
+          </Box>
+        )}
+      </div>
+    );
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -162,8 +180,9 @@ const Plan = ({ acceptances, tests }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
+            dataList={acceptances}
           >
-            {acceptances.map((accept) => (
+            {data.map((accept) => (
               <p key={accept.id} className={styles.certPlanP}>
                 {accept.title}
                 <br />
@@ -179,8 +198,9 @@ const Plan = ({ acceptances, tests }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
+            dataList={tests}
           >
-            {tests.map((test) => (
+            {data.map((test) => (
               <p key={test.id} className={styles.certPlanP}>
                 {test.title}
                 <br />

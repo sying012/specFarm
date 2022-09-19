@@ -59,7 +59,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public List<GetCert> getEarnedCert(String userId) {
-		List<GetCert> earnedCert = getCertRepository.findAllByUserId(userId);
+		List<GetCert> earnedCert = getCertRepository.findAllByUserIdOrderByGetCertDate(userId);
 		return earnedCert;
 	}
 	

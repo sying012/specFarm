@@ -42,7 +42,6 @@ const Login = () => {
   // Id Check
   const idCheck = useCallback((e) => {
     const userId = e.target.value;
-    console.log(userId === null);
 
     if (userId === null || userId === "") {
       setIdError(true);

@@ -44,6 +44,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 3px;
+  padding: 0 10px;
 }
 
 .userDetail,
@@ -64,15 +65,14 @@
 
 .earnedContent {
   display: flex;
+  justify-content: space-between;
   margin-bottom: 4px;
+  padding: 0 10px;
 }
 
-.earnedCertName {
-  min-width: 150px;
-}
-
-.earnedCertDate {
-  margin-left: 20px;
+.nothingEarnedCerts {
+  padding: 20px;
+  color: #555;
 }
 
 .writtenTab {
@@ -167,6 +167,11 @@
   color: gray;
 }
 
+.nothingWritten {
+  padding: 30px 20px 20px;
+  color: #555;
+}
+
 .attactive {
   width: auto;
   display: flex;
@@ -198,4 +203,9 @@
 
 .deleteBtn {
   color: white;
+}
+
+.nothingattrCerts {
+  padding: 10px 20px 25px;
+  color: #555;
 }

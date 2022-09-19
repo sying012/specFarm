@@ -8,18 +8,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.Notice;
 
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
 	Page<Notice> findByNoticeTitleContaining(String searchKeyword, Pageable pageable);
 
-
-//	@Query(value="SELECT NOTICE_IDX, NOTICE_TITLE FROM T_NOTICE WHERE NOTICE_IDX IN ((SELECT NOTICE_IDX FROM T_NOTICE WHERE NOTICE_IDX < :noticeIdx ORDER BY NOTICE_IDX DESC LIMIT 1), (SELECT NOTICE_IDX FROM T_NOTICE WHERE NOTICE_IDX > :noticeIdx ORDER BY NOTICE_IDX LIMIT 1))", nativeQuery = true)
-//	List<Notice> getPrev(@Param("noticeIdx")int noticeIdx);
-//	
-//	@Query(value="SELECT NOTICE_IDX, NOTICE_TITLE FROM T_NOTICE WHERE NOTICE_IDX < :noticeIdx ORDER BY NOTICE_IDX DESC LIMIT 1), (SELECT NOTICE_IDX FROM T_NOTICE WHERE NOTICE_IDX > :noticeIdx ORDER BY NOTICE_IDX LIMIT 1))", nativeQuery = true)
-//	List<Notice> getNext(@Param("noticeIdx")int noticeIdx);
+	//next는 되는데 얘는 왜안되는지 모르겠음 근데 메소드 퀘리로 하니까 됨 ㅎㅎ
+	//@Query(value="SELECT * FROM T_NOTICE WHERE NOTICE_IDX > :noticeIdx ORDER BY NOTICE_IDX ASC LIMIT 1", nativeQuery = true)
+	//Notice getPrev(@Param("noticeIdx")int noticeIdx);
+	
+	Notice findTopByNoticeIdxGreaterThanOrderByNoticeIdxAsc(int noticeIdx);
+	
+	
+	//@Query(value="SELECT * FROM T_NOTICE WHERE NOTICE_IDX < :noticeIdx ORDER BY NOTICE_IDX DESC LIMIT 1", nativeQuery = true)
+	//Notice getNext(@Param("noticeIdx")int noticeIdx);
+	
+	//SELECT * FROM T_NOTICE WHERE NOTICE_IDX < :noticeIdx ORDER BY NOTICE_IDX DESC LIMIT 1
+	Notice findTopByNoticeIdxLessThanOrderByNoticeIdxDesc(int noticeIdx);
 
 }

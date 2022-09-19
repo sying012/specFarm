@@ -10,11 +10,11 @@ import {
   Checkbox,
   MenuItem,
   styled,
+  FormControlLabel,
 } from "@mui/material";
 import styles from "../../styles/join/Join.module.css";
 import { ArrowForwardIos } from "@mui/icons-material";
 import { NavLink, useNavigate } from "react-router-dom";
-import { join } from "../../service/ApiService";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
@@ -60,25 +60,28 @@ const CssTextField = styled(TextField)({
 
 const JoinPage = () => {
   const navigate = useNavigate();
-  const [idError, setIdError] = useState(false);
-  const [idErrorText, setIdErrorText] = useState("");
-  const [pwValidationError, setPwValidationError] = useState(false);
-  const [pwValidationErrorText, setPwValidationErrorText] = useState("");
-  const [pwError, setPwError] = useState(false);
-  const [pwErrorText, setPwErrorText] = useState("");
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorText, setNameErrorText] = useState("");
-  const [telError, setTelError] = useState(false);
-  const [telErrorText, setTelErrorText] = useState("");
-  const [telAuthNumberError, setTelAuthNumberError] = useState(false);
-  const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
+  const [idError, setIdError] = useState({ error: false, text: "" });
+  const [pwValidationError, setPwValidationError] = useState({
+    error: false,
+    text: "",
+  });
+  const [pwError, setPwError] = useState({ error: false, text: "" });
+  const [nameError, setNameError] = useState({ error: false, text: "" });
+  const [telError, setTelError] = useState({ error: false, text: "" });
+  const [telAuthNumberError, setTelAuthNumberError] = useState({
+    error: false,
+    text: "",
+  });
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorText, setEmailErrorText] = useState("");
+  const [telAuthNumber, setTelAuthNumber] = useState("");
+  const [emailError, setEmailError] = useState({ error: false, text: "" });
+
+  // cert category
   const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
   const [certL, setCertL] = useState("");
   const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
   const [certM, setCertM] = useState("");
+
   const [checked, setChecked] = useState(false);
 
   // Id Check
@@ -86,8 +89,7 @@ const JoinPage = () => {
     const userId = e.target.value;
 
     if (userId === null || userId === "") {
-      setIdError(true);
-      setIdErrorText("필수 정보입니다.");
+      setIdError({ error: true, text: "필수 정보입니다." });
     } else {
       axios({
         method: "post",
@@ -95,19 +97,19 @@ const JoinPage = () => {
         data: { userId: userId },
       }).then((response) => {
         if (response.data === "success") {
-          setIdError(false);
-          setIdErrorText("");
+          setIdError({ error: false, text: "" });
         } else {
-          setIdError(true);
-          setIdErrorText("이미 사용중이거나 탈퇴한 아이디입니다.");
+          setIdError({
+            error: true,
+            text: "이미 사용중이거나 탈퇴한 아이디입니다.",
+          });
         }
       });
     }
   }, []);
 
   const idErrorReset = useCallback((e) => {
-    setIdError(false);
-    setIdErrorText("");
+    setIdError({ error: false, text: "" });
   });
 
   // Password Validation Check
@@ -116,22 +118,19 @@ const JoinPage = () => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/;
 
     if (userPw === null || userPw === "") {
-      setPwValidationError(true);
-      setPwValidationErrorText("필수 정보입니다.");
+      setPwValidationError({ error: true, text: "필수 정보입니다." });
     } else if (!passwordRegex.test(userPw)) {
-      setPwValidationError(true);
-      setPwValidationErrorText(
-        "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
-      );
+      setPwValidationError({
+        error: true,
+        text: "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.",
+      });
     } else {
-      setPwValidationError(false);
-      setPwValidationErrorText("");
+      setPwValidationError({ error: false, text: "" });
     }
   }, []);
 
   const pwValidationErrorReset = useCallback((e) => {
-    setPwValidationError(false);
-    setPwValidationErrorText("");
+    setPwValidationError({ error: false, text: "" });
   });
 
   // Password Check
@@ -140,96 +139,95 @@ const JoinPage = () => {
     const userPwCheck = e.target.value;
 
     if (userPwCheck === null || userPwCheck === "") {
-      setPwError(true);
-      setPwErrorText("필수 정보입니다.");
+      setPwError({ error: true, text: "필수 정보입니다." });
     } else if (userPw !== userPwCheck) {
-      setPwError(true);
-      setPwErrorText("비밀번호가 일치하지 않습니다.");
+      setPwError({ error: true, text: "비밀번호가 일치하지 않습니다." });
     } else {
-      setPwError(false);
-      setPwErrorText("");
+      setPwError({ error: false, text: "" });
     }
   }, []);
 
   const pwErrorReset = useCallback((e) => {
-    setPwError(false);
-    setPwErrorText("");
+    setPwError({ error: false, text: "" });
   });
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
     const userName = e.target.value;
-    if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+    const nameRegex = /[a-z0-9]|[ []{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+
+    if (nameRegex.test(userName)) {
+      setNameError({ error: true, text: "한글만 사용하세요." });
+    } else if (userName === null || userName === "") {
+      setNameError({ error: true, text: "필수 정보입니다." });
     } else {
-      setNameError(false);
-      setNameErrorText("");
+      setNameError({ error: false, text: "" });
     }
   }, []);
 
   const nameErrorReset = useCallback((e) => {
-    setNameError(false);
-    setNameErrorText("");
+    setNameError({ error: false, text: "" });
   });
 
   // Phone number authentication
   const telAuth = useCallback((e) => {
     const userTel = document.getElementById("userTel").value;
+    document.getElementById("authAlert").hidden = false;
+
     // remove Hyphen
     const newUserTel = userTel.replace(/-/g, "");
     document.getElementById("userTel").value = newUserTel;
 
-    const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    const telRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 
     if (newUserTel === null || newUserTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
-    } else if (!TelRegex.test(newUserTel)) {
-      setTelError(true);
-      setTelErrorText("형식에 맞지 않는 번호입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
+    } else if (!telRegex.test(newUserTel)) {
+      setTelError({ error: true, text: "형식에 맞지 않는 번호입니다." });
     } else {
       axios({
         method: "post",
         url: API_BASE_URL + "/user/telCheck",
         data: { userTel: newUserTel },
       }).then((response) => {
-        if (response.data === "success") {
-          setTelError(false);
-          setTelErrorText("");
-          setTelAuthNumberDisabled(false);
-
-          setTelAuthNumberError(false);
-          setTelAuthNumberErrorText();
+        if (response.data === "fail") {
+        } else if (response.data == "exist") {
+          setTelError({ error: true, text: "이미 사용중인 전화번호입니다." });
         } else {
-          setTelError(true);
-          setTelErrorText("이미 사용중인 전화번호입니다.");
+          setTelError({ error: false, text: "" });
+          setTelAuthNumberDisabled(false);
+          setTelAuthNumberError({ error: false, text: "" });
+          setTelAuthNumber(response.data);
         }
       });
     }
   }, []);
 
   const telErrorReset = useCallback((e) => {
-    setTelError(false);
-    setTelErrorText("");
+    setTelError({ error: false, text: "" });
   });
 
   // Phone number authentication Number Check
-  const telAuthNumberCheck = useCallback((e) => {
-    const userTelAuthNumber = e.target.value;
-    if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
-    } else {
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
-    }
-    // 인증번호 비교 후 인증 성공 실패 관련
-  }, []);
+  const telAuthNumberCheck = useCallback(
+    (e) => {
+      const userTelAuthNumber = e.target.value;
+      if (userTelAuthNumber === null || userTelAuthNumber === "") {
+        setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
+      } else if (parseInt(userTelAuthNumber) != telAuthNumber) {
+        setTelAuthNumberError({
+          error: true,
+          text: "인증번호를 다시 확인해주세요.",
+        });
+      } else {
+        setTelAuthNumberError({ error: false, text: "" });
+        document.getElementById("authAlert").hidden = true;
+      }
+    },
+    [telAuthNumber]
+  );
 
   const telAuthNumberErrorReset = useCallback((e) => {
-    setTelAuthNumberError(false);
-    setTelAuthNumberErrorText("");
+    setTelAuthNumberError({ error: false, text: "" });
   });
 
   // Email Validation Check
@@ -238,20 +236,16 @@ const JoinPage = () => {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     if (userEmail === null || userEmail === "") {
-      setEmailError(false);
-      setEmailErrorText("");
+      setEmailError({ error: false, text: "" });
     } else if (!emailRegex.test(userEmail)) {
-      setEmailError(true);
-      setEmailErrorText("이메일 주소를 다시 확인해주세요.");
+      setEmailError({ error: true, text: "이메일 주소를 다시 확인해주세요." });
     } else {
-      setEmailError(false);
-      setEmailErrorText("");
+      setEmailError({ error: false, text: "" });
     }
   }, []);
 
   const emailErrorReset = useCallback((e) => {
-    setEmailError(false);
-    setEmailErrorText("");
+    setEmailError({ error: false, text: "" });
   });
 
   // Cert Large Category
@@ -284,33 +278,32 @@ const JoinPage = () => {
     const userEmail = data.get("userEmail");
 
     if (userId === null || userId === "") {
-      setIdError(true);
-      setIdErrorText("필수 정보입니다.");
+      setIdError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userPw === null || userPw === "") {
-      setPwValidationError(true);
-      setPwValidationErrorText("필수 정보입니다.");
+      setPwValidationError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userPwCheck === null || userPwCheck === "") {
-      setPwError(true);
-      setPwErrorText("필수 정보입니다.");
+      setPwError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userName === null || userName === "") {
-      setNameError(true);
-      setNameErrorText("필수 정보입니다.");
+      setNameError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTel === null || userTel === "") {
-      setTelError(true);
-      setTelErrorText("필수 정보입니다.");
+      setTelError({ error: true, text: "필수 정보입니다." });
     }
 
     if (userTelAuthNumber === null || userTelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
+      setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
+    } else if (parseInt(userTelAuthNumber) != telAuthNumber) {
+      setTelAuthNumberError({
+        error: true,
+        text: "인증번호를 다시 확인해주세요.",
+      });
     }
 
     if (!checked) {
@@ -320,20 +313,21 @@ const JoinPage = () => {
     }
 
     if (
-      !idError &&
+      !idError.error &&
       userId !== "" &&
-      !pwValidationError &&
+      !pwValidationError.error &&
       userPw !== "" &&
-      !pwError &&
+      !pwError.error &&
       userPwCheck !== "" &&
-      !nameError &&
+      !nameError.error &&
       userName !== "" &&
-      !telError &&
+      !telError.error &&
       userTel !== "" &&
-      !telAuthNumberError &&
+      !telAuthNumberError.error &&
       userTelAuthNumber !== "" &&
-      !emailError &&
-      checked
+      !emailError.error &&
+      checked &&
+      parseInt(userTelAuthNumber) === telAuthNumber
     ) {
       const userInfo = {
         userId: userId,
@@ -343,7 +337,7 @@ const JoinPage = () => {
         userEmail: userEmail,
         favFieldL: certL,
         favFieldM: certM,
-        nickname: userId,
+        userNick: userId,
       };
 
       axios({
@@ -351,7 +345,11 @@ const JoinPage = () => {
         url: API_BASE_URL + "/user/join",
         data: userInfo,
       }).then((response) => {
-        navigate("/login");
+        if (response.data === "success") {
+          navigate("/login");
+        } else {
+          console.log(response.data);
+        }
       });
     }
   };
@@ -373,8 +371,8 @@ const JoinPage = () => {
                 label="아이디"
                 fullWidth
                 onBlur={idCheck}
-                error={idError}
-                helperText={idErrorText}
+                error={idError.error}
+                helperText={idError.text}
                 onFocus={idErrorReset}
                 inputProps={{
                   style: {
@@ -398,8 +396,8 @@ const JoinPage = () => {
                 label="비밀번호"
                 fullWidth
                 onBlur={pwValidationCheck}
-                error={pwValidationError}
-                helperText={pwValidationErrorText}
+                error={pwValidationError.error}
+                helperText={pwValidationError.text}
                 onFocus={pwValidationErrorReset}
                 inputProps={{
                   style: {
@@ -423,8 +421,8 @@ const JoinPage = () => {
                 label="비밀번호 확인"
                 fullWidth
                 onBlur={pwCheck}
-                error={pwError}
-                helperText={pwErrorText}
+                error={pwError.error}
+                helperText={pwError.text}
                 onFocus={pwErrorReset}
                 inputProps={{
                   style: {
@@ -447,8 +445,8 @@ const JoinPage = () => {
                 label="이름"
                 fullWidth
                 onBlur={nameCheck}
-                error={nameError}
-                helperText={nameErrorText}
+                error={nameError.error}
+                helperText={nameError.text}
                 onFocus={nameErrorReset}
                 inputProps={{
                   style: {
@@ -470,8 +468,8 @@ const JoinPage = () => {
                 id="userTel"
                 label="휴대폰 번호"
                 fullWidth
-                error={telError}
-                helperText={telErrorText}
+                error={telError.error}
+                helperText={telError.text}
                 onFocus={telErrorReset}
                 inputProps={{
                   style: {
@@ -512,8 +510,8 @@ const JoinPage = () => {
                 fullWidth
                 onBlur={telAuthNumberCheck}
                 onFocus={telAuthNumberErrorReset}
-                error={telAuthNumberError}
-                helperText={telAuthNumberErrorText}
+                error={telAuthNumberError.error}
+                helperText={telAuthNumberError.text}
                 disabled={telAuthNumberDisabled}
                 sx={{
                   "& .MuiInputBase-input.Mui-disabled": {
@@ -532,6 +530,20 @@ const JoinPage = () => {
                   },
                 }}
               />
+              <p
+                id="authAlert"
+                style={{
+                  fontSize: "14px",
+                  lineHeight: "120%",
+                  color: "rgb(9, 9, 9)",
+                  padding: "3px 14px 0px 14px",
+                }}
+                hidden
+              >
+                인증번호를 발송했습니다. (유효시간 30분)
+                <br />
+                인증번호가 오지않으면 입력하신 정보가 정확한지 확인하여 주세요.
+              </p>
             </Grid>
             <Grid item xs={12}>
               <CssTextField
@@ -541,8 +553,8 @@ const JoinPage = () => {
                 label="이메일(선택)"
                 fullWidth
                 onBlur={emailCheck}
-                error={emailError}
-                helperText={emailErrorText}
+                error={emailError.error}
+                helperText={emailError.text}
                 onFocus={emailErrorReset}
                 inputProps={{
                   style: {
@@ -680,26 +692,41 @@ const JoinPage = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={1.3}>
-              <Checkbox
-                size="small"
-                style={{ padding: "0px" }}
+            <Grid item xs={12}>
+              <FormControlLabel
                 onChange={checkedCheck}
+                control={
+                  <Checkbox
+                    size="small"
+                    style={{ paddingTop: "4px", paddingBottom: "4px" }}
+                  />
+                }
+                label="[필수] 개인정보 수집 및 이용동의"
+                sx={{
+                  ".MuiFormControlLabel-label": {
+                    fontSize: "14px",
+                  },
+                }}
+              />
+              <FormControlLabel
+                onChange={checkedCheck}
+                control={
+                  <Checkbox
+                    size="small"
+                    style={{ paddingTop: "4px", paddingBottom: "4px" }}
+                  />
+                }
+                label="[선택] 새로운 기능 출시안내 (광고 마케팅 수신동의)"
+                sx={{
+                  ".MuiFormControlLabel-label": {
+                    fontSize: "14px",
+                  },
+                }}
               />
             </Grid>
-            <Grid item xs={10.7} style={{ paddingLeft: "2px" }}>
-              <NavLink to="/a" className={styles.navLink}>
-                [필수] 개인정보 수집 및 이용동의
-              </NavLink>
-            </Grid>
-            <Grid item xs={1.3} style={{ paddingTop: "10px" }}>
-              <Checkbox size="small" style={{ padding: "0px" }} />
-            </Grid>
-            <Grid item xs={10.7} style={{ padding: "10px 2px" }}>
-              <NavLink to="/a" className={styles.navLink}>
-                [선택] 새로운 기능 출시안내 (광고 마케팅 수신동의)
-              </NavLink>
-            </Grid>
+            {/* <Grid item xs={10.7} style={{ paddingLeft: "2px" }}>
+              <NavLink to="/a" className={styles.navLink}></NavLink>
+            </Grid> */}
             <Grid item xs={12} style={{ textAlign: "center" }}>
               <p
                 className={styles.font15}

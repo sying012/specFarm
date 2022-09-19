@@ -5,18 +5,8 @@ import LostItem from "../components/lost/LostItem";
 import LostList from "../components/lost/LostList";
 import styles from "../styles/lost/Lost.module.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import axios from "axios";
-import { API_BASE_URL } from "../app-config";
 
 const Lost = () => {
-  const [parentLostList, setParentLostList] = useState([]);
-  const [parentBrchs, setParentBrchs] = useState([]);
-
-  const changeParentState = (losts, brchs) => {
-    setParentLostList(losts);
-    setParentBrchs(brchs);
-  };
-
   const searchType = [
     {
       id: 1,
@@ -24,7 +14,7 @@ const Lost = () => {
     },
     {
       id: 2,
-      name: "지사",
+      name: "지역",
     },
     {
       id: 3,
@@ -50,24 +40,8 @@ const Lost = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <LostList
-              searchType={searchType}
-              changeParentState={changeParentState}
-            />
-          }
-        ></Route>
-        <Route
-          path="/:index"
-          element={
-            <LostItem
-              parentLostList={parentLostList}
-              parentBrchs={parentBrchs}
-            />
-          }
-        ></Route>
+        <Route path="/" element={<LostList searchType={searchType} />}></Route>
+        <Route path="/:rownum" element={<LostItem />}></Route>
       </Routes>
     </div>
   );

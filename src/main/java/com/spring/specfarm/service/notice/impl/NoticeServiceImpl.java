@@ -1,16 +1,18 @@
 package com.spring.specfarm.service.notice.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.entity.Lost;
 import com.spring.specfarm.entity.Notice;
+import com.spring.specfarm.mapper.LostMapper;
 import com.spring.specfarm.repository.BrchRepository;
 import com.spring.specfarm.repository.LostRepository;
 import com.spring.specfarm.repository.NoticeRepository;
@@ -26,14 +28,17 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
 	NoticeRepository noticeRepository;
+	
+	@Autowired
+	LostMapper lostMapper;
 
 	@Override
-	public void saveBrch(List<Brch> brchList) {
+	public void saveBrchs(List<Brch> brchList) {
 		brchRepository.saveAll(brchList);
 	}
 
 	@Override
-	public List<Brch> getBrch() {
+	public List<Brch> getBrchs() {
 		List<Brch> list = brchRepository.findAll();
 		return list;
 	}
@@ -44,11 +49,45 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Lost> getLosts() {
-		List<Lost> list = lostRepository.findAll(Sort.by(Sort.Direction.DESC, "lostDate"));;
+	public List<Map<String, Object>> getLosts() {
+		List<Map<String, Object>> list = lostMapper.findLost();
 		return list;
 	}
 
+	@Override
+	public List<Map<String, Object>> getSearchLosts(String searchType, String searchText) {
+		List<Map<String, Object>> lostList = new ArrayList<>();
+		
+		switch (searchType) {
+		case "전체":
+			lostList = lostMapper.findLostAll(searchText);
+			break;
+			
+		case "지역":
+			lostList = lostMapper.findLostBrchName(searchText);
+			break;
+
+	      case "분실물 목록":
+	    	  lostList = lostMapper.findLostCatAndItem(searchText);
+	        break;
+
+	      case "분실 장소":
+	    	  lostList = lostMapper.findLostLoc(searchText);
+	        break;
+
+	      case "분실 일자":
+	        lostList = lostMapper.findLostDate(searchText);
+			break;
+
+		default:
+			break;
+		}
+
+		return lostList;
+	}
+	
+	//========================================================================================//
+	
 	@Override
 	public int insertNotice(Notice notice) {
 		noticeRepository.save(notice);

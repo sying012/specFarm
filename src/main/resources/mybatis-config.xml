@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+		<!-- 쿼리 결과 null 리턴됐을 때 처리방식 지정 -->
+		<!-- 결과 null일 때 모든 컬럼의 값을 null로 설정 -->
+		<setting name="callSettersOnNulls" value="true"></setting>
+		<!-- 쿼리 파라미터가 null일 때 Null처리 방식 지정 -->
+		<setting name="jdbcTypeForNull" value="NULL"></setting>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.spring.specfarm.common.CamelHashMap" alias="camelHashMap"></typeAlias>
+	</typeAliases>
+</configuration>

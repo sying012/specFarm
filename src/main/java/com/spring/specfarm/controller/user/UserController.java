@@ -5,7 +5,6 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,10 +45,16 @@ public class UserController {
 		User telCheck = userService.telCheck(user);
 
 		if (telCheck == null) {
-			return "success";
+			String numStr = sendSMS(user);
+			if (numStr != null || numStr != "") {
+				return numStr;
+			}
+
 		} else {
 			return "exist";
 		}
+
+		return "fail";
 	}
 
 	@PostMapping("/join")
@@ -57,7 +62,10 @@ public class UserController {
 		try {
 			user.setUserPw(passwordEncoder.encode(user.getUserPw()));
 			User joinUser = userService.join(user);
-			return ResponseEntity.ok().body("success");
+			if (joinUser != null) {
+				return ResponseEntity.ok().body("success");
+			} else 
+				return ResponseEntity.ok().body("fail");
 		} catch (Exception e) {
 			ResponseDTO<UserDTO> response = new ResponseDTO<>();
 			response.setError("join failed");
@@ -114,8 +122,8 @@ public class UserController {
 
 	// coolsms
 	@PostMapping("/check/sendSMS")
-	public String sendSMS(@RequestBody String phoneNumber) {
-		System.out.println(phoneNumber);
+	public String sendSMS(@RequestBody User user) {
+		String phoneNumber = user.getUserTel();
 
 		Random rand = new Random();
 		String numStr = "";
@@ -126,7 +134,7 @@ public class UserController {
 
 		System.out.println("수신자 번호 : " + phoneNumber);
 		System.out.println("인증번호 : " + numStr);
-		userService.certifiedPhoneNumber(phoneNumber, numStr);
+//		userService.certifiedPhoneNumber(phoneNumber, numStr);
 		return numStr;
 	}
 

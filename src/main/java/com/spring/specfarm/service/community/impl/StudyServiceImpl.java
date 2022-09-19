@@ -1,5 +1,7 @@
 package com.spring.specfarm.service.community.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,7 @@ public class StudyServiceImpl implements StudyService {
 
 	@Override
 	public int insertStudy(Study study) {
-		System.out.println("22222222222222222");
 		studyRepository.save(study);
 		return study.getStudyIdx();
 	}
-
 }

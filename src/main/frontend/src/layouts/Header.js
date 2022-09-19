@@ -2,6 +2,7 @@ import "../styles/layouts/Header.css";
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { boxSizing, display } from "@mui/system";
+import { logout } from "../service/ApiService";
 
 const Header = () => {
   const [commHover, setcommHover] = useState(0);
@@ -9,6 +10,8 @@ const Header = () => {
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
   const [skillsHover, setSkillsHover] = useState(0);
+
+  const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
 
   return (
     <header className="header">
@@ -57,7 +60,7 @@ const Header = () => {
               })}
               to="/skills"
             >
-              Skills(미정)
+              성장창고
             </NavLink>
             {skillsHover ? (
               <div
@@ -68,10 +71,10 @@ const Header = () => {
               >
                 <div className="skillsCat">
                   <Link className="skillsItem" to="/skills/jobcafe">
-                    일자리 CaFe
+                    일자리카페
                   </Link>
                   <Link className="skillsItem" to="/skills/findcourse">
-                    직Up훈련탐색
+                    직업훈련탐색
                   </Link>
                 </div>
               </div>
@@ -181,10 +184,26 @@ const Header = () => {
         </nav>
         <div className="tailwrap">
           <div className="loginbtn">
-            <Link to="/login">로그인</Link>
+            {!isAuthenticated ? (
+              <Link to="/login" id="loginLink">
+                로그인
+              </Link>
+            ) : (
+              <Link to="/" id="loginLink" onClick={logout}>
+                로그아웃
+              </Link>
+            )}
           </div>
           <div className="joinbtn">
-            <Link to="/join">회원가입</Link>
+            {!isAuthenticated ? (
+              <Link to="/join" id="joinLink">
+                회원가입
+              </Link>
+            ) : (
+              <Link to="/mypage" id="joinLink">
+                마이페이지
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 package com.spring.specfarm.service.community;
 
+import java.util.List;
+
 import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 

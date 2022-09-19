@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -154,6 +153,20 @@ public class CourseController {
         
         String jsonStr = resultResponse.toString(4);
         
+//        byte[] euckrStringBuffer  = jsonStr.getBytes(Charset.forName("euc-kr"));
+//        
+//        Charset euckrCharset = Charset.forName("euc-kr");
+//        CharBuffer charBuffer = euckrCharset.decode(ByteBuffer.wrap(euckrStringBuffer));
+//        String decodedHelloString = charBuffer.toString();
+//
+//
+//        byte[] utf8StringBuffer = decodedHelloString.getBytes("utf-8");
+//
+//        System.out.println();
+//        System.out.println("utf-8 - length : " + utf8StringBuffer.length);
+//        String decodedFromUtf8 = new String(utf8StringBuffer, "utf-8");
+//        System.out.println("String from utf-8 : " + decodedFromUtf8);
+        
 //        System.out.println(jsonStr);
 		
         return jsonStr;
@@ -178,11 +191,12 @@ public class CourseController {
         
 //        	System.out.println("Response code: " + conn.getResponseCode());
 	        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
+	        
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "EUC-KR"));
 	        } else {
-	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "EUC-KR"));
 	        }
 	        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
 	        StringBuilder sb = new StringBuilder();
@@ -194,7 +208,7 @@ public class CourseController {
 	        rd.close();
 	        conn.disconnect();
 	        // 11. 전달받은 데이터 확인.
-	//        System.out.println(sb.toString());
+//	        System.out.println(sb.toString());
 	        
 	        // 12. String 형태로 변환된 전달받은 xml 데이터 변수에 저장
 	        String xmlStr = sb.toString();
@@ -202,7 +216,7 @@ public class CourseController {
 	        json = XML.toJSONObject(xmlStr);
 	        
 	        String jsonStr = json.toString(4);
-//	        System.out.println(json);
+//	        System.out.println(jsonStr);
 	        objChk = jsonStr;
 	        
 	        
@@ -212,7 +226,7 @@ public class CourseController {
 	        	} 
 			}
 	        
-//          System.out.println(jsonStr);
+//          System.out.println(objChk);
           
 		} while (objChk.contains("HRDNet") == false);
         // 14. indent 4를 넣어 문자열의 개행과 공백을 분리하여 보기 좋게 변환
@@ -240,9 +254,9 @@ public class CourseController {
             // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
             BufferedReader rd;
             if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "EUC-KR"));
             } else {
-                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "EUC-KR"));
             }
             // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
             StringBuilder sb = new StringBuilder();

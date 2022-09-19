@@ -41,8 +41,8 @@ public class Study {
 	
 	private String studyTel;
 	
-	@ColumnDefault("'Y'")
-	private String studyYn;
+	private String studyYn = "Y";
 	
+	@Column(columnDefinition = "varchar(200)")
 	private String studyImgName;
 }

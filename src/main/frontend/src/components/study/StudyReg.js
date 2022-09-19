@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/study/StudyReg.module.css";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -34,6 +34,7 @@ const StudyReg = () => {
       },
       data: study,
     }).then((response) => {
+      console.log(response);
       navigate(`../${response.data.studyIdx}`);
     });
   };
@@ -44,14 +45,14 @@ const StudyReg = () => {
     console.log(study.get("studyContent"));
     console.log(study.get("studyMaxMember"));
     console.log(study.get("studyTel"));
-    console.log(study.get("studyImgName"));
+    console.log(study.get("imgFile"));
 
     insertStudy(study);
 
     e.preventDefault();
   };
 
-  const [maxMemberCnt, setMaxMemberCnt] = React.useState("");
+  const [maxMemberCnt, setMaxMemberCnt] = useState(5);
 
   const handleChange = (event) => {
     setMaxMemberCnt(event.target.value);
@@ -162,7 +163,7 @@ const StudyReg = () => {
             type="file"
             className={styles.uploadImg}
             id="uploadImg"
-            // name="studyImgName"
+            name="imgFile"
             onChange={(e) => {
               readImage(e.target.files[0]);
             }}

@@ -72,7 +72,7 @@
   height: 100%;
   margin-left: auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -81,6 +81,7 @@
   width: fit-content;
   height: 100%;
   align-items: center;
+  margin-left: 20px;
 }
 
 #mypageLink {
@@ -101,7 +102,7 @@
 }
 
 .tailwrap > div:nth-child(2) {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .tailwrap > div > a:hover {

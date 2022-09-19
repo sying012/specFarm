@@ -1,19 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/share/newShare.module.css";
 import { Stack, Box, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../app-config";
+import axios from "axios";
 
-const NewShare = ({ insertShare }) => {
-  const [shareContent, setShareContent] = useState("");
-  const handleShareContent = (value) => {
-    setShareContent(value);
+const NewShare = () => {
+  const fileList = [];
+  const [singleImage, setSingleImage] = useState(); //이미지
+  const [multiFiles, setMultiFiles] = useState([]); //첨부파일
+  const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
+  const navigate = useNavigate();
+
+  const insertShare = (share) => {
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/community/share/newShare",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: share,
+    })
+      .then((response) => {
+        navigate(`../${response.data.shareIdx}`);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const handleSubmit = (e) => {
-    let share = new FormData(e.target);
-    insertShare(share);
-
     e.preventDefault();
+
+    let share = new FormData(e.target);
+
+    const formObj = {};
+
+    share.forEach((value, key) => {
+      if (key === "shareTitle" || key === "shareContent") formObj[key] = value;
+    });
+    console.log(singleImage);
+    fileList.push(singleImage);
+    console.log(multiFiles);
+    multiFiles.forEach((file) => {
+      fileList.push(file);
+    });
+
+    formObj.uploadFiles = fileList;
+
+    console.log(formObj);
+
+    insertShare(formObj);
   };
 
   const readImage = (file) => {
@@ -29,21 +67,45 @@ const NewShare = ({ insertShare }) => {
       };
 
       reader.readAsDataURL(file);
+      console.log(file);
+      setSingleImage((prev) => file);
     }
   };
 
   const handleFileChange = (e) => {
-    document.getElementById("uploadFileName").value = e.target.value;
+    // 여러개 파일 선택시 하나로 나눠서 배열 담음
+    const tempList = Array.prototype.slice.call(e.target.files);
+    // 첨부파일 이름
+    const newFileNameInput = [];
+
+    const newFiles = [];
+    tempList.forEach((file) => {
+      //console.log(file.name);
+      newFileNameInput.push(file.name);
+      newFiles.push(file);
+      //console.log(newFileNameInput);
+    });
+    setFileNameInput((prev) => [...newFileNameInput]);
+    setMultiFiles((prev) => [...newFiles]);
   };
 
+  useEffect(() => {
+    if (fileNameInput.length > 0) {
+      fileNameInput.forEach((fileInput, index) => {
+        document.getElementById(`uploadFileName${index}`).value = fileInput;
+      });
+    }
+  }, [fileNameInput]);
+
   return (
-    <>
+    <form id="insertShareForm" onSubmit={handleSubmit}>
       <div className={styles.regBox}>
         <div className={styles.imgBox}>
           <img
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
             src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
+            /**src={`http:localhost:8080/upload/${shareImgName}`} */
             alt="img"
             id="shareImgPreview"
             title="사진을 추가하려면 클릭하세요."
@@ -55,6 +117,7 @@ const NewShare = ({ insertShare }) => {
             hidden
             type="file"
             id="fileInput"
+            name="shareImgName"
             onChange={(e) => {
               readImage(e.target.files[0]);
             }}
@@ -62,12 +125,25 @@ const NewShare = ({ insertShare }) => {
           <div className={styles.fileloadBtn}>
             <div className={styles.regBoxBottom}>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <input
-                  className={styles.uploadFileName}
-                  value="첨부파일"
-                  placeholder="첨부파일"
-                  id="uploadFileName"
-                />
+                {fileNameInput.length !== 0 ? (
+                  fileNameInput.map((fileName, index) => (
+                    <input
+                      className={styles.uploadFileName}
+                      value="첨부파일"
+                      placeholder="첨부파일"
+                      id={`uploadFileName${index}`}
+                      key={index}
+                      style={{ display: "block" }}
+                    />
+                  ))
+                ) : (
+                  <input
+                    className={styles.uploadFileName}
+                    value="첨부파일"
+                    placeholder="첨부파일"
+                    id="uploadFileName"
+                  />
+                )}
 
                 <label for="fileUpload" style={{ marginLeft: "0px" }}>
                   파일첨부
@@ -77,6 +153,7 @@ const NewShare = ({ insertShare }) => {
                   multiple={true}
                   onChange={handleFileChange}
                   id="fileUpload"
+                  name="shareFileName"
                 />
               </Stack>
             </div>
@@ -84,100 +161,90 @@ const NewShare = ({ insertShare }) => {
         </div>
 
         <div className={styles.shareForm}>
-          <form onSubmit={handleSubmit} encType="multipary/form-data">
-            <Box
-              component="form"
+          <Box
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: "#8cbf75",
+                },
+              },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="shareTitleInput"
+              label="제목"
+              variant="outlined"
+              name="shareTitle"
+              style={{ marginLeft: "9px", width: "100%" }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {
                     borderColor: "#8cbf75",
                   },
                 },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
+                  },
+                },
               }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="shareTitleInput"
-                label="제목"
-                variant="outlined"
-                name="shareTitle"
-                value={shareContent}
-                style={{ marginLeft: "9px", width: "100%" }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
-                  },
-                }}
-              />
-            </Box>
-            <Box
-              component="form"
+            />
+          </Box>
+          <Box
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "750px" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="shareContentInput"
+              label="내용"
+              multiline
+              rows={15}
+              name="shareContent"
+              style={{ marginLeft: "9px", width: "100%" }}
               sx={{
-                "& .MuiTextField-root": { m: 1, width: "750px" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="shareContentInput"
-                value={shareContent}
-                onChange={handleShareContent}
-                label="내용"
-                multiline
-                rows={15}
-                name="shareContent"
-                style={{ marginLeft: "9px", width: "100%" }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
                   },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
                   },
-                }}
-              />
-            </Box>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "750px" },
+                },
               }}
-              noValidate
-              autoComplete="off"
-            ></Box>
+            />
+          </Box>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1, width: "750px" },
+            }}
+            noValidate
+            autoComplete="off"
+          ></Box>
 
-            <div className={styles.shareBtns}>
-              <Link to="../share">
-                <button className={styles.cancelBtn} type="button">
-                  취소
-                </button>
-              </Link>
-              <Link to="/:id">
-                <button
-                  className={styles.RegBtn}
-                  type="submit"
-                  onClick={() => alert("등록되었습니다.")}
-                >
-                  등록
-                </button>
-              </Link>
-            </div>
-          </form>
+          <div className={styles.shareBtns}>
+            <button
+              className={styles.cancelBtn}
+              type="button"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              취소
+            </button>
+            <button className={styles.RegBtn} type="submit">
+              등록
+            </button>
+          </div>
         </div>
       </div>
-    </>
+    </form>
   );
   //<ShareForm addNewShare={addNewShareHandler}/>
 };

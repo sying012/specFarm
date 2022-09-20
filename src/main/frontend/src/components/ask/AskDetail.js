@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import defaultProfile from "../../images/defaultProfile.png";
-import { useParams, NavLink, useLocation } from "react-router-dom";
+import { useParams, NavLink, useLocation, useNavigate } from "react-router-dom";
 import AskDetailReply from "./AskDetailReply";
 import AskReplyRegBox from "./AskReplyRegBox";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
+import { history } from "../../lib/history";
 
 const AskDetail = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { searchType, searchKeyword, page } =
     location.state !== null
       ? location.state
       : { searchType: null, searchKeyword: null, page: null };
+  console.log(location.state);
 
   const [askReply, setAskReply] = useState([]);
   const [ask, setAsk] = useState({});
@@ -33,6 +36,27 @@ const AskDetail = () => {
       setAskReply(response.data.askReplyList);
     });
   };
+
+  useEffect(() => {
+    const listenBackEvent = () => {
+      navigate("..", {
+        state: {
+          searchType: searchType,
+          searchKeyword: searchKeyword,
+          page: page,
+        },
+        replace: true,
+      });
+    };
+
+    const unlistenHistoryEvent = history.listen(({ action }) => {
+      if (action === "POP") {
+        listenBackEvent();
+      }
+    });
+
+    return unlistenHistoryEvent;
+  }, [searchType, searchKeyword, page, navigate]);
 
   useEffect(() => {
     axios
@@ -96,7 +120,11 @@ const AskDetail = () => {
                 <>
                   <img
                     id="profileImg"
-                    src={ask.user.userProfileName || defaultProfile}
+                    src={
+                      ask.user.userProfileName
+                        ? "/upload/profile/" + ask.user.userProfileName
+                        : defaultProfile
+                    }
                     alt="프로필사진"
                   />
                   {ask.user.userNick}

@@ -3,9 +3,11 @@ import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField, Button, createTheme } from "@mui/material";
 import Editer from "../Editer";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 const AskReg = ({ certNames, insertAsk }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
   const [contentValue, setContentValue] = useState("");
   const [certName, setCertName] = useState("");
   const [askCert, setAskCert] = useState(null);
@@ -81,7 +83,10 @@ const AskReg = ({ certNames, insertAsk }) => {
               <div
                 key={cert.certIdx}
                 className="certItem"
-                onClick={() => setAskCert(cert.certName)}
+                onClick={() => {
+                  setAskCert(cert.certName);
+                  document.querySelector(".disabledCertInput").focus();
+                }}
               >
                 {cert.certName}
               </div>
@@ -126,6 +131,7 @@ const AskReg = ({ certNames, insertAsk }) => {
                 id="standard-basic"
                 label="자격종목"
                 variant="standard"
+                className="disabledCertInput"
                 required
                 onClick={() => {
                   document.querySelector("#outlined-search").focus();

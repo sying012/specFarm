@@ -9,4 +9,9 @@ public interface CertService {
 	
 	//종목코드 리스트 조회
 	List<String> getJmcdList();	
+	
+	//api 정보 db 저장
+	void setCertTestList(List<Map<String, Object>> list);
+	
+//	List<Map<String, Object>> getCertList();
 }

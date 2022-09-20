@@ -14,4 +14,7 @@ public interface CertRepository extends JpaRepository<Cert, Integer> {
 	
 	@Query(value="select distinct(a.jmcd) from t_cert a", nativeQuery=true)
 	List<String> getJmcdList();
+	
+	@Query(value="select ifnull(max(a.certtest_idx), 0) + 1 from t_cert a", nativeQuery=true)
+	int getNextCertTestIndex();
 }

@@ -15,6 +15,7 @@ import styles from "../../styles/mypage/ProfileMdf.module.css";
 
 function ProfileMdf() {
   const [user, setUser] = useState({});
+  const [checkChange, setCheckChange] = useState(false);
 
   useEffect(() => {
     axios({
@@ -57,7 +58,9 @@ function ProfileMdf() {
     }
   }, []);
 
-  const [imageSrc, setImageSrc] = useState();
+  const [imageSrc, setImageSrc] = useState(
+    !user.userProfileName ? "/upload/profile/farmer.png" : null
+  );
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
     // e.target.value = "";
@@ -68,12 +71,14 @@ function ProfileMdf() {
         setImageSrc(reader.result);
         resolve();
       };
+      setCheckChange(true);
     });
   };
 
   // 프로필 삭제 버튼 클릭시 avatar src기본값으로 변경
   function profilePicDeleteHandler() {
     setImageSrc("/upload/profile/farmer.png");
+    setCheckChange(true);
   }
 
   const [nicknameValue, setNicknameValue] = useState("");
@@ -96,15 +101,28 @@ function ProfileMdf() {
     e.preventDefault();
     const data = new FormData(e.target);
     const userNickname = data.get("nickname");
-    const userProfileName = data.get("userProfileName");
+    let userProfileName = data.get("userProfileName");
 
-    console.log(userProfileName);
+    if (user.userNickname !== nicknameValue) {
+      setCheckChange(true);
+    }
 
     if (userNickname === null || userNickname === "") {
       setNicknameError(true);
     } else {
-      console.log(user);
-      handleSubmit({ ...user, profileImage: userProfileName });
+      if (!checkChange) {
+        alert("변경사항이 없습니다.");
+      } else {
+        handleSubmit({
+          ...user,
+          userProfileName:
+            imageSrc === "/upload/profile/farmer.png"
+              ? null
+              : user.userProfileName,
+          profileImage: userProfileName,
+          checkChange: checkChange,
+        });
+      }
     }
   };
 
@@ -186,6 +204,7 @@ function ProfileMdf() {
             theme={theme}
             color="lightgreen"
             value={nicknameValue}
+            inputProps={{ maxLength: 7 }}
             onChange={(e) => {
               setNicknameValue(e.target.value);
             }}

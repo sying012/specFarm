@@ -106,16 +106,16 @@ public class NoticeController {
 	}
 	
 	//Notice 이미지 업로드
-		@PostMapping("/upload/images")
+		@PostMapping("/notice/upload/images")
 		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
 			try {
 					
 				FileUtils fileUtils = new FileUtils();
-				NoticeFile noticeFile  = new NoticeFile();
-				noticeFile.setNoticeFileName(fileUtils.parseFileInfo(session, image, "notice").get("fileName"));
+				
+				String fileName = fileUtils.parseFileInfo(session, image, "cs/notice").get("FileName");
 				
 				Map<String, Object> response = new HashMap<String, Object>();
-				response.put("noticeFile", noticeFile);
+				response.put("file", fileName);
 				
 				return response;
 				

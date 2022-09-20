@@ -133,7 +133,7 @@ const AskReg = ({ certNames, insertAsk }) => {
                 onFocus={() => {
                   document.querySelector("#outlined-search").focus();
                 }}
-                value={askCert}
+                value={askCert || ""}
                 style={{ width: "100%", marginTop: "10px" }}
                 name="askCert"
                 autoComplete="off"
@@ -156,10 +156,10 @@ const AskReg = ({ certNames, insertAsk }) => {
                 id="askContent"
                 name="askContent"
                 value={contentValue || ""}
-                required={true}
               />
               <Editer
                 placeholder="내용을 입력하세요"
+                place="community/ask"
                 value={contentValue || ""}
                 onChange={handleContentValue}
               ></Editer>

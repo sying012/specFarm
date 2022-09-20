@@ -9,7 +9,7 @@ import { useLocation } from "react-router";
 
 Quill.register("modules/imageResize", ImageResize);
 
-const Editer = ({ placeholder, value, ...rest }) => {
+const Editer = ({ placeholder, value, place, ...rest }) => {
   const quillRef = useRef(null);
   const testUrl = useLocation();
   const toolbarOptions = [
@@ -60,11 +60,10 @@ const Editer = ({ placeholder, value, ...rest }) => {
           .insertEmbed(range.index, "image", `/images/loading.gif`);
 
         await axios
-          .post(API_BASE_URL + "/cs/upload/images", formData)
+          .post(API_BASE_URL + `/${place}/upload/images`, formData)
           .then((response) => {
-            console.log(response.data);
-            const url =
-              "/upload/notice/" + response.data.noticeFile.noticeFileName;
+            console.log(response.data.file);
+            const url = `/upload/${place}/` + response.data.file;
             console.log(url);
 
             // 정상적으로 업로드 됐다면 로딩 placeholder 삭제

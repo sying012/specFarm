@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import defaultProfile from "../../images/defaultProfile.png";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useLocation } from "react-router-dom";
 import AskDetailReply from "./AskDetailReply";
 import AskReplyRegBox from "./AskReplyRegBox";
 import axios from "axios";
@@ -8,6 +8,12 @@ import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
 
 const AskDetail = () => {
+  const location = useLocation();
+  const { searchType, searchKeyword, page } =
+    location.state !== null
+      ? location.state
+      : { searchType: null, searchKeyword: null, page: null };
+
   const [askReply, setAskReply] = useState([]);
   const [ask, setAsk] = useState({});
   const { askIdx } = useParams();

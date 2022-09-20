@@ -173,6 +173,7 @@ const AskEdit = ({ certNames, insertAsk }) => {
               />
               <Editer
                 placeholder="내용을 입력하세요"
+                place="community/ask"
                 value={contentValue || ""}
                 onChange={handleContentValue}
               ></Editer>

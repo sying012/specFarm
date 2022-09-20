@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.AskReReply;
 import com.spring.specfarm.entity.AskReply;
+import com.spring.specfarm.entity.NoticeFile;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.AskService;
 
@@ -207,6 +212,27 @@ public class AskController {
 			
 				return response;
 			} catch (Exception e) {
+				Map<String, Object> errorMap = new HashMap<String, Object>();
+				errorMap.put("error",e.getMessage());
+				return errorMap;
+			}
+		}
+		
+		//Notice 이미지 업로드
+		@PostMapping("/upload/images")
+		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
+			try {
+					
+				FileUtils fileUtils = new FileUtils();
+				
+				String fileName = (fileUtils.parseFileInfo(session, image, "community/ask").get("FileName"));
+				
+				Map<String, Object> response = new HashMap<String, Object>();
+				response.put("file", fileName);
+				
+				return response;
+				
+			}catch(Exception e){
 				Map<String, Object> errorMap = new HashMap<String, Object>();
 				errorMap.put("error",e.getMessage());
 				return errorMap;

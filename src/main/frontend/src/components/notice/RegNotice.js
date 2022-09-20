@@ -26,7 +26,7 @@ const RegNotice = ({ insertNotice }) => {
   return (
     <div id="noticeRegContainer">
       <form onSubmit={submitNotice}>
-        <input type="hidden" name="noticeContent" value={noticeContent} />
+        <input type="hidden" name="noticeContent" value={noticeContent || ""} />
         <TextField
           id="standard-basic"
           name="noticeTitle"
@@ -50,6 +50,7 @@ const RegNotice = ({ insertNotice }) => {
         />
         <Editer
           placeholder={"내용"}
+          place="cs/notice"
           value={noticeContent}
           onChange={handleContent}
         ></Editer>

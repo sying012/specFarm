@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AskListItem from "./AskListItem";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Button,
   FormControl,
@@ -15,9 +15,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/lost/Lost.module.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 
 const AskContent = ({ certNames }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [searchType, setSearchType] = useState("자격증");
@@ -61,6 +63,11 @@ const AskContent = ({ certNames }) => {
   }, [page, searchKeyword, searchType]);
 
   useEffect(() => {
+    if (location.state !== null) {
+      setPage(location.state.page);
+      setSearchType(location.state.searchType);
+      setSearchKeyword(location.state.searchKeyword);
+    }
     getAksList();
   }, [page]);
 
@@ -160,6 +167,16 @@ const AskContent = ({ certNames }) => {
       </form>
     );
 
+  const preventGoBack = () => {
+    console.log("Sdfg");
+  };
+  useEffect(() => {
+    window.addEventListener("popstate", preventGoBack);
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+    };
+  }, []);
+
   return (
     <div id="container">
       <div id="boardTop">
@@ -214,9 +231,20 @@ const AskContent = ({ certNames }) => {
       </div>
       <div id="askList" style={{ marginTop: "20px" }}>
         {asks.map((ask) => (
-          <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+          <div
+            key={ask.askIdx}
+            onClick={() =>
+              navigate(`/community/ask/${ask.askIdx}`, {
+                state: {
+                  searchType: searchType,
+                  searchKeyword: searchKeyword,
+                  page: page,
+                },
+              })
+            }
+          >
             <AskListItem ask={ask}></AskListItem>
-          </NavLink>
+          </div>
         ))}
       </div>
       <div className="noticePageNation">

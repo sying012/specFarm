@@ -1,8 +1,9 @@
 import "../styles/layouts/Header.css";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { boxSizing, display } from "@mui/system";
 import { logout } from "../service/ApiService";
+import axios from "axios";
+import { API_BASE_URL } from "../app-config";
 
 const Header = () => {
   const [commHover, setcommHover] = useState(0);
@@ -10,8 +11,25 @@ const Header = () => {
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
   const [skillsHover, setSkillsHover] = useState(0);
+  const [loginedUserId, setLoginedUserId] = useState("");
 
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
+
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "/mypage", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      })
+      .then((response) => {
+        // console.log(response.data.user.userId);
+        setLoginedUserId(response.data.user.userId);
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
+  }, []);
 
   return (
     <header className="header">
@@ -185,12 +203,17 @@ const Header = () => {
         <div className="tailwrap">
           <div className="loginbtn">
             {!isAuthenticated ? (
-              <Link to="/login" id="loginLink">
+              <Link to="/login" id="loginLink" style={{ fontSize: "14px" }}>
                 로그인
               </Link>
             ) : (
-              <Link to="/" id="loginLink" onClick={logout}>
-                로그아웃
+              <Link to="/mypage" id="mypageLink">
+                <img
+                  src="/upload/profile/farmer.png"
+                  alt=""
+                  className="loginedProfileImg"
+                ></img>
+                <div>{loginedUserId}</div>
               </Link>
             )}
           </div>
@@ -200,8 +223,8 @@ const Header = () => {
                 회원가입
               </Link>
             ) : (
-              <Link to="/mypage" id="joinLink">
-                마이페이지
+              <Link to="/" id="logoutLink" onClick={logout}>
+                로그아웃
               </Link>
             )}
           </div>

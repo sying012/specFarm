@@ -29,11 +29,18 @@ const theme = createTheme({
 });
 
 const StudyCard = ({ studyItem }) => {
-  const { studyImg, studyTitle, studyMemCnt, studyState, id } = studyItem;
+  const {
+    studyImgName,
+    studyTitle,
+    studyMemberCnt,
+    studyMaxMember,
+    studyYn,
+    studyIdx,
+  } = studyItem;
 
   return (
     <div className="studyCard">
-      <Link to={"/community/study/" + id}>
+      <Link to={"/community/study/" + studyIdx}>
         <Card
           className="studyCardBody"
           sx={{
@@ -58,7 +65,7 @@ const StudyCard = ({ studyItem }) => {
               className="studyImage"
               component="img"
               height="240"
-              image={studyImg}
+              image={"/upload/study/" + studyImgName}
               alt="스터디 이미지"
               sx={{ objectFit: "unset" }}
             />
@@ -89,15 +96,17 @@ const StudyCard = ({ studyItem }) => {
                   className="studyState"
                   style={{
                     color: "white",
-                    background: studyState ? "#1d5902" : "lightslategrey",
+                    background: studyYn === "Y" ? "#1d5902" : "lightslategrey",
                     fontFamily: "Pretendard-Regular",
                   }}
                 >
-                  {studyState ? "모집" : "완료"}
+                  {studyYn === "Y" ? "모집" : "완료"}
                 </div>
                 <div className="studyMemberCnt">
                   <PeopleAltIcon />
-                  <div className="memberNum">{studyMemCnt}/10</div>
+                  <div className="memberNum">
+                    {studyMemberCnt}/{studyMaxMember}
+                  </div>
                 </div>
               </div>
             </CardContent>

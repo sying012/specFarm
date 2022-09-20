@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,6 +57,43 @@ public class StudyController {
 
 	}
 
+	@GetMapping("")
+	public Map<String, Object> getStudyList(
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable) {
+		try {
+
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			Page<Study> studyList = studyService.getStudyList(pageable);
+
+			resultMap.put("studyList", studyList);
+
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
+	@GetMapping("/getStudy")
+	public Map<String, Object> getStudy(@RequestParam("id") int studyIdx) {
+		try {
+
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			Study study = studyService.getStudy(studyIdx);
+
+			resultMap.put("study", study);
+
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
 	@PostMapping("/register")
 	public Map<String, Object> insertStudy(@ModelAttribute Study study, @AuthenticationPrincipal String userId,
 			HttpSession session, @RequestParam("imgFile") MultipartFile multipartFile) throws IOException {
@@ -62,7 +104,6 @@ public class StudyController {
 			User user = new User();
 			user.setUserId(userId);
 			study.setUser(user);
-			
 
 			String rootPath = session.getServletContext().getRealPath("/");
 
@@ -77,11 +118,13 @@ public class StudyController {
 			// 고유한 파일명 생성
 			// 실제 서버에 저장되는 파일명
 			String uuid = UUID.randomUUID().toString();
-			study.setStudyImgName(uuid + multipartFile.getOriginalFilename());
-			
+			// 파일명에 공백이 있으면 렌더링 시 파일을 못찾아 "_"로 변환
+			String rmSpaceFileName = multipartFile.getOriginalFilename().replace(" ", "_");
+			study.setStudyImgName(uuid + rmSpaceFileName);
+
 			int studyIdx = studyService.insertStudy(study);
 			// 파일 업로드 처리
-			File file = new File(rootPath + attachPath + uuid + multipartFile.getOriginalFilename());
+			File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
 
 			multipartFile.transferTo(file);
 
@@ -90,6 +133,25 @@ public class StudyController {
 			return response;
 		} catch (Exception e) {
 
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
+	@DeleteMapping("/delete")
+	public Map<String, Object> deleteStudy(@RequestParam("id") int studyIdx,
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable) {
+		try {
+
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			Page<Study> studyList = studyService.deleteStudy(studyIdx, pageable);
+
+			resultMap.put("studyList", studyList);
+
+			return resultMap;
+		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error", e.getMessage());
 			return errorMap;

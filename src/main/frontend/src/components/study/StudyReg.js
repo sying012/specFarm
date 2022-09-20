@@ -34,7 +34,7 @@ const StudyReg = () => {
       },
       data: study,
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       navigate(`../${response.data.studyIdx}`);
     });
   };

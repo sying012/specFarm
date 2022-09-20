@@ -23,8 +23,8 @@ public class ShareReReply {
 	@Id
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name = "SHARE_IDX", referencedColumnName = "shareIdx"),
-		@JoinColumn(name = "SHARE_REPLY_IDX", referencedColumnName = "shareReplyIdx")
+		@JoinColumn(name = "SHARE_IDX", referencedColumnName = "SHARE_IDX"),
+		@JoinColumn(name = "SHARE_REPLY_IDX", referencedColumnName = "SHARE_REPLY_IDX")
 	})
 	private ShareReply shareReply;
 	

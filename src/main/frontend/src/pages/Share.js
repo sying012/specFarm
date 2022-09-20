@@ -28,7 +28,7 @@ const Share = () => {
           path="/newShare"
           element={<PrivateRoute component={NewShare} />}
         ></Route>
-        <Route path="/:Id" element={<ShareDetail />}></Route>
+        <Route path="/:shareIdx" element={<ShareDetail />}></Route>
       </Routes>
     </div>
   );

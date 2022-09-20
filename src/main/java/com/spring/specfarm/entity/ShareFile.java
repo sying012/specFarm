@@ -25,4 +25,6 @@ public class ShareFile {
 	
 	@Column(columnDefinition = "varchar(1000)")
 	private String shareFileName;
+	
+	private String originalFileName;
 }

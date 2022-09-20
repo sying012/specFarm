@@ -19,7 +19,7 @@ const ShareDetail = () => {
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "/community/share/getShare?shareIdx=" + shareIdx)
+      .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
       .then((response) => {
         setShare(response.data);
       });

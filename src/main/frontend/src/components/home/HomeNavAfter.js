@@ -15,7 +15,7 @@ const HomeNavAfter = () => {
             <a className="catStyle">자격증 찾기</a>
           </div>
           <div>
-            <a className="catStyle">Skills(미정)</a>
+            <a className="catStyle">성장창고</a>
           </div>
           <div>
             <a className="catStyle">커뮤니티</a>

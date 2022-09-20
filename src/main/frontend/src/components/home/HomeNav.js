@@ -49,7 +49,7 @@ const HomeNav = ({ goClickPage }) => {
               id="2"
               onClick={(e) => goClickPage(e)}
             >
-              Skills(미정)
+              성장창고
             </a>
           </div>
 

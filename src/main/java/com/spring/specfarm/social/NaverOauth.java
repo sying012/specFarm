@@ -70,7 +70,7 @@ public class NaverOauth implements SocialOauth {
 		User user = new User();
 		if (userRepository.findByUserEmail(profile.getResponse().getEmail()) == null) {
 			user.setUserEmail(profile.getResponse().getEmail());
-			user.setUserId("G" + profile.getResponse().getId());
+			user.setUserId("N" + profile.getResponse().getId());
 			user.setUserName(profile.getResponse().getName());
 			user.setUserNick(profile.getResponse().getNickname());
 			user.setUserProfileName(profile.getResponse().getProfile_image());

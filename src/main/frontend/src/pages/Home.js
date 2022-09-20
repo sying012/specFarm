@@ -185,12 +185,17 @@ const Home = () => {
         >
           {show && <HomeNav goClickPage={goClickPage} show={show} />}
           {!show && <HomeNavAfter />}
-          <main
-            className="main"
-            style={{ background: "rgb(250, 250, 250)", height: "90vh" }}
+          <div
+            style={{
+              background: "rgb(250, 250, 250)",
+              width: "100%",
+              height: "100%",
+            }}
           >
-            {pageComponent}
-          </main>
+            <main className="main" style={{ height: "90vh" }}>
+              {pageComponent}
+            </main>
+          </div>
           <Footer />
         </div>
       </div>

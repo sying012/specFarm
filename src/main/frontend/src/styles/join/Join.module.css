@@ -1,5 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans:400");
-@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap&subset=korean");
+.center {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  margin: 0px 15px;
+}
 
 .logo {
   display: flex;

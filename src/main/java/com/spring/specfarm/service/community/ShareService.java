@@ -19,4 +19,8 @@ public interface ShareService {
 	Page<Share> getShareList(Pageable pageable);
 	
 	void insertShareFileList(List<ShareFile> shareFileList);
+	
+	Share shareDetail(int shareIdx);
+	
+//	List<ShareReply> getShareReplyList(int id);
 }

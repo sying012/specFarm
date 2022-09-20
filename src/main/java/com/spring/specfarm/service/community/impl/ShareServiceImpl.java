@@ -35,25 +35,22 @@ public class ShareServiceImpl implements ShareService {
 	ShareReReplyRepository shareReReplyRepository;
 
 	@Override
-	public int insertShare(Share share) {
-		shareRepository.save(share);
-		shareRepository.flush();
-		return share.getShareIdx();
-	}
-
-	@Override
 	public User getUser(String userId) {
 		if(userRepository.findById(userId).isEmpty()) {
 			return null;			
 		} else {
 			return userRepository.findById(userId).get();}
 		}
-
-	@Override
-	public Page<Share> getShareList(Pageable pageable) {
-		return shareRepository.findAll(pageable);
-	}
 	
+	// Insert Share
+	@Override
+	public int insertShare(Share share) {
+		shareRepository.save(share);
+		shareRepository.flush();
+		return share.getShareIdx();
+	}
+
+	// Insert Share File
 	@Override
 	public void insertShareFileList(List<ShareFile> shareFileList) {
 		System.out.println(shareFileList.size());
@@ -65,6 +62,35 @@ public class ShareServiceImpl implements ShareService {
 			shareFileRepository.save(shareFile);
 		}
 	}
+
+	// Share List
+	@Override
+	public Page<Share> getShareList(Pageable pageable) {
+		return shareRepository.findAll(pageable);
+	}
+	
+
+	// Share Detail
+	@Override
+	public Share shareDetail(int shareIdx) {
+		
+		return shareRepository.findById(shareIdx).get();
+	}
+
+	// Share Reply List
+//	@Override
+//	public List<ShareReply> getShareReplyList(int id) {
+//		return shareReplyRepository.findByShareIdx(id);
+//	}
+	
+	
+	// Share ReReply List
+	// Share ReplyIdx
+	// Insert Share Reply
+	// Share ReReplyIdx
+	// Insert Share ReReply
+	// DeleteShare
+	
 }
 
 

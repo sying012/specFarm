@@ -89,6 +89,7 @@ const NewShare = () => {
     setMultiFiles((prev) => [...newFiles]);
   };
 
+  //FileNameInput 파일 수 만큼 생성
   useEffect(() => {
     if (fileNameInput.length > 0) {
       fileNameInput.forEach((fileInput, index) => {
@@ -105,7 +106,7 @@ const NewShare = () => {
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
             src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
-            /**src={`http:localhost:8080/upload/${shareImgName}`} */
+            /**src={`http:localhost:8080/upload/share/${shareImgName}`} */
             alt="img"
             id="shareImgPreview"
             title="사진을 추가하려면 클릭하세요."
@@ -124,30 +125,37 @@ const NewShare = () => {
           />
           <div className={styles.fileloadBtn}>
             <div className={styles.regBoxBottom}>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                {fileNameInput.length !== 0 ? (
-                  fileNameInput.map((fileName, index) => (
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={2}
+                style={{ display: "block" }}
+              >
+                <div>
+                  {fileNameInput.length !== 0 ? (
+                    fileNameInput.map((fileName, index) => (
+                      <input
+                        className={styles.uploadFileName}
+                        value="첨부파일"
+                        placeholder="첨부파일"
+                        id={`uploadFileName${index}`}
+                        key={index}
+                      />
+                    ))
+                  ) : (
                     <input
                       className={styles.uploadFileName}
                       value="첨부파일"
                       placeholder="첨부파일"
-                      id={`uploadFileName${index}`}
-                      key={index}
-                      style={{ display: "block" }}
+                      id="uploadFileName"
                     />
-                  ))
-                ) : (
-                  <input
-                    className={styles.uploadFileName}
-                    value="첨부파일"
-                    placeholder="첨부파일"
-                    id="uploadFileName"
-                  />
-                )}
-
-                <label for="fileUpload" style={{ marginLeft: "0px" }}>
-                  파일첨부
-                </label>
+                  )}
+                </div>
+                <div>
+                  <label for="fileUpload" style={{ marginLeft: "250px" }}>
+                    파일첨부
+                  </label>
+                </div>
                 <input
                   type="file"
                   multiple={true}
@@ -246,7 +254,6 @@ const NewShare = () => {
       </div>
     </form>
   );
-  //<ShareForm addNewShare={addNewShareHandler}/>
 };
 
 export default NewShare;

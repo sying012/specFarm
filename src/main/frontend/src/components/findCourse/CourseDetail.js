@@ -4,13 +4,23 @@ import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findcourse/CourseDetail.module.css";
 
-const CourseDetail = () => {
+const CourseDetail = ({ searchList }) => {
   const { srchTrprId } = useParams();
   const { srchTrprDegr } = useParams();
   const { srchTorgId } = useParams();
   const [course, setCourse] = useState({});
   const [baseInfo, setBaseInfo] = useState({});
   const [detailInfo, setDetailInfo] = useState({});
+
+  useEffect(() => {
+    for (let i = 0; i < searchList.length; i++) {
+      if (baseInfo.trprId === searchList[i].trprId) {
+        setCourse(searchList[i]);
+        // setCourse({...course, realMan: course.realMan.replace(/\B(?=(\d{3})+(?!\d))/g, ","),})
+        console.log(course);
+      }
+    }
+  }, [baseInfo.trprId, searchList]);
 
   useEffect(() => {
     axios({
@@ -20,9 +30,9 @@ const CourseDetail = () => {
         `/skills/findcourse/srchTrprId=${srchTrprId}&srchTrprDegr=${srchTrprDegr}&srchTorgId=${srchTorgId}`,
     })
       .then((response) => {
-        console.log(response.data);
-        setBaseInfo(response.data.courseDetail.HRDNet.inst_base_info);
-        setDetailInfo(response.data.courseDetail.HRDNet.inst_detail.info);
+        console.log(response.data.HRDNet);
+        setBaseInfo(response.data.HRDNet.inst_base_info);
+        setDetailInfo(response.data.HRDNet.inst_detail_info);
       })
       .catch((e) => {
         console.log("catch문 " + e);
@@ -37,44 +47,43 @@ const CourseDetail = () => {
         <p className={styles.courseOrgName}>{baseInfo.inoNm}</p>
         <h1 className={styles.courseName}>{baseInfo.trprNm}</h1>
       </div>
-      {/* <hr className={styles.detailHr} /> */}
       <div className={styles.detailContent}>
         <div className={styles.contentRow}>
           <h4>NCS 직무분류</h4>
           <p>
-            {baseInfo.ncsNm}({baseInfo.ncsCd})
+            {baseInfo.ncsNm || "-"}({baseInfo.ncsCd || "-"})
           </p>
         </div>
         <div className={styles.contentRow}>
           <h4>훈련기간</h4>
           <p>
-            {course.traStartDate} ~ {course.traEndDate} ({detailInfo.trprDegr}
+            {course.traStartDate || "-"} ~ {course.traEndDate || "-"} ({detailInfo.trprDegr || "-"}
             회차)
           </p>
         </div>
         <div className={styles.contentRow}>
           <h4>훈련시간</h4>
           <p>
-            {detailInfo.trDcnt}일, 총 {detailInfo.trtm}시간
+            {detailInfo.totTraingDyct || "-"}일, 총 {detailInfo.totTraingTime || "-"}시간
           </p>
         </div>
-        <div className={styles.contentRow}>
+        {/* <div className={styles.contentRow}>
           <h4>수강생 평균 만족도</h4>
           <p>{course.courseRate || "-"}</p>
-        </div>
+        </div> */}
         <div className={styles.contentRow}>
           <h4>훈련유형</h4>
-          <p>{detailInfo.govBusiNm}</p>
+          <p>{detailInfo.govBusiNm || "-"}</p>
         </div>
         <div className={styles.contentRow}>
           <h4>주관부처</h4>
-          <p>{course.courseCenter}</p>
+          <p>{course.superViser || "-"}</p>
         </div>
 
         <div className={styles.contentRow}>
           <h4>훈련비</h4>
           <p>
-            {course.realMan}원
+            {course.realMan || "-"}원
             <span className={styles.priceDesc}>
               (실제 부담하시게 될 훈련비는 표시된 금액과 다를 수 있습니다.)
             </span>
@@ -90,12 +99,12 @@ const CourseDetail = () => {
 
         <div className={styles.contentRow}>
           <h4>훈련기관명</h4>
-          <p>{course.subTitle}</p>
+          <p>{baseInfo.inoNm}</p>
         </div>
-        <div className={styles.contentRow}>
+        {/* <div className={styles.contentRow}>
           <h4>훈련기관 직종별 취업률</h4>
-          <p>{course.orgHireRate}%</p>
-        </div>
+          <p>{course.orgHireRate || "-"}%</p>
+        </div> */}
         <div className={styles.contentRow}>
           <h4>훈련기관주소</h4>
           <p>
@@ -104,21 +113,21 @@ const CourseDetail = () => {
         </div>
         <div className={styles.contentRow}>
           <h4>훈련기관 전화번호</h4>
-          <p>{baseInfo.trprChapTel}</p>
+          <p>{baseInfo.trprChapTel || "-"}</p>
         </div>
         <div className={styles.contentRow}>
           <h4>훈련기관 이메일</h4>
-          <p>{baseInfo.trprChapEmail}</p>
+          <p>{baseInfo.trprChapEmail || "-"}</p>
         </div>
         <div className={styles.contentRow}>
           <h4>홈페이지</h4>
-          <a href={baseInfo.hpAddr}>{baseInfo.hpAddr}</a>
+          <a href={baseInfo.hpAddr}>{baseInfo.hpAddr || "-"}</a>
         </div>
       </div>
       <Link to="/skills/findcourse" className={styles.detailListBtn}>
         목록 보기
       </Link>
-      <div className={styles.courseDetails}>
+      {/* <div className={styles.courseDetails}>
         <div className={styles.courseDetailCard}>
           <h3>훈련목표</h3>
           <p>{course.courseAim}</p>
@@ -145,7 +154,7 @@ const CourseDetail = () => {
           <h3>과정운영</h3>
           <p>{course.courseManage}</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

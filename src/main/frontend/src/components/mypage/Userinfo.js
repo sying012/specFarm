@@ -72,11 +72,13 @@ function Userinfo({ certs, user }) {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorText, setEmailErrorText] = useState("");
   const [certLCat, setCertLCat] = useState([
+    { id: 0, name: "사업관리" },
     { id: 1, name: "사업관리1" },
     { id: 2, name: "썸띵스페셜1" },
   ]);
   const [certL, setCertL] = useState("");
   const [certMCat, setCertMCat] = useState([
+    { id: 0, name: "사업관리" },
     { id: 1, name: "사업관리2" },
     { id: 2, name: "썸띵스페셜2" },
   ]);

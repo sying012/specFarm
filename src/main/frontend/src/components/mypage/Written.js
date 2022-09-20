@@ -1,8 +1,9 @@
 import { useState } from "react";
 import AskListItem from "../ask/AskListItem";
+import { NavLink } from "react-router-dom";
+import WrittenShare from "./WrittenShare";
 
 import styles from "../../styles/mypage/Written.module.css";
-import { NavLink } from "react-router-dom";
 
 function Written({ asks, shares }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -70,22 +71,7 @@ function Written({ asks, shares }) {
                     key={share.shareIdx}
                     to={`/community/share/${share.shareIdx}`}
                   >
-                    <div className={styles.shareList}>
-                      <img
-                        src={share.itemImg}
-                        alt="나눔이미지 파일"
-                        className={styles.shareFile}
-                      />
-                      <div className={styles.shareContainer}>
-                        <div className={styles.shareListHeader}>
-                          <h1 className={styles.writtenTitle}>
-                            {share.shareTitle}
-                          </h1>
-                          <p className={styles.shareRegDate}>{share.regDate}</p>
-                        </div>
-                        <p className={styles.shareContent}>{share.content}</p>
-                      </div>
-                    </div>
+                    <WrittenShare share={share} />
                   </NavLink>
                 ))}
               </div>

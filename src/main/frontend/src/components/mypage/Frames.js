@@ -13,6 +13,7 @@ import styles from "../../styles/mypage/Frames.module.css";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import WrittenShare from "./WrittenShare";
 
 function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
   const [userInfo, setUserInfo] = useState({});
@@ -167,24 +168,7 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
                     key={share.shareIdx}
                     to={`/community/share/${share.shareIdx}`}
                   >
-                    (
-                    <div className={styles.shareList}>
-                      <img
-                        src={share.itemImg}
-                        alt="나눔이미지 파일"
-                        className={styles.shareFile}
-                      />
-                      <div className={styles.shareContainer}>
-                        <div className={styles.shareListHeader}>
-                          <h1 className={styles.writtenTitle}>
-                            {share.shareTitle}
-                          </h1>
-                          <p className={styles.shareRegDate}>{share.regDate}</p>
-                        </div>
-                        <p className={styles.shareContent}>{share.content}</p>
-                      </div>
-                    </div>
-                    )
+                    <WrittenShare share={share} />
                   </NavLink>
                 </div>
               )

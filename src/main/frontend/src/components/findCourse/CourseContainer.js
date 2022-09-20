@@ -7,11 +7,10 @@ import { useCallback } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
-const CourseContainer = () => {
+const CourseContainer = ({ searchList, setSearchList }) => {
   const [areaItems, setAreaItems] = useState([]);
   const [jobItems, setJobItems] = useState([]);
   const [value, setValue] = useState("");
-  const [searchList, setSearchList] = useState([]);
 
   const changeValue = useCallback((e) => {
     setValue(e.target.value);

@@ -125,6 +125,7 @@
   width: 60px;
   height: 60px;
   margin-right: 10px;
+  object-fit: cover;
 }
 
 .shareListHeader {
@@ -155,6 +156,7 @@
 .shareContent {
   font-size: 0.987em;
   font-weight: 400;
+  color: gray;
   /* 긴 텍스트 줄임말 처리 */
   white-space: normal;
   display: -webkit-box;

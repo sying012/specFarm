@@ -54,13 +54,11 @@ function ProfileMdf() {
 
   useEffect(() => {
     if (Object.keys(user).length !== 0) {
-      setImageSrc(user.userProfileName);
+      setImageSrc(!user.userProfileName ? "/upload/profile/farmer.png" : null);
     }
-  }, []);
+  }, [user]);
 
-  const [imageSrc, setImageSrc] = useState(
-    !user.userProfileName ? "/upload/profile/farmer.png" : null
-  );
+  const [imageSrc, setImageSrc] = useState();
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
     // e.target.value = "";
@@ -78,6 +76,7 @@ function ProfileMdf() {
   // 프로필 삭제 버튼 클릭시 avatar src기본값으로 변경
   function profilePicDeleteHandler() {
     setImageSrc("/upload/profile/farmer.png");
+    document.getElementById("userProfileName").value = "";
     setCheckChange(true);
   }
 
@@ -101,7 +100,9 @@ function ProfileMdf() {
     e.preventDefault();
     const data = new FormData(e.target);
     const userNickname = data.get("nickname");
-    let userProfileName = data.get("userProfileName");
+    const userProfileName = data.get("userProfileName");
+
+    console.log(userProfileName);
 
     if (user.userNickname !== nicknameValue) {
       setCheckChange(true);
@@ -109,20 +110,17 @@ function ProfileMdf() {
 
     if (userNickname === null || userNickname === "") {
       setNicknameError(true);
+      alert("닉네임을 입력하세요.");
     } else {
-      if (!checkChange) {
-        alert("변경사항이 없습니다.");
-      } else {
-        handleSubmit({
-          ...user,
-          userProfileName:
-            imageSrc === "/upload/profile/farmer.png"
-              ? null
-              : user.userProfileName,
-          profileImage: userProfileName,
-          checkChange: checkChange,
-        });
-      }
+      handleSubmit({
+        ...user,
+        userProfileName:
+          imageSrc === "/upload/profile/farmer.png"
+            ? null
+            : user.userProfileName,
+        profileImage: userProfileName,
+        checkChange: checkChange,
+      });
     }
   };
 

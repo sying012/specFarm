@@ -52,9 +52,9 @@ const CourseSelector = ({ areaItems, setAreaItems, jobItems, setJobItems }) => {
           style={
             selectedTab
               ? {
-                  borderBottom: "2px solid #0d0d0d",
+                  borderBottom: "2px solid rgb(150,150,150)",
                 }
-              : { border: "2px solid #0d0d0d", borderBottom: "0" }
+              : { border: "2px solid rgb(150,150,150)", borderBottom: "0" }
           }
         >
           지역선택
@@ -66,8 +66,8 @@ const CourseSelector = ({ areaItems, setAreaItems, jobItems, setJobItems }) => {
           }}
           style={
             selectedTab
-              ? { border: "2px solid #0d0d0d", borderBottom: "0" }
-              : { borderBottom: "2px solid #0d0d0d" }
+              ? { border: "2px solid rgb(150,150,150)", borderBottom: "0" }
+              : { borderBottom: "2px solid rgb(150,150,150)" }
           }
         >
           직무선택

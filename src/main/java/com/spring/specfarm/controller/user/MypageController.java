@@ -27,7 +27,6 @@ import com.spring.specfarm.entity.GetCert;
 import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.AskService;
-import com.spring.specfarm.service.community.ShareService;
 import com.spring.specfarm.service.user.MypageService;
 
 @RestController
@@ -38,9 +37,6 @@ public class MypageController {
 	
 	@Autowired
 	private AskService askService;
-	
-	@Autowired
-	private ShareService shareService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -63,9 +59,6 @@ public class MypageController {
 			responseMap.put("writtenAsks", writtenAsks);
 			
 			List<Share> writtenShares = mypageService.getWrittenShares(loginedUser);
-			for(Share share: writtenShares) {
-//				share.setCountReply(shareService.getShareReplyCount(share.getShareIdx()));
-			}
 			responseMap.put("writtenShares", writtenShares);
 			
 			List<FavCertDTO> favCerts = mypageService.getFavCerts(userId);
@@ -119,8 +112,6 @@ public class MypageController {
 				user.setUserNick(user.getUserNick());
 			}
 			
-			System.out.println(user);
-			
 			mypageService.editUserMdf(user);
 			
 			return ResponseEntity.ok().body("렛츠 수정");
@@ -138,7 +129,6 @@ public class MypageController {
 			if(earnedCert.isEmpty() || !mypageService.getEarnedCert(earnedCert.get(0).getUserId()).isEmpty()) {
 				mypageService.resetEarnedCert(earnedCert.get(0).getUserId());
 			}
-			System.out.println(earnedCert);
 			mypageService.editUserGetCert(earnedCert);
 			
 			return ResponseEntity.ok().body("유저자격증 렛츠 수정");
@@ -199,10 +189,6 @@ public class MypageController {
 			String userPw = userInfo[1];
 			
 			User loginedUser = mypageService.getUser(userId);
-			
-			System.out.println("deactivate" + userPw);
-			System.out.println("deactivate" + userId);
-			System.out.println("deactivate" + loginedUser);
 			
 			if(mypageService.pwCheck(userId, userPw)) {
 				loginedUser.setUserYn("N");

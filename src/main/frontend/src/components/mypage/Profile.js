@@ -37,9 +37,7 @@ function Profile({ certs, user }) {
         </div>
         <div className={styles.profileInfo}>
           <h1 className={styles.nickname}>{user.userNick}</h1>
-          <p className={styles.email}>
-            {user.userEmail || "이메일을 등록해주세요."}
-          </p>
+          <p className={styles.email}>{user.userEmail}</p>
         </div>
         <div>
           <div className={styles.badgeLabel}>

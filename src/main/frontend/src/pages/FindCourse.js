@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { Link, NavLink } from "react-router-dom";
 import CourseContainer from "../components/findCourse/CourseContainer";
@@ -6,6 +6,7 @@ import CourseDetail from "../components/findCourse/CourseDetail";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const FindCourse = () => {
+  const [searchList, setSearchList] = useState([]);
   return (
     <div>
       <div className="titleContainer">
@@ -16,8 +17,19 @@ const FindCourse = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route path="/" element={<CourseContainer />} />
-        <Route path="/srchTrprId=:srchTrprId&srchTrprDegr=:srchTrprDegr&srchTorgId=:srchTorgId" element={<CourseDetail />} />
+        <Route
+          path="/"
+          element={
+            <CourseContainer
+              searchList={searchList}
+              setSearchList={setSearchList}
+            />
+          }
+        />
+        <Route
+          path="/srchTrprId=:srchTrprId&srchTrprDegr=:srchTrprDegr&srchTorgId=:srchTorgId"
+          element={<CourseDetail searchList={searchList} />}
+        />
       </Routes>
     </div>
   );

@@ -22,8 +22,6 @@ public class FileUtils {
 		
 		File directory = new File(rootPath + attachPath);
 		
-		System.out.println(rootPath + attachPath);
-		
 		if(directory.exists() == false) {
 			//서버 루트 경로에 upload 폴더 만들기
 			directory.mkdir();
@@ -36,14 +34,11 @@ public class FileUtils {
 	
 		
 		//파일 업로드 처리
-		System.out.println(1);
-		File file = new File(rootPath + attachPath + uuid + files.getOriginalFilename());
-		System.out.println(2);
+		File file = new File(rootPath + attachPath + uuid + files.getOriginalFilename().replaceAll(" ", "_"));
 		files.transferTo(file);
-		System.out.println(3);
 	
 		Map<String, String> rm = new HashMap<String, String>();
-		rm.put("FileName", uuid + files.getOriginalFilename());
+		rm.put("FileName", uuid + files.getOriginalFilename().replaceAll(" ", "_"));
 		rm.put("FileOrgName", files.getOriginalFilename());
 		return rm;
 	}

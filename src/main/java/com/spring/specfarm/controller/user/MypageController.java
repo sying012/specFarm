@@ -4,25 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.FavCertDTO;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.dto.UserDTO;
 import com.spring.specfarm.entity.Ask;
-import com.spring.specfarm.entity.FavCert;
 import com.spring.specfarm.entity.GetCert;
 import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.AskService;
+import com.spring.specfarm.service.community.ShareService;
 import com.spring.specfarm.service.user.MypageService;
 
 @RestController
@@ -33,6 +38,9 @@ public class MypageController {
 	
 	@Autowired
 	private AskService askService;
+	
+	@Autowired
+	private ShareService shareService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -55,6 +63,9 @@ public class MypageController {
 			responseMap.put("writtenAsks", writtenAsks);
 			
 			List<Share> writtenShares = mypageService.getWrittenShares(loginedUser);
+			for(Share share: writtenShares) {
+//				share.setCountReply(shareService.getShareReplyCount(share.getShareIdx()));
+			}
 			responseMap.put("writtenShares", writtenShares);
 			
 			List<FavCertDTO> favCerts = mypageService.getFavCerts(userId);
@@ -97,11 +108,15 @@ public class MypageController {
 	}
 	
 	@PostMapping("/modify")
-	public ResponseEntity<?> editUserMdf(@RequestBody User user) {
+	public ResponseEntity<?> editUserMdf(@ModelAttribute User user, MultipartFile profileImage, HttpSession session) {
 		try {
+			System.out.println(profileImage.getOriginalFilename());
+			System.out.println("11");
+			FileUtils fileUtils = new FileUtils();
+			user.setUserProfileName(fileUtils.parseFileInfo(session, profileImage, "profile").get("FileName"));
+			System.out.println(user.getUserProfileName());
+			
 			mypageService.editUserMdf(user);
-			
-			
 			
 			return ResponseEntity.ok().body("렛츠 수정");
 		} catch (Exception e) {

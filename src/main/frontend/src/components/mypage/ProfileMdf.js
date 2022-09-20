@@ -55,12 +55,12 @@ function ProfileMdf() {
     if (Object.keys(user).length !== 0) {
       setImageSrc(user.userProfileName);
     }
-  }, [user]);
+  }, []);
 
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState();
   // 프로필 사진 미리보기 띄우기
   const encodeFileToBase64 = (e, file) => {
-    e.target.value = "";
+    // e.target.value = "";
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
@@ -71,13 +71,9 @@ function ProfileMdf() {
     });
   };
 
-  useEffect(() => {
-    console.log(document.getElementById("userProfileName"));
-  }, [imageSrc]);
-
   // 프로필 삭제 버튼 클릭시 avatar src기본값으로 변경
   function profilePicDeleteHandler() {
-    setImageSrc(null);
+    setImageSrc("/upload/profile/farmer.png");
   }
 
   const [nicknameValue, setNicknameValue] = useState("");
@@ -92,7 +88,6 @@ function ProfileMdf() {
       ...user,
       userNick: nicknameValue,
     });
-    console.log(user);
   }, [nicknameValue]);
 
   // form submit 시 닉네임 공란이면 에러 창 띄움
@@ -101,26 +96,37 @@ function ProfileMdf() {
     e.preventDefault();
     const data = new FormData(e.target);
     const userNickname = data.get("nickname");
+    const userProfileName = data.get("userProfileName");
+
+    console.log(userProfileName);
 
     if (userNickname === null || userNickname === "") {
       setNicknameError(true);
     } else {
-      axios({
-        method: "post",
-        url: API_BASE_URL + "/mypage/modify",
-        data: user,
-      })
-        .then((response) => {
-          if (response.data) {
-            console.log(response);
-            alert("변경되었습니다.");
-            window.location.replace("/mypage");
-          }
-        })
-        .catch((e) => {
-          console.log("catch문 " + e);
-        });
+      console.log(user);
+      handleSubmit({ ...user, profileImage: userProfileName });
     }
+  };
+
+  const handleSubmit = (user) => {
+    setUser(user);
+    console.log(user);
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/mypage/modify",
+      data: user,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        if (response.data) {
+          console.log(response);
+          alert("변경되었습니다.");
+          window.location.replace("/mypage");
+        }
+      })
+      .catch((e) => {
+        console.log("catch문 " + e);
+      });
   };
 
   return (
@@ -130,7 +136,11 @@ function ProfileMdf() {
           <h1 className={styles.mdfTitle}>프로필 수정</h1>
           <Avatar
             alt="profile"
-            src={imageSrc || "/upload/profile/farmer.png"}
+            src={
+              imageSrc ||
+              "/upload/profile/" + user.userProfileName ||
+              "/upload/profile/farmer.png"
+            }
             sx={{ width: 160, height: 160 }}
             className={styles.avatar}
           />
@@ -147,6 +157,7 @@ function ProfileMdf() {
               <input
                 hidden
                 id="userProfileName"
+                name="userProfileName"
                 accept="image/*"
                 type="file"
                 onChange={(e) => {

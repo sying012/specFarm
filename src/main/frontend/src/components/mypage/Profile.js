@@ -28,7 +28,7 @@ function Profile({ certs, user }) {
                 src={
                   !user.userProfileName
                     ? "/upload/profile/farmer.png"
-                    : user.userProfileName
+                    : "/upload/profile/" + user.userProfileName
                 }
                 sx={{ width: 140, height: 140 }}
               />
@@ -46,15 +46,16 @@ function Profile({ certs, user }) {
             <p>수확 현황</p>
           </div>
           <div className={styles.badges}>
-            {Object.keys(certs).length !== 0
-            ?certs.map((cert) => (
-              <img
-                key={cert.getCertIdx}
-                src={badgeArr[cert.getCertIdx]}
-                title={cert.certName}
-                alt={cert.certName}
-              />
-            )):(
+            {Object.keys(certs).length !== 0 ? (
+              certs.map((cert) => (
+                <img
+                  key={cert.getCertIdx}
+                  src={badgeArr[cert.getCertIdx]}
+                  title={cert.certName}
+                  alt={cert.certName}
+                />
+              ))
+            ) : (
               <div className={styles.nothingCerts}>
                 자격증 수확하러 갈까요?!
               </div>

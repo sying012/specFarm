@@ -7,7 +7,7 @@ const AskListItem = ({ ask }) => {
       <div id="profile">
         <img
           id="profileImg"
-          src={ask.user.userProfileName || defaultProfile}
+          src={"./upload/profile/" + ask.user.userProfileName || defaultProfile}
           alt="프로필사진"
         />
       </div>

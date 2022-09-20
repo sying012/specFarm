@@ -20,8 +20,9 @@ import { useCallback } from "react";
 const AskContent = ({ certNames }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [update, setUpdate] = useState(false);
   const [count, setCount] = useState(1);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [searchType, setSearchType] = useState("자격증");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [asks, setAsks] = useState([]);
@@ -53,6 +54,7 @@ const AskContent = ({ certNames }) => {
         },
       })
       .then((response) => {
+        console.log("돌았다!!");
         setAsks(response.data.askList.content);
         setCount(response.data.askList.totalPages);
         window.scrollTo(0, 0);
@@ -63,25 +65,27 @@ const AskContent = ({ certNames }) => {
   }, [page, searchKeyword, searchType]);
 
   useEffect(() => {
-    if (location.state !== null) {
+    console.log("key:" + searchKeyword + "/" + update);
+    if (update === true) getAksList();
+  }, [page, update]);
+
+  useEffect(() => {
+    setUpdate(false);
+    if (location.state == null) {
+      setSearchType("자격증");
+      setSearchKeyword("");
+      setPage(1);
+    } else {
       setPage(location.state.page);
       setSearchType(location.state.searchType);
       setSearchKeyword(location.state.searchKeyword);
+      setUpdate(true);
     }
-    getAksList();
-  }, [page]);
+  }, [location.key]);
 
   useEffect(() => {
-    sessionStorage.getItem("searchType") === null
-      ? setSearchType("자격증")
-      : setSearchType(sessionStorage.getItem("searchType"));
-
-    sessionStorage.getItem("searchKeyword") === null
-      ? setSearchKeyword("")
-      : setSearchKeyword(sessionStorage.getItem("searchKeyword"));
-
-    setSearchKeyword(sessionStorage.getItem("searchKeyword"));
-  }, []);
+    setUpdate(true);
+  }, [searchKeyword]);
 
   const submitSearch = (e) => {
     setPage(1);
@@ -166,16 +170,6 @@ const AskContent = ({ certNames }) => {
         />
       </form>
     );
-
-  const preventGoBack = () => {
-    console.log("Sdfg");
-  };
-  useEffect(() => {
-    window.addEventListener("popstate", preventGoBack);
-    return () => {
-      window.removeEventListener("popstate", preventGoBack);
-    };
-  }, []);
 
   return (
     <div id="container">

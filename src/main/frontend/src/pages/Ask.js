@@ -39,6 +39,16 @@ const Ask = () => {
     { certIdx: 7, certName: "화약류제조산업기사" },
     { certIdx: 8, certName: "바이오화학제품제조기사" },
     { certIdx: 9, certName: "바이오화학제품제조산업기사" },
+    { certIdx: 10, certName: "정보처리기사" },
+    { certIdx: 11, certName: "화공기사" },
+    { certIdx: 12, certName: "화공기술사" },
+    { certIdx: 13, certName: "정밀화학기사" },
+    { certIdx: 14, certName: "화학분석기사" },
+    { certIdx: 15, certName: "화학분석기능사" },
+    { certIdx: 16, certName: "화약류제조기사" },
+    { certIdx: 17, certName: "화약류제조산업기사" },
+    { certIdx: 18, certName: "바이오화학제품제조기사" },
+    { certIdx: 19, certName: "바이오화학제품제조산업기사" },
   ]);
 
   return (

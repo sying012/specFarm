@@ -108,13 +108,18 @@ public class MypageController {
 	}
 	
 	@PostMapping("/modify")
-	public ResponseEntity<?> editUserMdf(@ModelAttribute User user, MultipartFile profileImage, HttpSession session) {
+	public ResponseEntity<?> editUserMdf(@ModelAttribute User user, MultipartFile profileImage, Boolean checkChange, HttpSession session) {
 		try {
-			System.out.println(profileImage.getOriginalFilename());
-			System.out.println("11");
-			FileUtils fileUtils = new FileUtils();
-			user.setUserProfileName(fileUtils.parseFileInfo(session, profileImage, "profile").get("FileName"));
-			System.out.println(user.getUserProfileName());
+			if (!profileImage.isEmpty()) {				
+				FileUtils fileUtils = new FileUtils();
+				user.setUserProfileName(fileUtils.parseFileInfo(session, profileImage, "profile").get("FileName"));
+			} 
+			
+			if(checkChange) {
+				user.setUserNick(user.getUserNick());
+			}
+			
+			System.out.println(user);
 			
 			mypageService.editUserMdf(user);
 			

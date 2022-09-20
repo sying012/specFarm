@@ -269,19 +269,19 @@ const PwReset = () => {
       setPwError({ error: true, text: "필수 정보입니다." });
     }
 
-    if (!pwValidationError && userPw !== "" && !pwError && userPwCheck !== "") {
-      setUserInfo({
-        ...userInfo,
-        userPw: userPw,
-      });
-
+    if (
+      !pwValidationError.error &&
+      userPw !== "" &&
+      !pwError.error &&
+      userPwCheck !== ""
+    ) {
       axios({
         method: "post",
         url: API_BASE_URL + "/user/pwReset",
-        data: userInfo,
+        data: { ...userInfo, userPw: userPw },
       }).then((response) => {
         if (response.data === "success") {
-          navigate("/login");
+          navigate("/login", { replace: true });
         }
       });
     }
@@ -521,17 +521,6 @@ const PwReset = () => {
               fontSize: "15px",
               lineHeight: "18px",
               padding: "14px 16px",
-            }}
-            inputProps={{
-              style: {
-                paddingTop: "11px",
-                paddingBottom: "11px",
-              },
-            }}
-            InputLabelProps={{
-              style: {
-                lineHeight: "100%",
-              },
             }}
           >
             비밀번호 재설정

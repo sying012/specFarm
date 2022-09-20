@@ -745,7 +745,7 @@ const JoinPage = () => {
             <Grid item xs={7.5} style={{ paddingBottom: "30px" }}>
               <p>
                 이미 계정이 있으신가요?&nbsp;&nbsp;
-                <NavLink to="/login" className={styles.navLink}>
+                <NavLink to="/login" replace className={styles.navLink}>
                   로그인
                 </NavLink>
               </p>

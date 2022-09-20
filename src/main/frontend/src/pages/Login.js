@@ -1,6 +1,15 @@
-import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  createTheme,
+  FormControlLabel,
+  Grid,
+  styled,
+  TextField,
+} from "@mui/material";
 import axios from "axios";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../app-config";
 import SocialLogin from "../components/login/SocialLogin";
@@ -39,16 +48,37 @@ const Login = () => {
   const [idError, setIdError] = useState(false);
   const [pwError, setPwError] = useState(false);
 
-  // Id Check
-  const idCheck = useCallback((e) => {
-    const userId = e.target.value;
+  const [userId, setUserId] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberUserId"]);
+  const [isRemember, setIsRemember] = useState(false);
 
-    if (userId === null || userId === "") {
-      setIdError(true);
-    } else {
-      setIdError(false);
+  useEffect(() => {
+    setUserId(cookies.rememberUserId);
+    if (cookies.rememberUserId !== undefined) {
+      setIsRemember(true);
     }
   }, []);
+
+  const handleOnChange = (e) => {
+    setIsRemember(e.target.checked);
+    console.log(e.target.checked);
+    if (!e.target.checked) {
+      removeCookie("rememberUserId");
+    }
+  };
+
+  // Id Check
+  const idCheck = useCallback(
+    (e) => {
+      if (userId === null || userId === "") {
+        setIdError(true);
+      } else {
+        setIdError(false);
+        setUserId(userId);
+      }
+    },
+    [userId]
+  );
 
   const idErrorReset = useCallback((e) => {
     setIdError(false);
@@ -73,7 +103,6 @@ const Login = () => {
   const loginSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const userId = data.get("userId");
     const userPw = data.get("userPw");
 
     if (userId === null || userId === "") {
@@ -93,8 +122,8 @@ const Login = () => {
         if (response.data.token) {
           document.getElementById("loginFailAlert").hidden = true;
           sessionStorage.setItem("ACCESS_TOKEN", response.data.token);
-          sessionStorage.setItem("userId", userId);
-          navigate("/");
+          setCookie("rememberUserId", userId);
+          navigate(-1);
         } else {
           document.getElementById("loginFailAlert").hidden = false;
         }
@@ -132,6 +161,10 @@ const Login = () => {
                     lineHeight: "100%",
                   },
                 }}
+                value={userId}
+                onChange={(e) => {
+                  setUserId(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -154,6 +187,24 @@ const Login = () => {
                 InputLabelProps={{
                   style: {
                     lineHeight: "100%",
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                onChange={handleOnChange}
+                control={
+                  <Checkbox
+                    size="small"
+                    style={{ paddingTop: "0px", paddingBottom: "0px" }}
+                    checked={isRemember}
+                  />
+                }
+                label="아이디 저장"
+                sx={{
+                  ".MuiFormControlLabel-label": {
+                    fontSize: "14px",
                   },
                 }}
               />
@@ -199,7 +250,9 @@ const Login = () => {
               className={styles.aTagDiv}
               style={{ textAlign: "center", marginTop: "24px" }}
             >
-              <Link to="/findUser">계정정보 찾기</Link>
+              <Link to="/findUser" replace>
+                계정정보 찾기
+              </Link>
               <Link to="/join" style={{ marginLeft: "50px" }}>
                 회원가입
               </Link>

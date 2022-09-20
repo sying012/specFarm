@@ -110,14 +110,15 @@ public class UserController {
 
 	@PostMapping("/pwReset")
 	public String pwReset(@RequestBody User user) {
+		System.out.println(user);
 		try {
 			user.setUserPw(passwordEncoder.encode(user.getUserPw()));
 			userService.pwReset(user);
 			return "success";
 		} catch (Exception e) {
+			System.out.println(e);
 			return "fail";
 		}
-
 	}
 
 	// coolsms

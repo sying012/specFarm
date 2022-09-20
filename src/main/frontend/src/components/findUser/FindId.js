@@ -79,10 +79,7 @@ const FindId = () => {
     } else {
       setTelError({ error: false, text: "" });
       setTelAuthNumberDisabled(false);
-      setTelAuthNumberError({
-        error: false,
-        text: "",
-      });
+      setTelAuthNumberError({ error: false, text: "" });
 
       axios({
         method: "post",
@@ -102,6 +99,7 @@ const FindId = () => {
   const telAuthNumberCheck = useCallback(
     (e) => {
       const userTelAuthNumber = e.target.value;
+      console.log(parseInt(userTelAuthNumber) !== telAuthNumber);
       if (userTelAuthNumber === null || userTelAuthNumber === "") {
         setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
       } else if (parseInt(userTelAuthNumber) !== telAuthNumber) {
@@ -273,7 +271,7 @@ const FindId = () => {
             }}
           />
           <p
-            id="findId_authAlerts"
+            id="findId_authAlert"
             style={{
               fontSize: "14px",
               lineHeight: "120%",
@@ -328,7 +326,7 @@ const FindId = () => {
         '{userName}'님의 아이디는 {findId}입니다.
       </p>
       <br />
-      <NavLink to="/login" className={styles.goLogin}>
+      <NavLink to="/login" replace className={styles.goLogin}>
         &nbsp;&nbsp;로그인하러 가기 ▶
       </NavLink>
     </div>

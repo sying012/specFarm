@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.specfarm.common.CommUtils;
+import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.service.cert.CertService;
 
 @RestController
@@ -98,6 +99,19 @@ public class CertController {
         certService.setCertficationList(list);
 	 }
 	
+//	@GetMapping("/getCertList")
+//	public Map<String, Object> getCertList() {
+//		List<Map<String, Object>> certList = CertService.getCertList();
+//		
+//
+//		Map<String, Object> resultMap = new HashMap<String, Object>();
+//
+//		resultMap.put("CertList", certList);
+//	
+//
+//		return resultMap;
+//	}
+	
 	 @GetMapping("/testList")
 	 public void testList(String[] args) throws IOException, InterruptedException {
      
@@ -130,7 +144,46 @@ public class CertController {
 	     conn.disconnect();
 	     System.out.println(sb.toString());
 	     
-	     //Thread.sleep(10000);
+	     CommUtils commUtils = new CommUtils();
+	        String json = commUtils.xmlToJson(sb.toString());
+	        
+	        System.out.println(json);
+	        Map<String, JSONObject> map = commUtils.paramMap(json);
+	        
+	        ObjectMapper objectMapper= new ObjectMapper();
+	        
+	        JSONObject jObj = map.get("response");
+	        System.out.println(jObj.toString());
+	        JSONObject body = jObj.getJSONObject("body");
+	        System.out.println(body.toString());
+	        JSONObject items = body.getJSONObject("items");
+	        System.out.println(items.toString());
+	        JSONArray item = items.getJSONArray("item");
+	        System.out.println(item.toString());
+	        
+	        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+	        
+	        if (item != null) {
+	        	
+				int jsonSize = item.length();
+				
+				for (int t = 0; t < jsonSize; t++) {
+
+					Map<String, Object> temp = new HashMap<String, Object>();
+					
+					JSONObject tempobj = item.getJSONObject(t);
+					
+					Iterator it = tempobj.keys();
+					
+					while(it.hasNext()) {
+						String key = it.next().toString();
+						temp.put(key, tempobj.get(key));
+					}
+					
+					list.add(temp);
+				}
+			}
+	        certService.setCertTestList(list);
      }
     }
 	 @GetMapping("/testContent")

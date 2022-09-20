@@ -1,15 +1,13 @@
 package com.spring.specfarm.service.cert.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Cert;
+import com.spring.specfarm.entity.CertTest;
 import com.spring.specfarm.repository.CertRepository;
 import com.spring.specfarm.service.cert.CertService;
 
@@ -46,4 +44,30 @@ public class CertServiceImpl implements CertService{
 	public List<String> getJmcdList() {
 		return certRepository.getJmcdList();
 	}
+
+	@Override
+	public void setCertTestList(List<Map<String, Object>> list) {
+		for(int i = 0; i < list.size(); i++) {
+			CertTest certtest = new CertTest();
+			int certtestIdx = certRepository.getNextCertTestIndex();
+			
+			certtest.setCertTestIdx(certtestIdx);
+			certtest.setImplplannm(list.get(i).get("implplannm").toString());
+			certtest.setDocregstartdt(list.get(i).get("docregstartdt").toString());
+			certtest.setDocregenddt(list.get(i).get("docregenddt").toString());
+			certtest.setDocexamstartdt(list.get(i).get("docexamstartdt").toString());
+			certtest.setDocpassdt(list.get(i).get("docpassdt").toString());
+			certtest.setPracregstartdt(list.get(i).get("pracregstartdt").toString());
+			certtest.setPracregenddt(list.get(i).get("pracregenddt").toString());
+			certtest.setPracexamstartdt(list.get(i).get("pracexamstartdt").toString());
+			certtest.setPracexamenddt(list.get(i).get("pracexamenddt").toString());
+			certtest.setPracpassstartdt(list.get(i).get("pracpassstartdt").toString());
+	}
+    	}
+
+//	@Override
+//	public List<Map<String, Object>> getCertList() {
+//		List<Map<String, Object>> list = certMapper.findLost();
+//		return list;
+//	}
 }

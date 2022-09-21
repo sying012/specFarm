@@ -25,11 +25,7 @@ function Profile({ certs, user }) {
               <Avatar
                 title="프로필 사진을 수정하려면 클릭하세요."
                 alt="profile image"
-                src={
-                  !user.userProfileName
-                    ? "/upload/profile/farmer.png"
-                    : "/upload/profile/" + user.userProfileName
-                }
+                src={"/upload/profile/" + user.userProfileName}
                 sx={{ width: 140, height: 140 }}
               />
             </Badge>

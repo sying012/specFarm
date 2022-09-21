@@ -88,7 +88,14 @@ const JoinPage = () => {
   const idCheck = useCallback((e) => {
     const userId = e.target.value;
 
-    if (userId === null || userId === "") {
+    const idRegex = /^[a-z0-9_-]{4,20}$/;
+
+    if (!idRegex.test(userId)) {
+      setIdError({
+        error: true,
+        text: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.",
+      });
+    } else if (userId === null || userId === "") {
       setIdError({ error: true, text: "필수 정보입니다." });
     } else {
       axios({
@@ -115,7 +122,8 @@ const JoinPage = () => {
   // Password Validation Check
   const pwValidationCheck = useCallback((e) => {
     const userPw = e.target.value;
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,}$/;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{9,16}$/;
 
     if (userPw === null || userPw === "") {
       setPwValidationError({ error: true, text: "필수 정보입니다." });
@@ -250,13 +258,11 @@ const JoinPage = () => {
 
   // Cert Large Category
   const certLCatChange = (e) => {
-    console.log(e.target.value);
     setCertL(e.target.value);
   };
 
   // Cert Middle Category
   const certMCatChange = (e) => {
-    console.log(e.target.value);
     setCertM(e.target.value);
   };
 
@@ -268,6 +274,7 @@ const JoinPage = () => {
   // join submit
   const joinSubmit = (e) => {
     e.preventDefault();
+
     const data = new FormData(e.target);
     const userId = data.get("userId");
     const userPw = data.get("userPw");
@@ -346,7 +353,7 @@ const JoinPage = () => {
         data: userInfo,
       }).then((response) => {
         if (response.data === "success") {
-          navigate("/login");
+          navigate("/login", { replace: true });
         } else {
           console.log(response.data);
         }
@@ -357,7 +364,14 @@ const JoinPage = () => {
   return (
     <div className={styles.margin15}>
       <div className={styles.form}>
-        <form onSubmit={joinSubmit}>
+        <form
+          onSubmit={joinSubmit}
+          onKeyDown={(e) => {
+            if (e.key == "Enter") {
+              e.preventDefault();
+            }
+          }}
+        >
           <div className={styles.logo}>
             <NavLink to="/">specFarm</NavLink>
           </div>

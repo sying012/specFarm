@@ -35,10 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 			//토큰 검사 및 시큐리티 등록
 			if(token != null && !token.equalsIgnoreCase("null")) {
-				System.out.println(token);
 				//username 가져오기
 				String username = jwtTokenProvider.validateAndUsername(token);
-				System.out.println(username);
 				//유효성 검사된 토큰은 security에 등록
 				//인증된 사용자로 설정
 				AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.NO_AUTHORITIES);

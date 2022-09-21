@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../app-config";
 import SocialLogin from "../components/login/SocialLogin";
 import styles from "../styles/login/Login.module.css";
@@ -39,7 +39,7 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const Login = () => {
+const Login = ({ pathname }) => {
   useBeforeRender(() => {
     document.getElementsByTagName("body")[0].style.overflowY = "auto";
   }, []);
@@ -57,15 +57,8 @@ const Login = () => {
     if (cookies.rememberUserId !== undefined) {
       setIsRemember(true);
     }
+    console.log(pathname);
   }, []);
-
-  const handleOnChange = (e) => {
-    setIsRemember(e.target.checked);
-    console.log(e.target.checked);
-    if (!e.target.checked) {
-      removeCookie("rememberUserId");
-    }
-  };
 
   // Id Check
   const idCheck = useCallback(
@@ -122,8 +115,13 @@ const Login = () => {
         if (response.data.token) {
           document.getElementById("loginFailAlert").hidden = true;
           sessionStorage.setItem("ACCESS_TOKEN", response.data.token);
-          setCookie("rememberUserId", userId);
-          navigate(-1);
+          if (isRemember) {
+            setCookie("rememberUserId", userId);
+          } else {
+            removeCookie("rememberUserId");
+          }
+          console.log(pathname);
+          navigate(pathname || "/");
         } else {
           document.getElementById("loginFailAlert").hidden = false;
         }
@@ -161,7 +159,7 @@ const Login = () => {
                     lineHeight: "100%",
                   },
                 }}
-                value={userId}
+                value={userId || ""}
                 onChange={(e) => {
                   setUserId(e.target.value);
                 }}
@@ -193,7 +191,9 @@ const Login = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                onChange={handleOnChange}
+                onChange={(e) => {
+                  setIsRemember(e.target.checked);
+                }}
                 control={
                   <Checkbox
                     size="small"
@@ -250,9 +250,7 @@ const Login = () => {
               className={styles.aTagDiv}
               style={{ textAlign: "center", marginTop: "24px" }}
             >
-              <Link to="/findUser" replace>
-                계정정보 찾기
-              </Link>
+              <Link to="/findUser">계정정보 찾기</Link>
               <Link to="/join" style={{ marginLeft: "50px" }}>
                 회원가입
               </Link>

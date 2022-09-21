@@ -11,6 +11,8 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/home/Home.module.css";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 // mui theme
 const buttonTheme = createTheme({
@@ -21,27 +23,39 @@ const buttonTheme = createTheme({
   },
 });
 
-const Plan = ({ acceptances, tests }) => {
-  const [data, setData] = useState(acceptances.slice(0, 3));
+const Plan = ({ favCertList }) => {
+  let isUser = !!sessionStorage.getItem("ACCESS_TOKEN");
+  const [tests, setTests] = useState([]);
+  const [data, setData] = useState([]);
   const [value, setValue] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    if (value === 0) {
-      setData(acceptances.slice(0, 3));
-    } else {
-      setData(tests.slice(0, 3));
-    }
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/user/getFavCert",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    }).then((response) => {
+      setTests(response.data);
+      setData(response.data.slice(0, 3));
+    });
+  }, [isUser]);
+
+  useEffect(() => {
+    setActiveStep(0);
+    setData(tests.slice(0, 3));
   }, [value]);
 
   // tab content
   function TabPanel(props) {
-    const { children, value, index, dataList, ...other } = props;
+    const { children, value, index, ...other } = props;
     const theme = useTheme();
     const LAST_STEP =
-      dataList.length % 3 === 0
-        ? parseInt(dataList.length / 3)
-        : parseInt(dataList.length / 3) + 1;
+      tests.length % 3 === 0
+        ? parseInt(tests.length / 3)
+        : parseInt(tests.length / 3) + 1;
 
     const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -54,9 +68,8 @@ const Plan = ({ acceptances, tests }) => {
     };
 
     const handleData = (step) => {
-      console.log(step);
-      if (dataList.length !== 0) {
-        setData(dataList.slice(3 * step, 3 * step + 3));
+      if (tests.length !== 0) {
+        setData(tests.slice(3 * step, 3 * step + 3));
       } else {
         setData([]);
       }
@@ -96,7 +109,7 @@ const Plan = ({ acceptances, tests }) => {
                 <Button
                   size="small"
                   onClick={handleNext}
-                  disabled={activeStep === LAST_STEP - 1}
+                  disabled={LAST_STEP === 0 || activeStep === LAST_STEP - 1}
                   theme={buttonTheme}
                   color="green"
                 >
@@ -180,15 +193,28 @@ const Plan = ({ acceptances, tests }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
-            dataList={acceptances}
           >
-            {data.map((accept) => (
-              <p key={accept.id} className={styles.certPlanP}>
-                {accept.title}
-                <br />
-                접수 : {accept.startDate} ~ {accept.endDate}
-              </p>
-            ))}
+            {data &&
+              data.map((accept) => (
+                <p key={accept.certTestIdx} className={styles.certPlanP}>
+                  {accept.implplannm} {accept.certName}
+                  <br />
+                  <span style={{ fontSize: "14px" }}>
+                    접수 :
+                    {accept.docregstartdt &&
+                      accept.docregstartdt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                    ~
+                    {accept.docregenddt &&
+                      accept.docregenddt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                  </span>
+                </p>
+              ))}
           </TabPanel>
           <TabPanel
             value={value}
@@ -198,15 +224,40 @@ const Plan = ({ acceptances, tests }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
-            dataList={tests}
           >
-            {data.map((test) => (
-              <p key={test.id} className={styles.certPlanP}>
-                {test.title}
-                <br />
-                시험 : {test.startDate} ~ {test.endDate}
-              </p>
-            ))}
+            {data &&
+              data.map((test) => (
+                <p key={test.certTestIdx} className={styles.certPlanP}>
+                  {test.implplannm} {test.certName}
+                  <br />
+                  <span style={{ fontSize: "14px" }}>
+                    필기 :
+                    {test.docregstartdt &&
+                      test.docregstartdt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                    ~
+                    {test.docregenddt &&
+                      test.docregenddt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                    / 실기 :
+                    {test.docregstartdt &&
+                      test.docregstartdt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                    ~
+                    {test.docregenddt &&
+                      test.docregenddt.replace(
+                        /(\d{4})(\d{2})(\d{2})/,
+                        " $1.$2.$3 "
+                      )}
+                  </span>
+                </p>
+              ))}
           </TabPanel>
         </Box>
       </div>

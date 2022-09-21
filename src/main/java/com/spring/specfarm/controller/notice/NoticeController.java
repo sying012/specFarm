@@ -155,7 +155,9 @@ public class NoticeController {
 			return errorMap;
 		}
 	}
-		// 분실물
+	
+	//=======================================================================================//
+	// 분실물
 	@GetMapping("/saveLosts")
 	public void saveLosts() throws IOException {
         List<Lost> list = new ArrayList<>();
@@ -249,19 +251,18 @@ public class NoticeController {
 	}
 	
 
-	@GetMapping("/getLosts")
-	public Map<String, Object> getLosts() {
-		List<Map<String, Object>> lostList = noticeService.getLosts();
-		List<Brch> brchList = noticeService.getBrchs();
-
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-
-		resultMap.put("lostList", lostList);
-		resultMap.put("brchList", brchList);
-
-		return resultMap;
-
-	}
+//		@GetMapping("/getLosts")
+//		public Map<String, Object> getLosts() {
+//			List<Map<String, Object>> lostList = noticeService.getLosts();
+//			List<Brch> brchList = noticeService.getBrchs();
+//	
+//			Map<String, Object> resultMap = new HashMap<String, Object>();
+//	
+//			resultMap.put("lostList", lostList);
+//			resultMap.put("brchList", brchList);
+//	
+//			return resultMap;
+//		}
 
 	// 지사	
 	@GetMapping("/saveBrchs")
@@ -327,24 +328,23 @@ public class NoticeController {
 				list.add(temp);
 			}
 		}
-
-		System.out.println(list);
-
 		noticeService.saveBrchs(list);
 	}
 
 	// 분실물 검색
 	@GetMapping("/getLosts/search")
-	public List<Map<String, Object>> getSearchLosts(@RequestParam("searchType") String searchType,
+	public Map<String, Object> getSearchLosts(@RequestParam("searchType") String searchType,
 			@RequestParam("searchText") String searchText) {
-		System.out.println("서치타입" + searchType);
-		System.out.println("서치텍스트" + searchText);
-
 		List<Map<String, Object>> lostList = new ArrayList<>();
-
+		
 		lostList = noticeService.getSearchLosts(searchType, searchText);
-
-		return lostList;
-
+		List<Brch> brchList = noticeService.getBrchs();
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("lostList", lostList);
+		resultMap.put("brchList", brchList);
+		
+		return resultMap;
 	}
 }

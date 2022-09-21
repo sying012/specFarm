@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/dtd/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.specfarm.mapper.FavCertMapper">
+	<select id="getFavCert" parameterType="string" resultType="camelHashMap">
+		SELECT T.*,
+			   C.CERT_NAME
+			FROM T_CERT_TEST T,
+				 T_CERT C,
+				 (SELECT *
+						FROM T_FAV_CERT
+						WHERE USER_ID = "${userId}") F
+			WHERE F.CERT_IDX = T.CERT_TEST_IDX
+			  AND F.CERT_IDX = C.CERT_IDX
+	</select>
+</mapper>

@@ -14,7 +14,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
-const LostList = ({ searchType }) => {
+const LostList = ({
+  searchType,
+  pageNum,
+  onChangePage,
+  searchItem,
+  onChangeSearchItem,
+}) => {
   const [losts, setLosts] = useState([]);
   const [brchs, setBrchs] = useState([]);
   const [page, setPage] = useState(1); // firstPage = 1
@@ -27,16 +33,18 @@ const LostList = ({ searchType }) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: API_BASE_URL + "/cs/getLosts",
+      url: API_BASE_URL + "/cs/getLosts/search",
+      params: {
+        searchType: searchItem.type,
+        searchText: searchItem.text,
+      },
     }).then((response) => {
       setLosts(response.data.lostList);
       setBrchs(response.data.brchList);
     });
-
-    // axios({
-    //   method: "get",
-    //   url: API_BASE_URL + "/cs/saveLosts",
-    // });
+    setSelectSearchType(searchItem.type);
+    setSearchText(searchItem.text);
+    setPage(pageNum);
   }, []);
 
   const handleChange = (e) => {
@@ -47,7 +55,7 @@ const LostList = ({ searchType }) => {
   // tr click => lostItem
   const navigate = useNavigate();
   const goLostItem = (rownum) => {
-    navigate(`./${rownum}`, { state: losts });
+    navigate(`./${rownum}`, { state: { losts: losts } });
   };
 
   // search
@@ -61,8 +69,13 @@ const LostList = ({ searchType }) => {
         searchText: searchText,
       },
     }).then((response) => {
-      setLosts(response.data);
+      setLosts(response.data.lostList);
       setPage(1);
+    });
+
+    onChangeSearchItem({
+      type: selectSearchType,
+      text: searchText,
     });
   };
 
@@ -76,8 +89,13 @@ const LostList = ({ searchType }) => {
         searchText: newText,
       },
     }).then((response) => {
-      setLosts(response.data);
+      setLosts(response.data.lostList);
       setPage(1);
+    });
+
+    onChangeSearchItem({
+      type: selectSearchType,
+      text: newText,
     });
   };
 
@@ -114,6 +132,7 @@ const LostList = ({ searchType }) => {
         disableClearable
         options={brchs.map((option) => option.brchName)}
         onChange={(e, text) => brchSearchSubmit(text)}
+        value={searchText || ""}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -235,6 +254,7 @@ const LostList = ({ searchType }) => {
             page={page}
             onChange={(e, value) => {
               setPage(value);
+              onChangePage(value);
             }}
           />
         </Stack>

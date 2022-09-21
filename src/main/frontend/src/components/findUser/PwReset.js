@@ -281,14 +281,21 @@ const PwReset = () => {
         data: { ...userInfo, userPw: userPw },
       }).then((response) => {
         if (response.data === "success") {
-          navigate("/login", { replace: true });
+          navigate("/login");
         }
       });
     }
   };
 
   let pwResetPage = (
-    <form onSubmit={PwResetNext}>
+    <form
+      onSubmit={PwResetNext}
+      onKeyDown={(e) => {
+        if (e.key == "Enter") {
+          e.preventDefault();
+        }
+      }}
+    >
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <CssTextField
@@ -458,7 +465,15 @@ const PwReset = () => {
   );
 
   let pwResetResultPage = (
-    <form className={styles.pwResetResultDiv} onSubmit={pwResetSubmit}>
+    <form
+      className={styles.pwResetResultDiv}
+      onSubmit={pwResetSubmit}
+      onKeyDown={(e) => {
+        if (e.key == "Enter") {
+          e.preventDefault();
+        }
+      }}
+    >
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <CssTextField

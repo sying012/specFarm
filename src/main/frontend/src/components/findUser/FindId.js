@@ -99,7 +99,6 @@ const FindId = () => {
   const telAuthNumberCheck = useCallback(
     (e) => {
       const userTelAuthNumber = e.target.value;
-      console.log(parseInt(userTelAuthNumber) !== telAuthNumber);
       if (userTelAuthNumber === null || userTelAuthNumber === "") {
         setTelAuthNumberError({ error: true, text: "인증이 필요합니다." });
       } else if (parseInt(userTelAuthNumber) !== telAuthNumber) {
@@ -175,7 +174,14 @@ const FindId = () => {
   };
 
   let findIdPage = (
-    <form onSubmit={findIdSubmit}>
+    <form
+      onSubmit={findIdSubmit}
+      onKeyDown={(e) => {
+        if (e.key == "Enter") {
+          e.preventDefault();
+        }
+      }}
+    >
       <Grid container spacing={3} className={styles.padding}>
         <Grid item xs={12}>
           <CssTextField
@@ -326,7 +332,7 @@ const FindId = () => {
         '{userName}'님의 아이디는 {findId}입니다.
       </p>
       <br />
-      <NavLink to="/login" replace className={styles.goLogin}>
+      <NavLink to="/login" className={styles.goLogin}>
         &nbsp;&nbsp;로그인하러 가기 ▶
       </NavLink>
     </div>

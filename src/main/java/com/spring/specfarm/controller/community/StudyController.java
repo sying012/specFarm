@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -171,6 +172,17 @@ public class StudyController {
 		studyApply.setStudyIdx(studyIdx);
 		studyApply.setAcceptYn(acceptYn);
 
+		Study study = studyService.getStudy(studyIdx);
+		
+		// apply 에 acceptyn 확인하고 +하기
+		study.setStudyMemberCnt(study.getStudyMemberCnt() + 1);
+		
+		if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
+			study.setStudyYn("N");
+		}
+		
+		studyService.insertStudy(study);
+
 		List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
 
 		return studyMemberList;
@@ -180,6 +192,16 @@ public class StudyController {
 	public List<StudyApply> cancelJoin(@RequestParam int studyIdx, @RequestParam String userId) {
 		List<StudyApply> studyMemberList = studyService.cancelJoin(studyIdx, userId);
 
+		Study study = studyService.getStudy(studyIdx);
+		System.out.println(study.getStudyMemberCnt());
+		study.setStudyMemberCnt(study.getStudyMemberCnt() - 1);
+		System.out.println(study.getStudyMemberCnt());
+		if (study.getStudyMaxMember() > study.getStudyMemberCnt()) {
+			study.setStudyYn("Y");
+		}
+
+		studyService.insertStudy(study);
+		System.out.println(study.getStudyMemberCnt());
 		return studyMemberList;
 	}
 
@@ -195,6 +217,34 @@ public class StudyController {
 			resultMap.put("studyList", studyList);
 
 			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
+	@PostMapping("/toggleStudyState")
+	public Map<String, Object> toggleStudyState(@RequestBody Study study,
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable)
+			throws IOException {
+		try {
+			System.out.println(study);
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			if (study.getStudyYn().equals("Y")) {
+				study.setStudyYn("N");
+			} else {
+				study.setStudyYn("Y");
+			}
+			System.out.println("22222222222222222");
+			System.out.println(study);
+			int studyIdx = studyService.insertStudy(study);
+
+			resultMap.put("studyList", studyService.getStudyList(pageable));
+
+			return resultMap;
+
 		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error", e.getMessage());

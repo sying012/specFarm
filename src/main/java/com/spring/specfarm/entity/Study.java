@@ -35,7 +35,7 @@ public class Study {
 	
 	private String studyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));;
 	
-	private int studyMemberCnt = 1;
+	private int studyMemberCnt = 0;
 	
 	private int studyMaxMember;
 	

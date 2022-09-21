@@ -34,25 +34,31 @@ const StudyJoinList = ({
   return (
     <div className={styles.joinListWrapper}>
       {study.user.userId === loginUserId ? (
+        // 로그인 유저가 스터디 개설자인 경우
         <>
           <div className={styles.listName}>
             <p>신청자 목록</p>
             <p className={styles.memberCnt}>{reqMemberCnt}명 신청중</p>
           </div>
           <div className={styles.joinList}>
-            {studyMemberList.map((studyMember, index) => {
-              return (
-                studyMember.acceptYn === 0 && (
-                  <StudyJoinMember
-                    key={index}
-                    study={study}
-                    studyJoin={studyJoin}
-                    cancelJoin={cancelJoin}
-                    studyMember={studyMember}
-                  />
-                )
-              );
-            })}
+            {studyMemberList
+              .slice(0)
+              .reverse()
+              .map((studyMember, index) => {
+                return (
+                  // 스터디 멤버 상태가 0인 경우 신청자 목록에 표시
+                  studyMember.acceptYn === 0 && (
+                    <StudyJoinMember
+                      key={index}
+                      study={study}
+                      studyJoin={studyJoin}
+                      cancelJoin={cancelJoin}
+                      studyMember={studyMember}
+                      loginUserId={loginUserId}
+                    />
+                  )
+                );
+              })}
           </div>
           <div
             className={styles.joinListToggle}
@@ -70,7 +76,44 @@ const StudyJoinList = ({
           </div>
           {toggleList ? (
             <div className={styles.joinList}>
-              {studyMemberList.map((studyMember, index) => {
+              {studyMemberList
+                .slice(0)
+                .reverse()
+                .map((studyMember, index) => {
+                  return (
+                    // 스터디 멤버 상태가 1인 경우 참여자 목록에 표시
+                    studyMember.acceptYn === 1 && (
+                      <StudyJoinMember
+                        key={index}
+                        study={study}
+                        studyJoin={studyJoin}
+                        cancelJoin={cancelJoin}
+                        studyMember={studyMember}
+                        loginUserId={loginUserId}
+                      />
+                    )
+                  );
+                })}
+            </div>
+          ) : (
+            ""
+          )}
+        </>
+      ) : (
+        // 로그인 유저가 스터디 개설자가 아닌 경우 참여자 목록만 표시
+        <>
+          <div
+            className={styles.joinListToggle}
+            style={{ borderRadius: "4px 4px 0 0" }}
+          >
+            <p>참여자 목록</p>
+            <p className={styles.memberCnt}>{joinMemberCnt}명 참여중</p>
+          </div>
+          <div className={styles.joinList}>
+            {studyMemberList
+              .slice(0)
+              .reverse()
+              .map((studyMember, index) => {
                 return (
                   studyMember.acceptYn === 1 && (
                     <StudyJoinMember
@@ -83,34 +126,6 @@ const StudyJoinList = ({
                   )
                 );
               })}
-            </div>
-          ) : (
-            ""
-          )}
-        </>
-      ) : (
-        <>
-          <div
-            className={styles.joinListToggle}
-            style={{ borderRadius: "4px 4px 0 0" }}
-          >
-            <p>참여자 목록</p>
-            <p className={styles.memberCnt}>{joinMemberCnt}명 참여중</p>
-          </div>
-          <div className={styles.joinList}>
-            {studyMemberList.map((studyMember, index) => {
-              return (
-                studyMember.acceptYn === 1 && (
-                  <StudyJoinMember
-                    key={index}
-                    study={study}
-                    studyJoin={studyJoin}
-                    cancelJoin={cancelJoin}
-                    studyMember={studyMember}
-                  />
-                )
-              );
-            })}
           </div>
         </>
       )}

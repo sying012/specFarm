@@ -3,6 +3,12 @@
   align-items: center;
   margin-bottom: 15px;
   margin-left: 10px;
+  justify-content: space-between;
+}
+
+.memberInfo {
+  display: flex;
+  align-items: center;
 }
 
 .partImg {

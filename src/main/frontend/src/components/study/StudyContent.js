@@ -17,6 +17,7 @@ const StudyContent = ({
   const [loginUserId, setLoginUserId] = useState("");
   // const study = studyList[studyList.length - id];
   const [study, setStudy] = useState();
+  const [currentMember, setCurrentMember] = useState();
 
   // console.log(studyMemberList);
 
@@ -74,12 +75,13 @@ const StudyContent = ({
   useEffect(() => {
     // 스터디 멤버 리스트에 있는 유저 중 현재 로그인 된 유저가 있는지 확인
     studyMemberList.forEach((studyMember) => {
-      studyMember.user.userId === loginUserId
-        ? setCheckedMember(studyMember.user)
-        : setCheckedMember();
+      if (studyMember.user.userId === loginUserId) {
+        setCheckedMember(studyMember.user);
+        setCurrentMember(studyMember);
+      }
     });
 
-    console.log(checkedMember);
+    console.log(currentMember);
   }, [checkedMember, loginUserId, studyMemberList]);
 
   // 스터디 삭제
@@ -118,7 +120,7 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setStudyMemberList(response.data);
       })
       .catch((e) => {
@@ -141,7 +143,7 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setStudyMemberList(response.data);
       })
       .catch((e) => {
@@ -152,10 +154,40 @@ const StudyContent = ({
   const studyJoinHandler = () => {
     // 현재 로그인 된 유저가 리스트에 없을 시 acceptYn 을 0으로 보내 신청 대기 상태
     // 리스트에 있을 시 (참여 돼있거나 대기 상태) 참여 취소
-    console.log(checkedMember);
-    checkedMember === undefined
-      ? studyJoin(loginUserId, 0)
-      : cancelJoin(loginUserId);
+    // console.log(checkedMember);
+    if (checkedMember === undefined) {
+      study.studyMemberCnt < study.studyMaxMember
+        ? studyJoin(loginUserId, 0)
+        : alert("정원이 초과되었습니다.");
+    } else {
+      cancelJoin(loginUserId);
+    }
+  };
+
+  const toggleStudyState = () => {
+    // 로그인 유저가 개설자일 경우
+
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/community/study/toggleStudyState",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: study,
+    })
+      .then((response) => {
+        console.log(response);
+        setStudyList(response.data.studyList.content);
+
+        setStudy(
+          response.data.studyList.content.filter(
+            (study) => study.studyIdx === parseInt(id)
+          )[0]
+        );
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
   };
 
   return (
@@ -186,13 +218,14 @@ const StudyContent = ({
                 className={styles.studyContentState}
                 style={{
                   color: "white",
-                  background: study.studyYn === "Y" ? "#1d5902" : "#8cbf75",
+                  background:
+                    study.studyYn === "Y" ? "#1d5902" : "lightslategrey",
                 }}
                 onClick={() => {
-                  // user.userId === loginUserId ?  :
+                  if (study.user.userId === loginUserId) toggleStudyState();
                 }}
               >
-                {study.studyYn === "Y" ? "모집" : "완료"}
+                {study.studyYn === "Y" ? "모집" : "마감"}
               </div>
               <p className={styles.studyTitle}>{study.studyTitle}</p>
             </div>
@@ -213,10 +246,16 @@ const StudyContent = ({
               <p className={styles.studyRegDate}>{study.studyRegDate}</p>
             </div>
             <div className={styles.contactWrapper}>
-              <p>연락수단 👉</p>
-              <a href="#" className={styles.contact}>
-                {study.contact}
-              </a>
+              {currentMember && currentMember.acceptYn === 1 ? (
+                <>
+                  <p>연락수단 👉</p>
+                  <a href={study.studyTel} className={styles.contact}>
+                    {study.studyTel}
+                  </a>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
             <div className={styles.contentWrapper}>
               <pre className={styles.content}>{study.studyContent}</pre>
@@ -250,12 +289,16 @@ const StudyContent = ({
                     studyJoinHandler();
                   }}
                   className={
-                    checkedMember === undefined
+                    currentMember === undefined
                       ? styles.reqBtnStyle
                       : styles.cancelBtnStyle
                   }
                 >
-                  {checkedMember === undefined ? "신청" : "취소"}
+                  {currentMember === undefined
+                    ? "신청"
+                    : currentMember.acceptYn === 0
+                    ? "취소"
+                    : "탈퇴"}
                 </button>
               )}
             </div>

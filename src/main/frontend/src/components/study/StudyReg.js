@@ -54,7 +54,7 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
       },
       data: study,
     }).then((response) => {
-      console.log(response.data.studyMemberList);
+      // console.log(response.data.studyMemberList);
       setStudyList(response.data.studyList.content);
       setStudyMemberList(response.data.studyMemberList);
       navigate(`../${response.data.studyIdx}`);

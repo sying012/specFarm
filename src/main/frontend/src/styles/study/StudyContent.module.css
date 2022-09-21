@@ -135,15 +135,15 @@
 }
 
 .reqBtnStyle {
-  background-color: white;
-  border: 1px solid #1d5902;
-  color: #1d5902;
-}
-
-.cancelBtnStyle {
   background-color: #1d5902;
   border: none;
   color: white;
+}
+
+.cancelBtnStyle {
+  background-color: white;
+  border: 1px solid #1d5902;
+  color: #1d5902;
 }
 
 .badge {

@@ -107,7 +107,7 @@ const StudyCard = ({ studyItem }) => {
                     fontFamily: "Pretendard-Regular",
                   }}
                 >
-                  {studyYn === "Y" ? "모집" : "완료"}
+                  {studyYn === "Y" ? "모집" : "마감"}
                 </div>
                 <div className="studyMemberCnt">
                   <PeopleAltIcon />

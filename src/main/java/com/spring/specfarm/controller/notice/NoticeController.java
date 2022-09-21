@@ -73,9 +73,7 @@ public class NoticeController {
 		try {
 			Map<String, Object> response = new HashMap<String, Object>();
 			
-			User user = new User();
-			user.setUserId(userId);
-			user = userService.idCheck(user);
+			User user = userService.getUser(userId);
 			if(user.getRole().equals("ROLE_ADMIN")) {
 				int noticeIdx = noticeService.insertNotice(notice);
 				
@@ -99,9 +97,9 @@ public class NoticeController {
 			Notice notice = noticeService.getNotice(noticeId);
 			System.out.println("1");
 			Notice prev = noticeService.getPrev(searchKeyword, noticeId);
-			System.out.println(prev);
+			System.out.println("prev");
 			Notice next = noticeService.getNext(searchKeyword, noticeId);
-			System.out.println(next);
+			System.out.println("next");
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("notice", notice);
 			response.put("prev", prev);

@@ -14,15 +14,15 @@ const NoticeDetail = ({ user, deleteNotice }) => {
   const [next, setNext] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { searchKeyword, page } =
+  const { searchKeyword, page, prevUrl } =
     location.state !== null
       ? location.state
-      : { searchKeyword: null, page: null };
+      : { searchKeyword: null, page: null, prevUrl: location.pathname };
 
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/cs/${noticeId}`, {
-        params: { searchKeyword: searchKeyword },
+        params: { searchKeyword: searchKeyword || "" },
       })
       .then((response) => {
         setNotice(response.data.notice);
@@ -35,7 +35,7 @@ const NoticeDetail = ({ user, deleteNotice }) => {
   //뒤로가기 처리
   useEffect(() => {
     const listenBackEvent = () => {
-      navigate("..", {
+      navigate(prevUrl, {
         state: {
           searchKeyword: searchKeyword,
           page: page,
@@ -89,17 +89,39 @@ const NoticeDetail = ({ user, deleteNotice }) => {
             {prev === null ? null : (
               <div>
                 <p>이전글</p>
-                <Link className="otherNotice" to={`/cs/${prev.noticeIdx}`}>
+                <span
+                  className="otherNotice"
+                  onClick={() => {
+                    navigate(`/cs/${prev.noticeIdx}`, {
+                      state: {
+                        searchKeyword: searchKeyword,
+                        page: page,
+                      },
+                      replace: false,
+                    });
+                  }}
+                >
                   {prev.noticeTitle}
-                </Link>
+                </span>
               </div>
             )}
             {next === null ? null : (
               <div>
                 <p>다음글</p>
-                <Link className="otherNotice" to={`/cs/${next.noticeIdx}`}>
+                <span
+                  className="otherNotice"
+                  onClick={() => {
+                    navigate(`/cs/${next.noticeIdx}`, {
+                      state: {
+                        searchKeyword: searchKeyword,
+                        page: page,
+                      },
+                      replace: false,
+                    });
+                  }}
+                >
                   {next.noticeTitle}
-                </Link>
+                </span>
               </div>
             )}
           </div>

@@ -219,7 +219,7 @@ public class ShareController {
 			
 			List<ShareReReply> shareReReplyList = shareService.insertShareReReply(shareReReply);
 			Map<String, Object> response = new HashMap<String, Object>();
-			
+			System.out.println(shareReReplyList);
 			response.put("shareReReplyList", shareReReplyList);
 			
 			return response;

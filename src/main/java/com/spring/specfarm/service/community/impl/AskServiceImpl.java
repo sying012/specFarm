@@ -104,7 +104,7 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public int getAskReReplyIdx(int askIdx, int askReplyIdx) {
-		return askReReplyRepository.getAskReplyIdx(askIdx, askReplyIdx);
+		return askReReplyRepository.getAskReReplyIdx(askIdx, askReplyIdx);
 	}
 
 	@Override

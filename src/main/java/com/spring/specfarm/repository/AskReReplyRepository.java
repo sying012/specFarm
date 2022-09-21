@@ -15,5 +15,5 @@ public interface AskReReplyRepository extends JpaRepository<AskReReply, AskReRep
 	List<AskReReply> findByAskReply(AskReply AakReply);
 
 	@Query(value="SELECT IFNULL(MAX(ASK_RE_REPLY_IDX), 0) + 1 FROM T_ASK_RE_REPLY WHERE ASK_IDX = :askIdx AND ASK_REPLY_IDX = :askReplyIdx",nativeQuery=true)
-	int getAskReplyIdx(@Param("askIdx") int askIdx, @Param("askReplyIdx") int askReplyIdx);
+	int getAskReReplyIdx(@Param("askIdx") int askIdx, @Param("askReplyIdx") int askReplyIdx);
 }

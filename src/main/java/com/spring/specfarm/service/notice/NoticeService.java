@@ -28,8 +28,10 @@ public interface NoticeService {
 
 	Notice getNotice(int noticeId);
 
-	Notice getNext(int noticeId);
+	Notice getNext(String searchKeyword, int noticeId);
 
-	Notice getPrev(int noticeId);
+	Notice getPrev(String searchKeyword, int noticeId);
+
+	void deleteNotice(String noticeIdx);
 
 }

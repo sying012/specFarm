@@ -105,13 +105,19 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public Notice getPrev(int noticeId) {
-		return noticeRepository.findTopByNoticeIdxGreaterThanOrderByNoticeIdxAsc(noticeId);
+	public Notice getPrev(String searchKeyword, int noticeId) {
+		return noticeRepository.findTopByNoticeTitleContainingAndNoticeIdxGreaterThanOrderByNoticeIdxAsc(searchKeyword, noticeId);
 	}
 
 	@Override
-	public Notice getNext(int noticeId) {
-		return noticeRepository.findTopByNoticeIdxLessThanOrderByNoticeIdxDesc(noticeId);
+	public Notice getNext(String searchKeyword, int noticeId) {
+		return noticeRepository.findTopByNoticeTitleContainingAndNoticeIdxLessThanOrderByNoticeIdxDesc(searchKeyword,noticeId);
+	}
+
+	@Override
+	public void deleteNotice(String noticeIdx) {
+		noticeRepository.deleteById(Integer.parseInt(noticeIdx));
+		
 	}
 
 }

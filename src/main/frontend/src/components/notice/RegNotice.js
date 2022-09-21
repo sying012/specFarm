@@ -25,7 +25,12 @@ const RegNotice = ({ insertNotice }) => {
 
   return (
     <div id="noticeRegContainer">
-      <form onSubmit={submitNotice}>
+      <form
+        onSubmit={submitNotice}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
+      >
         <input type="hidden" name="noticeContent" value={noticeContent || ""} />
         <TextField
           id="standard-basic"

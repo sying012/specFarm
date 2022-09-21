@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import askWriteTop from "../../images/askWriteTop.png";
 import askWriteBottom from "../../images/askWriteBottom.png";
 import { TextField, Button, createTheme } from "@mui/material";
@@ -103,7 +103,9 @@ const AskReg = ({ certNames, insertAsk }) => {
             <form
               onSubmit={handleSubmit}
               id="regAskForm"
-              encType="multipary/form-data"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") e.preventDefault();
+              }}
             >
               <TextField
                 id="standard-basic"

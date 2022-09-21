@@ -52,7 +52,11 @@ const AskDetailReply = ({ reply }) => {
       <div id="askReplyBox" className="askReplyBox">
         <img
           id="profileImg"
-          src={reply.user.userProfileName || defaultProfile}
+          src={
+            reply.user.userProfileName
+              ? "/upload/profile/" + reply.user.userProfileName
+              : defaultProfile
+          }
           alt="프로필사진"
         />
         <div id="replyBox">

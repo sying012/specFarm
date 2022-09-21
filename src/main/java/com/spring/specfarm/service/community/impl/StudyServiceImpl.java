@@ -1,12 +1,17 @@
 package com.spring.specfarm.service.community.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Study;
+import com.spring.specfarm.entity.StudyApply;
+import com.spring.specfarm.entity.StudyApplyId;
 import com.spring.specfarm.entity.User;
+import com.spring.specfarm.repository.StudyApplyRepository;
 import com.spring.specfarm.repository.StudyRepository;
 import com.spring.specfarm.repository.UserRepository;
 import com.spring.specfarm.service.community.StudyService;
@@ -19,6 +24,9 @@ public class StudyServiceImpl implements StudyService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	StudyApplyRepository studyApplyRepository;
 
 	@Override
 	public User getUser(String userId) {
@@ -49,5 +57,29 @@ public class StudyServiceImpl implements StudyService {
 	public Page<Study> deleteStudy(int studyIdx, Pageable pageable) {
 		studyRepository.deleteById(studyIdx);
 		return studyRepository.findAll(pageable);
+	}
+
+	@Override
+	public List<StudyApply> insertStudyMember(StudyApply studyApply) {
+		studyApplyRepository.save(studyApply);
+		return studyApplyRepository.findByStudyIdx(studyApply.getStudyIdx());
+	}
+
+	@Override
+	public List<StudyApply> getStudyMemberList(int studyIdx) {
+		
+		return studyApplyRepository.findByStudyIdx(studyIdx);
+	}
+
+	@Override
+	public List<StudyApply> cancelJoin(int studyIdx, String userId) {
+		StudyApplyId studyApplyId = new StudyApplyId();
+		
+		studyApplyId.setStudyIdx(studyIdx);
+		studyApplyId.setUser(userId);
+		System.out.println(studyApplyId);
+		studyApplyRepository.deleteById(studyApplyId);
+		
+		return studyApplyRepository.findByStudyIdx(studyIdx);
 	}
 }

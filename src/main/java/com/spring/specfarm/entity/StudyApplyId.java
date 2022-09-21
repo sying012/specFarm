@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class StudyApplyId implements Serializable{
 
-	private int studyIdx;
+	private String user;
 	
-	private String userId;
+	private int studyIdx;
 }

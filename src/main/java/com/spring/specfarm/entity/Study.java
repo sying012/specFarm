@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import lombok.Data;
 
 @Entity

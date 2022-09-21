@@ -119,87 +119,11 @@
   margin-left: 5px;
 }
 
-.joinListWrapper {
-  background-color: rgba(107, 83, 67, 0.1);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  border-radius: 4px;
-}
-
-.listName {
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  padding: 10px;
-  flex-direction: column;
-  background-color: #97be7d;
-  box-sizing: border-box;
-  border-radius: 4px 4px 0 0;
-}
-
-.listName > * {
-  color: white;
-}
-
-.memberCnt {
-  font-size: 12px;
-  margin-left: auto;
-  margin-right: 5px;
-  margin-top: 5px;
-}
-
-.joinListToggle {
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  padding: 10px;
-  flex-direction: column;
-  background-color: lightgrey;
-  box-sizing: border-box;
-  border-radius: 4px 4px 0 0;
-}
-
-.joinListToggle:hover {
-  cursor: pointer;
-  color: rgb(243, 243, 243);
-}
-
-.joinList {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background-color: rgb(243, 243, 243);
-  padding: 15px 5px;
-  border-radius: 0 0 4px 4px;
-}
-
-.participant {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  margin-left: 10px;
-}
-
-.partImg {
+.makerImg {
   width: 40px;
   height: 40px;
   border-radius: 100%;
   margin-right: 17px;
-}
-
-.partId {
-  font-size: 18px;
-}
-
-.byebtn {
-  margin-left: auto;
-  margin-right: 15px;
 }
 
 .btnWrapper > button {

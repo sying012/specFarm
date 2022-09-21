@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const theme = createTheme({
   typography: {
@@ -38,6 +39,8 @@ const StudyCard = ({ studyItem }) => {
     studyIdx,
   } = studyItem;
 
+  // console.log(studyImgName);
+
   return (
     <div className="studyCard">
       <Link to={"/community/study/" + studyIdx}>
@@ -65,7 +68,11 @@ const StudyCard = ({ studyItem }) => {
               className="studyImage"
               component="img"
               height="240"
-              image={"/upload/study/" + studyImgName}
+              image={
+                studyImgName !== null
+                  ? "/upload/study/" + studyImgName
+                  : defaultStudyImg
+              }
               alt="스터디 이미지"
               sx={{ objectFit: "unset" }}
             />

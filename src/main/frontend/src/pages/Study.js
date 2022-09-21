@@ -11,7 +11,9 @@ import { API_BASE_URL } from "../app-config";
 
 const Study = () => {
   const [studyList, setStudyList] = useState([]);
+  const [studyMemberList, setStudyMemberList] = useState([]);
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
 
   const getStudyList = useCallback(() => {
     axios
@@ -26,7 +28,7 @@ const Study = () => {
       .then((response) => {
         // console.log(response.data);
         setStudyList(response.data.studyList.content);
-        // setCount(response.data.askList.totalPages);
+        setCount(response.data.studyList.totalPages);
         // window.scrollTo(0, 0);
       })
       .catch((e) => {
@@ -36,7 +38,7 @@ const Study = () => {
 
   useEffect(() => {
     getStudyList();
-  }, []);
+  }, [page]);
 
   return (
     <div>
@@ -48,17 +50,37 @@ const Study = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route path="/" element={<StudyMain studyList={studyList} />}></Route>
+        <Route
+          path="/"
+          element={
+            <StudyMain
+              studyList={studyList}
+              page={page}
+              setPage={setPage}
+              count={count}
+            />
+          }
+        ></Route>
         <Route
           path="/:id"
           element={
-            <StudyContent studyList={studyList} setStudyList={setStudyList} />
+            <StudyContent
+              setStudyList={setStudyList}
+              studyMemberList={studyMemberList}
+              setStudyMemberList={setStudyMemberList}
+            />
           }
         ></Route>
 
         <Route
           path="/register"
-          element={<PrivateRoute component={StudyReg} />}
+          element={
+            <PrivateRoute
+              component={StudyReg}
+              setStudyList={setStudyList}
+              setStudyMemberList={setStudyMemberList}
+            />
+          }
         />
       </Routes>
     </div>

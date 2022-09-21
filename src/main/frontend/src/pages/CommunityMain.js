@@ -99,19 +99,25 @@ const CommunityMain = () => {
           <div className="subtitlewrap">입구</div>
         </NavLink>
       </div>
-      <div className="commSubtitle">
-        <p>인기 품앗이👨‍👨‍👧‍👧</p>
-      </div>
+      <NavLink to="study">
+        <div className="commSubtitle">
+          <p>인기 품앗이👨‍👨‍👧‍👧</p>
+        </div>
+      </NavLink>
       <div className="popStudyContainer">
         <StudyCardList studyList={studyList} />
       </div>
-      <div className="commSubtitle">
-        <p>물어방 인기글🙋‍♀️</p>
-      </div>
+      <NavLink to="ask">
+        <div className="commSubtitle">
+          <p>물어방 인기글🙋‍♀️</p>
+        </div>
+      </NavLink>
       <div className="popAskContainer">{/* <AskListItem></AskListItem> */}</div>
-      <div className="commSubtitle">
-        <p>나눔장터 인기글🧚‍♀️</p>
-      </div>
+      <NavLink to="share">
+        <div className="commSubtitle">
+          <p>나눔장터 인기글🧚‍♀️</p>
+        </div>
+      </NavLink>
       <div className="popShareContainer">
         <ShareList shareList={shareList} />
       </div>

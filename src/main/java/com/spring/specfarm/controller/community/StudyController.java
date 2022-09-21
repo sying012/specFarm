@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.entity.Study;
+import com.spring.specfarm.entity.StudyApply;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.StudyService;
 
@@ -41,19 +42,11 @@ public class StudyController {
 	StudyService studyService;
 
 	@GetMapping("/getUser")
-	public Map<String, Object> getUser(@AuthenticationPrincipal String userId) {
-		try {
-			User user = studyService.getUser(userId);
+	public User getUser(@AuthenticationPrincipal String userId) {
 
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("user", user);
+		User user = studyService.getUser(userId);
 
-			return resultMap;
-		} catch (Exception e) {
-			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error", e.getMessage());
-			return errorMap;
-		}
+		return user;
 
 	}
 
@@ -94,15 +87,32 @@ public class StudyController {
 		}
 	}
 
+	@GetMapping("/getStudyMemberList")
+	public Map<String, Object> getStudyMemberList(@RequestParam("id") int studyIdx) {
+		try {
+			System.out.println(studyIdx + "studyIdxstudyIdxstudyIdx");
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			List<StudyApply> studyMemberList = studyService.getStudyMemberList(studyIdx);
+
+			resultMap.put("studyMemberList", studyMemberList);
+
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
 	@PostMapping("/register")
 	public Map<String, Object> insertStudy(@ModelAttribute Study study, @AuthenticationPrincipal String userId,
-			HttpSession session, @RequestParam("imgFile") MultipartFile multipartFile) throws IOException {
+			HttpSession session, @RequestParam("imgFile") MultipartFile multipartFile,
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable)
+			throws IOException {
 		try {
 
-			System.out.println(multipartFile.getOriginalFilename());
-
-			User user = new User();
-			user.setUserId(userId);
+			User user = getUser(userId);
 			study.setUser(user);
 
 			String rootPath = session.getServletContext().getRealPath("/");
@@ -113,23 +123,33 @@ public class StudyController {
 				// 서버 루트 경로에 upload 폴더 만들기
 				directory.mkdir();
 			}
-			// 첨부파일 목록 꺼내오기
+			// 첨부파일이 있는 경우에만 DB에 파일이름 저장
+			if (multipartFile.getOriginalFilename() != "") {
 
-			// 고유한 파일명 생성
-			// 실제 서버에 저장되는 파일명
-			String uuid = UUID.randomUUID().toString();
-			// 파일명에 공백이 있으면 렌더링 시 파일을 못찾아 "_"로 변환
-			String rmSpaceFileName = multipartFile.getOriginalFilename().replace(" ", "_");
-			study.setStudyImgName(uuid + rmSpaceFileName);
+				// 고유한 파일명 생성
+				// 실제 서버에 저장되는 파일명
+				String uuid = UUID.randomUUID().toString();
+				// 파일명에 공백이 있으면 렌더링 시 파일을 못찾아 "_"로 변환
+				String rmSpaceFileName = multipartFile.getOriginalFilename().replace(" ", "_");
+				study.setStudyImgName(uuid + rmSpaceFileName);
+
+				// 파일 업로드 처리
+				File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
+
+				multipartFile.transferTo(file);
+			}
 
 			int studyIdx = studyService.insertStudy(study);
-			// 파일 업로드 처리
-			File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
 
-			multipartFile.transferTo(file);
+			Page<Study> studyList = studyService.getStudyList(pageable);
+			StudyApply studyMaker = new StudyApply();
 
+			List<StudyApply> studyMemberList = insertStudyMember(userId, studyIdx, 1);
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("studyIdx", studyIdx);
+			response.put("studyList", studyList);
+			response.put("studyMemberList", studyMemberList);
+
 			return response;
 		} catch (Exception e) {
 
@@ -137,6 +157,30 @@ public class StudyController {
 			errorMap.put("error", e.getMessage());
 			return errorMap;
 		}
+	}
+
+	@GetMapping("/studyJoin")
+	public List<StudyApply> insertStudyMember(@RequestParam String userId, @RequestParam int studyIdx,
+			@RequestParam int acceptYn) {
+
+		User user = getUser(userId);
+
+		StudyApply studyApply = new StudyApply();
+
+		studyApply.setUser(user);
+		studyApply.setStudyIdx(studyIdx);
+		studyApply.setAcceptYn(acceptYn);
+
+		List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
+
+		return studyMemberList;
+	}
+
+	@DeleteMapping("/cancelJoin")
+	public List<StudyApply> cancelJoin(@RequestParam int studyIdx, @RequestParam String userId) {
+		List<StudyApply> studyMemberList = studyService.cancelJoin(studyIdx, userId);
+
+		return studyMemberList;
 	}
 
 	@DeleteMapping("/delete")

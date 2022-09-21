@@ -14,7 +14,7 @@ const theme = createTheme({
   },
 });
 
-const StudyMain = ({ studyList }) => {
+const StudyMain = ({ studyList, page, setPage, count }) => {
   return (
     <div className={styles.studyMainCard}>
       <div className={styles.searchFieldWrapper}>
@@ -44,7 +44,14 @@ const StudyMain = ({ studyList }) => {
 
       <div className={styles.pageNation}>
         <Stack spacing={2}>
-          <Pagination count={10} />
+          <Pagination
+            count={count} //총 페이지 수
+            size="large"
+            page={page} //현재 페이지
+            onChange={(e, p) => {
+              setPage(p);
+            }}
+          />
         </Stack>
       </div>
     </div>

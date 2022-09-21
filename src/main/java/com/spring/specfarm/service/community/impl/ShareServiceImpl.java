@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.ShareFile;
+import com.spring.specfarm.entity.ShareReReply;
+import com.spring.specfarm.entity.ShareReply;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.repository.ShareFileRepository;
 import com.spring.specfarm.repository.ShareReReplyRepository;
@@ -46,6 +48,8 @@ public class ShareServiceImpl implements ShareService {
 	@Override
 	public int insertShare(Share share) {
 		shareRepository.save(share);
+		System.out.println(	"fdjgkjdsfg"+ share.getShareIdx());
+	
 		shareRepository.flush();
 		return share.getShareIdx();
 	}
@@ -73,22 +77,60 @@ public class ShareServiceImpl implements ShareService {
 	// Share Detail
 	@Override
 	public Share shareDetail(int shareIdx) {
-		
 		return shareRepository.findById(shareIdx).get();
 	}
 
 	// Share Reply List
-//	@Override
-//	public List<ShareReply> getShareReplyList(int id) {
-//		return shareReplyRepository.findByShareIdx(id);
-//	}
-	
-	
+	@Override
+	public List<ShareReply> getShareReplyList(int id) {
+		return shareReplyRepository.findByShareIdx(id);
+	}
+
 	// Share ReReply List
+	@Override
+	public List<ShareReReply> getShareReReplyList(int id, int replyIdx) {
+		ShareReply shareReply = new ShareReply();
+		shareReply.setShareIdx(id);
+		shareReply.setShareReplyIdx(replyIdx);
+		return shareReReplyRepository.findByShareReply(shareReply);
+	}
+	
 	// Share ReplyIdx
+	@Override
+	public int getShareReplyIdx(int shareIdx) {
+		return shareReplyRepository.getShareReplyIdx(shareIdx);
+	}
+
 	// Insert Share Reply
+	@Override
+	public List<ShareReply> insertShareReply(ShareReply shareReply){
+		shareReplyRepository.save(shareReply);
+		return shareReplyRepository.findByShareIdx(shareReply.getShareIdx());
+	}
+
 	// Share ReReplyIdx
+	@Override
+	public int getShareReReplyIdx(int shareIdx, int shareReplyIdx) {
+		return shareReReplyRepository.getShareReplyIdx(shareIdx, shareReplyIdx);
+	}
+
 	// Insert Share ReReply
+	@Override
+	public List<ShareReReply> insertShareReReply(ShareReReply shareReReply) {
+		
+		shareReReplyRepository.save(shareReReply);
+		
+		ShareReply shareReply = new ShareReply();
+		
+		shareReply.setShareIdx(shareReReply.getShareReply().getShareReplyIdx());
+
+		shareReply.setShareReplyIdx(shareReReply.getShareReply().getShareReplyIdx());
+		
+		return shareReReplyRepository.findByShareReply(shareReply);
+	}
+	
+	
+	
 	// DeleteShare
 	
 }

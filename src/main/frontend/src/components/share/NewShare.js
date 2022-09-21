@@ -6,12 +6,13 @@ import { API_BASE_URL } from "../../app-config";
 import axios from "axios";
 
 const NewShare = () => {
-  const fileList = [];
+  const fileList = []; // 이미지 + 첨부파일
   const [singleImage, setSingleImage] = useState(); //이미지
   const [multiFiles, setMultiFiles] = useState([]); //첨부파일
   const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
   const navigate = useNavigate();
 
+  // share 글 등록
   const insertShare = (share) => {
     axios({
       method: "post",
@@ -23,6 +24,7 @@ const NewShare = () => {
       data: share,
     })
       .then((response) => {
+        console.log(response);
         navigate(`../${response.data.shareIdx}`);
       })
       .catch((e) => {
@@ -37,12 +39,13 @@ const NewShare = () => {
 
     const formObj = {};
 
+    // key 설정
     share.forEach((value, key) => {
       if (key === "shareTitle" || key === "shareContent") formObj[key] = value;
     });
-    console.log(singleImage);
+    //console.log(singleImage);
     fileList.push(singleImage);
-    console.log(multiFiles);
+    //console.log(multiFiles);
     multiFiles.forEach((file) => {
       fileList.push(file);
     });
@@ -105,7 +108,7 @@ const NewShare = () => {
           <img
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
-            src="https://cdn.pixabay.com/photo/2022/08/18/09/20/houses-7394390__340.jpg"
+            src={`/upload/share/newShareImg.png`}
             /**src={`http:localhost:8080/upload/share/${shareImgName}`} */
             alt="img"
             id="shareImgPreview"
@@ -117,6 +120,7 @@ const NewShare = () => {
           <input
             hidden
             type="file"
+            accept="image/*"
             id="fileInput"
             name="shareImgName"
             onChange={(e) => {
@@ -136,7 +140,7 @@ const NewShare = () => {
                     fileNameInput.map((fileName, index) => (
                       <input
                         className={styles.uploadFileName}
-                        value="첨부파일"
+                        defaultValue={fileName}
                         placeholder="첨부파일"
                         id={`uploadFileName${index}`}
                         key={index}
@@ -145,14 +149,14 @@ const NewShare = () => {
                   ) : (
                     <input
                       className={styles.uploadFileName}
-                      value="첨부파일"
+                      defaultValue="첨부파일"
                       placeholder="첨부파일"
                       id="uploadFileName"
                     />
                   )}
                 </div>
                 <div>
-                  <label for="fileUpload" style={{ marginLeft: "250px" }}>
+                  <label htmlFor="fileUpload" style={{ marginLeft: "250px" }}>
                     파일첨부
                   </label>
                 </div>

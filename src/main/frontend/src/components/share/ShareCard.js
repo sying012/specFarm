@@ -11,7 +11,13 @@ import styles from "../../styles/share/shareCard.module.css";
 import { Link } from "react-router-dom";
 
 const ShareCard = ({ shareItem }) => {
-  const { id, shareTitle, userId, itemImg, shareState } = shareItem;
+  const {
+    shareIdx,
+    shareTitle,
+    user: { userNick },
+    shareImgName,
+    shareYn,
+  } = shareItem;
 
   const theme = createTheme({
     typography: {
@@ -31,14 +37,18 @@ const ShareCard = ({ shareItem }) => {
   });
 
   return (
-    <Link to={`/community/share/${id}`}>
+    <Link to={`/community/share/${shareIdx}`}>
       <Card theme={theme} className={styles.cardbody} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
             className={styles.img}
             component="img"
             height="140"
-            image={itemImg}
+            image={
+              shareImgName
+                ? `/upload/share/${shareImgName}`
+                : "/upload/share/shareImg.png"
+            }
             alt="itemImg"
           />
           <CardContent theme={theme} style={{ paddingTop: 10 }}>
@@ -62,13 +72,13 @@ const ShareCard = ({ shareItem }) => {
                 className={styles.state}
                 style={{
                   color: "white",
-                  background: shareState ? "#1d5902" : "#777",
+                  background: shareYn ? "#1d5902" : "#777",
                 }}
               >
-                {shareState ? "나눔" : "완료"}
+                {shareYn ? "나눔" : "완료"}
               </div>
               <p className={styles.writer} theme={theme}>
-                {userId}
+                {userNick}
               </p>
             </div>
           </CardContent>

@@ -1,29 +1,66 @@
 import React, { useState } from "react";
-import defaultProfile from "../../images/defaultProfile.png";
 import { OutlinedInput, IconButton } from "@mui/material";
 import Send from "@mui/icons-material/Send";
 import styles from "../../styles/share/commentContainer.module.css";
 
-const CommentContainer = ({ style }) => {
+//댓글 입력
+const CommentContainer = ({
+  user,
+  share,
+  style,
+  insertShareReply,
+  shareIdx,
+  shareReplyIdx,
+  insertShareCommentReply,
+}) => {
+  const [shareReplyContent, setShareReplyContent] = useState("");
+
+  const handleReplySubmit = (e) => {
+    e.preventDefault();
+    if (user) {
+      if (!shareReplyIdx) {
+        let shareReply = { shareReplyContent: shareReplyContent };
+        setShareReplyContent("");
+        insertShareReply(shareReply, shareIdx);
+      } else {
+        let shareReReply = {
+          shareReply: {
+            shareIdx: shareIdx,
+            shareReplyIdx: shareReplyIdx,
+          },
+          shareReReplyContent: shareReplyContent,
+        };
+        setShareReplyContent("");
+        insertShareCommentReply(shareReReply);
+      }
+    } else {
+      alert("로그인 후 작성할 수 있습니다.");
+    }
+  };
+
   return (
     <div className={styles.inputContainer} style={style}>
       <div className={styles.containerTop}>
         <img
           className={styles.profileImg}
-          src={defaultProfile}
+          id="profileImg"
+          src={`/upload/profile/${user.userProfileName}`}
           alt="프로필사진"
+          style={{ borderRadius: "50%" }}
         />
-        <form action="" className={styles.RegForm}>
+        <form className={styles.RegForm} onSubmit={handleReplySubmit}>
           <div className={styles.RegForm}>
             <OutlinedInput
-              name="askReplyContent"
+              name="shareReplyContent"
+              value={shareReplyContent}
+              onChange={(e) => setShareReplyContent(e.target.value)}
               multiline={true}
               minRows="1"
               maxRows="5"
-              style={{ width: "100%", padding: "10px", fontSize: "0.9rem" }}
+              style={{ width: "90%", padding: "10px", fontSize: "0.9rem" }}
             ></OutlinedInput>
             <div className={styles.sendBtn}>
-              <IconButton>
+              <IconButton type="submit">
                 <Send />
               </IconButton>
             </div>

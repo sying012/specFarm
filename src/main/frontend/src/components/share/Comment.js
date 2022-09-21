@@ -1,20 +1,57 @@
 import React from "react";
-import CommentReply from "./CommentReply";
 import CommentContainer from "./CommentContainer";
-import defaultProfile from "../../images/defaultProfile.png";
+import { useState } from "react";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
+import CommentReply from "./CommentReply";
 
-//3. 댓글 출력
-const Comment = ({ comment }) => {
-  function togglecommentreply() {
+const Comment = ({ comment, user, share }) => {
+  //대댓글 출력
+  const [commentReplytList, setCommentReplyList] = useState([]);
+
+  //대댓글(답글) 토글
+  function toggleCommentReply() {
     let commentReplyContainer = document.querySelector(
-      ".rereplyContainer" + comment.shareReplyIdx
+      ".commentReplyContainer" + comment.shareReplyIdx
     );
     if (commentReplyContainer.style.display === "none") {
+      axios({
+        method: "get",
+        url:
+          API_BASE_URL +
+          "/community/share/" +
+          comment.shareIdx +
+          "/commentReply",
+        params: { commentIdx: comment.shareReplyIdx },
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      }).then((response) => {
+        setCommentReplyList(response.data.data);
+      });
       commentReplyContainer.style.display = "block";
     } else {
       commentReplyContainer.style.display = "none";
     }
   }
+
+  // 대댓글 입력
+  const insertShareCommentReply = (commentReply) => {
+    axios({
+      method: "post",
+      url:
+        API_BASE_URL +
+        `/community/share/${comment.shareIdx}/insertCommentReply`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: commentReply,
+    }).then((response) => {
+      console.log(response);
+      setCommentReplyList(response.data.shareReReplyList);
+    });
+  };
 
   return (
     <>
@@ -30,6 +67,7 @@ const Comment = ({ comment }) => {
             >
               <div
                 style={{
+                  width: "100%",
                   boxSizing: "border-box",
                   display: "flex",
                   alignItems: "center",
@@ -38,30 +76,50 @@ const Comment = ({ comment }) => {
               >
                 <img
                   style={{ width: "40px", paddingRight: "8px" }}
-                  src={comment.userProfileName || defaultProfile}
+                  id="profileImg"
+                  src={`/upload/profile/${share.user.userProfileName}`}
                   alt="프로필사진"
                 />
-                <p>{comment.userId}</p>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p>{share.user.userNick}</p>
+                  <p>{share.shareRegDate}</p>
+                </div>
               </div>
               <p style={{ fontSize: "0.8rem" }}>{comment.shareReplyDate}</p>
             </div>
 
-            <div style={{ padding: "5px" }}>{comment.shareReplyContent}</div>
+            <div style={{ padding: "10px 15px" }}>
+              {comment.shareReplyContent}
+            </div>
             <div style={{ padding: "5px", display: "flex", float: "right" }}>
-              <p onClick={togglecommentreply}>답글</p>
+              <p onClick={toggleCommentReply}>답글</p>
             </div>
           </div>
         </div>
         <div
-          className={"rereplyContainer" + comment.shareReplyIdx}
+          className={"commentReplyContainer" + comment.shareReplyIdx}
           style={{ display: "none", marginLeft: "50px" }}
         >
           <div>
-            <CommentContainer style={{ maxWidth: "410px" }} />
+            <CommentContainer
+              style={{ maxWidth: "100%" }}
+              insertShareCommentReply={insertShareCommentReply}
+              shareReplyIdx={comment.shareReplyIdx}
+              shareIdx={comment.shareIdx}
+              user={user}
+            />
           </div>
-          <div style={{ display: "flex" }}>
-            <CommentReply />
-          </div>
+          {commentReplytList.map((commentReply) => (
+            <div key={commentReply.shareReReplyIdx} style={{ display: "flex" }}>
+              <CommentReply commentReply={commentReply} />
+            </div>
+          ))}
         </div>
       </div>
     </>

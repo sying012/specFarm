@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,12 +29,15 @@ import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.ShareFile;
+import com.spring.specfarm.entity.ShareReReply;
+import com.spring.specfarm.entity.ShareReply;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.ShareService;
 
 @RestController
 @RequestMapping("/community/share")
 public class ShareController {
+
 	@Autowired
 	ShareService shareService;
 	
@@ -41,18 +48,21 @@ public class ShareController {
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("user", user);
+		
 			
 			return resultMap;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error", e.getMessage());
+			errorMap.put("error",e.getMessage());
 			return errorMap;
 		}
+		
 	}
 
 	// Share List
-	@GetMapping("/shareList")
-	public Map<String, Object> getShare(@PageableDefault(page = 0, size = 8, sort="shareIdx") Pageable pageable) {
+	@GetMapping("")
+	public Map<String, Object> getShareList(
+			@PageableDefault(page = 0, size = 8, sort="shareIdx", direction = Direction.DESC) Pageable pageable) {
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			
@@ -75,7 +85,6 @@ public class ShareController {
 			Share share, 
 			@AuthenticationPrincipal String userId){
 	      try {
-	          System.out.println(share.toString());
 	          
 	          User user = new User();
 	          user.setUserId(userId);
@@ -97,7 +106,6 @@ public class ShareController {
 
 	                   if (isFirstFile) {
 	                      share.setShareImgName(fileInfo.get("FileName"));
-	                      shareIdx = shareService.insertShare(share);
 	                      isFirstFile = false;
 	                   } else {
 	                      ShareFile shareFile = new ShareFile();
@@ -111,6 +119,8 @@ public class ShareController {
 	             }
 	          }
 	          
+	          shareIdx = shareService.insertShare(share);
+	          
 	          System.out.println(shareFileList.size());
 	          System.out.println(share.getShareIdx());
 			
@@ -120,7 +130,6 @@ public class ShareController {
 			response.put("shareIdx", shareIdx);
 			return response;
 		} catch (Exception e) {
-			
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error", e.getMessage());
 			return errorMap;
@@ -142,30 +151,88 @@ public class ShareController {
 	}
 	
 	//Share Reply List
-//	@GetMapping("/comment/{id}")
-//	public ResponseEntity<?> getShareReply(@PathVariable int id){
-//		System.out.println(id);
-//		try {
-//			List<ShareReply> shareReplyList = shareService.getShareReplyList(id);
-//			
-//			ResponseDTO<ShareReply> response = new ResponseDTO<>();
-//			
-//			response.setData(shareReplyList);
-//			
-//			return ResponseEntity.ok().body(response);
-//		} catch (Exception e) {
-//			ResponseDTO<ShareReply> response = new ResponseDTO<>();
-//			response.setError(e.getMessage());
-//			return ResponseEntity.badRequest().body(response);		}
-//		
-//	}
+	@GetMapping("/comment/{id}")
 	
-	// Share Reply List
+	public ResponseEntity<?> getShareReply(@PathVariable int id){
+		System.out.println(id);
+		try {
+			List<ShareReply> shareReplyList = shareService.getShareReplyList(id);
+			
+			ResponseDTO<ShareReply> response = new ResponseDTO<>();
+			
+			response.setData(shareReplyList);
+			
+			return ResponseEntity.ok().body(response);
+		} catch (Exception e) {
+			ResponseDTO<ShareReply> response = new ResponseDTO<>();
+			response.setError(e.getMessage());
+			return ResponseEntity.badRequest().body(response);		
+		}
+		
+	}
+	
 	// Share ReReply List
-	// Share ReplyIdx
+	@GetMapping("/{id}/commentReply")
+	public ResponseEntity<?> getShareReReply(@PathVariable int id, @RequestParam int commentIdx){
+		try {
+			System.out.println(1);
+			List<ShareReReply> shareReReplyList = shareService.getShareReReplyList(id, commentIdx);
+			System.out.println(2);
+			ResponseDTO<ShareReReply> response = new ResponseDTO<>();
+			response.setData(shareReReplyList);
+			
+			return ResponseEntity.ok().body(response);
+		} catch(Exception e) {
+			ResponseDTO<ShareReply> response = new ResponseDTO<>();
+			response.setError(e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
 	// Insert Share Reply
-	// Share ReReplyIdx
+	@PostMapping("/{shareIdx}/insertComment")
+	public Map<String, Object> insertComment(@PathVariable int shareIdx, @RequestBody ShareReply shareReply, @AuthenticationPrincipal String userId){
+		try {
+			shareReply.setUser(shareService.getUser(userId));
+			shareReply.setShareIdx(shareIdx);
+			shareReply.setShareReplyIdx(shareService.getShareReplyIdx(shareIdx));
+			
+			List<ShareReply> shareReplyList = shareService.insertShareReply(shareReply);
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("shareReplyList", shareReplyList);
+			return response;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+	
 	// Insert Share ReReply
+	@PostMapping("/{shareIdx}/insertCommentReply")
+	public Map<String, Object> insertCommentReply(@PathVariable int shareIdx, @RequestBody ShareReReply shareReReply, @AuthenticationPrincipal String userId){
+		try {
+			User user = new User();
+			user.setUserId(userId);
+			shareReReply.setUser(user);
+			shareReReply.setShareReReplyIdx(shareService.getShareReReplyIdx(shareIdx, shareReReply.getShareReply().getShareReplyIdx()));
+			
+			List<ShareReReply> shareReReplyList = shareService.insertShareReReply(shareReReply);
+			Map<String, Object> response = new HashMap<String, Object>();
+			
+			response.put("shareReReplyList", shareReReplyList);
+			
+			return response;
+			
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	
+	
 	// DeleteShare
 	
 	// FileDown

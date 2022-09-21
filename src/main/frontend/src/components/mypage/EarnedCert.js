@@ -1,6 +1,6 @@
 import { Close } from "@mui/icons-material";
 import { Autocomplete, IconButton, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "../../styles/mypage/EarnedCert.module.css";
 
 const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
@@ -25,21 +25,41 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
   }, [cert]);
 
   // 취득한 자격증란 onChange
-  const autocompleteChage = (e, text) => {
+  const autocompleteChage = (e, text, getCertIdx) => {
     const addCert = {
       ...singleCert,
       certName: text,
     };
-    setSingleCert(addCert);
+    console.log(text);
+    //console.log(singleCert);
+    console.log(cert);
+    setCountList((prev) =>
+      prev.map((cer) =>
+        cer.getCertIdx === getCertIdx ? { ...cer, certName: text } : cer
+      )
+    );
   };
-  
+
+  useEffect(() => {
+    console.log(singleCert);
+  }, [singleCert]);
+
+  useEffect(() => {
+    console.log(countList);
+  }, [countList]);
+
   const handleChange = (getCertIdx, e) => {
+    const dateCheck = /^[0-9]+$/;
+    // if (e.target.name === "getCertDate" && !dateCheck.test(e.target.value)) {
+    // alert("수확일자를 확인해주세요.");
+    // } else {
     const addCert = {
       ...singleCert,
       [e.target.name]: e.target.value,
     };
+    console.log(addCert);
     setSingleCert(addCert);
-
+    console.log(singleCert);
     setCountList(
       countList.map((cer) =>
         cer.getCertIdx === getCertIdx
@@ -54,6 +74,7 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
           : cer
       )
     );
+    // }
   };
 
   return (
@@ -67,6 +88,8 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
           // id="free-solo-2-demo"
           disableClearable
           options={certNames.map((option) => option.certName)}
+          value={singleCert.certName || ""}
+          onChange={(e, text) => autocompleteChage(e, text, cert.getCertIdx)}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -92,8 +115,6 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
               onChange={(e) => handleChange(cert.getCertIdx, e)}
             />
           )}
-          value={singleCert.certName || ""}
-          onChange={autocompleteChage}
         />
         <TextField
           variant="outlined"

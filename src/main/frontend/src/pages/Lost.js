@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router";
 import { NavLink } from "react-router-dom";
 import LostItem from "../components/lost/LostItem";
@@ -7,6 +7,8 @@ import styles from "../styles/lost/Lost.module.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Lost = () => {
+  const [pageNum, setPageNum] = useState(1);
+  const [searchItem, setSearchItem] = useState({ type: "전체", text: "" });
   const searchType = [
     {
       id: 1,
@@ -30,6 +32,14 @@ const Lost = () => {
     },
   ];
 
+  const onChangePage = (value) => {
+    setPageNum(value);
+  };
+
+  const onChangeSearchItem = (value) => {
+    setSearchItem(value);
+  };
+
   return (
     <div id="content">
       <div className={styles.titleContainer}>
@@ -40,7 +50,18 @@ const Lost = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route path="/" element={<LostList searchType={searchType} />}></Route>
+        <Route
+          path="/"
+          element={
+            <LostList
+              searchType={searchType}
+              pageNum={pageNum}
+              onChangePage={onChangePage}
+              searchItem={searchItem}
+              onChangeSearchItem={onChangeSearchItem}
+            />
+          }
+        ></Route>
         <Route path="/:rownum" element={<LostItem />}></Route>
       </Routes>
     </div>

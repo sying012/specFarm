@@ -38,7 +38,6 @@ public class CommUtils {
       
       while(i.hasNext()) {
          String k = i.next().toString();
-         System.out.println(k);
          hashMap.put(k, json.getJSONObject(k));
       }
       return hashMap;

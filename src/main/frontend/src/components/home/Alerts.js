@@ -1,31 +1,55 @@
+import React from "react";
 import { Alert, Slide } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import CampaignIcon from "@mui/icons-material/Campaign";
 
-const Alerts = () => {
-  const [open, setOpen] = useState(true);
-
-  // alert timer 10sec
-  useEffect(() => {
-    // let timer = setTimeout(() => {
-    //   setOpen(false);
-    // }, 100000);
-    // return () => {
-    //   clearTimeout(timer);
-    // };
-  }, []);
-
-  return (
-    <Slide in={open} direction="down">
-      <Alert
-        severity="warning"
-        onClose={() => {
-          setOpen(false);
-        }}
-      >
-        [ 정보처리기사 ] 원서접수 D-3 씨앗 심을 준비하세요!
-      </Alert>
-    </Slide>
-  );
+const Alerts = ({ alerts, onCloseAlert }) => {
+  return alerts.map((alert) => (
+    <div style={{ marginBottom: "5px" }} key={alert.id}>
+      <Slide in={true}>
+        {alert.dDay === 0 || alert.dDay === 1 ? (
+          <Alert
+            icon={<CampaignIcon fontSize="inherit" />}
+            severity="error"
+            onClose={() => onCloseAlert(alert.id)}
+            style={{ width: "350px" }}
+          >
+            [ {alert.certName} ]{" "}
+            <strong
+              style={{ color: "rgb(240, 99 ,96)", textDecoration: "underline" }}
+            >
+              D-{alert.dDay}
+            </strong>{" "}
+            {alert.cat}
+          </Alert>
+        ) : alert.dDay === 2 || alert.dDay === 3 || alert.dDay === 4 ? (
+          <Alert
+            icon={<CampaignIcon fontSize="inherit" />}
+            severity="warning"
+            onClose={() => onCloseAlert(alert.id)}
+            style={{ width: "350px" }}
+          >
+            [ {alert.certName} ]{" "}
+            <strong style={{ color: "rgb(255, 161, 23)" }}>
+              D-{alert.dDay}
+            </strong>{" "}
+            {alert.cat}
+          </Alert>
+        ) : (
+          <Alert
+            icon={<CampaignIcon fontSize="inherit" />}
+            onClose={() => onCloseAlert(alert.id)}
+            style={{ width: "350px" }}
+          >
+            [ {alert.certName} ]{" "}
+            <strong style={{ color: "rgb(92, 182 ,96)" }}>
+              D-{alert.dDay}
+            </strong>{" "}
+            {alert.cat}
+          </Alert>
+        )}
+      </Slide>
+    </div>
+  ));
 };
 
 export default Alerts;

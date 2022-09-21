@@ -4,92 +4,96 @@
 
 <mapper namespace="com.spring.specfarm.mapper.LostMapper">
 	<select id="findLost" resultType="camelHashMap">
-		SELECT L.*,
-			   B.BRCH_ADDR,
+		SELECT A.*,
+   			   B.BRCH_ADDR,
 			   B.BRCH_TEL,
-			   B.BRCH_TRTH_NAME,
-			   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-			FROM T_LOST L, 
-				 T_BRCH B,
-				 (SELECT @ROWNUM := 0) R
-			WHERE L.BRCH_NAME = B.BRCH_NAME
-			ORDER BY LOST_DATE DESC
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
 	
 	<select id="findLostAll" parameterType="string"  resultType="camelHashMap">
-		SELECT L.*,
-		   B.BRCH_ADDR,
-		   B.BRCH_TEL,
-		   B.BRCH_TRTH_NAME,
-		   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-		FROM T_LOST L, 
-			 T_BRCH B,
-			 (SELECT @ROWNUM := 0) R
-		WHERE L.BRCH_NAME = B.BRCH_NAME
-		  AND (L.BRCH_NAME LIKE CONCAT('%', '${text}', '%')
-		   OR LOST_CAT LIKE CONCAT('%', '${text}', '%')
-		   OR LOST_ITEM LIKE CONCAT('%', '${text}', '%')
-		   OR LOST_LOC LIKE CONCAT('%', '${text}', '%')
-		   OR LOST_DATE LIKE CONCAT('%', '${text}', '%'))
-		ORDER BY LOST_DATE DESC
+		SELECT A.*,
+   			   B.BRCH_ADDR,
+			   B.BRCH_TEL,
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						WHERE L.BRCH_NAME LIKE CONCAT('%', '${text}', '%')
+						   OR LOST_CAT LIKE CONCAT('%', '${text}', '%')
+						   OR LOST_ITEM LIKE CONCAT('%', '${text}', '%')
+						   OR LOST_LOC LIKE CONCAT('%', '${text}', '%')
+						   OR LOST_DATE LIKE CONCAT('%', '${text}', '%')
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
 	
 	<select id="findLostBrchName" parameterType="string" resultType="camelHashMap">
-		SELECT L.*,
-		   B.BRCH_ADDR,
-		   B.BRCH_TEL,
-		   B.BRCH_TRTH_NAME,
-		   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-		FROM T_LOST L, 
-			 T_BRCH B,
-			 (SELECT @ROWNUM := 0) R
-		WHERE L.BRCH_NAME = B.BRCH_NAME
-		  AND L.BRCH_NAME LIKE CONCAT('%', '${text}', '%')
-		ORDER BY LOST_DATE DESC
+		SELECT A.*,
+   			   B.BRCH_ADDR,
+			   B.BRCH_TEL,
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						WHERE L.BRCH_NAME LIKE CONCAT('%', '${text}', '%')
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
 	
 	<select id="findLostCatAndItem" parameterType="string" resultType="camelHashMap">
-		SELECT L.*,
-		   B.BRCH_ADDR,
-		   B.BRCH_TEL,
-		   B.BRCH_TRTH_NAME,
-		   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-		FROM T_LOST L, 
-			 T_BRCH B,
-			 (SELECT @ROWNUM := 0) R
-		WHERE L.BRCH_NAME = B.BRCH_NAME
-		  AND (LOST_CAT LIKE CONCAT('%', '${text}', '%')
-		   	   OR LOST_ITEM LIKE CONCAT('%', '${text}', '%'))
-		ORDER BY LOST_DATE DESC
+		SELECT A.*,
+   			   B.BRCH_ADDR,
+			   B.BRCH_TEL,
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						WHERE LOST_CAT LIKE CONCAT('%', '${text}', '%')
+						   OR LOST_ITEM LIKE CONCAT('%', '${text}', '%')
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
 	
 	<select id="findLostLoc" parameterType="string" resultType="camelHashMap">
-		SELECT L.*,
-		   B.BRCH_ADDR,
-		   B.BRCH_TEL,
-		   B.BRCH_TRTH_NAME,
-		   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-		FROM T_LOST L, 
-			 T_BRCH B,
-			 (SELECT @ROWNUM := 0) R
-		WHERE L.BRCH_NAME = B.BRCH_NAME
-		  AND LOST_LOC LIKE CONCAT('%', '${text}', '%')
-		ORDER BY LOST_DATE DESC
+		SELECT A.*,
+   			   B.BRCH_ADDR,
+			   B.BRCH_TEL,
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						WHERE LOST_LOC LIKE CONCAT('%', '${text}', '%')
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
 	
 	<select id="findLostDate" parameterType="string" resultType="camelHashMap">
-		SELECT L.*,
-		   B.BRCH_ADDR,
-		   B.BRCH_TEL,
-		   B.BRCH_TRTH_NAME,
-		   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
-		FROM T_LOST L, 
-			 T_BRCH B,
-			 (SELECT @ROWNUM := 0) R
-		WHERE L.BRCH_NAME = B.BRCH_NAME
-		  AND LOST_DATE LIKE CONCAT('%', '${text}', '%')
-		ORDER BY LOST_DATE DESC
+		SELECT A.*,
+   			   B.BRCH_ADDR,
+			   B.BRCH_TEL,
+			   B.BRCH_TRTH_NAME
+			FROM T_BRCH B,
+				 (SELECT L.*,
+						   @ROWNUM := @ROWNUM + 1 AS ROWNUM 
+						FROM T_LOST L,
+							 (SELECT @ROWNUM := 0) R
+						WHERE LOST_DATE LIKE CONCAT('%', '${text}', '%')
+						ORDER BY LOST_DATE DESC) A
+			WHERE A.BRCH_NAME = B.BRCH_NAME
 	</select>
-	
-	
 </mapper>

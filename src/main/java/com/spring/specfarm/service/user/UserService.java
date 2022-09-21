@@ -1,8 +1,15 @@
 package com.spring.specfarm.service.user;
 
+import java.util.List;
+import java.util.Map;
+
+import com.spring.specfarm.entity.FavCert;
 import com.spring.specfarm.entity.User;
 
 public interface UserService {
+	// user 가져오기
+	User getUser(String userId);
+	
 	User idCheck(User user);
 	
 	User telCheck(User user);
@@ -17,5 +24,5 @@ public interface UserService {
 
 	void certifiedPhoneNumber(String phoneNumber, String numStr);
 
-
+	List<Map<String, Object>> getUserFavCert(String userId);
 }

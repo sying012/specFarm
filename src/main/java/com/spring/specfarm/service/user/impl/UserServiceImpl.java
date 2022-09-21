@@ -1,6 +1,11 @@
 package com.spring.specfarm.service.user.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.User;
+import com.spring.specfarm.mapper.FavCertMapper;
 import com.spring.specfarm.repository.UserRepository;
 import com.spring.specfarm.service.user.UserService;
 
@@ -21,6 +27,16 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private FavCertMapper favCertMapper;
+	
+	// user 가져오기
+	@Override
+	public User getUser(String userId) {
+		User user = userRepository.findById(userId).get();
+		return user;
+	}
 
 	@Override
 	public User idCheck(User user) {
@@ -65,9 +81,6 @@ public class UserServiceImpl implements UserService {
 		} else {
 			findUser = userRepository.findByUserIdAndUserNameAndUserTel(user.getUserId(),
 					user.getUserName(), user.getUserTel());
-			System.out.println("userId ==== " + user.getUserId());
-			System.out.println("userName ==== " + user.getUserName());
-			System.out.println("userTel ==== " + user.getUserTel());
 		}
 
 		if (findUser != null) {
@@ -79,13 +92,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void pwReset(User user) {
-		System.out.println(user.getUserTel());
 		User findUser = userRepository.findByUserIdAndUserNameAndUserTel(user.getUserId(),
 				user.getUserName(), user.getUserTel());
 
 		findUser.setUserPw(user.getUserPw());
 		userRepository.save(findUser);
-		System.out.println(findUser);
 	}
 
 	@Override
@@ -103,12 +114,19 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			JSONObject obj = (JSONObject) coolsms.send(params);
-			System.out.println(obj.toString());
 		} catch (CoolsmsException e) {
 			System.out.println(e.getMessage());
 			System.out.println(e.getCode());
 		}
 
 	}
+
+	@Override
+	public List<Map<String, Object>> getUserFavCert(String userId) {
+		List<Map<String, Object>> favCertList = favCertMapper.getFavCert(userId);
+		
+		return favCertList;
+	}
+
 
 }

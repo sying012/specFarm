@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,13 +22,27 @@ import Deactivate from "./components/mypage/Deactivate";
 import ProfileMdf from "./components/mypage/ProfileMdf";
 import CheckPw from "./components/mypage/CheckPw";
 import CertFind from "./components/cert/CertFind";
+import SocialLogin from "./components/login/SocialLogin";
+import { useEffect, useState } from "react";
 
 function App() {
+  const location = useLocation();
+  const [pathname, setPathname] = useState("");
+  useEffect(() => {
+    if (
+      location.pathname !== "/login" &&
+      location.pathname !== "/join" &&
+      location.pathname !== "/findUser"
+    ) {
+      setPathname(location.pathname);
+    }
+  }, [location.pathname]);
+
   return (
     <Routes>
-      <Route exact path="/oauth2/code/*" element={<Login />} />
+      <Route exact path="/oauth2/code/*" element={<SocialLogin />} />
       <Route path="/" element={<Home />}></Route>
-      <Route path="/login" element={<Login />}></Route>
+      <Route path="/login" element={<Login pathname={pathname} />}></Route>
       <Route path="/join" element={<Join />}></Route>
       <Route path="/finduser" element={<FindUser />}></Route>
 

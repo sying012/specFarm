@@ -33,7 +33,7 @@ const AskEdit = ({ certNames, insertAsk }) => {
 
       //현재 접속 유저정보요청
       axios
-        .get(API_BASE_URL + "/community/ask/getUser", {
+        .get(API_BASE_URL + "/user/getUser", {
           headers: {
             Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
           },

@@ -47,7 +47,7 @@ public class UserController {
 	public Map<String, Object> getUser(@AuthenticationPrincipal String userId) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		
-		User user = userService.getUser("aaa");
+		User user = userService.getUser(userId);
 		response.put("user", user);
 		
 		return response;

@@ -118,6 +118,7 @@ const NoticeList = ({ user }) => {
                   state: {
                     searchKeyword: searchKeyword,
                     page: page,
+                    prevUrl: location.pathname,
                   },
                 })
               }

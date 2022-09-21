@@ -38,25 +38,6 @@ public class AskController {
 	@Autowired
 	AskService askService;
 	
-	@GetMapping("/getUser")
-	public Map<String, Object> getUser(@AuthenticationPrincipal String userId){
-		try {
-			System.out.println("dfsgsdfgs"+userId);
-			User user = askService.getUser(userId);
-			
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("user", user);
-		
-			
-			return resultMap;
-		} catch (Exception e) {
-			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error",e.getMessage());
-			return errorMap;
-		}
-		
-	}
-	
 	//Ask 리스트 반환
 	@GetMapping("")
 	public Map<String, Object> getAsk(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchType, @RequestParam(required = false) String searchKeyword ) {

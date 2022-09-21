@@ -174,11 +174,13 @@
   width: 50px;
 }
 
-.noticeDetailDivB > div > a {
+.noticeDetailDivB > div > span {
   padding: 20px;
   text-decoration: none;
   color: black;
   width: 85%;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .otherNotice{

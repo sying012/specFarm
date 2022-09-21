@@ -16,7 +16,7 @@ const NoticeMain = () => {
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "/community/ask/getUser", {
+      .get(API_BASE_URL + "/user/getUser", {
         headers: {
           Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
         },

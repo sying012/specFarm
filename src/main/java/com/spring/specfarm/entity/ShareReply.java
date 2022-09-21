@@ -33,7 +33,7 @@ public class ShareReply {
 	@Column(columnDefinition = "varchar(1000)")
 	private String shareReplyContent;
 	
-	private String shareReplyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.mm.dd HH:mm:ss"));
+	private String shareReplyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 	
 	@Column(columnDefinition = "char(1)")
 	private char shareReplyYn = 'Y';

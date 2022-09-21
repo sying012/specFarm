@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .title {
@@ -77,14 +78,8 @@
   box-shadow: 5px 6px 22px lightgray;
 }
 
-.writer {
-  display: flex;
-  align-items: center;
-}
-
-.writer > p {
-  display: flex;
-  flex-grow: 1;
+#profileImg {
+  border-radius: 25%;
 }
 
 .content {

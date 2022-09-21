@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { Routes, Route, NavLink } from "react-router-dom";
 import NewShare from "../components/share/NewShare";
 import ShareDetail from "../components/share/ShareDetail";
@@ -8,8 +7,6 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import PrivateRoute from "../lib/PrivateRoute";
 
 const Share = () => {
-  const [shareList, setShareList] = useState([]);
-
   return (
     <div>
       <div className="titleContainer">
@@ -20,10 +17,7 @@ const Share = () => {
         </NavLink>
       </div>
       <Routes>
-        <Route
-          path="/"
-          element={<ShareContainer shareList={shareList} />}
-        ></Route>
+        <Route path="/" element={<ShareContainer />}></Route>
         <Route
           path="/newShare"
           element={<PrivateRoute component={NewShare} />}

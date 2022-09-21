@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import lombok.Data;
@@ -37,10 +38,11 @@ public class Share {
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
-	private String shareRegDate =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+	private String shareRegDate =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 	
 	private String shareYn = "Y";
 	
+	@ColumnDefault("'shareImg.png'")
 	private String shareImgName;	
 	
 	@Transient

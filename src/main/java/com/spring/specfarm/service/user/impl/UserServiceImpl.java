@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 	// user 가져오기
 	@Override
 	public User getUser(String userId) {
-		User user = userRepository.findById(userId).get();
-		return user;
+		System.out.println(userId);
+		return  userRepository.findById(userId).get();
 	}
 
 	@Override

@@ -63,6 +63,18 @@ public class JobCafeController {
 		String apiData = sb.toString();
 		
 		return apiData;
+		
+		/** API DB에 넣기
+		 * for(int i=0;i<infoArr.size();i++){
+			   JSONObject tmp = (JSONObject)infoArr.get(i);
+			   JobCafeInfo infoObj=new JobCafeInfo(i+(long)1,
+			    (String)tmp.get("CAFE_NM"),(String)tmp.get("SMPL_INTRO"),
+			    (String)tmp.get("SPACE_INFRO"),(String)tmp.get("USE_DT"),
+			    (String)tmp.get("HOLI_DD"),(String)tmp.get("FACLT_INFO1"),
+			    (String)tmp.get("RSRV_SGGST1"),(String)tmp.get("BASS_ADRES_CN"),
+			    infoRepository.save(infoObj);
+			}
+					 * */
 	}
 }
 

@@ -44,10 +44,13 @@ public class UserController {
 	
 	// user 가져오기
 	@GetMapping("/getUser")
-	public User getUser(@AuthenticationPrincipal String userId) {
-		User user = userService.getUser(userId);
+	public Map<String, Object> getUser(@AuthenticationPrincipal String userId) {
+		Map<String, Object> response = new HashMap<String, Object>();
 		
-		return user;
+		User user = userService.getUser("aaa");
+		response.put("user", user);
+		
+		return response;
 	}
 
 	@PostMapping("/idCheck")

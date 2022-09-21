@@ -1,8 +1,7 @@
 import React from "react";
-import styles from "../../styles/share/commentReply.module.css";
-import defaultProfile from "../../images/defaultProfile.png";
 
-const CommentReply = () => {
+//대댓글 출력
+const CommentReply = ({ commentReply }) => {
   return (
     <div>
       <div
@@ -17,7 +16,7 @@ const CommentReply = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <img
             style={{ width: "40px", paddingRight: "8px" }}
-            src={defaultProfile}
+            src={`/upload/profile/${commentReply.user.userProfileName}`}
             alt="프로필사진"
           />
           <p
@@ -26,7 +25,7 @@ const CommentReply = () => {
               justifyContent: "space-between",
             }}
           >
-            답변자
+            {commentReply.user.userNick}
           </p>
         </div>
         <p
@@ -36,10 +35,10 @@ const CommentReply = () => {
             color: "rgb(100, 100, 100)",
           }}
         >
-          2022.08.29 11:34 PM
+          {commentReply.shareReReplyRegDate}
         </p>
       </div>
-      <div>fdnbvn</div>
+      <div>{commentReply.shareReReplyContent}</div>
     </div>
   );
 };

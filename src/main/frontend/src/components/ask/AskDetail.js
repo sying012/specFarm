@@ -37,6 +37,7 @@ const AskDetail = () => {
     });
   };
 
+  //뒤로가기 처리
   useEffect(() => {
     const listenBackEvent = () => {
       navigate("..", {
@@ -134,7 +135,10 @@ const AskDetail = () => {
             <div className="detailRegDate">{ask.askRegDate}</div>
           </div>
 
-          <div className="detailTitle">{ask.askTitle}</div>
+          <div className="detailTitle">
+            {" "}
+            [{ask.askCert}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
+          </div>
           <div
             className="detailContent"
             dangerouslySetInnerHTML={{ __html: ask.askContent }}

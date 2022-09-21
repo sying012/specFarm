@@ -95,7 +95,6 @@ public class KakaoOauth implements SocialOauth {
 		// Http 요청 (POST 방식) 후, response 변수에 응답을 받음
 		ResponseEntity<String> ProfileResponse = restTemplate.exchange("https://kapi.kakao.com/v2/user/me",
 				HttpMethod.POST, ProfileRequest, String.class);
-		System.out.println(ProfileResponse);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		KakaoProfile kakaoProfile = null;

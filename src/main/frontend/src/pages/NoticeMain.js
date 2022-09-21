@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/notice/notice.css";
 import NoticeList from "../components/notice/NoticeList";
 import RegNotice from "../components/notice/RegNotice";
@@ -11,31 +11,20 @@ import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NoticeMain = () => {
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const noticeData = [
-    {
-      id: 1,
-      noticeTitle:
-        "제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목 제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목 제목인데 엄청나게 긴 제목이라서 뒤에 ...이 생기면 좋겠다는 생각을 하는 제목",
-      noticeContent:
-        "<p>내요요요요요요요요요용</p> 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:34",
-    },
-    {
-      id: 2,
-      noticeTitle: "제목인데 그냥 제목",
-      noticeContent:
-        "내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:35",
-    },
-    {
-      id: 3,
-      noticeTitle: "제목인데 엄청나게 긴 제목이지만 ...은 없을 정도의 제목",
-      noticeContent:
-        "내요요요요요요요요요용 내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용내요요요요요요요요요용",
-      noticeRegDate: "2022.08.04 22:36",
-    },
-  ];
+
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "/community/ask/getUser", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      })
+      .then((response) => {
+        setUser(response.data.user);
+      });
+  }, [sessionStorage.getItem("ACCESS_TOKEN")]);
 
   const insertNotice = (notice) => {
     axios
@@ -46,7 +35,32 @@ const NoticeMain = () => {
         },
       })
       .then((response) => {
-        navigate(`${response.data.noticeIdx}`);
+        if (!!response.data.result) {
+          alert("권한이 없습니다.");
+          navigate("/login", { replace: true });
+        } else {
+          navigate(`${response.data.noticeIdx}`);
+        }
+      });
+  };
+
+  const deleteNotice = (noticeIdx) => {
+    console.log(typeof noticeIdx);
+    axios
+      .get(
+        API_BASE_URL + "/cs/delete",
+        { params: { noticeIdx: noticeIdx } },
+        {
+          headers: {
+            Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.result === "success") {
+          alert("삭제완료");
+          navigate("/cs", { replace: true });
+        }
       });
   };
   return (
@@ -59,11 +73,11 @@ const NoticeMain = () => {
         </NavLink>
       </div>
       <Routes>
+        <Route path="/" element={<NoticeList user={user} />}></Route>
         <Route
-          path="/"
-          element={<NoticeList noticeData={noticeData} />}
+          path="/:noticeId"
+          element={<NoticeDetail user={user} deleteNotice={deleteNotice} />}
         ></Route>
-        <Route path="/:noticeId" element={<NoticeDetail />}></Route>
         <Route
           path="/write"
           element={

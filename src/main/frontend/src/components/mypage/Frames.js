@@ -30,7 +30,6 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
       .then((response) => {
         if (response.data) {
           alert("삭제되었습니다.");
-          // window.location.replace("/mypage");
           setAttrCerts(response.data);
         }
       })

@@ -35,7 +35,7 @@ function MypageMain() {
       })
       .catch((e) => {
         console.log("catch문 " + e);
-        window.location.href = "/login";
+        // window.location.href = "/login";
       });
   }, []);
 
@@ -47,7 +47,7 @@ function MypageMain() {
           <Route
             path="/userinfo"
             element={
-              <HalfFrame text="농부정보 수정" certs={certs} user={user} />
+              <HalfFrame text="농부 정보 수정" certs={certs} user={user} />
             }
           />
           <Route

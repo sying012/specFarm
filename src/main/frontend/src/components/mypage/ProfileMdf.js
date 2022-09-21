@@ -94,6 +94,33 @@ function ProfileMdf() {
     });
   }, [nicknameValue]);
 
+  function checkByte(value) {
+    const maxByte = 12; //최대 100바이트
+    const text_val = value; //입력한 문자
+    const text_len = text_val.length; //입력한 문자수
+
+    let totalByte = 0;
+    for (let i = 0; i < text_len; i++) {
+      const each_char = text_val.charAt(i);
+      const uni_char = escape(each_char); //유니코드 형식으로 변환
+      if (uni_char.length > 4) {
+        // 한글 : 2Byte
+        totalByte += 2;
+      } else {
+        // 영문,숫자,특수문자 : 1Byte
+        totalByte += 1;
+      }
+    }
+
+    if (totalByte > maxByte) {
+      alert("최대 14Byte까지만 입력가능합니다.");
+    } 
+
+    // for(let i = 0; i < this.value.length; i++) {
+    //   const eachChar = this.value.char
+    // }
+  }
+
   // form submit 시 닉네임 공란이면 에러 창 띄움
   const [nicknameError, setNicknameError] = useState(false);
   const userProfileEdit = (e) => {
@@ -152,11 +179,7 @@ function ProfileMdf() {
           <h1 className={styles.mdfTitle}>프로필 수정</h1>
           <Avatar
             alt="profile"
-            src={
-              imageSrc ||
-              "/upload/profile/" + user.userProfileName ||
-              "/upload/profile/farmer.png"
-            }
+            src={imageSrc || "/upload/profile/" + user.userProfileName}
             sx={{ width: 160, height: 160 }}
             className={styles.avatar}
           />
@@ -202,10 +225,10 @@ function ProfileMdf() {
             theme={theme}
             color="lightgreen"
             value={nicknameValue}
-            inputProps={{ maxLength: 7 }}
             onChange={(e) => {
               setNicknameValue(e.target.value);
             }}
+            onKeyUp={(e) => checkByte(e.target.value)}
             placeholder="닉네임을 입력해주세요."
             className={styles.nicknameInput}
             error={nicknameError}

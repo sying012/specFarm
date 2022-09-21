@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,14 +36,18 @@ import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.entity.Brch;
 import com.spring.specfarm.entity.Lost;
 import com.spring.specfarm.entity.Notice;
-import com.spring.specfarm.entity.NoticeFile;
+import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.notice.NoticeService;
+import com.spring.specfarm.service.user.UserService;
 
 @RestController
 @RequestMapping("/cs")
 public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private UserService userService;
 	
 	//공지사항
 	//NoticeList 반환
@@ -64,14 +69,20 @@ public class NoticeController {
 
 	//Notice 작성
 	@PostMapping("/write")
-	public Map<String, Object> insertNoice(@ModelAttribute Notice notice){
+	public Map<String, Object> insertNoice(@ModelAttribute Notice notice, @AuthenticationPrincipal String userId){
 		try {
-			int noticeIdx = noticeService.insertNotice(notice);
-
-			
 			Map<String, Object> response = new HashMap<String, Object>();
-			response.put("noticeIdx", noticeIdx);
 			
+			User user = new User();
+			user.setUserId(userId);
+			user = userService.idCheck(user);
+			if(user.getRole().equals("ROLE_ADMIN")) {
+				int noticeIdx = noticeService.insertNotice(notice);
+				
+				response.put("noticeIdx", noticeIdx);		
+			}else {
+				response.put("result", "not admin");
+			}
 			return response;
 			
 		}catch(Exception e){
@@ -83,13 +94,13 @@ public class NoticeController {
 
 	//Notice 반환
 	@GetMapping("/{noticeId}")
-	public Map<String, Object> getNotice(@PathVariable int noticeId){
+	public Map<String, Object> getNotice(@PathVariable int noticeId, @RequestParam String searchKeyword){
 		try {
 			Notice notice = noticeService.getNotice(noticeId);
 			System.out.println("1");
-			Notice prev = noticeService.getPrev(noticeId);
+			Notice prev = noticeService.getPrev(searchKeyword, noticeId);
 			System.out.println(prev);
-			Notice next = noticeService.getNext(noticeId);
+			Notice next = noticeService.getNext(searchKeyword, noticeId);
 			System.out.println(next);
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("notice", notice);
@@ -106,26 +117,47 @@ public class NoticeController {
 	}
 	
 	//Notice 이미지 업로드
-		@PostMapping("/notice/upload/images")
-		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
-			try {
-					
-				FileUtils fileUtils = new FileUtils();
+	@PostMapping("/notice/upload/images")
+	public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
+		try {
 				
-				String fileName = fileUtils.parseFileInfo(session, image, "cs/notice").get("FileName");
-				
-				Map<String, Object> response = new HashMap<String, Object>();
-				response.put("file", fileName);
-				
-				return response;
-				
-			}catch(Exception e){
-				Map<String, Object> errorMap = new HashMap<String, Object>();
-				errorMap.put("error",e.getMessage());
-				return errorMap;
-			}
+			FileUtils fileUtils = new FileUtils();
+			
+			String fileName = fileUtils.parseFileInfo(session, image, "cs/notice").get("FileName");
+			
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("file", fileName);
+			
+			return response;
+			
+		}catch(Exception e){
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
 		}
-		// 분실물
+	}
+	
+	//Notice 삭제
+	@GetMapping("/delete")
+	public Map<String, Object> deleteNotice(@RequestParam String noticeIdx){
+		try {
+			noticeService.deleteNotice(noticeIdx);
+			
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("result", "success");
+			
+			return response;
+			
+		}catch(Exception e){
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("result","failed");
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	//=======================================================================================//
+	// 분실물
 	@GetMapping("/saveLosts")
 	public void saveLosts() throws IOException {
         List<Lost> list = new ArrayList<>();
@@ -219,19 +251,18 @@ public class NoticeController {
 	}
 	
 
-	@GetMapping("/getLosts")
-	public Map<String, Object> getLosts() {
-		List<Map<String, Object>> lostList = noticeService.getLosts();
-		List<Brch> brchList = noticeService.getBrchs();
-
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-
-		resultMap.put("lostList", lostList);
-		resultMap.put("brchList", brchList);
-
-		return resultMap;
-
-	}
+//		@GetMapping("/getLosts")
+//		public Map<String, Object> getLosts() {
+//			List<Map<String, Object>> lostList = noticeService.getLosts();
+//			List<Brch> brchList = noticeService.getBrchs();
+//	
+//			Map<String, Object> resultMap = new HashMap<String, Object>();
+//	
+//			resultMap.put("lostList", lostList);
+//			resultMap.put("brchList", brchList);
+//	
+//			return resultMap;
+//		}
 
 	// 지사	
 	@GetMapping("/saveBrchs")
@@ -297,24 +328,23 @@ public class NoticeController {
 				list.add(temp);
 			}
 		}
-
-		System.out.println(list);
-
 		noticeService.saveBrchs(list);
 	}
 
 	// 분실물 검색
 	@GetMapping("/getLosts/search")
-	public List<Map<String, Object>> getSearchLosts(@RequestParam("searchType") String searchType,
+	public Map<String, Object> getSearchLosts(@RequestParam("searchType") String searchType,
 			@RequestParam("searchText") String searchText) {
-		System.out.println("서치타입" + searchType);
-		System.out.println("서치텍스트" + searchText);
-
 		List<Map<String, Object>> lostList = new ArrayList<>();
-
+		
 		lostList = noticeService.getSearchLosts(searchType, searchText);
-
-		return lostList;
-
+		List<Brch> brchList = noticeService.getBrchs();
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("lostList", lostList);
+		resultMap.put("brchList", brchList);
+		
+		return resultMap;
 	}
 }

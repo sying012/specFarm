@@ -221,7 +221,7 @@ function Userinfo({ certs, user }) {
   const addNewCert = (e) => {
     const addCertCount = [...countList];
     const counter = {
-      getCertIdx: addCertCount.length,
+      getCertIdx: countList.length,
       userId: userInfo.userId,
       certName: "",
       getCertDate: "",
@@ -229,18 +229,24 @@ function Userinfo({ certs, user }) {
 
     addCertCount.push(counter);
     setCountList(addCertCount);
+    console.log(countList);
   };
 
   // 자격증 삭제 버튼 클릭시 div 삭제
   const deleteCertDiv = useCallback(
     (i) => {
+      console.log(i);
+      // 중간번호 삭제시 뒷 인덱스 땡기기
       let newCountList = countList.filter((cert) => cert.getCertIdx !== i);
-      if (newCountList[0].getCertIdx !== 0) {
-        newCountList[0].getCertIdx = 0;
-      }
-      for (let i = 1; i < newCountList.length; i++) {
-        if (newCountList[i].getCertIdx !== newCountList[i - 1].getCertIdx) {
-          newCountList[i].getCertIdx = i;
+      console.log(countList);
+      if (newCountList.length !== 0) {
+        if (newCountList[0].getCertIdx !== 0) {
+          newCountList[0].getCertIdx = 0;
+        }
+        for (let i = 1; i < newCountList.length; i++) {
+          if (newCountList[i].getCertIdx !== newCountList[i - 1].getCertIdx) {
+            newCountList[i].getCertIdx = i;
+          }
         }
       }
       setCountList(newCountList);
@@ -252,6 +258,7 @@ function Userinfo({ certs, user }) {
   const handleCertSubmit = (e) => {
     e.preventDefault();
     let blankError = false;
+    let existedCertName = false;
     for (let i = 0; i < countList.length; i++) {
       console.log(
         countList[i].certName + "//////////" + countList[i].getCertDate
@@ -265,12 +272,17 @@ function Userinfo({ certs, user }) {
       ) {
         blankError = true;
       }
+      for (let j = 0; j < i; j++) {
+        if (countList[i].certName === countList[j].certName) {
+          existedCertName = true;
+        }
+      }
     }
 
-    if (!blankError) {
+    if (!blankError && !existedCertName) {
       axios({
         method: "post",
-        url: API_BASE_URL + "/mypage/earnedcert",
+        url: API_BASE_URL + `/mypage/earnedcert/${user.userId}`,
         data: countList,
       })
         .then((response) => {
@@ -282,8 +294,10 @@ function Userinfo({ certs, user }) {
         .catch((e) => {
           console.log("catch문 " + e);
         });
-    } else {
+    } else if (blankError) {
       alert("빈 칸을 입력해주세요.");
+    } else if (existedCertName) {
+      alert("동일한 자격증은 등록 불가합니다.");
     }
   };
 

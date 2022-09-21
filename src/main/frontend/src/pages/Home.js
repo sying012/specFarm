@@ -11,6 +11,8 @@ import { useNavigate } from "react-router";
 import HomeNavAfter from "../components/home/HomeNavAfter";
 import { Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
+import axios from "axios";
+import { API_BASE_URL } from "../app-config";
 
 const Home = () => {
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
@@ -25,44 +27,6 @@ const Home = () => {
       }
     };
   }, []);
-
-  // Application acceptance schedule
-  const [acceptances, setAcceptance] = useState([
-    {
-      id: 1,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-    {
-      id: 2,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-    {
-      id: 3,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-    {
-      id: 4,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-  ]);
-
-  // test schedule
-  const [tests, setTests] = useState([
-    {
-      id: 1,
-      title: "2022년 제 32회 정수시설운영관리사 1,2차 동시",
-      startDate: "2022.08.29",
-      endDate: "2022.09.02",
-    },
-  ]);
 
   let scrollInterval;
 
@@ -126,8 +90,8 @@ const Home = () => {
   window.onscroll = () => {
     if (window.scrollY >= window.innerHeight - 105) {
       document.getElementById("logoLink").style.color = "#1d5902";
-      document.getElementById("loginLink").style.color = "black";
-      document.getElementById("joinLink").style.color = "black";
+      document.getElementById("leftLink").style.color = "black";
+      document.getElementById("rightLink").style.color = "black";
     }
     if (window.scrollY >= window.innerHeight - 71) {
       clearInterval(scrollInterval);
@@ -149,34 +113,30 @@ const Home = () => {
             <div className={styles.tailwrap}>
               <div className="loginbtn">
                 {!isAuthenticated ? (
-                  <Link to="/login" id="loginLink">
+                  <Link to="/login" id="leftLink">
                     로그인
                   </Link>
                 ) : (
-                  <Link to="/" id="loginLink" onClick={logout}>
-                    로그아웃
+                  <Link to="/mypage" id="leftLink">
+                    마이페이지
                   </Link>
                 )}
               </div>
               <div className="joinbtn">
                 {!isAuthenticated ? (
-                  <Link to="/join" id="joinLink">
+                  <Link to="/join" id="rightLink">
                     회원가입
                   </Link>
                 ) : (
-                  <Link to="/mypage" id="joinLink">
-                    마이페이지
+                  <Link to="/" id="rightLink" onClick={logout}>
+                    로그아웃
                   </Link>
                 )}
               </div>
             </div>
           </div>
         </header>
-        <Main
-          className={styles.content}
-          acceptances={acceptances}
-          tests={tests}
-        />
+        <Main className={styles.content} />
       </div>
       <div className={styles.homeDiv} id="scroll">
         <div

@@ -55,7 +55,7 @@ public class JwtTokenProvider {
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
-		System.out.println(claims.getSubject());
+//		System.out.println(claims.getSubject());
 		
 		//일치하면 토큰의 주체 즉 username 리턴
 		return claims.getSubject();

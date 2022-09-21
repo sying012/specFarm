@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,11 @@ public class MypageController {
 			responseMap.put("user", loginedUser);
 			
 			List<GetCert> earnedCert = mypageService.getEarnedCert(userId);
+			for(int i=0; i < earnedCert.size(); i++) {
+				System.out.println(i);
+				earnedCert.get(i).setGetCertIdx(i);
+			}
+			System.out.println(earnedCert);
 			responseMap.put("earnedCert", earnedCert);
 			
 			List<Ask> writtenAsks = mypageService.getWrittenAsks(loginedUser);
@@ -110,6 +116,9 @@ public class MypageController {
 			
 			if(checkChange) {
 				user.setUserNick(user.getUserNick());
+				if(user.getUserProfileName().isEmpty()) {
+					user.setUserProfileName("farmer.png");
+				}
 			}
 			
 			mypageService.editUserMdf(user);
@@ -123,12 +132,14 @@ public class MypageController {
 		}
 	}
 	
-	@PostMapping("/earnedcert")
-	public ResponseEntity<?> editUserInfo(@RequestBody List<GetCert> earnedCert) {
+	@PostMapping("/earnedcert/{userId}")
+	public ResponseEntity<?> editUserInfo(@PathVariable("userId") String userId, @RequestBody List<GetCert> earnedCert) {
 		try {
-			if(earnedCert.isEmpty() || !mypageService.getEarnedCert(earnedCert.get(0).getUserId()).isEmpty()) {
-				mypageService.resetEarnedCert(earnedCert.get(0).getUserId());
-			}
+			System.out.println("earnedCert: ////////"+ earnedCert);
+				
+			if(earnedCert.isEmpty() || !mypageService.getEarnedCert(userId).isEmpty()) {
+				mypageService.resetEarnedCert(userId);
+			} 
 			mypageService.editUserGetCert(earnedCert);
 			
 			return ResponseEntity.ok().body("유저자격증 렛츠 수정");

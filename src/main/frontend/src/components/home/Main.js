@@ -1,12 +1,49 @@
 import { Container, Grid } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useCallback, useState } from "react";
+import { useEffect } from "react";
 import { Stack } from "react-bootstrap";
+import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/home/Home.module.css";
 import Alerts from "./Alerts";
 import Plan from "./Plan";
 
-const Main = ({ acceptances, tests, open }) => {
-  const isUser = sessionStorage.getItem("userId");
+const Main = () => {
+  const isUser = !!sessionStorage.getItem("ACCESS_TOKEN");
+  const [favCertList, setFavCertList] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: API_BASE_URL + "/user/getAlerts",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    }).then((response) => {
+      setFavCertList(response.data.favCertList);
+      setAlerts(response.data.alertList);
+    });
+  }, []);
+
+  const onCloseAlert = useCallback(
+    (id) => {
+      setAlerts(alerts.filter((item) => item.id !== id));
+    },
+    [alerts]
+  );
+
+  // alert timer 10sec
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setAlerts(
+        alerts.map((item) => (item.id ? { ...item, open: false } : item))
+      );
+    }, 100000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -15,7 +52,7 @@ const Main = ({ acceptances, tests, open }) => {
           {isUser ? (
             <Grid container className={styles.alert}>
               <Stack sx={{ width: "510px" }} spacing={1}>
-                <Alerts open={open} />
+                <Alerts alerts={alerts} onCloseAlert={onCloseAlert} />
               </Stack>
             </Grid>
           ) : (
@@ -34,7 +71,7 @@ const Main = ({ acceptances, tests, open }) => {
                 자격증 취득의 즐거움을 느낄 수 있습니다.
               </p>
             </div>
-            <Plan acceptances={acceptances} tests={tests} />
+            <Plan favCertList={favCertList} />
           </div>
         </Container>
       </div>

@@ -29,7 +29,6 @@ import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.AskReReply;
 import com.spring.specfarm.entity.AskReply;
-import com.spring.specfarm.entity.NoticeFile;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.community.AskService;
 
@@ -42,6 +41,7 @@ public class AskController {
 	@GetMapping("/getUser")
 	public Map<String, Object> getUser(@AuthenticationPrincipal String userId){
 		try {
+			System.out.println("dfsgsdfgs"+userId);
 			User user = askService.getUser(userId);
 			
 			Map<String, Object> resultMap = new HashMap<String, Object>();

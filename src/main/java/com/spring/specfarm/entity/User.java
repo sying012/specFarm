@@ -2,8 +2,6 @@ package com.spring.specfarm.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +9,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import lombok.Data;
-import lombok.Getter;
 
 @Entity
 @Table(name = "T_USER")
@@ -39,6 +36,7 @@ public class User {
 
 	private String favFieldM;
 
+	@ColumnDefault("'farmer.png'")
 	private String userProfileName;
 
 	@Column(columnDefinition = "char(1)")

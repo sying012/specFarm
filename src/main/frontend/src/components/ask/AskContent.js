@@ -65,7 +65,6 @@ const AskContent = ({ certNames }) => {
   }, [page, searchKeyword, searchType]);
 
   useEffect(() => {
-    console.log("key:" + searchKeyword + "/" + update);
     if (update === true) getAksList();
   }, [page, update]);
 
@@ -245,7 +244,6 @@ const AskContent = ({ certNames }) => {
         <Stack spacing={2}>
           <Pagination
             count={count} //총 페이지 수
-            size="large"
             page={page} //현재 페이지
             onChange={(e, p) => {
               setPage(p);

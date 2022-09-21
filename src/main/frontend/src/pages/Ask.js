@@ -9,7 +9,6 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 import PrivateRoute from "../lib/PrivateRoute";
-import { AskContext } from "../context/AskContext";
 
 const Ask = () => {
   const navigate = useNavigate();

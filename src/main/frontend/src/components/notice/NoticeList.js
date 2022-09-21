@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Stack, Pagination, Button, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { API_BASE_URL } from "../../app-config";
 import axios from "axios";
 import { useCallback } from "react";
 
-const NoticeList = () => {
+const NoticeList = ({ user }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [update, setUpdate] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [count, setCount] = useState(1);
@@ -30,18 +33,37 @@ const NoticeList = () => {
   }, [page, searchKeyword]);
 
   useEffect(() => {
-    getNoticeList();
-  }, [page]);
+    if (update === true) getNoticeList();
+  }, [page, update]);
+
+  useEffect(() => {
+    setUpdate(false);
+    if (location.state == null) {
+      setSearchKeyword("");
+      setPage(1);
+    } else {
+      setPage(location.state.page);
+      setSearchKeyword(location.state.searchKeyword);
+      setUpdate(true);
+    }
+  }, [location.key]);
+
+  useEffect(() => {
+    setUpdate(true);
+  }, [searchKeyword]);
+
   return (
     <>
       <div id="noticeSearchBar" className="search">
-        <Button
-          className="askRegButton"
-          variant="contained"
-          onClick={() => (window.location = "./cs/write")}
-        >
-          글쓰기
-        </Button>
+        {user !== null && user.role === "ROLE_ADMIN" ? (
+          <Button
+            className="askRegButton"
+            variant="contained"
+            onClick={() => (window.location = "./cs/write")}
+          >
+            글쓰기
+          </Button>
+        ) : null}
         <form
           id="keywordSearchBar"
           onSubmit={(e) => {
@@ -91,6 +113,14 @@ const NoticeList = () => {
             <NoticeListItem
               key={notice.noticeIdx}
               notice={notice}
+              onClick={() =>
+                navigate(`/cs/${notice.noticeIdx}`, {
+                  state: {
+                    searchKeyword: searchKeyword,
+                    page: page,
+                  },
+                })
+              }
             ></NoticeListItem>
           ))}
         </tbody>
@@ -99,7 +129,6 @@ const NoticeList = () => {
         <Stack spacing={2}>
           <Pagination
             count={count} //총 페이지 수
-            size="large"
             page={page} //현재 페이지
             onChange={(e, p) => {
               setPage(p);
@@ -114,12 +143,10 @@ const NoticeList = () => {
 
 export default NoticeList;
 
-export const NoticeListItem = ({ notice }) => (
-  <tr>
+export const NoticeListItem = ({ notice, onClick }) => (
+  <tr onClick={onClick} style={{ cursor: "pointer" }}>
     <td className="noticeNo">{notice.noticeIdx}</td>
-    <td className="noticeTitle">
-      <Link to={`/cs/${notice.noticeIdx}`}>{notice.noticeTitle}</Link>
-    </td>
+    <td className="noticeTitle">{notice.noticeTitle}</td>
     <td className="noticeDate">{notice.noticeRegDate}</td>
   </tr>
 );

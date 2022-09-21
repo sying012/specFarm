@@ -6,7 +6,11 @@ const AskReReply = ({ reReply }) => {
     <div id="askReReplyBox" className="askReplyBox">
       <img
         id="profileImg"
-        src={reReply.user.userProfileName || defaultProfile}
+        src={
+          reReply.user.userProfileName
+            ? "/upload/profile/" + reReply.user.userProfileName
+            : defaultProfile
+        }
         alt="프로필사진"
       />
       <div id="replyBox">

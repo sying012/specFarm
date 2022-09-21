@@ -56,7 +56,13 @@ const AskReplyRegBox = ({
     <div id="askReplyRegBox" className="askReplyBox" style={style}>
       <img
         id="profileImg"
-        src={!!user ? user.userProfileName || defaultProfile : defaultProfile}
+        src={
+          !!user
+            ? user.userProfileName
+              ? "/upload/profile/" + user.userProfileName
+              : defaultProfile
+            : defaultProfile
+        }
         alt="프로필사진"
       />
       <form id="replyRegForm" onSubmit={handleReplySubmit}>

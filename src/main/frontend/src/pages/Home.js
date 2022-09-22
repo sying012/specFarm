@@ -11,14 +11,30 @@ import { useNavigate } from "react-router";
 import HomeNavAfter from "../components/home/HomeNavAfter";
 import { Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
-import axios from "axios";
 import { API_BASE_URL } from "../app-config";
+import axios from "axios";
 
 const Home = () => {
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
   const navigate = useNavigate();
   const [page, setPage] = useState("/cert");
   const [pageComponent, setPageComponent] = useState(<CertMain />);
+  const [loginedUser, setLoginedUser] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "/user/getUser", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+      })
+      .then((response) => {
+        setLoginedUser(response.data.user);
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -113,22 +129,45 @@ const Home = () => {
             <div className={styles.tailwrap}>
               <div className="loginbtn">
                 {!isAuthenticated ? (
-                  <Link to="/login" id="leftLink">
+                  <Link
+                    to="/login"
+                    className="loginLink"
+                    id="leftLink"
+                    style={{ fontSize: "14px" }}
+                  >
                     로그인
                   </Link>
                 ) : (
-                  <Link to="/mypage" id="leftLink">
-                    마이페이지
+                  <Link
+                    to="/mypage"
+                    className={styles.mypageLink}
+                    id="leftLink"
+                  >
+                    <img
+                      src={
+                        Object.keys(loginedUser).length !== 0
+                          ? "/upload/profile/" + loginedUser.userProfileName
+                          : "/upload/profile/farmer.png"
+                      }
+                      alt=""
+                      className="loginedProfileImg"
+                    ></img>
+                    <div>{loginedUser.userNick}</div>
                   </Link>
                 )}
               </div>
               <div className="joinbtn">
                 {!isAuthenticated ? (
-                  <Link to="/join" id="rightLink">
+                  <Link to="/join" className="joinLink" id="rightLink">
                     회원가입
                   </Link>
                 ) : (
-                  <Link to="/" id="rightLink" onClick={logout}>
+                  <Link
+                    to="/"
+                    className="logoutLink"
+                    id="rightLink"
+                    onClick={logout}
+                  >
                     로그아웃
                   </Link>
                 )}

@@ -49,6 +49,7 @@ const Main = () => {
     <>
       <div className={styles.homeBackground}>
         <Container style={{ position: "relative", boxSizing: "content-box" }}>
+          {/* <Container> */}
           {isUser ? (
             <Grid container className={styles.alert}>
               <Stack sx={{ width: "510px" }} spacing={1}>

@@ -52,7 +52,7 @@
 
 .lostLoc {
   text-align: center;
-  width: 22%;
+  width: 25%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -75,7 +75,6 @@
 
 /* lost Item */
 .itemMainDiv {
-  margin: 0 15px;
   border: 1px solid rgba(150, 150, 150, 0.3);
   border-radius: 10px;
 }
@@ -148,6 +147,7 @@
   font-size: 36px;
   color: #403633;
   font-weight: bold;
+  line-height: 150%;
 }
 
 .subtitlewrap {
@@ -187,4 +187,49 @@
 .detailListBtn:hover {
   background-color: #000;
   color: white;
+}
+
+.map {
+  width: 400px;
+  height: 300px;
+  border: 1px solid lightgray;
+  margin: auto 0;
+  margin-left: 20px;
+}
+
+.lostItemContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .brchName {
+    width: 100px;
+  }
+
+  .lostDate {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .brchName {
+    width: 80px;
+  }
+}
+
+@media screen and (max-width: 978px) {
+  .lostItemContent {
+    flex-direction: column;
+  }
+
+  .map {
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .itemtable {
+    width: 90%;
+    margin: 20px auto;
+  }
 }

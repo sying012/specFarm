@@ -1,8 +1,9 @@
 .center {
+  width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  margin: 0px 15px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .logo {
@@ -24,9 +25,11 @@
 
 .form {
   max-width: 600px;
-  margin: 30px auto;
+  margin: 30px;
+  display: inline-block;
   border-radius: 15px;
   box-shadow: 5px 6px 22px 0 lightgray;
+  text-align: left;
 }
 
 .padding {

@@ -124,7 +124,6 @@ public class MypageServiceImpl implements MypageService {
 		if(passwordEncoder.matches(pastPw, loginUser.getUserPw())) {
 			return true;
 		} else {
-			System.out.println("something wrong");
 			return false;
 		}
 	}

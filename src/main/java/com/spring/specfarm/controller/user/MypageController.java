@@ -52,10 +52,8 @@ public class MypageController {
 			
 			List<GetCert> earnedCert = mypageService.getEarnedCert(userId);
 			for(int i=0; i < earnedCert.size(); i++) {
-				System.out.println(i);
 				earnedCert.get(i).setGetCertIdx(i);
 			}
-			System.out.println(earnedCert);
 			responseMap.put("earnedCert", earnedCert);
 			
 			List<Ask> writtenAsks = mypageService.getWrittenAsks(loginedUser);
@@ -84,18 +82,6 @@ public class MypageController {
 		try {
 			User loginedUser = mypageService.getUser(userId);
 			loginedUser.setUserNick(loginedUser.getUserNick() == null || loginedUser.getUserNick() == "" ? loginedUser.getUserId() : loginedUser.getUserNick());
-			
-//			UserDTO userDTO = new UserDTO();
-//			userDTO.setUserId(loginedUser.getUserId());
-//			userDTO.setUserPw(loginedUser.getUserPw());
-//			userDTO.setUserName(loginedUser.getUserName());
-//			userDTO.setUserTel(loginedUser.getUserTel());
-//			userDTO.setUserEmail(loginedUser.getUserEmail());
-//			userDTO.setUserNick(loginedUser.getUserNick() == null ? loginedUser.getUserId() : loginedUser.getUserNick());
-//			userDTO.setFavFieldL(loginedUser.getFavFieldL());
-//			userDTO.setFavFieldM(loginedUser.getFavFieldM());
-//			userDTO.setUserProfileName(loginedUser.getUserProfileName());
-//			userDTO.setRole(loginedUser.getRole());
 			
 			return ResponseEntity.ok().body(loginedUser);
 		} catch (Exception e) {
@@ -135,8 +121,6 @@ public class MypageController {
 	@PostMapping("/earnedcert/{userId}")
 	public ResponseEntity<?> editUserInfo(@PathVariable("userId") String userId, @RequestBody List<GetCert> earnedCert) {
 		try {
-			System.out.println("earnedCert: ////////"+ earnedCert);
-				
 			if(earnedCert.isEmpty() || !mypageService.getEarnedCert(userId).isEmpty()) {
 				mypageService.resetEarnedCert(userId);
 			} 

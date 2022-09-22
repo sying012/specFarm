@@ -8,6 +8,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import PrivateRoute from "../lib/PrivateRoute";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
+import StudyEdit from "../components/study/StudyEdit";
 
 const Study = () => {
   const [studyList, setStudyList] = useState([]);
@@ -38,7 +39,7 @@ const Study = () => {
 
   useEffect(() => {
     getStudyList();
-  }, [studyMemberList, page]);
+  }, [studyMemberList, page, getStudyList]);
 
   return (
     <div>
@@ -71,7 +72,10 @@ const Study = () => {
             />
           }
         ></Route>
-
+        <Route
+          path="/:id/edit"
+          element={<StudyEdit setStudyList={setStudyList} />}
+        ></Route>
         <Route
           path="/register"
           element={

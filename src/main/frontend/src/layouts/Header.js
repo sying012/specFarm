@@ -23,8 +23,8 @@ const Header = () => {
         },
       })
       .then((response) => {
-        // console.log(response.data.user.userId);
-        setLoginedUser(response.data);
+        // console.log(response.data.user);
+        setLoginedUser(response.data.user);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -210,7 +210,7 @@ const Header = () => {
               <Link to="/mypage" id="mypageLink">
                 <img
                   src={
-                    loginedUser.userProfileName !== null
+                    Object.keys(loginedUser).length !== 0
                       ? "/upload/profile/" + loginedUser.userProfileName
                       : "/upload/profile/farmer.png"
                   }

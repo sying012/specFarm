@@ -162,6 +162,55 @@ public class StudyController {
 		}
 	}
 
+	@PostMapping("/edit")
+	public Map<String, Object> editStudy(@ModelAttribute Study study, HttpSession session,
+			@RequestParam("imgFile") MultipartFile multipartFile,
+			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable)
+			throws IOException {
+		try {
+			System.out.println(study);
+			
+			String rootPath = session.getServletContext().getRealPath("/");
+
+			String attachPath = "../frontend/public/upload/study/";
+			File directory = new File(rootPath + attachPath);
+			if (directory.exists() == false) {
+				// 서버 루트 경로에 upload 폴더 만들기
+				directory.mkdir();
+			}
+			// 첨부파일이 있는 경우에만 DB에 파일이름 저장
+			if (multipartFile.getOriginalFilename() != "") {
+
+				// 고유한 파일명 생성
+				// 실제 서버에 저장되는 파일명
+				String uuid = UUID.randomUUID().toString();
+				// 파일명에 공백이 있으면 렌더링 시 파일을 못찾아 "_"로 변환
+				String rmSpaceFileName = multipartFile.getOriginalFilename().replace(" ", "_");
+				study.setStudyImgName(uuid + rmSpaceFileName);
+
+				// 파일 업로드 처리
+				File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
+
+				multipartFile.transferTo(file);
+			}
+
+			int studyIdx = studyService.insertStudy(study);
+
+			Page<Study> studyList = studyService.getStudyList(pageable);
+
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("studyIdx", studyIdx);
+			response.put("studyList", studyList);
+
+			return response;
+		} catch (Exception e) {
+
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
 	@GetMapping("/studyJoin")
 	public Map<String, Object> insertStudyMember(@RequestParam String userId, @RequestParam int studyIdx,
 			@RequestParam int acceptYn) {
@@ -171,7 +220,7 @@ public class StudyController {
 			User user = getUser(userId);
 
 			StudyApply studyApply = studyService.getStudyApply(studyIdx, userId);
-			
+
 			if (studyApply.getStudyApplyIdx() == 0) {
 				studyApply = new StudyApply();
 				studyApply.setStudyApplyIdx(studyService.getStudyApplyIdx(studyIdx));
@@ -179,7 +228,7 @@ public class StudyController {
 				studyApply.setStudyIdx(studyIdx);
 			}
 			studyApply.setAcceptYn(acceptYn);
-			
+
 			Study study = studyService.getStudy(studyIdx);
 
 			if (studyApply.getAcceptYn() == 1)

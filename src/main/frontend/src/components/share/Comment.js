@@ -77,7 +77,7 @@ const Comment = ({ comment, user, share }) => {
                 <img
                   style={{ width: "40px", paddingRight: "8px" }}
                   id="profileImg"
-                  src={`/upload/profile/${share.user.userProfileName}`}
+                  src={`/upload/profile/${comment.user.userProfileName}`}
                   alt="프로필사진"
                 />
                 <div
@@ -87,8 +87,8 @@ const Comment = ({ comment, user, share }) => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <p>{share.user.userNick}</p>
-                  <p>{share.shareRegDate}</p>
+                  <p>{comment.user.userNick}</p>
+                  <p>{comment.shareRegDate}</p>
                 </div>
               </div>
               <p style={{ fontSize: "0.8rem" }}>{comment.shareReplyDate}</p>

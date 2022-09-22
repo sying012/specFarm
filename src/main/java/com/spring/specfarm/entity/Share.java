@@ -42,7 +42,6 @@ public class Share {
 	
 	private String shareYn = "Y";
 	
-	@ColumnDefault("'shareImg.png'")
 	private String shareImgName;	
 	
 	@Transient

@@ -1,40 +1,69 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/share/newShare.module.css";
 import { Stack, Box, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../../app-config";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
-const ShareEdit = () => {
+const ShareEdit = ({ insertShare }) => {
   const fileList = []; // 이미지 + 첨부파일
   const [singleImage, setSingleImage] = useState(); //이미지
   const [multiFiles, setMultiFiles] = useState([]); //첨부파일
   const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
   const navigate = useNavigate();
+  const [share, setShare] = useState({});
+  const { shareIdx } = useParams();
+  const [titleValue, setTitleValue] = useState("");
+  const [contentValue, setContentValue] = useState("");
 
-  // share 글 등록
-  const insertShare = (share) => {
-    axios({
-      method: "post",
-      url: API_BASE_URL + "/community/share/newShare",
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-      },
-      data: share,
-    })
-      .then((response) => {
-        navigate(`../${response.data.shareIdx}`);
-      })
-      .catch((e) => {
-        console.log(e);
+  useEffect(() => {
+    //share 데이터요청
+    axios
+      .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
+      .then((responseShare) => {
+        setShare(responseShare.data);
       });
+  }, [shareIdx]);
+
+  useEffect(() => {
+    if (Object.keys(share).length !== 0) {
+      setContentValue(share.shareContent);
+      setTitleValue(share.shareTitle);
+
+      //현재 접속 유저정보요청
+      axios
+        .get(API_BASE_URL + "/user/getUser", {
+          headers: {
+            Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+          },
+        })
+        .then((response) => {
+          if (response.data.user === null) {
+            alert("로그인 후 수정할 수 있습니다.");
+            navigate("/login");
+          } else if (response.data.user.userId !== share.user.userId) {
+            alert("본인이 작성한 글만 수정할 수 있습니다.");
+            navigate(-1);
+          }
+        });
+    }
+  }, [share]);
+
+  const handleTitleValue = (e) => {
+    setTitleValue(e.target.value);
+  };
+
+  const handleContentValue = (value) => {
+    setContentValue(value);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     let share = new FormData(e.target);
+    e.preventDefault();
+    share.set("shareIdx", share.shareIdx);
+    share.set("shareRegDate", share.shareRegDate);
+
+    insertShare(share);
 
     const formObj = {};
 
@@ -108,7 +137,6 @@ const ShareEdit = () => {
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
             src={`/upload/share/newShareImg.png`}
-            /**src={`http:localhost:8080/upload/share/${shareImgName}`} */
             alt="img"
             id="shareImgPreview"
             title="사진을 추가하려면 클릭하세요."
@@ -188,6 +216,8 @@ const ShareEdit = () => {
               label="제목"
               variant="outlined"
               name="shareTitle"
+              value={titleValue || ""}
+              onChange={handleTitleValue}
               style={{ marginLeft: "9px", width: "100%" }}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -213,6 +243,8 @@ const ShareEdit = () => {
             <TextField
               id="shareContentInput"
               label="내용"
+              value={contentValue || ""}
+              onChange={handleContentValue}
               multiline
               rows={15}
               name="shareContent"
@@ -250,7 +282,7 @@ const ShareEdit = () => {
               취소
             </button>
             <button className={styles.RegBtn} type="submit">
-              등록
+              수정
             </button>
           </div>
         </div>

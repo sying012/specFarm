@@ -9,15 +9,15 @@ import {
 } from "@mui/material";
 import styles from "../../styles/share/shareCard.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const ShareCard = ({ shareItem }) => {
-  const {
-    shareIdx,
-    shareTitle,
-    user: { userNick },
-    shareImgName,
-    shareYn,
-  } = shareItem;
+  const [share, setShare] = useState({});
+
+  useEffect(() => {
+    setShare(shareItem);
+  }, [shareItem]);
 
   const theme = createTheme({
     typography: {
@@ -37,7 +37,7 @@ const ShareCard = ({ shareItem }) => {
   });
 
   return (
-    <Link to={`/community/share/${shareIdx}`}>
+    <Link to={`/community/share/${share.shareIdx}`}>
       <Card theme={theme} className={styles.cardbody} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
@@ -45,9 +45,7 @@ const ShareCard = ({ shareItem }) => {
             component="img"
             height="140"
             image={
-              shareImgName
-                ? `/upload/share/${shareImgName}`
-                : "/upload/share/shareImg.png"
+              share.shareImgName ? `/upload/share/${share.shareImgName}` : null
             }
             alt="itemImg"
           />
@@ -64,7 +62,7 @@ const ShareCard = ({ shareItem }) => {
                 textOverflow: "ellipsis",
               }}
             >
-              {shareTitle}
+              {share.shareTitle}
             </Typography>
             <div className={styles.bottom}>
               <div
@@ -72,13 +70,13 @@ const ShareCard = ({ shareItem }) => {
                 className={styles.state}
                 style={{
                   color: "white",
-                  background: shareYn ? "#1d5902" : "#777",
+                  background: share.shareYn ? "#1d5902" : "#777",
                 }}
               >
-                {shareYn ? "나눔" : "완료"}
+                {share.shareYn ? "나눔" : "완료"}
               </div>
               <p className={styles.writer} theme={theme}>
-                {userNick}
+                {share.userNick}
               </p>
             </div>
           </CardContent>

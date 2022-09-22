@@ -12,6 +12,8 @@ import com.spring.specfarm.entity.User;
 public interface MypageService {
 	User getUser(String userId);
 	
+	User nickCheck(String userNick);
+	
 	void editUserMdf(User user);
 	
 	List<GetCert> getEarnedCert(String userId);

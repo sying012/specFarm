@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -99,6 +100,17 @@ public class MypageController {
 		}
 	}
 	
+	@PostMapping("/nickCheck")
+	public String nickCheck(@RequestBody User user) {
+		User nickCheck = mypageService.nickCheck(user.getUserNick());
+		
+		if (nickCheck == null) {
+			return "success";
+		} else {
+			return "exist";
+		}
+	}
+	
 	@PostMapping("/modify")
 	public ResponseEntity<?> editUserMdf(@ModelAttribute User user, MultipartFile profileImage, Boolean checkChange, HttpSession session) {
 		try {
@@ -117,6 +129,21 @@ public class MypageController {
 			mypageService.editUserMdf(user);
 			
 			return ResponseEntity.ok().body("렛츠 수정");
+		} catch (Exception e) {
+			ResponseDTO<UserDTO> response = new ResponseDTO<>();
+			response.setError(e.getMessage());
+			
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
+	@PostMapping("/editUserInfo")
+	public ResponseEntity<?> editUserInfo(@RequestBody User user) {
+		try {
+			System.out.println(user);
+			mypageService.editUserMdf(user);
+			
+			return ResponseEntity.ok().body("수정 완");
 		} catch (Exception e) {
 			ResponseDTO<UserDTO> response = new ResponseDTO<>();
 			response.setError(e.getMessage());

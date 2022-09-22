@@ -101,8 +101,6 @@ function ResetPw({ user }) {
     const newPw = data.get("userPw");
     const userPwCheck = data.get("newPw");
 
-    console.log(userInfo);
-
     if (pastPw === null || pastPw === "") {
       setPastPwError(true);
       setPastPwErrorText("필수 정보입니다.");
@@ -143,7 +141,6 @@ function ResetPw({ user }) {
       })
         .then((response) => {
           if (response.data === "correctPassword") {
-            console.log(response);
             alert("변경되었습니다.");
             window.location.replace("/mypage/userinfo");
           } else {

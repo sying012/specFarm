@@ -8,7 +8,7 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { API_BASE_URL } from "../../app-config";
 
 import styles from "../../styles/mypage/ProfileMdf.module.css";
@@ -129,8 +129,6 @@ function ProfileMdf() {
     const userNickname = data.get("nickname");
     const userProfileName = data.get("userProfileName");
 
-    console.log(userProfileName);
-
     if (user.userNickname !== nicknameValue) {
       setCheckChange(true);
     }
@@ -151,9 +149,25 @@ function ProfileMdf() {
     }
   };
 
+  //nickCheck
+  const nickCheck = useCallback((e) => {
+    const userNick = e.target.value;
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/mypage/nickCheck",
+      data: { userNick: userNick },
+    }).then((response) => {
+      if (response.data === "success") {
+        setNicknameError(false);
+      } else {
+        setNicknameError(true);
+        alert("이미 사용중인 닉네임입니다.");
+      }
+    });
+  }, []);
+
   const handleSubmit = (user) => {
     setUser(user);
-    console.log(user);
     axios({
       method: "post",
       url: API_BASE_URL + "/mypage/modify",
@@ -162,7 +176,6 @@ function ProfileMdf() {
     })
       .then((response) => {
         if (response.data) {
-          console.log(response);
           alert("변경되었습니다.");
           window.location.replace("/mypage");
         }
@@ -228,6 +241,7 @@ function ProfileMdf() {
             onChange={(e) => {
               setNicknameValue(e.target.value);
             }}
+            onBlur={nickCheck}
             onKeyUp={(e) => checkByte(e.target.value)}
             placeholder="닉네임을 입력해주세요."
             className={styles.nicknameInput}

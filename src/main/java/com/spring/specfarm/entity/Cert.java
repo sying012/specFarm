@@ -15,34 +15,28 @@ public class Cert {
 	@Id
 	private int certIdx;
 	
-	@Column(name="obligfldcd")
+	@Column(name="obligfldcd") //대분류 코드
 	private String obligfldcd;
 	
-	@Column(name="seriescd")
-	private String seriescd;
-	
-	@Column(name="jmcd")
-	private String jmcd;
-	
-	@Column(name="mdobligfldnm")
-	private String mdobligfldnm;
-	
-	@Column(name="seriesnm")
-	private String seriesnm;
-	
-	@Column(name="mdobligfldcd")
-	private String mdobligfldcd;
-	
-	@Column(name="obligfldnm")
+	@Column(name="obligfldnm") //대분류 이름
 	private String obligfldnm;
 	
-	@Column(name="qualgbcd")
-	private String qualgbcd;
+	@Column(name="mdobligfldcd") //중분류 코드
+	private String mdobligfldcd;
 	
-	@Column(name="CertName")
-	private String CertName;
+	@Column(name="mdobligfldnm") //중분류 이름
+	private String mdobligfldnm;
+		
+	@Column(name="jmcd") //종목코드
+	private String jmcd;
 	
-	@Column(name="qualgbnm")
-	private String qualgbnm;
+	@Column(name="jmfldnm") //종목 이름
+	private String jmfldnm;
 	
-}
+	
+
+	
+	}
+	
+	
+

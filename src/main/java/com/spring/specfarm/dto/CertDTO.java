@@ -5,25 +5,19 @@ import lombok.Data;
 @Data
 
 public class CertDTO {
+	private String obligfldnm;
 	
 	private String obligfldcd;
 	
-	private String seriescd;
-	
-	private String jmcd;
-	
 	private String mdobligfldnm;
-	
-	private String seriesnm;
 	
 	private String mdobligfldcd;
 	
-	private String obligfldnm;
+	private String jmfldnm;
 	
-	private String qualgbcd;
-	
-	private String CertName;
+	private String jmcd;
+
 		
-	private String qualgbnm;
+
 	
 }

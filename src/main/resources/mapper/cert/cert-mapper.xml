@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/dtd/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.specfarm.mapper.CertMapper">
+	<select id="getCertLList" resultType="camelHashMap">
+		SELECT DISTINCT OBLIGFLDNM,
+			   OBLIGFLDCD
+			FROM T_CERT
+			WHERE OBLIGFLDCD IS NOT NULL
+			  AND OBLIGFLDCD != ''
+			ORDER BY OBLIGFLDCD
+	</select>
+	
+	<select id="getCertMList" parameterType="string" resultType="camelHashMap">
+		SELECT DISTINCT MDOBLIGFLDNM,
+			   MDOBLIGFLDCD
+			FROM T_CERT
+			WHERE MDOBLIGFLDCD IS NOT NULL
+			  AND MDOBLIGFLDCD != ''
+			  AND OBLIGFLDNM = #{obligfldnm}
+			ORDER BY MDOBLIGFLDCD
+	</select>
+	
+	<select id="getCertSList" parameterType="string" resultType="camelHashMap">
+		SELECT DISTINCT MDOBLIGFLDNM,
+			   MDOBLIGFLDCD,
+			   JMCD
+			FROM T_CERT
+			WHERE MDOBLIGFLDCD IS NOT NULL
+			  AND MDOBLIGFLDCD != ''
+			  AND OBLIGFLDNM = #{mdobligfldnm}
+			ORDER BY MDOBLIGFLDCD
+	</select>
+</mapper>

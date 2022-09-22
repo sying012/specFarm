@@ -10,6 +10,7 @@ import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.ShareFile;
 import com.spring.specfarm.entity.ShareReReply;
 import com.spring.specfarm.entity.ShareReply;
+import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 
 public interface ShareService {
@@ -23,7 +24,7 @@ public interface ShareService {
 	void insertShareFileList(List<ShareFile> shareFileList);
 
 	// share 리스트
-	Page<Share> getShareList(Pageable pageable);
+	Page<Share> getShareList(String searchKeyword, Pageable pageable);
 	
 	// share 상세페이지
 	Share shareDetail(int shareIdx);
@@ -45,6 +46,10 @@ public interface ShareService {
 	
 	// share 대댓글 작성
 	List<ShareReReply> insertShareReReply(ShareReReply shareReReply);
+
+	// share 글 삭제
+	void deleteShare(int shareIdx);
+
 	
 	
 }

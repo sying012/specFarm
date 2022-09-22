@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styles from "../../styles/share/detail.module.css";
 import { Button } from "@mui/material";
 import CommentContainer from "./CommentContainer";
 import Comment from "./Comment";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import { useCallback } from "react";
+import { NavLink } from "react-router-dom";
 
 const ShareDetail = () => {
+  const navigate = useNavigate();
   const [share, setShare] = useState({});
   const { shareIdx } = useParams();
   const [shareReply, setShareReply] = useState([]);
@@ -33,7 +36,7 @@ const ShareDetail = () => {
     axios
       .get(API_BASE_URL + "/user/getUser", {
         headers: {
-          Authorization: "Bearer" + sessionStorage.getItem("ACCESS_TOKEN"),
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
         },
       })
       .then((response) => {
@@ -41,7 +44,7 @@ const ShareDetail = () => {
         if (response.data.user !== null && response.data.user !== undefined)
           setUser(response.data.user);
       });
-  }, []);
+  }, [shareIdx]);
 
   //share 댓글 입력
   const insertShareReply = (shareReply) => {
@@ -60,40 +63,64 @@ const ShareDetail = () => {
     console.log(shareReply);
   };
 
+  //share 삭제
+  const deleteShare = useCallback(() => {
+    const result = window.confirm("삭제할까요?");
+    if (result) {
+      console.log(result);
+      if (user.userId === share.user.userId) {
+        axios
+          .delete(
+            API_BASE_URL + "/community/share/delete?shareIdx=" + share.shareIdx
+          )
+          .then((response) => {
+            console.log(response);
+            alert("삭제되었습니다.");
+            navigate("/community/share");
+          });
+      } else {
+        alert("삭제할 수 없습니다.");
+      }
+    }
+  }, [share, user]);
+
   return (
     <div className={styles.detailBox}>
       <div className={styles.title}>
         <p>{share.shareYn === "Y" ? "나눔" : "완료"}</p>
         <h1>{share.shareTitle}</h1>
         <div className={styles.btns}>
-          <Button
-            style={{
-              border: "1px solid #1d5902",
-              color: "#1d5902",
-              height: "38px",
-            }}
-            href="/community/share"
-            className={styles.deleteBtn}
-            onClick={() => (
-              (window.location = "/share"), alert("삭제되었습니다.")
-            )}
-          >
-            삭제
-          </Button>
-          <Button
-            style={{
-              backgroundColor: "#1d5902",
-            }}
-            type="submit"
-            color="primary"
-            variant="contained"
-            onClick={() => (
-              (window.location = "./detail"), alert("등록되었습니다.")
-            )}
-            className={styles.mdfBtn}
-          >
-            수정
-          </Button>
+          {Object.keys(user).length !== 0 &&
+          Object.keys(share).length !== 0 &&
+          share.user.userId === user.userId ? (
+            <div>
+              <Button
+                style={{
+                  backgroundColor: "#1d5902",
+                }}
+                type="submit"
+                color="primary"
+                variant="contained"
+                onClick={() => navigate(`/community/share/${shareIdx}/edit`)}
+                className={styles.mdfBtn}
+              >
+                수정
+              </Button>
+              <Button
+                style={{
+                  border: "1px solid #1d5902",
+                  color: "#1d5902",
+                  height: "38px",
+                }}
+                className={styles.deleteBtn}
+                onClick={deleteShare}
+              >
+                삭제
+              </Button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
       <div className={styles.detailBoxTop}>

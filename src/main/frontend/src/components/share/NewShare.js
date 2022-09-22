@@ -2,35 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/share/newShare.module.css";
 import { Stack, Box, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../../app-config";
-import axios from "axios";
 
-const NewShare = () => {
+const NewShare = ({ insertShare }) => {
   const fileList = []; // 이미지 + 첨부파일
   const [singleImage, setSingleImage] = useState(); //이미지
   const [multiFiles, setMultiFiles] = useState([]); //첨부파일
   const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
   const navigate = useNavigate();
-
-  // share 글 등록
-  const insertShare = (share) => {
-    axios({
-      method: "post",
-      url: API_BASE_URL + "/community/share/newShare",
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-      },
-      data: share,
-    })
-      .then((response) => {
-        console.log(response);
-        navigate(`../${response.data.shareIdx}`);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -109,7 +87,6 @@ const NewShare = () => {
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
             src={`/upload/share/newShareImg.png`}
-            /**src={`http:localhost:8080/upload/share/${shareImgName}`} */
             alt="img"
             id="shareImgPreview"
             title="사진을 추가하려면 클릭하세요."

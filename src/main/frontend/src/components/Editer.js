@@ -62,9 +62,7 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
         await axios
           .post(API_BASE_URL + `/${place}/upload/images`, formData)
           .then((response) => {
-            console.log(response.data.file);
             const url = `/upload/${place}/` + response.data.file;
-            console.log(url);
 
             // 정상적으로 업로드 됐다면 로딩 placeholder 삭제
             quillRef.current?.getEditor().deleteText(range.index, 1);

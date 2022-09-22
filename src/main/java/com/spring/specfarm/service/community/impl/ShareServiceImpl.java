@@ -48,7 +48,6 @@ public class ShareServiceImpl implements ShareService {
 	@Override
 	public int insertShare(Share share) {
 		shareRepository.save(share);
-		System.out.println(	"fdjgkjdsfg"+ share.getShareIdx());
 	
 		shareRepository.flush();
 		return share.getShareIdx();
@@ -57,7 +56,6 @@ public class ShareServiceImpl implements ShareService {
 	// Insert Share File
 	@Override
 	public void insertShareFileList(List<ShareFile> shareFileList) {
-		System.out.println(shareFileList.size());
 		for(ShareFile shareFile : shareFileList) {
 			int shareFileIdx = shareFileRepository.getNextFileIdx(shareFile.getShare().getShareIdx());
 			
@@ -69,8 +67,13 @@ public class ShareServiceImpl implements ShareService {
 
 	// Share List
 	@Override
-	public Page<Share> getShareList(Pageable pageable) {
-		return shareRepository.findAll(pageable);
+	public Page<Share> getShareList(String searchKeyword, Pageable pageable) {
+		if(searchKeyword != null && !searchKeyword.equals("")) {
+			return shareRepository.findByShareTitleContainingOrShareContentContaining(searchKeyword, searchKeyword,pageable);
+		}else {
+			
+			return shareRepository.findAll(pageable);
+		}
 	}
 	
 
@@ -122,16 +125,27 @@ public class ShareServiceImpl implements ShareService {
 		
 		ShareReply shareReply = new ShareReply();
 		
-		shareReply.setShareIdx(shareReReply.getShareReply().getShareReplyIdx());
+		shareReply.setShareIdx(shareReReply.getShareReply().getShareIdx());
 
 		shareReply.setShareReplyIdx(shareReReply.getShareReply().getShareReplyIdx());
 		
 		return shareReReplyRepository.findByShareReply(shareReply);
 	}
-	
-	
-	
+
 	// DeleteShare
+	@Override
+	public void deleteShare(int shareIdx) {
+		shareRepository.deleteById(shareIdx);
+		shareReplyRepository.deleteByShareIdx(shareIdx);
+		
+	}
+
+	
+
+	
+
+	
+	
 	
 }
 

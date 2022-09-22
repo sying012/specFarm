@@ -74,7 +74,7 @@ const CourseContainer = ({ searchList, setSearchList }) => {
           <input
             className={styles.courseinput}
             value={value}
-            placeholder="검색"
+            placeholder="검색어를 입력하세요."
             onChange={changeValue}
           ></input>
           <div onClick={handleSubmit} style={{ cursor: "pointer" }}>

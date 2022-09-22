@@ -45,7 +45,7 @@
 } */
 
 .certPlan {
-  width: 500px;
+  width: 470px;
   height: 400px;
   margin-top: 20px;
   border: none;
@@ -61,7 +61,7 @@
   line-height: 150%;
   width: 95%;
   height: fit-content;
-  margin-bottom: 15px;
+  margin-top: 15px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -156,6 +156,12 @@
   font-weight: bold;
 }
 
+.mypageLink {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
 /* alerts */
 .alert {
   /* width: 100%; */
@@ -166,4 +172,11 @@
   display: flex;
   justify-content: flex-end;
   max-width: 1200px;
+}
+
+@media screen and (max-width: 978px) {
+  .homeContent {
+    padding-top: 5%;
+    flex-direction: column;
+  }
 }

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 const FindUser = () => {
   return (
-    <div className={styles.margin15}>
+    <div className={styles.center}>
       <div className={styles.form}>
         <div className={styles.logo}>
           <NavLink to="/">specFarm</NavLink>

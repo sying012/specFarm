@@ -84,10 +84,10 @@ const Plan = ({ favCertList }) => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ pr: 3, pt: 3, pl: 3, pb: 2 }}>
+          <Box sx={{ pr: 2.5, pt: 1, pl: 2.5, pb: 1 }}>
             <div
               style={{
-                height: "250px",
+                height: "240px",
               }}
             >
               {children}

@@ -48,8 +48,8 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public Page<Study> getStudyList(Pageable pageable) {
-		return studyRepository.findAll(pageable);
+	public Page<Study> getStudyList(String searchKeyword, Pageable pageable) {
+		return studyRepository.findByStudyTitleContainingOrStudyContentContaining(searchKeyword, searchKeyword, pageable);
 	}
 
 	@Override
@@ -110,4 +110,5 @@ public class StudyServiceImpl implements StudyService {
 		}
 
 	}
+
 }

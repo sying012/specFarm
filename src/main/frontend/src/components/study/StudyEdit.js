@@ -82,7 +82,7 @@ const StudyEdit = ({ setStudyList }) => {
 
   const menuItemList = () => {
     const result = [];
-    for (let index = 2; index < 11; index++) {
+    for (let index = currentStudy.studyMemberCnt; index < 11; index++) {
       result.push(
         <MenuItem key={index} value={index}>
           {index}명
@@ -278,7 +278,7 @@ const StudyEdit = ({ setStudyList }) => {
               <button
                 className={styles.studyRegCancel}
                 onClick={() => {
-                  navigate(-1);
+                  navigate("./..");
                 }}
               >
                 취소

@@ -7,7 +7,6 @@ import Comment from "./Comment";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
-import { NavLink } from "react-router-dom";
 
 const ShareDetail = () => {
   const navigate = useNavigate();
@@ -15,6 +14,7 @@ const ShareDetail = () => {
   const { shareIdx } = useParams();
   const [shareReply, setShareReply] = useState([]);
   const [user, setUser] = useState({});
+  const [fileList, setFileList] = useState([]);
 
   //share 상세페이지
   useEffect(() => {
@@ -22,8 +22,10 @@ const ShareDetail = () => {
       .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
       .then((response) => {
         console.log(response);
-        setShare(response.data);
+        setShare(response.data.share);
+        setFileList(response.data.shareFileList);
       });
+
     //share 댓글 반환
     axios
       .get(API_BASE_URL + "/community/share/comment/" + shareIdx)
@@ -163,7 +165,24 @@ const ShareDetail = () => {
                 </div>
                 <p>{share.shareRegDate}</p>
               </div>
-              <div className="detailContent">{share.shareContent}</div>
+              <div
+                className="detailContent"
+                style={{
+                  height: "200px",
+                  paddingTop: "15px",
+                }}
+              >
+                {share.shareContent}
+              </div>
+              <div className={styles.fileDown}>
+                {fileList !== null &&
+                  fileList.map((file) => (
+                    <a href={"/upload/share/" + file.shareFileName}>
+                      {file.originalFileName}
+                      <p></p>
+                    </a>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

@@ -140,6 +140,17 @@ public class ShareServiceImpl implements ShareService {
 		
 	}
 
+	@Override
+	public List<ShareFile> getfileList(int shareIdx) {
+		Share share = new Share();
+		share.setShareIdx(shareIdx);
+		if (shareFileRepository.findByShare(share).isEmpty()) {
+			return null;
+		} else {
+			return shareFileRepository.findByShare(share);
+		}
+	}
+
 	
 
 	

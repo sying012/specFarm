@@ -50,6 +50,9 @@ public interface ShareService {
 	// share 글 삭제
 	void deleteShare(int shareIdx);
 
+	//share 첨부된 파일 리스트
+	List<ShareFile> getfileList(int shareIdx);
+
 	
 	
 }

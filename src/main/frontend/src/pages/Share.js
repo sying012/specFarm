@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, NavLink, Navigate } from "react-router-dom";
+import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import NewShare from "../components/share/NewShare";
 import ShareDetail from "../components/share/ShareDetail";
 import ShareContainer from "../components/share/ShareContainer";
@@ -10,6 +10,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 
 const Share = () => {
+  const navigate = useNavigate();
   // share 글 등록
   const insertShare = (share) => {
     console.log(share);
@@ -24,7 +25,7 @@ const Share = () => {
     })
       .then((response) => {
         console.log(response);
-        Navigate(`../${response.data.shareIdx}`);
+        navigate(`/community/share/${response.data.shareIdx}`);
       })
       .catch((e) => {
         console.log(e);

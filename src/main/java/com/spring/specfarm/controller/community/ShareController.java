@@ -62,56 +62,60 @@ public class ShareController {
 	}
 	
 	// Insert Share
-	@PostMapping("/newShare") 
-	public Map<String, Object> insertShare(MultipartHttpServletRequest multipartServletRequest, 
-			HttpServletRequest request,
-			Share share, 
-			@AuthenticationPrincipal String userId){
-	      try {
-	          
-	          User user = new User();
-	          user.setUserId(userId);
-	          share.setUser(user);
-	          int shareIdx = 0;
-	          
-	          // Share File List
-	          List<ShareFile> shareFileList = new ArrayList<>();
-	          
-	          
-	          Iterator<String> i = multipartServletRequest.getFileNames();
-	             List<MultipartFile> fileList = multipartServletRequest.getFiles(i.next());
-	             boolean isFirstFile = fileList.get(0).isEmpty();
-	             
-	             System.out.println(fileList);
-	             for (MultipartFile file : fileList) {
-	            	 System.out.println(file);
-	                if (!file.isEmpty()) {
-	                	
-	                   FileUtils fileUtils = new FileUtils();
-	                   Map<String, String> fileInfo = fileUtils.parseFileInfo(request.getSession(), file, "share");
+	@PostMapping("/newShare")
+	public Map<String, Object> insertShare(MultipartHttpServletRequest multipartServletRequest,
+			HttpServletRequest request, Share share, @AuthenticationPrincipal String userId, @RequestParam Boolean hasImg) {
+		try {
+			User user = new User();
+			user.setUserId(userId);
+			share.setUser(user);
+			int shareIdx = 0;
+			System.out.println("조유미"+hasImg);
+			// Share File List
+			List<ShareFile> shareFileList = new ArrayList<>();
 
-	                   if (!isFirstFile) {
-	                       share.setShareImgName(fileInfo.get("FileName"));
-//	                       isFirstFile = false;
-	                    } else {
-	                 	System.out.println("fdfdsfsfg");
-	                 	   share.setShareImgName("shareImg.png");
-	                 	   
-	                    }
-	                   ShareFile shareFile = new ShareFile();
-	                   
-	                   shareFile.setShare(share);
-	                   shareFile.setShareFileName(fileInfo.get("FileName"));
-	                   shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
-	                   shareFileList.add(shareFile);
-	                }
-	             }
-	          
-	          shareIdx = shareService.insertShare(share);
-	          
+			//파일 이름 받기
+			Iterator<String> i = multipartServletRequest.getFileNames();
 			
+			// file data list
+			if (!hasImg) {
+				share.setShareImgName("shareImg.png");
+			}
+
+			while (i.hasNext()) {
+				// sigleImg 값 확인
+
+				List<MultipartFile> fileList = multipartServletRequest.getFiles(i.next());
+
+				System.out.println(fileList);
+				for (MultipartFile file : fileList) {
+					System.out.println(file);
+					if (!file.isEmpty()) {
+
+						FileUtils fileUtils = new FileUtils();
+						Map<String, String> fileInfo = fileUtils.parseFileInfo(request.getSession(), file, "share");
+
+						ShareFile shareFile = new ShareFile();
+
+						if (hasImg) {
+							share.setShareImgName(fileInfo.get("FileName"));
+							hasImg = false;
+						} else {
+
+							shareFile.setShare(share);
+							shareFile.setShareFileName(fileInfo.get("FileName"));
+							shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
+							shareFileList.add(shareFile);
+						}
+					}
+
+				}
+			}
+
+			shareIdx = shareService.insertShare(share);
+
 			shareService.insertShareFileList(shareFileList);
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("shareIdx", shareIdx);
 			return response;
@@ -121,18 +125,23 @@ public class ShareController {
 			return errorMap;
 		}
 	}
-	
+
 	//Share Detail
 	@GetMapping("/shareDetail")
-	public ResponseEntity<?> shareDetail(int shareIdx){
+	public Map<String, Object> shareDetail(int shareIdx){
 		try {
-			Share share = shareService.shareDetail(shareIdx);
+			Map<String, Object> response = new HashMap<String, Object>();
 			
-			return ResponseEntity.ok().body(share);
+			Share share = shareService.shareDetail(shareIdx);
+			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
+			response.put("share", share);
+			response.put("shareFileList", shareFileList);
+			
+			return response;
 		} catch(Exception e) {
-			ResponseDTO<Share> response = new ResponseDTO<>();
-			response.setError(e.getMessage());
-			return ResponseEntity.badRequest().body(response);
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
 		}
 	}
 	

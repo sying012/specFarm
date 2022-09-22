@@ -8,6 +8,7 @@ const NewShare = ({ insertShare }) => {
   const [singleImage, setSingleImage] = useState(); //이미지
   const [multiFiles, setMultiFiles] = useState([]); //첨부파일
   const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
+  const [hasImg, setHasImg] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -31,7 +32,7 @@ const NewShare = ({ insertShare }) => {
     formObj.uploadFiles = fileList;
 
     console.log(formObj);
-
+    formObj.hasImg = hasImg;
     insertShare(formObj);
   };
 
@@ -102,6 +103,7 @@ const NewShare = ({ insertShare }) => {
             name="shareImgName"
             onChange={(e) => {
               readImage(e.target.files[0]);
+              setHasImg(true);
             }}
           />
           <div className={styles.fileloadBtn}>

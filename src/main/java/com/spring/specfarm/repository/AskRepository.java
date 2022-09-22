@@ -24,6 +24,7 @@ public interface AskRepository extends JpaRepository<Ask, Integer> {
 
 	List<Ask> findAllByUserOrderByAskRegDateDesc(User user);
 	
-//	List<Ask> findTop4ByAskCountOrderByAskCountDesc();
+	//Community Main 조회수 상위4개 추출
+	List<Ask> findTop4ByOrderByAskCountDesc();
 
 }

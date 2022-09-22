@@ -16,5 +16,7 @@ public interface ShareRepository extends JpaRepository<Share, Integer> {
 	//검색
 	Page<Share> findByShareTitleContainingOrShareContentContaining(String searchKeyword1,String searchKeyword2, Pageable pageable);
 	
-//	List<Share> findTop4ByShareCountOrderByShareCountDesc();
+	//Community Main 조회수 상위4개 추출
+//	List<Share> findTop4ByOrderByShareCountDesc();
+	List<Share> findTop4ByOrderByShareRegDateDesc();
 }

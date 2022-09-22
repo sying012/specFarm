@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
-import { useEffect } from "react";
 import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const StudyReg = ({ setStudyList, setStudyMemberList }) => {
@@ -74,7 +73,7 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
     e.preventDefault();
   };
 
-  const [maxMemberCnt, setMaxMemberCnt] = useState(5);
+  const [maxMemberCnt, setMaxMemberCnt] = useState(4);
 
   const handleChange = (event) => {
     setMaxMemberCnt(event.target.value);
@@ -82,7 +81,7 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
 
   const menuItemList = () => {
     const result = [];
-    for (let index = 1; index < 11; index++) {
+    for (let index = 2; index < 11; index++) {
       result.push(
         <MenuItem key={index} value={index}>
           {index}명
@@ -278,13 +277,12 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
             />
           </Box>
           <div className={styles.submitBtnWrapper}>
-            <Link to={".."}>
-              <button className={styles.studyRegCancel}>취소</button>
-            </Link>
-
             <button type="submit" className={styles.studyRegBtn}>
               등록
             </button>
+            <Link to={".."}>
+              <button className={styles.studyRegCancel}>취소</button>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import styles from "../../styles/study/StudyContent.module.css";
 import { API_BASE_URL } from "../../app-config";
@@ -95,7 +95,7 @@ const StudyContent = ({
       params: { id: studyIdx },
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setStudyList(response.data.studyList.content);
         navigate(`..`);
       })
@@ -119,11 +119,11 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setStudyMemberList(response.data.studyMemberList);
 
         setStudy(response.data.study);
-        console.log(study);
+        // console.log(study);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -145,11 +145,11 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setStudyMemberList(response.data.studyMemberList);
 
         setStudy(response.data.study);
-        console.log(study);
+        // console.log(study);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -245,7 +245,9 @@ const StudyContent = ({
                 <>
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate(`./edit`);
+                    }}
                     className={styles.reqBtnStyle}
                     style={{ marginRight: "10px" }}
                   >

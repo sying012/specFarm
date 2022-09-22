@@ -11,20 +11,20 @@ const Header = () => {
   const [noticeHover, setnoticeHover] = useState(0);
   const [noticeName, setNoticeName] = useState("공지사항");
   const [skillsHover, setSkillsHover] = useState(0);
-  const [loginedUserId, setLoginedUserId] = useState("");
+  const [loginedUser, setLoginedUser] = useState({});
 
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "/mypage", {
+      .get(API_BASE_URL + "/user/getUser", {
         headers: {
           Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
         },
       })
       .then((response) => {
         // console.log(response.data.user.userId);
-        setLoginedUserId(response.data.user.userId);
+        setLoginedUser(response.data);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -209,11 +209,15 @@ const Header = () => {
             ) : (
               <Link to="/mypage" id="mypageLink">
                 <img
-                  src="/upload/profile/farmer.png"
+                  src={
+                    loginedUser.userProfileName !== null
+                      ? "/upload/profile/" + loginedUser.userProfileName
+                      : "/upload/profile/farmer.png"
+                  }
                   alt=""
                   className="loginedProfileImg"
                 ></img>
-                <div>{loginedUserId}</div>
+                <div>{loginedUser.userNick}</div>
               </Link>
             )}
           </div>

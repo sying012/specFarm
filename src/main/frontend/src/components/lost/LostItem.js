@@ -73,27 +73,16 @@ const LostItem = () => {
       <>
         <div className={styles.itemMainDiv}>
           <div className={styles.itemdiv}>
-            <strong>
+            <strong className={styles.otherItem}>
               [{lost.lostCat}] {lost.lostItem}, {lost.lostLoc}
             </strong>
-            <p>
+            <p style={{ marginLeft: "5px" }}>
               {lost.lostDate &&
                 lost.lostDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")}
             </p>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div
-              style={{
-                border: "1px solid lightgray",
-                width: "400px",
-                height: "300px",
-                margin: "auto 0",
-                marginLeft: "20px",
-              }}
-              id="map"
-            >
-              {/* <Map lost={lost} /> */}
-            </div>
+          <div className={styles.lostItemContent}>
+            <div className={styles.map} id="map"></div>
             <table className={styles.itemtable}>
               <tbody>
                 <tr>

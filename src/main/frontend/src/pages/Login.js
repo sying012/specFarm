@@ -10,11 +10,13 @@ import {
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../app-config";
 import SocialLogin from "../components/login/SocialLogin";
 import styles from "../styles/login/Login.module.css";
 import { useBeforeRender } from "../utils";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const theme = createTheme({
   status: {
@@ -57,7 +59,6 @@ const Login = ({ pathname }) => {
     if (cookies.rememberUserId !== undefined) {
       setIsRemember(true);
     }
-    console.log(pathname);
   }, []);
 
   // Id Check
@@ -120,7 +121,6 @@ const Login = ({ pathname }) => {
           } else {
             removeCookie("rememberUserId");
           }
-          console.log(pathname);
           navigate(pathname || "/");
         } else {
           document.getElementById("loginFailAlert").hidden = false;
@@ -199,6 +199,15 @@ const Login = ({ pathname }) => {
                     size="small"
                     style={{ paddingTop: "0px", paddingBottom: "0px" }}
                     checked={isRemember}
+                    icon={
+                      <CheckCircleOutlineIcon
+                        color="disabled"
+                        fontSize="medium"
+                      />
+                    }
+                    checkedIcon={
+                      <CheckCircleIcon color="success" fontSize="medium" />
+                    }
                   />
                 }
                 label="아이디 저장"

@@ -165,9 +165,8 @@ const FindId = () => {
         if (response.data === "fail") {
           document.getElementById("findIdFailAlert").hidden = false;
         } else if (response.data !== null || response.data !== "") {
-          const id = response.data.userId.substr(0, 3) + "****";
           setUserName(userName);
-          setFindId(id);
+          setFindId(response.data.userId);
         }
       });
     }

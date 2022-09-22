@@ -40,7 +40,7 @@ public class CertController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/xml");
-        System.out.println("Response code: " + conn.getResponseCode());
+//        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -54,24 +54,24 @@ public class CertController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+//        System.out.println(sb.toString());
         
         CommUtils commUtils = new CommUtils();
         String json = commUtils.xmlToJson(sb.toString());
         
-        System.out.println(json);
+//        System.out.println(json);
         Map<String, JSONObject> map = commUtils.paramMap(json);
         
         ObjectMapper objectMapper= new ObjectMapper();
         
         JSONObject jObj = map.get("response");
-        System.out.println(jObj.toString());
+//        System.out.println(jObj.toString());
         JSONObject body = jObj.getJSONObject("body");
-        System.out.println(body.toString());
+//        System.out.println(body.toString());
         JSONObject items = body.getJSONObject("items");
-        System.out.println(items.toString());
+//        System.out.println(items.toString());
         JSONArray item = items.getJSONArray("item");
-        System.out.println(item.toString());
+//        System.out.println(item.toString());
         
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         
@@ -124,11 +124,11 @@ public class CertController {
 	     urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=" + "ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*Service Key*/
 	     URL url = new URL(urlBuilder.toString());
 	     
-	     System.out.println(urlBuilder.toString());
+//	     System.out.println(urlBuilder.toString());
 	     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	     conn.setRequestMethod("GET");
 	     conn.setRequestProperty("Content-type", "application/xml");
-	     System.out.println("Response code: " + conn.getResponseCode());
+//	     System.out.println("Response code: " + conn.getResponseCode());
 	     BufferedReader rd;
 	     if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	         rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -142,24 +142,24 @@ public class CertController {
 	     }
 	     rd.close();
 	     conn.disconnect();
-	     System.out.println(sb.toString());
+//	     System.out.println(sb.toString());
 	     
 	     CommUtils commUtils = new CommUtils();
 	        String json = commUtils.xmlToJson(sb.toString());
 	        
-	        System.out.println(json);
+//	        System.out.println(json);
 	        Map<String, JSONObject> map = commUtils.paramMap(json);
 	        
 	        ObjectMapper objectMapper= new ObjectMapper();
 	        
 	        JSONObject jObj = map.get("response");
-	        System.out.println(jObj.toString());
+//	        System.out.println(jObj.toString());
 	        JSONObject body = jObj.getJSONObject("body");
-	        System.out.println(body.toString());
+//	        System.out.println(body.toString());
 	        JSONObject items = body.getJSONObject("items");
-	        System.out.println(items.toString());
+//	        System.out.println(items.toString());
 	        JSONArray item = items.getJSONArray("item");
-	        System.out.println(item.toString());
+//	        System.out.println(item.toString());
 	        
 	        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 	        

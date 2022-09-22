@@ -38,7 +38,7 @@ const Study = () => {
 
   useEffect(() => {
     getStudyList();
-  }, [page]);
+  }, [studyMemberList, page]);
 
   return (
     <div>

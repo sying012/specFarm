@@ -80,8 +80,7 @@ const StudyContent = ({
         setCurrentMember(studyMember);
       }
     });
-
-    console.log(currentMember);
+    // console.log(currentMember);
   }, [checkedMember, loginUserId, studyMemberList]);
 
   // 스터디 삭제
@@ -96,7 +95,7 @@ const StudyContent = ({
       params: { id: studyIdx },
     })
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         setStudyList(response.data.studyList.content);
         navigate(`..`);
       })
@@ -120,8 +119,11 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        // console.log(response);
-        setStudyMemberList(response.data);
+        console.log(response.data);
+        setStudyMemberList(response.data.studyMemberList);
+
+        setStudy(response.data.study);
+        console.log(study);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -143,8 +145,11 @@ const StudyContent = ({
       },
     })
       .then((response) => {
-        // console.log(response);
-        setStudyMemberList(response.data);
+        console.log(response.data);
+        setStudyMemberList(response.data.studyMemberList);
+
+        setStudy(response.data.study);
+        console.log(study);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -162,32 +167,6 @@ const StudyContent = ({
     } else {
       cancelJoin(loginUserId);
     }
-  };
-
-  const toggleStudyState = () => {
-    // 로그인 유저가 개설자일 경우
-
-    axios({
-      method: "post",
-      url: API_BASE_URL + "/community/study/toggleStudyState",
-      headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-      },
-      data: study,
-    })
-      .then((response) => {
-        console.log(response);
-        setStudyList(response.data.studyList.content);
-
-        setStudy(
-          response.data.studyList.content.filter(
-            (study) => study.studyIdx === parseInt(id)
-          )[0]
-        );
-      })
-      .catch((e) => {
-        console.log(e.data.error);
-      });
   };
 
   return (
@@ -221,9 +200,9 @@ const StudyContent = ({
                   background:
                     study.studyYn === "Y" ? "#1d5902" : "lightslategrey",
                 }}
-                onClick={() => {
-                  if (study.user.userId === loginUserId) toggleStudyState();
-                }}
+                // onClick={() => {
+                //   if (study.user.userId === loginUserId) toggleStudyState();
+                // }}
               >
                 {study.studyYn === "Y" ? "모집" : "마감"}
               </div>

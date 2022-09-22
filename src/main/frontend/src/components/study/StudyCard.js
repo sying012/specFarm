@@ -30,20 +30,11 @@ const theme = createTheme({
 });
 
 const StudyCard = ({ studyItem }) => {
-  const {
-    studyImgName,
-    studyTitle,
-    studyMemberCnt,
-    studyMaxMember,
-    studyYn,
-    studyIdx,
-  } = studyItem;
-
   // console.log(studyImgName);
 
   return (
     <div className="studyCard">
-      <Link to={"/community/study/" + studyIdx}>
+      <Link to={"/community/study/" + studyItem.studyIdx}>
         <Card
           className="studyCardBody"
           sx={{
@@ -69,8 +60,8 @@ const StudyCard = ({ studyItem }) => {
               component="img"
               height="240"
               image={
-                studyImgName !== null
-                  ? "/upload/study/" + studyImgName
+                studyItem.studyImgName !== null
+                  ? "/upload/study/" + studyItem.studyImgName
                   : defaultStudyImg
               }
               alt="스터디 이미지"
@@ -96,23 +87,24 @@ const StudyCard = ({ studyItem }) => {
                 component="div"
                 theme={theme}
               >
-                {studyTitle}
+                {studyItem.studyTitle}
               </Typography>
               <div className="studyCardBottom">
                 <div
                   className="studyState"
                   style={{
                     color: "white",
-                    background: studyYn === "Y" ? "#1d5902" : "lightslategrey",
+                    background:
+                      studyItem.studyYn === "Y" ? "#1d5902" : "lightslategrey",
                     fontFamily: "Pretendard-Regular",
                   }}
                 >
-                  {studyYn === "Y" ? "모집" : "마감"}
+                  {studyItem.studyYn === "Y" ? "모집" : "마감"}
                 </div>
                 <div className="studyMemberCnt">
                   <PeopleAltIcon />
                   <div className="memberNum">
-                    {studyMemberCnt}/{studyMaxMember}
+                    {studyItem.studyMemberCnt}/{studyItem.studyMaxMember}
                   </div>
                 </div>
               </div>

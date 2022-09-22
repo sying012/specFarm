@@ -1,10 +1,14 @@
 package com.spring.specfarm.service.community.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Study;
@@ -24,7 +28,7 @@ public class StudyServiceImpl implements StudyService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	StudyApplyRepository studyApplyRepository;
 
@@ -55,6 +59,7 @@ public class StudyServiceImpl implements StudyService {
 
 	@Override
 	public Page<Study> deleteStudy(int studyIdx, Pageable pageable) {
+		studyApplyRepository.deleteByStudyIdx(studyIdx);
 		studyRepository.deleteById(studyIdx);
 		return studyRepository.findAll(pageable);
 	}
@@ -62,24 +67,47 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public List<StudyApply> insertStudyMember(StudyApply studyApply) {
 		studyApplyRepository.save(studyApply);
-		return studyApplyRepository.findByStudyIdx(studyApply.getStudyIdx());
+		return studyApplyRepository.findByStudyIdx(studyApply.getStudyIdx(),
+				Sort.by(Sort.Direction.ASC, "studyApplyIdx"));
 	}
 
 	@Override
 	public List<StudyApply> getStudyMemberList(int studyIdx) {
-		
-		return studyApplyRepository.findByStudyIdx(studyIdx);
+
+		return studyApplyRepository.findByStudyIdx(studyIdx, Sort.by(Sort.Direction.ASC, "studyApplyIdx"));
 	}
 
 	@Override
 	public List<StudyApply> cancelJoin(int studyIdx, String userId) {
 		StudyApplyId studyApplyId = new StudyApplyId();
-		
+
 		studyApplyId.setStudyIdx(studyIdx);
 		studyApplyId.setUser(userId);
-		System.out.println(studyApplyId);
+//		System.out.println(studyApplyId);
 		studyApplyRepository.deleteById(studyApplyId);
-		
-		return studyApplyRepository.findByStudyIdx(studyIdx);
+
+		return studyApplyRepository.findByStudyIdx(studyIdx, Sort.by(Sort.Direction.ASC, "studyApplyIdx"));
+	}
+
+	@Override
+	public int getStudyApplyIdx(int studyIdx) {
+
+		return studyApplyRepository.getStudyApplyIdx(studyIdx);
+	}
+
+	@Override
+	public StudyApply getStudyApply(int studyIdx, String userId) {
+
+		StudyApplyId studyApplyId = new StudyApplyId();
+
+		studyApplyId.setStudyIdx(studyIdx);
+		studyApplyId.setUser(userId);
+
+		if (studyApplyRepository.findById(studyApplyId).isEmpty()) {
+			return new StudyApply();
+		} else {
+			return studyApplyRepository.findById(studyApplyId).get();
+		}
+
 	}
 }

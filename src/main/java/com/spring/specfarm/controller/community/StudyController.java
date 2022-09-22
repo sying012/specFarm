@@ -143,9 +143,11 @@ public class StudyController {
 			int studyIdx = studyService.insertStudy(study);
 
 			Page<Study> studyList = studyService.getStudyList(pageable);
-			StudyApply studyMaker = new StudyApply();
 
-			List<StudyApply> studyMemberList = insertStudyMember(userId, studyIdx, 1);
+			insertStudyMember(userId, studyIdx, 1);
+
+			List<StudyApply> studyMemberList = studyService.getStudyMemberList(studyIdx);
+
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("studyIdx", studyIdx);
 			response.put("studyList", studyList);
@@ -161,48 +163,79 @@ public class StudyController {
 	}
 
 	@GetMapping("/studyJoin")
-	public List<StudyApply> insertStudyMember(@RequestParam String userId, @RequestParam int studyIdx,
+	public Map<String, Object> insertStudyMember(@RequestParam String userId, @RequestParam int studyIdx,
 			@RequestParam int acceptYn) {
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
 
-		User user = getUser(userId);
+			User user = getUser(userId);
 
-		StudyApply studyApply = new StudyApply();
+			StudyApply studyApply = studyService.getStudyApply(studyIdx, userId);
+			
+			if (studyApply.getStudyApplyIdx() == 0) {
+				studyApply = new StudyApply();
+				studyApply.setStudyApplyIdx(studyService.getStudyApplyIdx(studyIdx));
+				studyApply.setUser(user);
+				studyApply.setStudyIdx(studyIdx);
+			}
+			studyApply.setAcceptYn(acceptYn);
+			
+			Study study = studyService.getStudy(studyIdx);
 
-		studyApply.setUser(user);
-		studyApply.setStudyIdx(studyIdx);
-		studyApply.setAcceptYn(acceptYn);
+			if (studyApply.getAcceptYn() == 1)
+				study.setStudyMemberCnt(study.getStudyMemberCnt() + 1);
 
-		Study study = studyService.getStudy(studyIdx);
-		
-		// apply 에 acceptyn 확인하고 +하기
-		study.setStudyMemberCnt(study.getStudyMemberCnt() + 1);
-		
-		if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
-			study.setStudyYn("N");
+			if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
+				study.setStudyYn("N");
+			}
+
+			studyService.insertStudy(study);
+
+			study = studyService.getStudy(studyIdx);
+
+			List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
+
+			resultMap.put("studyMemberList", studyMemberList);
+			resultMap.put("study", study);
+
+			return resultMap;
+
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
 		}
-		
-		studyService.insertStudy(study);
-
-		List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
-
-		return studyMemberList;
 	}
 
 	@DeleteMapping("/cancelJoin")
-	public List<StudyApply> cancelJoin(@RequestParam int studyIdx, @RequestParam String userId) {
-		List<StudyApply> studyMemberList = studyService.cancelJoin(studyIdx, userId);
+	public Map<String, Object> cancelJoin(@RequestParam int studyIdx, @RequestParam String userId) {
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			List<StudyApply> studyMemberList = studyService.cancelJoin(studyIdx, userId);
 
-		Study study = studyService.getStudy(studyIdx);
-		System.out.println(study.getStudyMemberCnt());
-		study.setStudyMemberCnt(study.getStudyMemberCnt() - 1);
-		System.out.println(study.getStudyMemberCnt());
-		if (study.getStudyMaxMember() > study.getStudyMemberCnt()) {
-			study.setStudyYn("Y");
+			Study study = studyService.getStudy(studyIdx);
+
+			study.setStudyMemberCnt(study.getStudyMemberCnt() - 1);
+
+			if (study.getStudyMaxMember() > study.getStudyMemberCnt()) {
+				study.setStudyYn("Y");
+			}
+
+			studyService.insertStudy(study);
+
+			study = studyService.getStudy(studyIdx);
+			studyMemberList = studyService.getStudyMemberList(studyIdx);
+
+			resultMap.put("studyMemberList", studyMemberList);
+			resultMap.put("study", study);
+
+			return resultMap;
+
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
 		}
-
-		studyService.insertStudy(study);
-		System.out.println(study.getStudyMemberCnt());
-		return studyMemberList;
 	}
 
 	@DeleteMapping("/delete")
@@ -217,34 +250,6 @@ public class StudyController {
 			resultMap.put("studyList", studyList);
 
 			return resultMap;
-		} catch (Exception e) {
-			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error", e.getMessage());
-			return errorMap;
-		}
-	}
-
-	@PostMapping("/toggleStudyState")
-	public Map<String, Object> toggleStudyState(@RequestBody Study study,
-			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable)
-			throws IOException {
-		try {
-			System.out.println(study);
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-
-			if (study.getStudyYn().equals("Y")) {
-				study.setStudyYn("N");
-			} else {
-				study.setStudyYn("Y");
-			}
-			System.out.println("22222222222222222");
-			System.out.println(study);
-			int studyIdx = studyService.insertStudy(study);
-
-			resultMap.put("studyList", studyService.getStudyList(pageable));
-
-			return resultMap;
-
 		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error", e.getMessage());

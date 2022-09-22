@@ -17,14 +17,14 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "/mypage", {
+      .get(API_BASE_URL + "/user/getUser", {
         headers: {
           Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
         },
       })
       .then((response) => {
         // console.log(response.data.user.userId);
-        setLoginedUser(response.data.user);
+        setLoginedUser(response.data);
       })
       .catch((e) => {
         console.log(e.data.error);

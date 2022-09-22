@@ -16,8 +16,8 @@ public interface StudyService {
 
 	int insertStudy(Study study);
 
-	Page<Study> getStudyList(Pageable pageable);
-
+	Page<Study> getStudyList(String searchKeyword, Pageable pageable);
+	
 	Study getStudy(int studyIdx);
 
 	Page<Study> deleteStudy(int studyIdx, Pageable pageable);
@@ -31,5 +31,7 @@ public interface StudyService {
 	int getStudyApplyIdx(int studyIdx);
 
 	StudyApply getStudyApply(int studyIdx, String userId);
+
+	
 
 }

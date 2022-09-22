@@ -13,7 +13,6 @@ const StudyContent = ({
 }) => {
   const { id } = useParams();
 
-  const [checkedMember, setCheckedMember] = useState();
   const [loginUserId, setLoginUserId] = useState("");
   // const study = studyList[studyList.length - id];
   const [study, setStudy] = useState();
@@ -76,12 +75,11 @@ const StudyContent = ({
     // 스터디 멤버 리스트에 있는 유저 중 현재 로그인 된 유저가 있는지 확인
     studyMemberList.forEach((studyMember) => {
       if (studyMember.user.userId === loginUserId) {
-        setCheckedMember(studyMember.user);
         setCurrentMember(studyMember);
       }
     });
     // console.log(currentMember);
-  }, [checkedMember, loginUserId, studyMemberList]);
+  }, [loginUserId, studyMemberList]);
 
   // 스터디 삭제
   const navigate = useNavigate();
@@ -159,13 +157,13 @@ const StudyContent = ({
   const studyJoinHandler = () => {
     // 현재 로그인 된 유저가 리스트에 없을 시 acceptYn 을 0으로 보내 신청 대기 상태
     // 리스트에 있을 시 (참여 돼있거나 대기 상태) 참여 취소
-    // console.log(checkedMember);
-    if (checkedMember === undefined) {
+    if (currentMember === undefined) {
       study.studyMemberCnt < study.studyMaxMember
         ? studyJoin(loginUserId, 0)
         : alert("정원이 초과되었습니다.");
     } else {
       cancelJoin(loginUserId);
+      setCurrentMember(undefined);
     }
   };
 

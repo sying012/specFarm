@@ -66,6 +66,7 @@ function Userinfo({ certs, user }) {
 
   const [telError, setTelError] = useState(false);
   const [telErrorText, setTelErrorText] = useState("");
+  const [telAuthNumber, setTelAuthNumber] = useState("");
   const [telAuthNumberError, setTelAuthNumberError] = useState(false);
   const [telAuthNumberErrorText, setTelAuthNumberErrorText] = useState("");
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
@@ -94,10 +95,7 @@ function Userinfo({ certs, user }) {
 
       const TelRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 
-      console.log(userInfo.userTel);
-      console.log(userTel);
-
-      if (userInfo.userTel === userTel) {
+      if (user.userTel === userTel) {
         setTelError(true);
         setTelErrorText("변경된 내용이 없습니다.");
       } else if (newUserTel === null || newUserTel === "") {
@@ -107,28 +105,46 @@ function Userinfo({ certs, user }) {
         setTelError(true);
         setTelErrorText("형식에 맞지 않는 번호입니다.");
       } else {
-        setTelError(false);
-        setTelErrorText("");
-        setTelAuthNumberDisabled(false);
+        axios({
+          method: "post",
+          url: API_BASE_URL + "/user/telCheck",
+          data: { userTel: newUserTel },
+        }).then((response) => {
+          if (response.data === "fail") {
+          } else if (response.data === "exist") {
+            setTelError(true);
+            setTelErrorText("이미 사용중인 번호입니다.");
+          } else {
+            setTelError(false);
+            setTelErrorText("");
+            setTelAuthNumberDisabled(false);
+            // setTelAuthNumberError({ error: false, text: "" });
+            setTelAuthNumber(response.data);
+            // document.getElementById("authAlert").hidden = false;
+          }
+        });
       }
     },
     [userInfo]
   );
 
   // Phone number authentication Number Check
-  const telAuthNumberCheck = useCallback((e) => {
-    const usertelAuthNumber = e.target.value;
-    if (usertelAuthNumber === null || usertelAuthNumber === "") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증이 필요합니다.");
-    } else if (usertelAuthNumber !== "0000") {
-      setTelAuthNumberError(true);
-      setTelAuthNumberErrorText("인증번호가 일치하지 않습니다.");
-    } else {
-      setTelAuthNumberError(false);
-      setTelAuthNumberErrorText("");
-    }
-  }, []);
+  const telAuthNumberCheck = useCallback(
+    (e) => {
+      const usertelAuthNumber = e.target.value;
+      if (usertelAuthNumber === null || usertelAuthNumber === "") {
+        setTelAuthNumberError(true);
+        setTelAuthNumberErrorText("인증이 필요합니다.");
+      } else if (usertelAuthNumber != telAuthNumber) {
+        setTelAuthNumberError(true);
+        setTelAuthNumberErrorText("인증번호가 일치하지 않습니다.");
+      } else {
+        setTelAuthNumberError(false);
+        setTelAuthNumberErrorText("");
+      }
+    },
+    [telAuthNumber]
+  );
 
   // email Validation Check
   const emailCheck = useCallback((e) => {
@@ -168,15 +184,18 @@ function Userinfo({ certs, user }) {
       if (usertelAuthNumber === null || usertelAuthNumber === "") {
         setTelAuthNumberError(true);
         setTelAuthNumberErrorText("인증이 필요합니다.");
-      } else if (usertelAuthNumber !== "0000") {
+      } else if (usertelAuthNumber != telAuthNumber) {
         setTelAuthNumberError(true);
         setTelAuthNumberErrorText("인증번호가 일치하지 않습니다.");
+      } else {
+        setTelAuthNumberError(false);
+        setTelAuthNumberErrorText("");
       }
 
-      if (!telAuthNumberError && usertelAuthNumber === "0000") {
+      if (!telAuthNumberError && usertelAuthNumber == telAuthNumber) {
         axios({
           method: "post",
-          url: API_BASE_URL + "/mypage/modify",
+          url: API_BASE_URL + "/mypage/editUserInfo",
           data: userInfo,
         })
           .then((response) => {
@@ -194,7 +213,7 @@ function Userinfo({ certs, user }) {
     } else {
       axios({
         method: "post",
-        url: API_BASE_URL + "/mypage/modify",
+        url: API_BASE_URL + "/mypage/editUserInfo",
         data: userInfo,
       })
         .then((response) => {
@@ -229,16 +248,13 @@ function Userinfo({ certs, user }) {
 
     addCertCount.push(counter);
     setCountList(addCertCount);
-    console.log(countList);
   };
 
   // 자격증 삭제 버튼 클릭시 div 삭제
   const deleteCertDiv = useCallback(
     (i) => {
-      console.log(i);
       // 중간번호 삭제시 뒷 인덱스 땡기기
       let newCountList = countList.filter((cert) => cert.getCertIdx !== i);
-      console.log(countList);
       if (newCountList.length !== 0) {
         if (newCountList[0].getCertIdx !== 0) {
           newCountList[0].getCertIdx = 0;
@@ -250,7 +266,6 @@ function Userinfo({ certs, user }) {
         }
       }
       setCountList(newCountList);
-      console.log(newCountList);
     },
     [countList]
   );
@@ -260,10 +275,6 @@ function Userinfo({ certs, user }) {
     let blankError = false;
     let existedCertName = false;
     for (let i = 0; i < countList.length; i++) {
-      console.log(
-        countList[i].certName + "//////////" + countList[i].getCertDate
-      );
-
       if (
         countList[i].certName === null ||
         countList[i].certName === "" ||
@@ -412,7 +423,7 @@ function Userinfo({ certs, user }) {
                   id="usertelAuthNumber"
                   label="인증번호"
                   fullWidth
-                  onChange={telAuthNumberCheck}
+                  onBlur={telAuthNumberCheck}
                   error={telAuthNumberError}
                   helperText={telAuthNumberErrorText}
                   // disabled={telAuthNumberDisabled}

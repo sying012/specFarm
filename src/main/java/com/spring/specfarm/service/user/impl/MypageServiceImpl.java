@@ -1,5 +1,7 @@
 package com.spring.specfarm.service.user.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,15 @@ public class MypageServiceImpl implements MypageService {
 		User loginedUser = userRepository.findById(userId).get();
 		return loginedUser;
 	}
+	
+	@Override
+	public User nickCheck(String userNick) {
+		if (userRepository.findByUserNick(userNick) != null) {
+			return userRepository.findByUserNick(userNick);
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public void editUserMdf(User user) {
@@ -84,7 +95,7 @@ public class MypageServiceImpl implements MypageService {
 			favCertDTO.setCertIdx(favCert.getCertIdx());
 			favCertDTO.setUserId(favCert.getUserId());
 			favCertDTO.setFavCertIdx(favCert.getFavCertIdx());
-			favCertDTO.setCertName(getCertName(favCert.getCertIdx()).getCertName());
+			favCertDTO.setCertName(getCertName(favCert.getCertIdx()).getJmfldnm());
 			
 			favCertDTOsList.add(favCertDTO);
 		}

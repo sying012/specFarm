@@ -30,23 +30,12 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
       ...singleCert,
       certName: text,
     };
-    console.log(text);
-    //console.log(singleCert);
-    console.log(cert);
     setCountList((prev) =>
       prev.map((cer) =>
         cer.getCertIdx === getCertIdx ? { ...cer, certName: text } : cer
       )
     );
   };
-
-  useEffect(() => {
-    console.log(singleCert);
-  }, [singleCert]);
-
-  useEffect(() => {
-    console.log(countList);
-  }, [countList]);
 
   const handleChange = (getCertIdx, e) => {
     const dateCheck = /^[0-9]+$/;
@@ -57,9 +46,7 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
       ...singleCert,
       [e.target.name]: e.target.value,
     };
-    console.log(addCert);
     setSingleCert(addCert);
-    console.log(singleCert);
     setCountList(
       countList.map((cer) =>
         cer.getCertIdx === getCertIdx

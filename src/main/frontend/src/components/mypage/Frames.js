@@ -39,7 +39,6 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
   }
 
   useEffect(() => {
-    console.log(user);
     if (Object.keys(user).length !== 0)
       setUserInfo({
         ...user,

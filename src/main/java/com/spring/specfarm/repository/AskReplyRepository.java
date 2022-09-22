@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.spring.specfarm.entity.AskReply;
 import com.spring.specfarm.entity.AskReplyId;
 
-
+@Transactional
 public interface AskReplyRepository extends JpaRepository<AskReply, AskReplyId> {
 
 	List<AskReply> findByAskIdx(int askIdx);

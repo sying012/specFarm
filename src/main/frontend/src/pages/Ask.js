@@ -14,7 +14,6 @@ const Ask = () => {
   const navigate = useNavigate();
 
   const insertAsk = (ask) => {
-    console.log(ask, "dfsf");
     axios({
       method: "post",
       url: API_BASE_URL + "/community/ask/write",

@@ -10,7 +10,6 @@ const RegNotice = ({ insertNotice }) => {
 
   const submitNotice = (e) => {
     let noticeForm = new FormData(e.target);
-    console.log(noticeForm.get("noticeContent"));
     e.preventDefault();
     insertNotice(noticeForm);
   };

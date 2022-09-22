@@ -7,7 +7,6 @@ import { useNavigate, useLocation } from "react-router";
 const AskReg = ({ certNames, insertAsk }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   const [contentValue, setContentValue] = useState("");
   const [certName, setCertName] = useState("");
   const [askCert, setAskCert] = useState(null);
@@ -41,8 +40,6 @@ const AskReg = ({ certNames, insertAsk }) => {
 
   const handleSubmit = (e) => {
     let ask = new FormData(e.target);
-    console.log(ask.get("askTitle"));
-
     insertAsk(ask);
 
     e.preventDefault();

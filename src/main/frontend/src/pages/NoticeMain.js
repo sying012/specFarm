@@ -45,7 +45,6 @@ const NoticeMain = () => {
   };
 
   const deleteNotice = (noticeIdx) => {
-    console.log(typeof noticeIdx);
     axios
       .get(
         API_BASE_URL + "/cs/delete",

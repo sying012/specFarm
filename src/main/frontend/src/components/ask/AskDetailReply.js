@@ -6,7 +6,6 @@ import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
 const AskDetailReply = ({ reply }) => {
-  console.log(reply.askIdx);
   const [reReplyList, setReReplyList] = useState([]);
   function toggleRereply() {
     let rereplyContainer = document.querySelector(
@@ -22,7 +21,6 @@ const AskDetailReply = ({ reply }) => {
         params: { replyIdx: reply.askReplyIdx },
       }).then((response) => {
         setReReplyList(response.data.data);
-        console.log(response.data.data);
       });
 
       rereplyContainer.style.display = "block";
@@ -32,7 +30,6 @@ const AskDetailReply = ({ reply }) => {
   }
 
   const insertAskReReply = (askReReply) => {
-    console.log(askReReply);
     axios({
       method: "post",
       url: API_BASE_URL + `/community/ask/${reply.askIdx}/insertReReply`,
@@ -42,7 +39,6 @@ const AskDetailReply = ({ reply }) => {
       },
       data: askReReply,
     }).then((response) => {
-      console.log(response);
       setReReplyList(response.data.askReReplyList);
     });
   };

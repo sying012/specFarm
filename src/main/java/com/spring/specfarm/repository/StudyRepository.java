@@ -9,5 +9,5 @@ import com.spring.specfarm.entity.Study;
 public interface StudyRepository extends JpaRepository<Study, Integer> {
 	Study findById(int studyIdx);
 	
-//	List<Study> findTop4ByStudyCountOrderByDesc();
+//	List<Study> findTop4ByStudyCountOrderByStudyCountDesc();
 }

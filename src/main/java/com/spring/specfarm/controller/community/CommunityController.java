@@ -39,7 +39,7 @@ public class CommunityController {
 			responseMap.put("popularAsks", popularAsks);
 			
 			List<Share> popularShares = communityService.getShares();
-			responseMap.put("popularShares", null);
+			responseMap.put("popularShares", popularShares);
 			
 			return responseMap;
 		} catch (Exception e) {

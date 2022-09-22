@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.spring.specfarm.entity.Ask;
-import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 
 public interface AskRepository extends JpaRepository<Ask, Integer> {
@@ -25,6 +24,6 @@ public interface AskRepository extends JpaRepository<Ask, Integer> {
 
 	List<Ask> findAllByUserOrderByAskRegDateDesc(User user);
 	
-//	List<Study> findTop4ByAskCountOrderByDesc();
+//	List<Ask> findTop4ByAskCountOrderByAskCountDesc();
 
 }

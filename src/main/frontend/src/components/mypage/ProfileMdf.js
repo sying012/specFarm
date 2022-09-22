@@ -56,7 +56,7 @@ function ProfileMdf() {
     if (Object.keys(user).length !== 0) {
       setImageSrc(!user.userProfileName ? "/upload/profile/farmer.png" : null);
     }
-  }, [user]);
+  }, []);
 
   const [imageSrc, setImageSrc] = useState();
   // 프로필 사진 미리보기 띄우기

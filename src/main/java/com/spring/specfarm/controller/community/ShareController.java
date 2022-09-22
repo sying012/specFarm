@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,32 +42,14 @@ public class ShareController {
 	@Autowired
 	ShareService shareService;
 	
-	@GetMapping("/getUser")
-	public Map<String, Object> getUser(@AuthenticationPrincipal String userId){
-		try {
-			User user = shareService.getUser(userId);
-			
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("user", user);
-		
-			
-			return resultMap;
-		} catch (Exception e) {
-			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error",e.getMessage());
-			return errorMap;
-		}
-		
-	}
-
 	// Share List
 	@GetMapping("")
 	public Map<String, Object> getShareList(
-			@PageableDefault(page = 0, size = 8, sort="shareIdx", direction = Direction.DESC) Pageable pageable) {
+			@PageableDefault(page = 0, size = 8, sort="shareIdx", direction = Direction.DESC) Pageable pageable, @RequestParam(required = false) String searchKeyword ) {
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			
-			Page<Share> shareList = shareService.getShareList(pageable);
+			Page<Share> shareList = shareService.getShareList(searchKeyword, pageable);
 			
 			resultMap.put("shareList", shareList);
 		
@@ -94,35 +77,38 @@ public class ShareController {
 	          // Share File List
 	          List<ShareFile> shareFileList = new ArrayList<>();
 	          
-	          boolean isFirstFile = true;
 	          
 	          Iterator<String> i = multipartServletRequest.getFileNames();
-	          while (i.hasNext()) {
 	             List<MultipartFile> fileList = multipartServletRequest.getFiles(i.next());
+	             boolean isFirstFile = fileList.get(0).isEmpty();
+	             
+	             System.out.println(fileList);
 	             for (MultipartFile file : fileList) {
+	            	 System.out.println(file);
 	                if (!file.isEmpty()) {
+	                	
 	                   FileUtils fileUtils = new FileUtils();
 	                   Map<String, String> fileInfo = fileUtils.parseFileInfo(request.getSession(), file, "share");
 
-	                   if (isFirstFile) {
-	                      share.setShareImgName(fileInfo.get("FileName"));
-	                      isFirstFile = false;
-	                   } else {
-	                      ShareFile shareFile = new ShareFile();
-
-	                      shareFile.setShare(share);
-	                      shareFile.setShareFileName(fileInfo.get("FileName"));
-	                      shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
-	                      shareFileList.add(shareFile);
-	                   }
+	                   if (!isFirstFile) {
+	                       share.setShareImgName(fileInfo.get("FileName"));
+//	                       isFirstFile = false;
+	                    } else {
+	                 	System.out.println("fdfdsfsfg");
+	                 	   share.setShareImgName("shareImg.png");
+	                 	   
+	                    }
+	                   ShareFile shareFile = new ShareFile();
+	                   
+	                   shareFile.setShare(share);
+	                   shareFile.setShareFileName(fileInfo.get("FileName"));
+	                   shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
+	                   shareFileList.add(shareFile);
 	                }
 	             }
-	          }
 	          
 	          shareIdx = shareService.insertShare(share);
 	          
-	          System.out.println(shareFileList.size());
-	          System.out.println(share.getShareIdx());
 			
 			shareService.insertShareFileList(shareFileList);
 			
@@ -219,7 +205,7 @@ public class ShareController {
 			
 			List<ShareReReply> shareReReplyList = shareService.insertShareReReply(shareReReply);
 			Map<String, Object> response = new HashMap<String, Object>();
-			System.out.println(shareReReplyList);
+			
 			response.put("shareReReplyList", shareReReplyList);
 			
 			return response;
@@ -231,9 +217,18 @@ public class ShareController {
 		}
 	}
 	
-	
-	
 	// DeleteShare
+	@DeleteMapping("/delete")
+	public void deleteAsk(@RequestParam int shareIdx){
+		try {
+			shareService.deleteShare(shareIdx);
+			
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+		}
+	}
+
 	
 	// FileDown
 	/** @RequestMapping("/fileDown")

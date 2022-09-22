@@ -1,19 +1,29 @@
 package com.spring.specfarm.controller.skills;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.spring.specfarm.common.CommUtils;
 
 @RestController
 public class JobCafeController {
 		
 	@GetMapping("/skills/jobCafe")
-	public String test () throws IOException {
+	public void test () throws IOException {
 		// 1. URL을 만들기 위한 StringBuilder
 		StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
 		// 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키
@@ -62,7 +72,37 @@ public class JobCafeController {
 		
 		String apiData = sb.toString();
 		
-		return apiData;
+		CommUtils commUtils = new CommUtils();
+		
+		Map<String, JSONObject> map = commUtils.paramMap(apiData);
+		
+		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");
+		JSONArray row = jobCafeOpenInfo.getJSONArray("row");
+		System.out.println(row);
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+		if(row != null) {
+			
+			int jsonSize = row.length();
+			
+			for (int i = 0; i < jsonSize; i++) {
+
+				Map<String, Object> temp = new HashMap<String, Object>();
+				
+				JSONObject tempobj = row.getJSONObject(i);
+				
+				Iterator it = tempobj.keys();
+				
+				while(it.hasNext()) {
+					String key = it.next().toString();
+					temp.put(key, tempobj.get(key));
+				}
+				
+				list.add(temp);
+			}
+		}
+		
 		
 		/** API DB에 넣기
 		 * for(int i=0;i<infoArr.size();i++){

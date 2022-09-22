@@ -41,13 +41,15 @@ const CommentContainer = ({
   return (
     <div className={styles.inputContainer} style={style}>
       <div className={styles.containerTop}>
-        <img
-          className={styles.profileImg}
-          id="profileImg"
-          src={`/upload/profile/${user.userProfileName}`}
-          alt="프로필사진"
-          style={{ borderRadius: "50%" }}
-        />
+        {Object.keys(user).length !== 0 ? (
+          <img
+            className={styles.profileImg}
+            id="profileImg"
+            src={`/upload/profile/${user.userProfileName}`}
+            alt="프로필사진"
+            style={{ borderRadius: "50%" }}
+          />
+        ) : null}
         <form className={styles.RegForm} onSubmit={handleReplySubmit}>
           <div className={styles.RegForm}>
             <OutlinedInput

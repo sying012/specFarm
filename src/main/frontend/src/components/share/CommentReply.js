@@ -15,7 +15,7 @@ const CommentReply = ({ commentReply }) => {
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           <img
-            style={{ width: "40px", paddingRight: "8px" }}
+            style={{ width: "40px", paddingRight: "8px", borderRadius: "50%" }}
             src={`/upload/profile/${commentReply.user.userProfileName}`}
             alt="프로필사진"
           />

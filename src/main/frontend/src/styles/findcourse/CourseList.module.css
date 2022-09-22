@@ -9,6 +9,15 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.noSearchResult {
+  display: flex;
+  justify-content: center;
+}
+
+.noSearchResult > h1 {
+  font-size: 25px;
+}
+
 .pageNation {
   margin: 40px;
   display: flex;

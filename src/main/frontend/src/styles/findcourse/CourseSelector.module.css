@@ -14,32 +14,27 @@
   display: flex;
 }
 
-.tabWrapper > div {
-  text-align: center;
-  line-height: 60px;
-  width: 50%;
-  height: 100%;
-  font-size: 20px;
-  font-weight: bold;
-  border: 1px solid rgb(241, 241, 241);
-  box-sizing: border-box;
-}
-
 .areaBtn {
   border-radius: 5px 0 0 0;
 }
 
 .jobBtn {
+  /* border-radius: 0 5px 0 0; */
+}
+
+.backListBtn {
+  width: 16%;
+  border: 1px solid rgb(250, 250, 250);
   border-radius: 0 5px 0 0;
 }
 
-.selected {
-  width: 100%;
-  height: 100px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  row-gap: 10px;
-  column-gap: 10px;
-  /* background-color: tomato; */
-  margin-top: 20px;
+.tabWrapper > div {
+  text-align: center;
+  line-height: 60px;
+  width: 42%;
+  height: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid rgb(241, 241, 241);
+  box-sizing: border-box;
 }

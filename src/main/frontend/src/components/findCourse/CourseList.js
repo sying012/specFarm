@@ -7,11 +7,9 @@ const CourseList = ({ searchList }) => {
   // console.log(searchList);
 
   const LAST_PAGE =
-    searchList !== undefined
-      ? searchList.length % 9 === 0
-        ? parseInt(searchList.length / 9)
-        : parseInt(searchList.length / 9) + 1
-      : 1; // 마지막 페이지
+    searchList.length % 9 === 0
+      ? parseInt(searchList.length / 9)
+      : parseInt(searchList.length / 9) + 1; // 마지막 페이지
   const [page, setPage] = useState(1); // 처음 페이지는 1이다.
   const [data, setData] = useState(searchList);
 
@@ -28,31 +26,42 @@ const CourseList = ({ searchList }) => {
     } else {
       setData();
     }
-  }, [searchList, page]);
+  }, [searchList, page, LAST_PAGE]);
 
-  const handlePage = (event) => {
-    const nowPageInt = parseInt(event.target.outerText);
-    setPage(nowPageInt);
+  const handlePage = (event, value) => {
+    // console.log(event.target);
+    // const nowPageInt = parseInt(event.target.outerText);
+    setPage(value);
   };
 
   return (
     <>
-      <div className={styles.courseList}>
-        {data !== undefined
-          ? data.map((card, index) => {
-              return <CourseCard key={index} index={index} card={card} />;
-            })
-          : null}
+      <div
+        className={
+          data !== undefined ? styles.courseList : styles.noSearchResult
+        }
+      >
+        {data !== undefined ? (
+          data.map((card, index) => {
+            return <CourseCard key={index} index={index} card={card} />;
+          })
+        ) : (
+          <h1>검색 결과가 없습니다.</h1>
+        )}
       </div>
-      <div className={styles.pageNation}>
-        <Pagination
-          count={LAST_PAGE}
-          defaultPage={1}
-          siblingCount={3}
-          boundaryCount={1}
-          onChange={(e) => handlePage(e)}
-        />
-      </div>
+      {data !== undefined ? (
+        <div className={styles.pageNation}>
+          <Pagination
+            count={LAST_PAGE}
+            defaultPage={1}
+            siblingCount={3}
+            boundaryCount={1}
+            onChange={handlePage}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

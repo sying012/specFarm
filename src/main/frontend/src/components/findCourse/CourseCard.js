@@ -10,10 +10,17 @@ import styles from "../../styles/findcourse/CourseCard.module.css";
 
 const CourseCard = ({ index, card }) => {
   let cost = card.courseMan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  console.log(card);
+  // console.log(card);
   return (
     <NavLink
-      to={"../srchTrprId=" + card.trprId + "&srchTrprDegr=" + card.trprDegr + "&srchTorgId=" + card.trainstCstId}
+      to={
+        "../srchTrprId=" +
+        card.trprId +
+        "&srchTrprDegr=" +
+        card.trprDegr +
+        "&srchTorgId=" +
+        card.trainstCstId
+      }
     >
       <Card
         sx={{

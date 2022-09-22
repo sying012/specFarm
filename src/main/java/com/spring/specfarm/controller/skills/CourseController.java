@@ -1,5 +1,7 @@
 package com.spring.specfarm.controller.skills;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -215,7 +217,7 @@ public class CourseController {
 	        json = XML.toJSONObject(xmlStr);
 	        
 	        String jsonStr = json.toString(4);
-//	        System.out.println(jsonStr);
+	        System.out.println(jsonStr);
 	        objChk = jsonStr;
 	        
 	        
@@ -230,9 +232,13 @@ public class CourseController {
 		} while (objChk.contains("HRDNet") == false);
         // 14. indent 4를 넣어 문자열의 개행과 공백을 분리하여 보기 좋게 변환
 //        String jsonStr = json.toString(4);
-//        System.out.println(jsonStr);
+//        System.out.println(json.getJSONObject("HRDNet").get("srchList") + "??????????");
 //		return jsonStr;
-        return json.getJSONObject("HRDNet").getJSONObject("srchList");
+        if(json.getJSONObject("HRDNet").get("srchList") == "") {
+        	return null;
+        } else {
+			return json.getJSONObject("HRDNet").getJSONObject("srchList");
+		}
 	}
 	
 	public String makeCatList(StringBuilder urlBuilder) throws IOException, JSONException{

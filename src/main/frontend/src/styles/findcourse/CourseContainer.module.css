@@ -4,6 +4,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  /* background-color: antiquewhite; */
 }
 
 .courseSearchBar {
@@ -26,15 +27,26 @@
   outline: none;
 }
 
-.popCourse {
+.selectedWrap {
   width: 100%;
   height: 50px;
   /* background-color: aqua; */
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   margin-top: 25px;
   margin-bottom: 20px;
+}
+
+.selected {
+  width: 100%;
+  height: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 10px;
+  /* background-color: tomato; */
+  margin-top: 20px;
 }
 
 .skillsBtns {
@@ -61,11 +73,11 @@
 }
 
 .selectWrapper {
-  width: 40%;
+  width: 25%;
   height: fit-content;
   margin-right: 50px;
   /* background-color: bisque; */
-  margin-left: -200px;
+  /* margin-left: -200px; */
 }
 
 .selectBox {

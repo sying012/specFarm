@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styles/findcourse/InsertItem.module.css";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const InsertItem = ({ selectedItem, deleteItem }) => {
   return selectedItem.map(({ name, code, which }) => (
@@ -12,7 +12,7 @@ const InsertItem = ({ selectedItem, deleteItem }) => {
       }}
     >
       <div>{name}</div>
-      <HighlightOffIcon sx={{ marginLeft: "auto" }} />
+      <ClearIcon sx={{ marginLeft: "auto", width: "20px" }} />
     </button>
   ));
 };

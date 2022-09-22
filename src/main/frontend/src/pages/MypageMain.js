@@ -35,7 +35,7 @@ function MypageMain() {
       })
       .catch((e) => {
         console.log("catch문 " + e);
-        // window.location.href = "/login";
+        window.location.href = "/login";
       });
   }, []);
 

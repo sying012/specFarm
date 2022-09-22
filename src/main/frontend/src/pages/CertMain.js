@@ -16,10 +16,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const CertMain = () => {
-  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certLList, setCertLList] = useState([]);
   const [certL, setCertL] = useState("");
-  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
+  const [certSList, setCertSList] = useState([]);
 
   // const handleClick = (e) => {
   //   axios({
@@ -32,20 +33,57 @@ const CertMain = () => {
   // };
 
   const certLCatChange = (e) => {
-    console.log(e.target.value);
-    setCertL(e.target.value);
+    setCertL((prev) => e.target.value);
   };
+
+  useEffect(() => {
+    console.log(certL);
+    if (certL !== "" && typeof certL !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertMList",
+        method: "get",
+        params: { obligfldnm: certL },
+      }).then((response) => {
+        setCertMList(response.data.certMList);
+      });
+    }
+  }, [certL]);
 
   const certMCatChange = (e) => {
     console.log(e.target.value);
     setCertM(e.target.value);
   };
+
+  useEffect(() => {
+    console.log(certM);
+    if (certM !== "" && typeof certM !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSList",
+        method: "get",
+        params: { mdobligfldnm: certM },
+      }).then((response) => {
+        setCertSList(response.data.certSList);
+      });
+    }
+  }, [certM]);
+
+  //const handleClick = (e) => {
+  //   axios({
+  //     url: API_BASE_URL + "/cert/getCertList",
+  //     method: "get",
+  //     params: { jmcd: e.target.value },
+  //   }).then((response) => {
+  //     setTestList((prev) => response.data.testList);
+  //   });
+  // };
+
   useEffect(() => {
     axios({
-      url: API_BASE_URL + "/cert/certList",
+      url: API_BASE_URL + "/cert/getCertLList",
       method: "get",
     }).then((response) => {
-      console.log(response.data);
+      console.log(response.data.certLList);
+      setCertLList(response.data.certLList);
     });
   }, []);
 
@@ -126,11 +164,12 @@ const CertMain = () => {
                 },
               }}
             >
-              {certLCat.map((certL) => (
-                <MenuItem key={certL.id} value={certL.name}>
-                  {certL.name}
-                </MenuItem>
-              ))}
+              {certLList &&
+                certLList.map((item) => (
+                  <MenuItem key={item.obligfldcd} value={item.obligfldnm}>
+                    {item.obligfldnm}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </Grid>
@@ -173,9 +212,9 @@ const CertMain = () => {
                 },
               }}
             >
-              {certMCat.map((certM) => (
-                <MenuItem key={certM.id} value={certM.name}>
-                  {certM.name}
+              {certMList.map((item) => (
+                <MenuItem key={item.mdobligfldcd} value={item.mdobligfldnm}>
+                  {item.mdobligfldnm}
                 </MenuItem>
               ))}
             </Select>

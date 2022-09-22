@@ -82,11 +82,12 @@
   border-radius: 25%;
 }
 
-.content {
-  padding-top: 16px;
-  width: 100%;
-  height: 280px;
-  font-size: 22px;
+.fileDown {
+  width: 500px;
+}
+
+.fileDown p {
+  margin-top: 10px;
 }
 
 .detailBoxBottom {

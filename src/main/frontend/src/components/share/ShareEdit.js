@@ -6,11 +6,11 @@ import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
 const ShareEdit = ({ insertShare }) => {
+  const navigate = useNavigate();
   const fileList = []; // 이미지 + 첨부파일
   const [singleImage, setSingleImage] = useState(); //이미지
   const [multiFiles, setMultiFiles] = useState([]); //첨부파일
   const [fileNameInput, setFileNameInput] = useState([]); //첨부파일 이름
-  const navigate = useNavigate();
   const [share, setShare] = useState({});
   const { shareIdx } = useParams();
   const [titleValue, setTitleValue] = useState("");
@@ -248,7 +248,10 @@ const ShareEdit = ({ insertShare }) => {
               multiline
               rows={15}
               name="shareContent"
-              style={{ marginLeft: "9px", width: "100%" }}
+              style={{
+                marginLeft: "9px",
+                width: "100%",
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {

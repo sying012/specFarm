@@ -71,14 +71,14 @@ const CertFind = () => {
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-  useEffect(() => {
-    axios({
-      url: API_BASE_URL + "/cert/testList",
-      method: "get",
-    }).then((response) => {
-      console.log(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     url: API_BASE_URL + "/cert/testList",
+  //     method: "get",
+  //   }).then((response) => {
+  //     console.log(response.data);
+  //   });
+  // }, []);
 
   useEffect(() => {
     axios({

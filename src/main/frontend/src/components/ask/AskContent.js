@@ -28,7 +28,6 @@ const AskContent = ({ certNames }) => {
   const [asks, setAsks] = useState([]);
   const handleSearchType = (e) => {
     setSearchType(e.target.value);
-    console.log(e.target.value);
     setSearchKeyword("");
     // sessionStorage.setItem("searchType", e.target.value);
   };
@@ -54,7 +53,6 @@ const AskContent = ({ certNames }) => {
         },
       })
       .then((response) => {
-        console.log("돌았다!!");
         setAsks(response.data.askList.content);
         setCount(response.data.askList.totalPages);
         window.scrollTo(0, 0);

@@ -15,7 +15,6 @@ const AskDetail = () => {
     location.state !== null
       ? location.state
       : { searchType: null, searchKeyword: null, page: null };
-  console.log(location.state);
 
   const [askReply, setAskReply] = useState([]);
   const [ask, setAsk] = useState({});
@@ -23,7 +22,6 @@ const AskDetail = () => {
   const [user, setUser] = useState({});
 
   const insertAskReply = (askReply) => {
-    console.log(askReply);
     axios({
       method: "post",
       url: API_BASE_URL + `/community/ask/${askIdx}/insertReply`,
@@ -63,7 +61,6 @@ const AskDetail = () => {
     axios
       .get(API_BASE_URL + "/community/ask/getAsk?askIdx=" + askIdx)
       .then((response) => {
-        console.log(response);
         setAsk(response.data);
       });
     axios
@@ -84,12 +81,20 @@ const AskDetail = () => {
       });
   }, [askIdx]);
 
+  //삭제 요청
   const deleteAsk = useCallback(() => {
     if (user.userId === ask.user.userId) {
       axios
         .delete(API_BASE_URL + "/community/ask/delete?askIdx=" + ask.askIdx)
         .then((response) => {
-          console.log(response);
+          navigate("..", {
+            state: {
+              searchType: searchType,
+              searchKeyword: searchKeyword,
+              page: page,
+            },
+            replace: true,
+          });
         });
     } else {
       alert("삭제할 수 없습니다.");

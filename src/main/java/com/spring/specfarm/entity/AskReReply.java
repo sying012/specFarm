@@ -3,6 +3,7 @@ package com.spring.specfarm.entity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ import lombok.Data;
 @IdClass(AskReReplyId.class)
 public class AskReReply {
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumns({
 		@JoinColumn(name = "ASK_IDX", referencedColumnName = "ASK_IDX"),
 		@JoinColumn(name = "ASK_REPLY_IDX", referencedColumnName = "ASK_REPLY_IDX")

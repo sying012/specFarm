@@ -26,19 +26,19 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public List<Study> getStudys() {
-//		return studyRepository.findTop4ByStudyCountOrderByDesc();
+//		return studyRepository.findTop4ByStudyCountOrderByStudyCountDesc();
 		return studyRepository.findAll();
 	}
 	
 	@Override
 	public List<Ask> getAsks() {
-//		return askRepository.findTop4ByAskCountOrderByDesc();
+//		return askRepository.findTop4ByAskCountOrderByAskCountDesc();
 		return askRepository.findAll();
 	}
 
 	@Override
 	public List<Share> getShares() {
-//		return shareRepository.findTop4ByShareCountOrderByDesc();
+//		return shareRepository.findTop4ByShareCountOrderByShareCountDesc();
 		return shareRepository.findAll();
 	}
 

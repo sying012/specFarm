@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import AskListItem from "../components/ask/AskListItem";
-import ShareList from "../components/share/ShareList";
-import StudyCardList from "../components/study/StudyCardList";
 import "../styles/community/CommunityMain.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import StudyCard from "../components/study/StudyCard";
@@ -81,7 +79,7 @@ const CommunityMain = () => {
       <div className="popShareContainer">
         {shareList &&
           shareList.map((shareItem) => (
-            <ShareCard key={shareItem.shareIdx} share={shareItem} />
+            <ShareCard key={shareItem.shareIdx} shareItem={shareItem} />
           ))}
       </div>
     </div>

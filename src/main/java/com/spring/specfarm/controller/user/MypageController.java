@@ -1,5 +1,6 @@
 package com.spring.specfarm.controller.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.FavCertDTO;
+import com.spring.specfarm.dto.GetCertDTO;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.dto.UserDTO;
 import com.spring.specfarm.entity.Ask;
@@ -47,14 +49,20 @@ public class MypageController {
 		try {
 			Map<String, Object> responseMap = new HashMap<String, Object>();
 			User loginedUser = mypageService.getUser(userId);
-			loginedUser.setUserNick(loginedUser.getUserNick() == null || loginedUser.getUserNick() == "" ? loginedUser.getUserId() : loginedUser.getUserNick());
 			responseMap.put("user", loginedUser);
 			
 			List<GetCert> earnedCert = mypageService.getEarnedCert(userId);
+			List<GetCertDTO> earnCertDTOs = new ArrayList<GetCertDTO>();
 			for(int i=0; i < earnedCert.size(); i++) {
-				earnedCert.get(i).setGetCertIdx(i);
+				GetCertDTO getCertDTO = new GetCertDTO();
+				getCertDTO.setGetCertIdx(i);
+				getCertDTO.setUserId(userId);
+				getCertDTO.setCertName(earnedCert.get(i).getCertName());
+				getCertDTO.setGetCertDate(earnedCert.get(i).getGetCertDate());
+				
+				earnCertDTOs.add(getCertDTO);
 			}
-			responseMap.put("earnedCert", earnedCert);
+			responseMap.put("earnedCert", earnCertDTOs);
 			
 			List<Ask> writtenAsks = mypageService.getWrittenAsks(loginedUser);
 			for(Ask ask: writtenAsks) {
@@ -81,7 +89,6 @@ public class MypageController {
 	public ResponseEntity<?> getUserNickAndProfile(@AuthenticationPrincipal String userId) {
 		try {
 			User loginedUser = mypageService.getUser(userId);
-			loginedUser.setUserNick(loginedUser.getUserNick() == null || loginedUser.getUserNick() == "" ? loginedUser.getUserId() : loginedUser.getUserNick());
 			
 			return ResponseEntity.ok().body(loginedUser);
 		} catch (Exception e) {

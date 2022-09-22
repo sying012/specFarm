@@ -17,9 +17,6 @@ const CommunityMain = () => {
     axios({
       method: "get",
       url: API_BASE_URL + "/community",
-      headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-      },
     })
       .then((response) => {
         if (response) {

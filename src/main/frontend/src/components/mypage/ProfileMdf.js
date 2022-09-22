@@ -56,7 +56,7 @@ function ProfileMdf() {
     if (Object.keys(user).length !== 0) {
       setImageSrc(!user.userProfileName ? "/upload/profile/farmer.png" : null);
     }
-  }, []);
+  }, [user]);
 
   const [imageSrc, setImageSrc] = useState();
   // 프로필 사진 미리보기 띄우기
@@ -115,6 +115,10 @@ function ProfileMdf() {
     if (totalByte > maxByte) {
       alert("최대 14Byte까지만 입력가능합니다.");
     }
+
+    // for(let i = 0; i < this.value.length; i++) {
+    //   const eachChar = this.value.char
+    // }
   }
 
   // form submit 시 닉네임 공란이면 에러 창 띄움
@@ -224,7 +228,7 @@ function ProfileMdf() {
             onChange={(e) => {
               setNicknameValue(e.target.value);
             }}
-            // onKeyUp={(e) => checkByte(e.target.value)}
+            onKeyUp={(e) => checkByte(e.target.value)}
             placeholder="닉네임을 입력해주세요."
             className={styles.nicknameInput}
             error={nicknameError}

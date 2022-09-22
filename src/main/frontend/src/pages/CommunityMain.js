@@ -23,7 +23,6 @@ const CommunityMain = () => {
     })
       .then((response) => {
         if (response) {
-          console.log(response.data);
           setStudyList(response.data.popularStudys);
           setAskList(response.data.popularAsks);
           setShareList(response.data.popularShares);
@@ -65,8 +64,8 @@ const CommunityMain = () => {
       <div className="popAskContainer">
         {askList &&
           askList.map((ask) => (
-            <Link to={`/community/ask/${ask.askIdx}`}>
-              <AskListItem key={ask.askIdx} ask={ask} />
+            <Link to={`/community/ask/${ask.askIdx}`} key={ask.askIdx}>
+              <AskListItem ask={ask} />
             </Link>
           ))}
       </div>

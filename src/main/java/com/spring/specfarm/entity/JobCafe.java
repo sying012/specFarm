@@ -2,11 +2,13 @@ package com.spring.specfarm.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name="T_JOB_CAFE")
 public class JobCafe {
 	@Id
 	private String cafeName;

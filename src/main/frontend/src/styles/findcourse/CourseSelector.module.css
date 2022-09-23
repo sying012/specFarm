@@ -16,16 +16,18 @@
 
 .areaBtn {
   border-radius: 5px 0 0 0;
+  cursor: pointer;
 }
 
 .jobBtn {
-  /* border-radius: 0 5px 0 0; */
+  cursor: pointer;
 }
 
 .backListBtn {
   width: 16%;
   border: 1px solid rgb(250, 250, 250);
   border-radius: 0 5px 0 0;
+  cursor: pointer;
 }
 
 .tabWrapper > div {

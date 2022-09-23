@@ -5,13 +5,15 @@ import CourseCard from "./CourseCard";
 
 const CourseList = ({ searchList }) => {
   // console.log(searchList);
-
-  const LAST_PAGE =
-    searchList.length % 9 === 0
-      ? parseInt(searchList.length / 9)
-      : parseInt(searchList.length / 9) + 1; // 마지막 페이지
   const [page, setPage] = useState(1); // 처음 페이지는 1이다.
   const [data, setData] = useState(searchList);
+  // console.log(data);
+
+  const LAST_PAGE =
+    searchList !== undefined &&
+    (searchList.length % 9 === 0
+      ? parseInt(searchList.length / 9)
+      : parseInt(searchList.length / 9) + 1); // 마지막 페이지
 
   useEffect(() => {
     // setData(/* fetch(또는 전체 데이터에서 slice)로 현재 page의 데이터를 가져온다. */);

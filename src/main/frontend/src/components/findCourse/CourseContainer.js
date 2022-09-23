@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/findcourse/CourseContainer.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import CourseSelector from "../../components/findCourse/CourseSelector";
@@ -8,11 +8,21 @@ import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import InsertItem from "./InsertItem";
 
-const CourseContainer = ({ searchList, setSearchList }) => {
-  const [areaItems, setAreaItems] = useState([]);
-  const [jobItems, setJobItems] = useState([]);
-  const [value, setValue] = useState("");
-  const [selectedItem, setSelectedItem] = useState([]);
+const CourseContainer = ({
+  searchList,
+  setSearchList,
+  areaItems,
+  setAreaItems,
+  jobItems,
+  setJobItems,
+  value,
+  setValue,
+  selectedItem,
+  setSelectedItem,
+}) => {
+  useEffect(() => {
+    searchCourse(areaItems, jobItems, value);
+  }, []);
 
   const deleteItem = useCallback(
     (code, which) => {
@@ -31,24 +41,23 @@ const CourseContainer = ({ searchList, setSearchList }) => {
     [selectedItem]
   );
 
+  // 검색어 입력 시 검색 키워드 value에 저장
   const changeValue = useCallback((e) => {
     setValue(e.target.value);
+    console.log(value);
   }, []);
 
   const handleSubmit = useCallback(
     (e) => {
-      searchCourse(areaItems, jobItems, value);
-      setValue("");
       e.preventDefault();
+      searchCourse(areaItems, jobItems, value);
+      // 검색 후 검색창에서 검색어 제거
+      // setValue("");
     },
     [areaItems, jobItems, value]
   );
 
-  useEffect(() => {
-    searchCourse(areaItems, jobItems, value);
-  }, []);
-
-  const searchCourse = useCallback((areaItems, jobItems, text) => {
+  const searchCourse = (areaItems, jobItems, text) => {
     // console.log(areaItems);
     // console.log(jobItems);
     axios({
@@ -65,7 +74,7 @@ const CourseContainer = ({ searchList, setSearchList }) => {
       setSearchList(response.data.scn_list);
       // console.log(response.data);
     });
-  }, []);
+  };
 
   return (
     <div className={styles.courseContainer}>

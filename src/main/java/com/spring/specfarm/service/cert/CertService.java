@@ -22,4 +22,9 @@ public interface CertService {
 	List<Map<String, Object>> getCertMList(String obligfldnm);
 	
 	List<Map<String, Object>> getCertSList(String mdobligfldnm);
+	
+	List<Map<String, Object>> getTestList(String jmcd);
+	
+	List<Map<String, Object>> getCertList(); 
+	
 }

@@ -4,6 +4,7 @@ import AskReReply from "./AskReReply";
 import AskReplyRegBox from "./AskReplyRegBox";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import SmallInfo from "../mypage/SmallInfo";
 
 const AskDetailReply = ({ reply }) => {
   const [reReplyList, setReReplyList] = useState([]);
@@ -43,28 +44,48 @@ const AskDetailReply = ({ reply }) => {
     });
   };
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <>
       <div id="askReplyBox" className="askReplyBox">
         <img
           id="profileImg"
           src={
-            reply.user.userProfileName
+            reply.user
               ? "/upload/profile/" + reply.user.userProfileName
               : defaultProfile
           }
           alt="프로필사진"
+          onClick={(e) => userSmallInfo(e)}
         />
         <div id="replyBox">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {reply.user.userNick}
+            <div onClick={(e) => userSmallInfo(e)}>
+              {reply.user && reply.user.userNick}
+            </div>
+            <div
+              onClick={(e) => userSmallInfo(e)}
+              style={{ position: "absolute", marginLeft: "-65px" }}
+            >
+              {infoVisible && <SmallInfo user={reply.user} id="smallInfo" />}
+            </div>
             <p style={{ fontSize: "0.8rem", color: "rgb(100, 100, 100)" }}>
               {reply.askReplyRegDate}
             </p>
           </div>
           <div className="askReplyContent">{reply.askReplyContent}</div>
           <div className="rereplyOpen">
-            <p onClick={toggleRereply}>답글</p>
+            <p onClick={toggleRereply}>답글 {reply.countReReply || null}</p>
           </div>
         </div>
       </div>
@@ -78,6 +99,7 @@ const AskDetailReply = ({ reply }) => {
             insertAskReReply={insertAskReReply}
             askReplyIdx={reply.askReplyIdx}
             askIdx={reply.askIdx}
+            reply={reply}
           />
         </div>
         {reReplyList.map((reReply) => (

@@ -135,9 +135,12 @@ public class ShareController {
 			Share share = shareService.shareDetail(shareIdx);
 			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
 			List<String> shareFileNameList = new ArrayList<>();
-			for(ShareFile shareFile: shareFileList) {
-				shareFileNameList.add(shareFile.getOriginalFileName());
+			if(shareFileList!=null) {
+				for (ShareFile shareFile : shareFileList) {
+					shareFileNameList.add(shareFile.getOriginalFileName());
+				}
 			}
+			System.out.println("////"+share);
 			
 			response.put("share", share);
 			response.put("shareFileNameList", shareFileNameList);
@@ -260,6 +263,9 @@ public class ShareController {
 //			return errorMap;
 //		}
 //	}
+	
+
+	// 업데이트 파일, 쉐어가져오기
 	
 }
  

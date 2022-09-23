@@ -3,6 +3,7 @@ import { Alert, Slide } from "@mui/material";
 import CampaignIcon from "@mui/icons-material/Campaign";
 
 const Alerts = ({ alerts, onCloseAlert }) => {
+  console.log(alerts);
   return alerts.map((alert) => (
     <div style={{ marginBottom: "5px" }} key={alert.id}>
       <Slide in={true}>

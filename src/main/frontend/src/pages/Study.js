@@ -17,7 +17,7 @@ const Study = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
-  console.log(searchKeyword);
+  // console.log(searchKeyword);
   const getStudyList = useCallback(() => {
     axios
       .get(API_BASE_URL + "/community/study", {
@@ -30,8 +30,8 @@ const Study = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        console.log("아무글자");
+        // console.log(response.data);
+        // console.log("아무글자");
         setStudyList(response.data.studyList.content);
         setCount(response.data.studyList.totalPages);
         // window.scrollTo(0, 0);

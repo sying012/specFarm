@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import HomeNav from "../components/home/HomeNav";
 import Main from "../components/home/Main";
@@ -20,6 +21,7 @@ const Home = () => {
   const [page, setPage] = useState("/cert");
   const [pageComponent, setPageComponent] = useState(<CertMain />);
   const [loginedUser, setLoginedUser] = useState({});
+  const [isScroll, setIsScroll] = useState("");
 
   useEffect(() => {
     axios
@@ -41,6 +43,7 @@ const Home = () => {
       for (let i = 0; i < 10000; i++) {
         clearInterval(i);
       }
+      window.removeEventListener("resize", innerHeight, true);
     };
   }, []);
 
@@ -49,24 +52,25 @@ const Home = () => {
   // body scroll
   useEffect(() => {
     document.getElementById("wheel").onwheel = { wheelEvent };
-    if (window.innerHeight <= 786) {
-      document.getElementsByTagName("body")[0].style.overflowY = "auto";
-      document.getElementById("wheel").removeEventListener("wheel", wheelEvent);
-    } else {
-      document.getElementsByTagName("body")[0].style.overflowY = "hidden";
-      document.getElementById("wheel").addEventListener("wheel", wheelEvent);
-    }
+    innerHeight();
+    window.addEventListener("resize", innerHeight, true);
   }, []);
 
-  window.addEventListener("resize", () => {
-    if (window.innerHeight <= 786) {
+  let innerHeight = function () {
+    //console.log(this);
+    if (window.innerHeight <= 845 && window.innerWidth <= 978) {
+      setIsScroll(true);
       document.getElementsByTagName("body")[0].style.overflowY = "auto";
       document.getElementById("wheel").removeEventListener("wheel", wheelEvent);
+      // document.getElementById("header").style.position = "static";
     } else {
+      setIsScroll(false);
       document.getElementsByTagName("body")[0].style.overflowY = "hidden";
       document.getElementById("wheel").addEventListener("wheel", wheelEvent);
     }
-  });
+  };
+
+  // window.addEventListener("resize", innerHeight, true);
 
   const [show, setShow] = useState(true);
   // wheel event
@@ -124,26 +128,29 @@ const Home = () => {
 
   // scroll event
   window.onscroll = () => {
-    if (window.scrollY >= window.innerHeight - 105) {
-      document.getElementById("logoLink").style.color = "#1d5902";
-      document.getElementById("leftLink").style.color = "black";
-      document.getElementById("rightLink").style.color = "black";
-    }
-    if (window.scrollY >= window.innerHeight - 71) {
-      clearInterval(scrollInterval);
-      navigate(page);
-      window.onscroll = () => {};
+    if (!isScroll) {
+      if (window.scrollY >= window.innerHeight - 105) {
+        document.getElementById("logoLink").style.color = "#1d5902";
+        document.getElementById("leftLink").style.color = "black";
+        document.getElementById("rightLink").style.color = "black";
+      }
+      if (window.scrollY >= window.innerHeight - 71) {
+        clearInterval(scrollInterval);
+        navigate(page);
+        window.onscroll = () => {};
+        window.removeEventListener("resize", innerHeight, true);
+      }
     }
   };
 
   return (
     <>
-      <div
-        className={styles.outer}
-        id="wheel"
-        // onWheel={wheelEvent}
-      >
-        <header className={styles.header} style={{ position: "fixed" }}>
+      <div className={styles.outer} id="wheel">
+        <header
+          className={styles.header}
+          id="header"
+          style={{ position: "fixed" }}
+        >
           <div className="innerheader">
             <Link to="/">
               <div className={styles.logo} id="logoLink">
@@ -167,16 +174,20 @@ const Home = () => {
                     className={styles.mypageLink}
                     id="leftLink"
                   >
-                    <img
-                      src={
-                        Object.keys(loginedUser).length !== 0
-                          ? "/upload/profile/" + loginedUser.userProfileName
-                          : "/upload/profile/farmer.png"
-                      }
-                      alt=""
-                      className="loginedProfileImg"
-                    ></img>
-                    <div>{loginedUser.userNick}</div>
+                    {loginedUser.userProfileName && (
+                      <img
+                        src={
+                          Object.keys(loginedUser).length !== 0
+                            ? "/upload/profile/" + loginedUser.userProfileName
+                            : "/upload/profile/farmer.png"
+                        }
+                        alt=""
+                        className="loginedProfileImg"
+                      ></img>
+                    )}
+                    <div style={{ fontSize: "17px" }}>
+                      {loginedUser.userNick}
+                    </div>
                   </Link>
                 )}
               </div>
@@ -201,27 +212,31 @@ const Home = () => {
         </header>
         <Main className={styles.content} />
       </div>
-      <div className={styles.homeDiv} id="scroll">
-        <div
-          className="layout"
-          style={{ background: "rgba(255, 255, 255, 0.15)" }}
-        >
-          {show && <HomeNav goClickPage={goClickPage} show={show} />}
-          {!show && <HomeNavAfter />}
+      {isScroll ? (
+        ""
+      ) : (
+        <div className={styles.homeDiv} id="scroll">
           <div
-            style={{
-              background: "rgb(250, 250, 250)",
-              width: "100%",
-              height: "100%",
-            }}
+            className="layout"
+            style={{ background: "rgba(255, 255, 255, 0.15)" }}
           >
-            <main className="main" style={{ height: "90vh" }}>
-              {pageComponent}
-            </main>
+            {show && <HomeNav goClickPage={goClickPage} show={show} />}
+            {!show && <HomeNavAfter />}
+            <div
+              style={{
+                background: "rgb(250, 250, 250)",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <main className="main" style={{ height: "90vh" }}>
+                {pageComponent}
+              </main>
+            </div>
+            <Footer />
           </div>
-          <Footer />
         </div>
-      </div>
+      )}
     </>
   );
 };

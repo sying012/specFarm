@@ -1,20 +1,26 @@
 package com.spring.specfarm.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name="T_JOB_CAFE")
+@NoArgsConstructor
+@AllArgsConstructor
 public class JobCafe {
 	@Id
 	private int jobCafeIdx;
 	private String cafeName;
 	private String smplIntro;
-	private String spaceInfo;
+//	@Column(columnDefinition = "varchar(65534)")
+//	private String spaceInfo;
 	private String useDate;
 	private String holiDate;
 	private String facltInfo01;

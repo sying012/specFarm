@@ -17,13 +17,13 @@ const JobCafe = () => {
 
   useEffect(() => {
     axios({
-      url: API_BASE_URL + "/skills/jobCafe",
-      method: "get",
+      url: API_BASE_URL + "/skills/jobCafe/getJobCafeList",
+      method: "get", //토큰 받아서 인증처리
     }).then((response) => {
-      setJobCafeList(response.data.jobCafeOpenInfo.row);
+      setJobCafeList(response.data.jobCafeList);
       const typeArr = new Set();
-      for (let i = 0; i < response.data.jobCafeOpenInfo.row.length; i++) {
-        typeArr.add(response.data.jobCafeOpenInfo.row[i].CAFE_TYPE_NM);
+      for (let i = 0; i < response.data.jobCafeList.length; i++) {
+        typeArr.add(response.data.jobCafeList[i].CAFE_TYPE_NM);
       }
       setCategories(Array.from(typeArr));
     });

@@ -21,7 +21,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
 
   //페이징 업데이트
   useEffect(() => {
-    if (update === true) jobCafeList();
+    //if (update === true) //jobCafeList;
   }, [page, update]);
 
   useEffect(() => {
@@ -43,11 +43,11 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   const submitSearch = (e) => {
     setPage(1);
     e.preventDefault();
-    jobCafeList();
+    //jobCafeList();
   };
 
   //onSelectCategory: 카테고리별로 분류된 리스트 반환
-  const onClickCategory = (category, e) => {
+  const onClickCategory = (e, category) => {
     e.preventDefault();
     onSelectCategory(category);
     //category === CAFE_TYPE_NM list 생성(id 생성 후)
@@ -63,7 +63,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
         </div>
         {categories.map((category, index) => (
           <div key={category + index} className={styles.typeBtns}>
-            <a href={"/"} onClick={(e) => onClickCategory(category, e)}>
+            <a href={"/"} onClick={() => onClickCategory(category)}>
               {category}
             </a>
           </div>

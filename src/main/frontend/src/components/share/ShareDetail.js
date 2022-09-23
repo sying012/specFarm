@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
+import SmallInfo from "../mypage/SmallInfo";
 
 const ShareDetail = () => {
   const navigate = useNavigate();
@@ -95,6 +96,17 @@ const ShareDetail = () => {
     }
   }, [share, user]);
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <div className={styles.detailBox}>
       <div className={styles.title}>
@@ -160,7 +172,10 @@ const ShareDetail = () => {
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <div className="detailWrite">
+                  <div
+                    className="detailWrite"
+                    onClick={(e) => userSmallInfo(e)}
+                  >
                     <img
                       id="profileImg"
                       src={
@@ -171,6 +186,14 @@ const ShareDetail = () => {
                       style={{ borderRadius: "50%" }}
                     />
                     {share.user && share.user.userNick}
+                  </div>
+                  <div
+                    onClick={(e) => userSmallInfo(e)}
+                    style={{ position: "absolute" }}
+                  >
+                    {infoVisible && (
+                      <SmallInfo user={share.user} id="smallInfo" />
+                    )}
                   </div>
                 </div>
                 <p>{share.shareRegDate}</p>

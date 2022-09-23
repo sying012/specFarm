@@ -87,39 +87,63 @@ function ProfileMdf() {
     }
   }, [user]);
 
-  useEffect(() => {
-    setUser({
-      ...user,
-      userNick: nicknameValue,
-    });
-  }, [nicknameValue]);
+  useEffect(() => {}, [nicknameValue]);
 
+  // 닉네임 유니코드 변환하여 글자수 제한(14byte)
   function checkByte(value) {
-    const maxByte = 12; //최대 100바이트
+    const maxByte = 14; //최대 100바이트
     const text_val = value; //입력한 문자
     const text_len = text_val.length; //입력한 문자수
 
     let totalByte = 0;
     for (let i = 0; i < text_len; i++) {
       const each_char = text_val.charAt(i);
-      const uni_char = escape(each_char); //유니코드 형식으로 변환
-      if (uni_char.length > 4) {
-        // 한글 : 2Byte
-        totalByte += 2;
+      const test = "%u" + each_char.charCodeAt(0).toString(16); //유니코드 형식으로 변환
+
+      if (test.length > 4) {
+        totalByte += 2; // 한글 : 2Byte
       } else {
-        // 영문,숫자,특수문자 : 1Byte
-        totalByte += 1;
+        totalByte += 1; // 영문,숫자,특수문자 : 1Byte
       }
     }
 
     if (totalByte > maxByte) {
       alert("최대 14Byte까지만 입력가능합니다.");
+      return;
     }
 
-    // for(let i = 0; i < this.value.length; i++) {
-    //   const eachChar = this.value.char
-    // }
+    setNicknameValue(value);
   }
+
+  useEffect(() => {
+    console.log(user.userNick);
+  }, [user]);
+
+  // 닉네임 중복체크
+  const nickCheck = useCallback(
+    (e) => {
+      const userNick = e.target.value;
+      if (user.userNick !== userNick) {
+        axios({
+          method: "post",
+          url: API_BASE_URL + "/mypage/nickCheck",
+          data: { userNick: userNick },
+        }).then((response) => {
+          if (response.data === "success") {
+            setNicknameError(false);
+            setUser({
+              ...user,
+              userNick: nicknameValue,
+            });
+          } else {
+            setNicknameError(true);
+            alert("이미 사용중인 닉네임입니다.");
+          }
+        });
+      }
+    },
+    [user.userNick]
+  );
 
   // form submit 시 닉네임 공란이면 에러 창 띄움
   const [nicknameError, setNicknameError] = useState(false);
@@ -149,23 +173,6 @@ function ProfileMdf() {
     }
   };
 
-  //nickCheck
-  const nickCheck = useCallback((e) => {
-    const userNick = e.target.value;
-    axios({
-      method: "post",
-      url: API_BASE_URL + "/mypage/nickCheck",
-      data: { userNick: userNick },
-    }).then((response) => {
-      if (response.data === "success") {
-        setNicknameError(false);
-      } else {
-        setNicknameError(true);
-        alert("이미 사용중인 닉네임입니다.");
-      }
-    });
-  }, []);
-
   const handleSubmit = (user) => {
     setUser(user);
     axios({
@@ -188,13 +195,13 @@ function ProfileMdf() {
   return (
     <div>
       <form onSubmit={userProfileEdit} className={styles.innerContainer}>
-      <h1 className={styles.mdfTitle}>프로필 수정</h1>
-      <Avatar
-        alt="profile"
-        src={imageSrc || "/upload/profile/" + user.userProfileName}
-        sx={{ width: 160, height: 160 }}
-        className={styles.avatar}
-      />
+        <h1 className={styles.mdfTitle}>프로필 수정</h1>
+        <Avatar
+          alt="profile"
+          src={imageSrc || "/upload/profile/" + user.userProfileName}
+          sx={{ width: 160, height: 160 }}
+          className={styles.avatar}
+        />
 
         <div className={styles.profilePicMdfBtns}>
           <Button
@@ -238,10 +245,10 @@ function ProfileMdf() {
           color="lightgreen"
           value={nicknameValue}
           onChange={(e) => {
-            setNicknameValue(e.target.value);
+            checkByte(e.target.value);
           }}
           onBlur={nickCheck}
-          onKeyUp={(e) => checkByte(e.target.value)}
+          // onKeyUp={(e) => checkByte(e.target.value)}
           placeholder="닉네임을 입력해주세요."
           className={styles.nicknameInput}
           error={nicknameError}

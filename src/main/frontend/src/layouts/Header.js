@@ -4,6 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
+import { useBeforeRender } from "../utils";
 import {
   Accordion,
   AccordionDetails,
@@ -356,15 +357,17 @@ const Header = () => {
               </Link>
             ) : (
               <Link to="/mypage" id="mypageLink">
-                <img
-                  src={
-                    Object.keys(loginedUser).length !== 0
-                      ? "/upload/profile/" + loginedUser.userProfileName
-                      : "/upload/profile/farmer.png"
-                  }
-                  alt=""
-                  className="loginedProfileImg"
-                ></img>
+                {loginedUser.userProfileName && (
+                  <img
+                    src={
+                      Object.keys(loginedUser).length !== 0
+                        ? "/upload/profile/" + loginedUser.userProfileName
+                        : "/upload/profile/farmer.png"
+                    }
+                    alt=""
+                    className="loginedProfileImg"
+                  ></img>
+                )}
                 <div>{loginedUser.userNick}</div>
               </Link>
             )}

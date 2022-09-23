@@ -1,5 +1,6 @@
 package com.spring.specfarm.controller.community;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.Limit;
 import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Ask;
@@ -109,6 +111,11 @@ public class AskController {
 		try {
 			List<AskReply> askReplyList = askService.getAskReplyList(id);
 		
+			for(AskReply askReply: askReplyList) {
+				System.out.println(askReply.getUser());
+				askReply.setCountReReply(askService.getAskReReplyCount(askReply));
+			}
+			
 			ResponseDTO<AskReply> response = new ResponseDTO<>();
 			
 			response.setData(askReplyList);
@@ -202,11 +209,11 @@ public class AskController {
 			}
 		}
 		
-		//Notice 이미지 업로드
+		//Ask 이미지 업로드
 		@PostMapping("/upload/images")
 		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
 			try {
-					
+				
 				FileUtils fileUtils = new FileUtils();
 				
 				String fileName = (fileUtils.parseFileInfo(session, image, "community/ask").get("FileName"));
@@ -219,6 +226,41 @@ public class AskController {
 			}catch(Exception e){
 				Map<String, Object> errorMap = new HashMap<String, Object>();
 				errorMap.put("error",e.getMessage());
+				return errorMap;
+			}
+		}
+		
+		//Ask 이미지 삭제
+		@PostMapping("/delete/images")
+		public Map<String, Object> deleteImages(@RequestBody List<String> imagesList, HttpSession session) {
+			try {
+				System.out.println(imagesList);
+				
+				String rootPath = session.getServletContext().getRealPath("/");
+
+				String attachPath = "../frontend/public/upload/community/ask/";
+				for (String name : imagesList) {
+					File file = new File(rootPath+attachPath+name);
+
+					if (file.exists()) {
+						if (file.delete()) {
+							System.out.println("파일삭제 성공");
+						} else {
+							System.out.println("파일삭제 실패");
+						}
+					} else {
+						System.out.println("파일이 존재하지 않습니다.");
+					}
+				}
+
+				Map<String, Object> response = new HashMap<String, Object>();
+				response.put("result", "success");
+
+				return response;
+
+			} catch (Exception e) {
+				Map<String, Object> errorMap = new HashMap<String, Object>();
+				errorMap.put("error", e.getMessage());
 				return errorMap;
 			}
 		}

@@ -7,6 +7,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
 import { history } from "../../lib/history";
+import SmallInfo from "../mypage/SmallInfo";
 
 const AskDetail = () => {
   const navigate = useNavigate();
@@ -58,16 +59,20 @@ const AskDetail = () => {
   }, [searchType, searchKeyword, page, navigate]);
 
   useEffect(() => {
+    //게시글 데이터 불러오기
     axios
       .get(API_BASE_URL + "/community/ask/getAsk?askIdx=" + askIdx)
       .then((response) => {
         setAsk(response.data);
       });
+
+    //댓글 데이터 불러오기
     axios
       .get(API_BASE_URL + "/community/ask/reply/" + askIdx)
       .then((response) => {
         setAskReply(response.data.data);
       });
+
     //현재 접속 유저정보요청
     axios
       .get(API_BASE_URL + "/user/getUser", {
@@ -112,6 +117,16 @@ const AskDetail = () => {
   //   }
   // }, [ask]);
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <div id="askDetailContainer">
       <div id="detailContentBox">
@@ -121,7 +136,7 @@ const AskDetail = () => {
             <> */}
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div className="detailWrite">
+            <div className="detailWrite" onClick={(e) => userSmallInfo(e)}>
               {ask.user !== null && typeof ask.user !== "undefined" ? (
                 <>
                   <img
@@ -136,6 +151,14 @@ const AskDetail = () => {
                   {ask.user.userNick}
                 </>
               ) : null}
+            </div>
+            <div
+              onClick={(e) => userSmallInfo(e)}
+              style={{
+                position: "absolute",
+              }}
+            >
+              {infoVisible && <SmallInfo user={ask.user} id="smallInfo" />}
             </div>
             <div className="detailRegDate">{ask.askRegDate}</div>
           </div>

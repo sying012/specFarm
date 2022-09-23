@@ -40,6 +40,7 @@ const AskReg = ({ certNames, insertAsk }) => {
 
   const handleSubmit = (e) => {
     let ask = new FormData(e.target);
+    sessionStorage.setItem("submit", true);
     insertAsk(ask);
 
     e.preventDefault();

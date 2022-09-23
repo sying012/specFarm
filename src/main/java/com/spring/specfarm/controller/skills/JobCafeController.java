@@ -29,17 +29,13 @@ import com.spring.specfarm.service.user.UserService;
 @RequestMapping("/skills/jobCafe")
 public class JobCafeController {
 	
-//	@Autowired
-//	private JobCafeService jobCafeService;
-//	
-//	@Autowired
-//	private JobCafeRepository jobCafeRepository;
-//	
-//	@Autowired
-//	private UserService userService;
-//	
+	@Autowired
+	private JobCafeService jobCafeService;
+	
+	@Autowired
+	private JobCafeRepository jobCafeRepository;
 		
-	@GetMapping("")
+	@GetMapping("/dbinsertList")
 	public void getJobCafe () throws IOException {
 		// 1. URL을 만들기 위한 StringBuilder
 		StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
@@ -87,7 +83,7 @@ public class JobCafeController {
 		// 11. 전달받은 데이터 확인
 		//System.out.println(sb.toString());
 		
-		//db에 저장
+//		//db에 저장
 //		String apiData = sb.toString();
 //		
 //		CommUtils commUtils = new CommUtils();
@@ -119,49 +115,16 @@ public class JobCafeController {
 //				while(it.hasNext()) {
 //					String key = it.next().toString();
 //					temp.put(key, tempobj.get(key));
-//					
-//					jobCafe.setJobCafeIdx(jobCafeIdx);
-//					jobCafe.setCafeName(list.get(i).get("CAFE_NM").toString());
-//					jobCafe.setSmplIntro(list.get(i).get("SMPL_INTRO").toString());
-//					jobCafe.setSpaceInfo(list.get(i).get("SPACE_INFRO").toString());
-//					jobCafe.setUseDate(list.get(i).get("USE_DT").toString());
-//					jobCafe.setHoliDate(list.get(i).get("HOLI_DD").toString());
-//					jobCafe.setFacltInfo01(list.get(i).get("FACLT_INFO1").toString());
-//					jobCafe.setFacltInfo02(list.get(i).get("FACLT_INFO2").toString());
-//					jobCafe.setFacltInfo03(list.get(i).get("FACLT_INFO3").toString());
-//					jobCafe.setFacltInfo04(list.get(i).get("FACLT_INFO4").toString());
-//					jobCafe.setFacltInfo05(list.get(i).get("FACLT_INFO5").toString());
-//					jobCafe.setFacltInfo06(list.get(i).get("FACLT_INFO6").toString());
-//					jobCafe.setFacltInfo07(list.get(i).get("FACLT_INFO7").toString());
-//					jobCafe.setFacltInfo08(list.get(i).get("FACLT_INFO8").toString());
-//					jobCafe.setFacltInfo09(list.get(i).get("FACLT_INFO9").toString());
-//					jobCafe.setFacltInfo10(list.get(i).get("FACLT_INF10").toString());
-//					jobCafe.setRsrvSggst1(list.get(i).get("RSRV_SGGST1").toString());
-//					jobCafe.setRsrvSggst2(list.get(i).get("RSRV_SGGST2").toString());
-//					jobCafe.setRsrvSggst3(list.get(i).get("RSRV_SGGST3").toString());
-//					jobCafe.setRsrvSggst4(list.get(i).get("RSRV_SGGST4").toString());
-//					jobCafe.setRsrvSggst5(list.get(i).get("RSRV_SGGST5").toString());
-//					jobCafe.setRsrvSggst6(list.get(i).get("RSRV_SGGST6").toString());
-//					jobCafe.setRsrvSggst7(list.get(i).get("RSRV_SGGST7").toString());
-//					jobCafe.setRsrvSggst8(list.get(i).get("RSRV_SGGST8").toString());
-//					jobCafe.setRsrvSggst9(list.get(i).get("RSRV_SGGST9").toString());
-//					jobCafe.setRsrvSggst10(list.get(i).get("RSRV_SGGST10").toString());
-//					jobCafe.setBassAdresCn(list.get(i).get("BASS_ADRES_CN").toString());
-//					jobCafe.setGuGun(list.get(i).get("GUGUN").toString());
-//					jobCafe.setRoadAdresCn(list.get(i).get("ROAD_ADRES2_CN").toString());
-//					jobCafe.setFileName(list.get(i).get("FILE_NM").toString());
-//					jobCafe.setCafeTypeName(list.get(i).get("CAFE_TYPE_NM").toString());
-//					
 //				}
 //				
 //				list.add(temp);
 //			}
 //			
-//			jobCafeRepository.getJobCafe(list);
+//			jobCafeService.getJobCafe(list);
 //		}
-	
-	}
-	
+//	
+//	}
+//	
 //	@GetMapping("/getJobCafeList")
 //	public Map<String, Object> getJobCafeList(){
 //		try {
@@ -177,7 +140,7 @@ public class JobCafeController {
 //			errorMap.put("error",e.getMessage());
 //			return errorMap;
 //		}
-//	}
+}
 	
 }
 

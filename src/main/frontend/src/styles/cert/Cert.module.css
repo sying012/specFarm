@@ -44,11 +44,13 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    
   }
   
   .certMainBody {
     width: 800px;
-    height: 250px;
+    min-height: 250px;
+    height: max-content;
     display: flex;
     flex-direction: row;
     box-sizing: border-box;

@@ -15,6 +15,7 @@ const ShareDetail = () => {
   const [shareReply, setShareReply] = useState([]);
   const [user, setUser] = useState({});
   const [fileList, setFileList] = useState([]);
+  const [stateYn, setStateYn] = useState([]);
 
   //share 상세페이지
   useEffect(() => {
@@ -23,7 +24,7 @@ const ShareDetail = () => {
       .then((response) => {
         console.log(response);
         setShare(response.data.share);
-        setFileList(response.data.shareFileList);
+        setFileList(response.data.shareFileNameList);
       });
 
     //share 댓글 반환
@@ -65,6 +66,14 @@ const ShareDetail = () => {
     console.log(shareReply);
   };
 
+  //share 나눔 상태
+  const shareYn = (stateYn) => {
+    axios.get(API_BASE_URL + "/state" + share.shareState).then((response) => {
+      console.log(response);
+      setStateYn(response.data.data);
+    });
+  };
+
   //share 삭제
   const deleteShare = useCallback(() => {
     const result = window.confirm("삭제할까요?");
@@ -89,7 +98,7 @@ const ShareDetail = () => {
   return (
     <div className={styles.detailBox}>
       <div className={styles.title}>
-        <p>{share.shareYn === "Y" ? "나눔" : "완료"}</p>
+        <a href="/">{share.shareYn === "Y" ? "나눔" : "완료"}</a>
         <h1>{share.shareTitle}</h1>
         <div className={styles.btns}>
           {Object.keys(user).length !== 0 &&
@@ -113,6 +122,7 @@ const ShareDetail = () => {
                   border: "1px solid #1d5902",
                   color: "#1d5902",
                   height: "38px",
+                  marginLeft: "10px",
                 }}
                 className={styles.deleteBtn}
                 onClick={deleteShare}
@@ -177,8 +187,8 @@ const ShareDetail = () => {
               <div className={styles.fileDown}>
                 {fileList !== null &&
                   fileList.map((file) => (
-                    <a href={"/upload/share/" + file.shareFileName}>
-                      {file.originalFileName}
+                    <a href={"/upload/share/" + file}>
+                      {file}
                       <p></p>
                     </a>
                   ))}

@@ -50,20 +50,81 @@ function a11yProps(index) {
 
 const CertFind = () => {
   const [value, setValue] = React.useState(0);
-  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certLList, setCertLList] = useState([]);
   const [certL, setCertL] = useState("");
-  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
+  const [certSList, setCertSList] = useState([]);
+  const [testList, setTestList] = useState([]);
+
+  const handleClick = (e) => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertTest",
+      method: "get",
+      params: { jmcd: e.target.value },
+    }).then((response) => {
+      setTestList(response.data.testList);
+    });
+  };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertLList",
+      method: "get",
+    }).then((response) => {
+      console.log(response.data.certLList);
+      setCertLList(response.data.certLList);
+    });
+  }, []);
 
   const certLCatChange = (e) => {
-    console.log(e.target.value);
-    setCertL(e.target.value);
+    setCertL((prev) => e.target.value);
   };
+
+  useEffect(() => {
+    console.log(certL);
+    if (certL !== "" && typeof certL !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertMList",
+        method: "get",
+        params: { obligfldnm: certL },
+      }).then((response) => {
+        setCertMList(response.data.certMList);
+      });
+    }
+  }, [certL]);
 
   const certMCatChange = (e) => {
     console.log(e.target.value);
     setCertM(e.target.value);
   };
+
+  useEffect(() => {
+    console.log(certM);
+    if (certM !== "" && typeof certM !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSList",
+        method: "get",
+        params: { mdobligfldnm: certM },
+      }).then((response) => {
+        setCertSList(response.data.certSList);
+      });
+    }
+  }, [certM]);
+
+  useEffect(() => {
+    console.log(certM);
+    if (certM !== "" && typeof certM !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSList",
+        method: "get",
+        params: { mdobligfldnm: certM },
+      }).then((response) => {
+        console.log(response.data);
+        setCertSList(response.data.certSList);
+      });
+    }
+  }, [certM]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -80,14 +141,14 @@ const CertFind = () => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    axios({
-      url: API_BASE_URL + "/cert/testContent",
-      method: "get",
-    }).then((response) => {
-      console.log(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     url: API_BASE_URL + "/cert/testContent",
+  //     method: "get",
+  //   }).then((response) => {
+  //     console.log(response.data);
+  //   });
+  // }, []);
 
   return (
     <div>
@@ -151,11 +212,12 @@ const CertFind = () => {
                   },
                 }}
               >
-                {certLCat.map((certL) => (
-                  <MenuItem key={certL.id} value={certL.name}>
-                    {certL.name}
-                  </MenuItem>
-                ))}
+                {certLList &&
+                  certLList.map((item) => (
+                    <MenuItem key={item.obligfldcd} value={item.obligfldnm}>
+                      {item.obligfldnm}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Grid>
@@ -189,45 +251,26 @@ const CertFind = () => {
                   },
                 }}
               >
-                {certMCat.map((certM) => (
-                  <MenuItem key={certM.id} value={certM.name}>
-                    {certM.name}
+                {certMList.map((item) => (
+                  <MenuItem key={item.mdobligfldcd} value={item.mdobligfldnm}>
+                    {item.mdobligfldnm}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
           <div style={{ margin: "20px" }}>
-            <button type="button" className={styles.smallFindCert}>
-              거푸집기능사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축구조기술사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              길게하면 어디까지 나올까 정말 궁금
-            </button>
+            {certSList &&
+              certSList.map((certS) => (
+                <button
+                  type="button"
+                  key={certS.jmcd}
+                  //onClick={() => handleClick(certS)}
+                  className={styles.smallFindCert}
+                >
+                  {certS.jmfldnm}
+                </button>
+              ))}
           </div>
         </div>
         <div className={styles.certFind}>

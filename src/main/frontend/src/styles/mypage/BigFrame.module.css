@@ -1,0 +1,14 @@
+.outsideContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.mdfContainer {
+  width: 700px;
+  min-height: 500px;
+  border-radius: 15px;
+  box-shadow: 5px 6px 22px lightgray;
+  padding: 40px 80px;
+  line-height: 1.5;
+}

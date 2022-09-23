@@ -1,44 +1,39 @@
 import React from "react";
+import styles from "../../styles/share/comment.module.css";
 
 //대댓글 출력
 const CommentReply = ({ commentReply }) => {
   return (
-    <div>
-      <div
-        style={{
-          width: "300px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingBottom: "8px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            style={{ width: "40px", paddingRight: "8px", borderRadius: "50%" }}
-            src={`/upload/profile/${commentReply.user.userProfileName}`}
-            alt="프로필사진"
-          />
-          <p
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {commentReply.user.userNick}
-          </p>
+    <div className={styles.commentReplyTop}>
+      <div className={styles.commentReplyBox}>
+        <img
+          src={`/upload/profile/${commentReply.user.userProfileName}`}
+          alt="프로필사진"
+        />
+        <div className={styles.commentReplyText}>
+          <span className={styles.CommentReplyNick}>
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              {commentReply.user.userNick}
+            </p>
+
+            <p
+              style={{
+                display: "flex",
+                fontSize: "0.8rem",
+                color: "rgb(100, 100, 100)",
+              }}
+            >
+              {commentReply.shareReReplyRegDate}
+            </p>
+          </span>
+          <p>{commentReply.shareReReplyContent}</p>
         </div>
-        <p
-          style={{
-            display: "flex",
-            fontSize: "0.8rem",
-            color: "rgb(100, 100, 100)",
-          }}
-        >
-          {commentReply.shareReReplyRegDate}
-        </p>
       </div>
-      <div>{commentReply.shareReReplyContent}</div>
     </div>
   );
 };

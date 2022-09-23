@@ -39,15 +39,15 @@ const ShareContainer = () => {
       });
   }, [page, searchKeyword]);
 
-  //페이징 업데이트
-  useEffect(() => {
-    if (update === true) getShareList();
-  }, [page, update]);
-
   // 검색
   const handleSearchKeyword = (e) => {
     setSearchKeyword(e.target.value);
   };
+
+  //페이징 업데이트
+  useEffect(() => {
+    if (update === true) getShareList();
+  }, [page, update]);
 
   useEffect(() => {
     setUpdate(false);

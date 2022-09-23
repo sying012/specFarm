@@ -68,3 +68,79 @@
   padding: 25px 10px;
   color: #555;
 }
+
+@media (max-width: 1250px) {
+  .profileContainer {
+    width: 330px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .profileContainer {
+    width: 100%;
+    min-height: 80px;
+  }
+
+  .innerContainer {
+    margin: 20px auto;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .avatarImage {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .profileInfo {
+    margin: 0 30px;
+  }
+
+  .nickname {
+    margin: 10px auto;
+    font-size: 1.4em;
+  }
+
+  .email {
+    font-size: 0.95rem;
+  }
+
+  .badgeLabel {
+    width: 55px;
+    height: 17px;
+    margin-top: 0;
+  }
+
+  .badgeLabel > p {
+    font-size: 0.85em;
+  }
+
+  .badges {
+    margin-top: 10px;
+    min-height: 40px;
+    height: none;
+    min-width: 100px;
+    width: auto;
+    padding: 10px 8px;
+  }
+
+  .badges > img {
+    width: 40px;
+    margin: 2px;
+  }
+}
+
+@media (max-width: 800px) {
+  .avatarImage {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .profileInfo {
+    margin: 0 15px;
+  }
+
+  .badgeLabel, .badges {
+    display: none;
+  }
+}

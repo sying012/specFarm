@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -6,9 +6,14 @@ import { NavLink } from "react-router-dom";
 
 import styles from "../../styles/findcourse/CourseCard.module.css";
 
-const CourseCard = ({ index, card }) => {
+const CourseCard = ({ card }) => {
   let cost = card.courseMan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  // console.log(card);
+
+  useEffect(() => {
+    card.courseMan = cost;
+    console.log(card.courseMan);
+  }, [card, cost]);
+
   return (
     <NavLink
       to={

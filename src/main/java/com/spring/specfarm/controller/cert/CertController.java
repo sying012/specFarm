@@ -70,7 +70,7 @@ public class CertController {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		JSONObject jObj = map.get("response");
-		
+
 		JSONObject body = jObj.getJSONObject("body");
 		JSONObject items = body.getJSONObject("items");
 		JSONArray item = items.getJSONArray("item");
@@ -107,59 +107,81 @@ public class CertController {
 	public Map<String, Object> getCertLList() {
 		try {
 			List<Map<String, Object>> certLList = certService.getCertLList();
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
-	
+
 			response.put("certLList", certLList);
 			System.out.println(response);
 			return response;
-			
-		} catch(Exception e){
+
+		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error",e.getMessage());
+			errorMap.put("error", e.getMessage());
 			return errorMap;
 		}
 	}
-	
+
 	@GetMapping("/getCertMList")
 	public Map<String, Object> getCertMList(@RequestParam("obligfldnm") String obligfldnm) {
 		try {
 			System.out.println(obligfldnm);
-			
+
 			List<Map<String, Object>> certMList = certService.getCertMList(obligfldnm);
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
-	
+
 			response.put("certMList", certMList);
 			System.out.println(response);
 			return response;
-			
-		} catch(Exception e){
+
+		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error",e.getMessage());
+			errorMap.put("error", e.getMessage());
 			return errorMap;
 		}
 	}
-	
+
 	@GetMapping("/getCertSList")
 	public Map<String, Object> getCertSList(@RequestParam("mdobligfldnm") String mdobligfldnm) {
 		try {
 			System.out.println(mdobligfldnm);
-			
+
 			List<Map<String, Object>> certSList = certService.getCertSList(mdobligfldnm);
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
-	
+
 			response.put("certSList", certSList);
 			System.out.println(response);
 			return response;
-			
-		} catch(Exception e){
+
+		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
-			errorMap.put("error",e.getMessage());
+			errorMap.put("error", e.getMessage());
 			return errorMap;
 		}
 	}
+	
+	@GetMapping("/getTestList")
+	public Map<String, Object> getTestList(@RequestParam("jmcd") String jmcd) {
+		try {
+			System.out.println();
+
+			List<Map<String, Object>> testList = certService.getTestList(jmcd);
+
+			Map<String, Object> response = new HashMap<String, Object>();
+
+			response.put("getTestList", testList);
+			System.out.println(response);
+			return response;
+
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+		
+	
 
 	@GetMapping("/testList")
 	public void testList(String[] args) throws IOException, InterruptedException {
@@ -173,7 +195,7 @@ public class CertController {
 			urlBuilder.append("?" + URLEncoder.encode("jmCd", "UTF-8") + "="
 					+ URLEncoder.encode(jmcdList.get(i), "UTF-8")); /* 종목코드 */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ "ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*
+					+ "uFezCoycg2tzO%2F3YbMtuevHdoqHsYNVyZFxo7m7%2FzxR4d9UKxEotUcHCaaawwmChdB%2B1ZL%2B8oMzqnVKrz4C2dQ%3D%3D"); /*
 																																 * Service
 																																 * Key
 																																 */
@@ -209,43 +231,48 @@ public class CertController {
 
 			JSONObject jObj = map.get("response");
 			System.out.println(jObj.toString());
-			JSONObject body = jObj.getJSONObject("body");
-			System.out.println(body.isEmpty());
-			System.out.println("!1111111111111111111111111111111");
-			System.out.println(body.getJSONObject("items").isEmpty());
-			System.out.println("!2222222222222222222222222222222");
-			JSONObject items = body.getJSONObject("items");
-			System.out.println("!3333333333333333333333333333333");
-			
-			if (items.toString().indexOf("[") != -1) {
-				JSONArray item = items.getJSONArray("item");
 
-				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			if (!jObj.get("body").equals("")) {
+				JSONObject body = jObj.getJSONObject("body");
 
-				if (item != null) {
+				if (!body.get("items").equals("")) {
+					JSONObject items = body.getJSONObject("items");
 
-					int jsonSize = item.length();
+					if (items.toString().indexOf("[") != -1) {
+						JSONArray item = items.getJSONArray("item");
 
-					for (int t = 0; t < jsonSize; t++) {
+						List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-						Map<String, Object> temp = new HashMap<String, Object>();
+						if (item != null) {
 
-						JSONObject tempobj = item.getJSONObject(t);
+							int jsonSize = item.length();
 
-						Iterator it = tempobj.keys();
+							for (int t = 0; t < jsonSize; t++) {
 
-						while (it.hasNext()) {
-							String key = it.next().toString();
-							// if(key.equals("contents"))
-							temp.put(key, tempobj.get(key));
+								Map<String, Object> temp = new HashMap<String, Object>();
+
+								JSONObject tempobj = item.getJSONObject(t);
+
+								Iterator it = tempobj.keys();
+
+								while (it.hasNext()) {
+									String key = it.next().toString();
+									// if(key.equals("contents"))
+									temp.put(key, tempobj.get(key));
+								}
+
+								list.add(temp);
+							}
 						}
-
-						list.add(temp);
+						certService.setCertTestList(list);
+					} else {
+						JSONObject item = items.getJSONObject("item");
 					}
+				} else {
+					continue;
 				}
-				certService.setCertTestList(list);
 			} else {
-				JSONObject item = items.getJSONObject("item");
+				continue;
 			}
 		}
 
@@ -271,7 +298,7 @@ public class CertController {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Content-type", "application/xml");
-			 System.out.println("Response code: " + conn.getResponseCode());
+			System.out.println("Response code: " + conn.getResponseCode());
 			BufferedReader rd;
 			if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -285,49 +312,85 @@ public class CertController {
 			}
 			rd.close();
 			conn.disconnect();
-			 System.out.println(sb.toString());
+			System.out.println(sb.toString());
 
 			CommUtils commUtils = new CommUtils();
 			String json = commUtils.xmlToJson(sb.toString());
 
-			 System.out.println(json);
+			System.out.println(json);
 			Map<String, JSONObject> map = commUtils.paramMap(json);
 
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			JSONObject jObj = map.get("response");
-			JSONObject body = jObj.getJSONObject("body");
-			JSONObject items = body.getJSONObject("items");
-			if (items.toString().indexOf("[") != -1) {
-				JSONArray item = items.getJSONArray("item");
 
-				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			if (!jObj.get("body").equals("")) {
+				JSONObject body = jObj.getJSONObject("body");
 
-				if (item != null) {
+				if (!body.get("items").equals("")) {
+					JSONObject items = body.getJSONObject("items");
 
-					int jsonSize = item.length();
+					if (items.toString().indexOf("[") != -1) {
+						JSONArray item = items.getJSONArray("item");
 
-					for (int t = 0; t < jsonSize; t++) {
+						List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-						Map<String, Object> temp = new HashMap<String, Object>();
+						if (item != null) {
 
-						JSONObject tempobj = item.getJSONObject(t);
+							int jsonSize = item.length();
 
-						Iterator it = tempobj.keys();
+							for (int t = 0; t < jsonSize; t++) {
 
-						while (it.hasNext()) {
-							String key = it.next().toString();
-							if (key.equals("contents"))
-								temp.put(key, tempobj.get(key));
+								Map<String, Object> temp = new HashMap<String, Object>();
+
+								JSONObject tempobj = item.getJSONObject(t);
+
+								Iterator it = tempobj.keys();
+
+								while (it.hasNext()) {
+									String key = it.next().toString();
+
+									if (key.equals("contents"))
+										temp.put(key, tempobj.get(key));
+									else if (key.equals("jmfldnm"))
+										temp.put(key, tempobj.get(key));
+								}
+
+								list.add(temp);
+							}
 						}
-
-						list.add(temp);
+						certService.setCertContents(list);
+					} else {
+						JSONObject item = items.getJSONObject("item");
 					}
+				} else {
+					continue;
 				}
-				certService.setCertContents(list);
 			} else {
-				JSONObject item = items.getJSONObject("item");
+				continue;
 			}
 		}
 	}
+	
+	//자격증 목록 불러오기
+	   @GetMapping("/getCertList")
+	   public Map<String, Object> getCertList() {
+	      try {
+	            
+	         List<Map<String, Object>> certList = certService.getCertList();
+	         
+	         Map<String, Object> response = new HashMap<String, Object>();
+	   
+	         response.put("certList", certList);
+	         System.out.println(response);
+	         return response;
+	         
+	      } catch(Exception e){
+	         Map<String, Object> errorMap = new HashMap<String, Object>();
+	         errorMap.put("error",e.getMessage());
+	         return errorMap;
+	      }
+	   }
+
+
 }

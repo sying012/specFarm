@@ -10,7 +10,6 @@ import Plan from "./Plan";
 
 const Main = () => {
   const isUser = !!sessionStorage.getItem("ACCESS_TOKEN");
-  const [favCertList, setFavCertList] = useState([]);
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
@@ -21,8 +20,7 @@ const Main = () => {
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
     }).then((response) => {
-      setFavCertList(response.data.favCertList);
-      setAlerts(response.data.alertList);
+      setAlerts(response.data);
     });
   }, []);
 
@@ -48,7 +46,9 @@ const Main = () => {
   return (
     <>
       <div className={styles.homeBackground}>
-        <Container style={{ position: "relative", boxSizing: "content-box" }}>
+        <Container
+        // style={{ position: "relative", boxSizing: "content-box" }}
+        >
           {/* <Container> */}
           {isUser ? (
             <Grid container className={styles.alert}>
@@ -59,8 +59,11 @@ const Main = () => {
           ) : (
             ""
           )}
-          <div className={styles.homeContent} style={{ position: "relative" }}>
-            <div>
+          <div
+            className={styles.homeContent}
+            // style={{ position: "relative" }}
+          >
+            <div className={styles.homeP}>
               <p className={styles.subTitle}>
                 자격증을 취득하여,
                 <br />
@@ -72,7 +75,7 @@ const Main = () => {
                 자격증 취득의 즐거움을 느낄 수 있습니다.
               </p>
             </div>
-            <Plan favCertList={favCertList} />
+            <Plan />
           </div>
         </Container>
       </div>

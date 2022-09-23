@@ -21,16 +21,17 @@ const CertMain = () => {
   const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
   const [certSList, setCertSList] = useState([]);
+  const [testList, setTestList] = useState([]);
 
-  // const handleClick = (e) => {
-  //   axios({
-  //     url: getjmtestlist,
-  //     method: "get",
-  //     params: { jmcd: e.target.value },
-  //   }).then((response) => {
-  //     setTestList((prev) => response.data.testList);
-  //   });
-  // };
+  const handleClick = (e) => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertTest",
+      method: "get",
+      params: { jmcd: e.target.value },
+    }).then((response) => {
+      setTestList(response.data.testList);
+    });
+  };
 
   const certLCatChange = (e) => {
     setCertL((prev) => e.target.value);
@@ -62,6 +63,7 @@ const CertMain = () => {
         method: "get",
         params: { mdobligfldnm: certM },
       }).then((response) => {
+        console.log(response.data);
         setCertSList(response.data.certSList);
       });
     }
@@ -176,8 +178,7 @@ const CertMain = () => {
         <Grid
           xs={1}
           style={{
-            paddingLeft: "15px",
-            paddingTop: "15px",
+            padding: "15px 50px",
             display: "flex",
             justifyContent: "center",
           }}
@@ -225,35 +226,17 @@ const CertMain = () => {
       <div className={styles.certMainCard}>
         <div className={styles.certMainBody}>
           <div>
-            <Link to="/cert/certfind">
-              <button type="button" className={styles.smallcert}>
-                거푸집기능사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축구조기술사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-            </Link>
+            {certSList &&
+              certSList.map((certS) => (
+                <button
+                  type="button"
+                  key={certS.jmcd}
+                  onClick={() => handleClick(certS)}
+                  className={styles.smallcert}
+                >
+                  {certS.jmfldnm}
+                </button>
+              ))}
           </div>
         </div>
       </div>

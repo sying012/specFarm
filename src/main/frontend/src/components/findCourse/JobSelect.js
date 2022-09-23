@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/findcourse/SelectCommon.module.css";
 import { API_BASE_URL } from "../../app-config";
 
-const JobSelect = ({ selectedItem, getSelectedItem }) => {
-  const [active, setActive] = useState(0);
-
+const JobSelect = ({ selectedItem, getSelectedItem, active, setActive }) => {
   const [selState1, setSelState1] = useState({});
   const [selState2, setSelState2] = useState({});
   const [selState3, setSelState3] = useState({});
@@ -179,17 +177,9 @@ const JobSelect = ({ selectedItem, getSelectedItem }) => {
   ];
 
   return (
-    <>
-      <div className={styles.selectListWrapper}>
-        <ul className={styles.upperList}>{liArray[active]}</ul>
-        {selState1 ? (
-          <ul className={styles.lowerList}>{liArray[active + 1]}</ul>
-        ) : (
-          ""
-        )}
-      </div>
-      <button onClick={() => setActive(Math.max(0, active - 1))}>뒤로</button>
-    </>
+    <div className={styles.selectListWrapper}>
+      <ul className={styles.selectList}>{liArray[active + 1]}</ul>
+    </div>
   );
 };
 

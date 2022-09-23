@@ -6,11 +6,30 @@ import CourseList from "./CourseList";
 import { useCallback } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import InsertItem from "./InsertItem";
 
 const CourseContainer = ({ searchList, setSearchList }) => {
   const [areaItems, setAreaItems] = useState([]);
   const [jobItems, setJobItems] = useState([]);
   const [value, setValue] = useState("");
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  const deleteItem = useCallback(
+    (code, which) => {
+      setSelectedItem(
+        selectedItem.filter((selectedItem) => selectedItem.code !== code)
+      );
+
+      if (which === "area") {
+        // 선택된 검색조건이 지역일 경우 지역 배열에 분류
+        setAreaItems(areaItems.filter((areaItems) => areaItems.code !== code));
+      } else {
+        // 선택된 검색조건이 직종일 경우 직종 배열에 분류
+        setJobItems(jobItems.filter((jobItems) => jobItems.code !== code));
+      }
+    },
+    [selectedItem]
+  );
 
   const changeValue = useCallback((e) => {
     setValue(e.target.value);
@@ -55,7 +74,7 @@ const CourseContainer = ({ searchList, setSearchList }) => {
           <input
             className={styles.courseinput}
             value={value}
-            placeholder="검색"
+            placeholder="검색어를 입력하세요."
             onChange={changeValue}
           ></input>
           <div onClick={handleSubmit} style={{ cursor: "pointer" }}>
@@ -67,27 +86,9 @@ const CourseContainer = ({ searchList, setSearchList }) => {
           </div>
         </form>
       </div>
-      <div className={styles.popCourse}>
-        <div className={styles.skillsBtns}>
-          <a href="#">지게차 운전 기능사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">건축기사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">한식조리 기능사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">중식조리 기능사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">일식조리 기능사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">양식조리 기능사</a>
-        </div>
-        <div className={styles.skillsBtns}>
-          <a href="#">문식조리 기능사</a>
+      <div className={styles.selectedWrap}>
+        <div className={styles.selected}>
+          <InsertItem selectedItem={selectedItem} deleteItem={deleteItem} />
         </div>
       </div>
       <div className={styles.selectContainer}>
@@ -97,6 +98,8 @@ const CourseContainer = ({ searchList, setSearchList }) => {
             setAreaItems={setAreaItems}
             jobItems={jobItems}
             setJobItems={setJobItems}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
           ></CourseSelector>
         </div>
         <div className={styles.selectBox}>

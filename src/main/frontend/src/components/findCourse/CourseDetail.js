@@ -57,14 +57,16 @@ const CourseDetail = ({ searchList }) => {
         <div className={styles.contentRow}>
           <h4>훈련기간</h4>
           <p>
-            {course.traStartDate || "-"} ~ {course.traEndDate || "-"} ({detailInfo.trprDegr || "-"}
+            {course.traStartDate || "-"} ~ {course.traEndDate || "-"} (
+            {detailInfo.trprDegr || "-"}
             회차)
           </p>
         </div>
         <div className={styles.contentRow}>
           <h4>훈련시간</h4>
           <p>
-            {detailInfo.totTraingDyct || "-"}일, 총 {detailInfo.totTraingTime || "-"}시간
+            {detailInfo.totTraingDyct || "-"}일, 총{" "}
+            {detailInfo.totTraingTime || "-"}시간
           </p>
         </div>
         {/* <div className={styles.contentRow}>

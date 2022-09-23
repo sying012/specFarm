@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import styles from "../../styles/findcourse/SelectCommon.module.css";
 import { API_BASE_URL } from "../../app-config";
 
-const AreaSelect = ({ selectedItem, getSelectedItem }) => {
+const AreaSelect = ({ selectedItem, getSelectedItem, active, setActive }) => {
   const [selState, setSelState] = useState({});
   const [upperList, setUpperList] = useState([]);
   const [lowerList, setLowerList] = useState([]);
@@ -47,65 +47,66 @@ const AreaSelect = ({ selectedItem, getSelectedItem }) => {
     if (upperList !== undefined && lowerList !== undefined) reqLowerList();
   }, [upperList, selState]);
 
-  return (
-    <div className={styles.selectListWrapper}>
-      <ul className={styles.upperList}>
-        {upperList.map(({ rsltCode, rsltName }) => (
+  const liArray = [
+    upperList.map(({ rsltCode, rsltName }) => (
+      <li key={rsltCode}>
+        <button
+          onClick={() => {
+            setActive(0);
+            setSelState({ code: rsltCode, name: rsltName });
+          }}
+        >
+          {rsltName}
+        </button>
+      </li>
+    )),
+
+    lowerList.map(({ rsltCode, rsltName }) => {
+      let result;
+
+      // 중분류 코드 앞 두자리가 대분류 코드와 같을 경우 리스트에 추가
+      if (selState.code == rsltCode.toString().substr(0, 2)) {
+        result = (
           <li key={rsltCode}>
             <button
               onClick={() => {
-                setSelState({ code: rsltCode, name: rsltName });
+                if (selectedItem.length === 0) {
+                  // 선택된 아이템이 없는 경우 바로 추가
+                  getSelectedItem({
+                    code: rsltCode + "",
+                    name: selState.name + " " + rsltName,
+                    which: "area",
+                  });
+                } else {
+                  // 선택된 아이템들을 순회하며 같은 코드가 있는지 비교 후 없으면 추가
+                  if (
+                    selectedItem.findIndex((item) => item.code == rsltCode) ===
+                    -1
+                  ) {
+                    getSelectedItem({
+                      code: rsltCode + "",
+                      name: selState.name + " " + rsltName,
+                      which: "area",
+                    });
+                  } else {
+                    alert("이미 있음");
+                  }
+                }
               }}
             >
               {rsltName}
             </button>
           </li>
-        ))}
-      </ul>
-      <ul className={styles.lowerList}>
-        {lowerList.map(({ rsltCode, rsltName }) => {
-          let result;
+        );
+      }
 
-          // 중분류 코드 앞 두자리가 대분류 코드와 같을 경우 리스트에 추가
-          if (selState.code == rsltCode.toString().substr(0, 2)) {
-            result = (
-              <li key={rsltCode}>
-                <button
-                  onClick={() => {
-                    if (selectedItem.length === 0) {
-                      // 선택된 아이템이 없는 경우 바로 추가
-                      getSelectedItem({
-                        code: rsltCode + "",
-                        name: selState.name + " " + rsltName,
-                        which: "area",
-                      });
-                    } else {
-                      // 선택된 아이템들을 순회하며 같은 코드가 있는지 비교 후 없으면 추가
-                      if (
-                        selectedItem.findIndex(
-                          (item) => item.code == rsltCode
-                        ) === -1
-                      ) {
-                        getSelectedItem({
-                          code: rsltCode + "",
-                          name: selState.name + " " + rsltName,
-                          which: "area",
-                        });
-                      } else {
-                        alert("이미 있음");
-                      }
-                    }
-                  }}
-                >
-                  {rsltName}
-                </button>
-              </li>
-            );
-          }
+      return result;
+    }),
+  ];
 
-          return result;
-        })}
-      </ul>
+  return (
+    <div className={styles.selectListWrapper}>
+      <ul className={styles.selectList}>{liArray[active + 1]}</ul>
     </div>
   );
 };

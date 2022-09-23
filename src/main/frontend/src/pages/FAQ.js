@@ -30,7 +30,7 @@ const FAQ = () => {
       </div>
       <div className={styles.faqcontainer}>
         <div className={styles.searchFieldWrapper}>
-          <form>
+          {/* <form>
             <ThemeProvider theme={theme}>
               <TextField
                 id="studySearch"
@@ -50,7 +50,7 @@ const FAQ = () => {
                 }}
               ></TextField>
             </ThemeProvider>
-          </form>
+          </form> */}
         </div>
         <div className={styles.accordionContainer}>
           <div className={styles.accordionHead}></div>
@@ -59,9 +59,9 @@ const FAQ = () => {
           </ThemeProvider>
         </div>
         <div className={styles.pageNation}>
-          <Stack spacing={2}>
+          {/* <Stack spacing={2}>
             <Pagination count={10} />
-          </Stack>
+          </Stack> */}
         </div>
       </div>
     </div>

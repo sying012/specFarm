@@ -9,10 +9,12 @@
   border-width: 0;
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .selectedItem > div {
   width: 100%;
   text-align: center;
+  font-family: "Pretendard-Regular";
 }

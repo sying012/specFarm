@@ -4,6 +4,27 @@ import { NavLink, Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  SwipeableDrawer,
+  Typography,
+} from "@mui/material";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import { styled } from "@mui/material/styles";
 
 const Header = () => {
   const [commHover, setcommHover] = useState(0);
@@ -14,6 +35,119 @@ const Header = () => {
   const [loginedUser, setLoginedUser] = useState({});
 
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
+
+  const [state, setState] = React.useState({
+    top: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ state, [anchor]: open });
+  };
+
+  const Accordion = styled((props) => (
+    <MuiAccordion disableGutters elevation={0} square {...props} />
+  ))(({ theme }) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    "&:not(:last-child)": {
+      borderBottom: 0,
+    },
+    "&:before": {
+      display: "none",
+    },
+  }));
+
+  const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+      expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255, 255, 255, .05)"
+        : "rgba(0, 0, 0, .03)",
+    flexDirection: "row-reverse",
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+      transform: "rotate(90deg)",
+    },
+    "& .MuiAccordionSummary-content": {
+      marginLeft: theme.spacing(1),
+    },
+  }));
+
+  const [expanded, setExpanded] = React.useState("panel1");
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+      }}
+      role="presentation"
+      // onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        <Accordion
+          expanded={expanded === "panel1"}
+          onChange={handleChange("panel1")}
+        >
+          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+            <Typography>Collapsible Group Item #1</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>111</Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel2"}
+          onChange={handleChange("panel2")}
+        >
+          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+            <Typography>Collapsible Group Item #2</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>222</Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel3"}
+          onChange={handleChange("panel3")}
+        >
+          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+            <Typography>Collapsible Group Item #3</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>333</Typography>
+          </AccordionDetails>
+        </Accordion>
+      </List>
+      {/* <Divider /> */}
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   useEffect(() => {
     axios
@@ -200,6 +334,20 @@ const Header = () => {
             }}
           ></div>
         </nav>
+
+        <React.Fragment key={"top"}>
+          <Button onClick={toggleDrawer("top", !state.top)}>{"top"}</Button>
+          <SwipeableDrawer
+            anchor={"top"}
+            open={state["top"]}
+            onClose={toggleDrawer("top", false)}
+            onOpen={toggleDrawer("top", true)}
+            sx={{ marginTop: "50px", zIndex: "1" }}
+          >
+            {list("top")}
+          </SwipeableDrawer>
+        </React.Fragment>
+
         <div className="tailwrap">
           <div className="loginbtn">
             {!isAuthenticated ? (

@@ -52,14 +52,14 @@ public class StudyController {
 			@PageableDefault(page = 0, size = 8, sort = "studyIdx", direction = Direction.DESC) Pageable pageable,
 			@RequestParam String searchKeyword) {
 		try {
-			System.out.println(searchKeyword+"    getStudyListgetStudyListgetStudyList");
+			System.out.println(searchKeyword + "    getStudyListgetStudyListgetStudyList");
 			Page<Study> studyList = studyService.getStudyList(searchKeyword, pageable);
 			System.out.println(studyList);
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("studyList", studyList);
 
 			return response;
-			
+
 		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
 			errorMap.put("error", e.getMessage());
@@ -88,7 +88,7 @@ public class StudyController {
 	@GetMapping("/getStudyMemberList")
 	public Map<String, Object> getStudyMemberList(@RequestParam("id") int studyIdx) {
 		try {
-			System.out.println(studyIdx + "studyIdxstudyIdxstudyIdx");
+//			System.out.println(studyIdx + "studyIdxstudyIdxstudyIdx");
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 
 			List<StudyApply> studyMemberList = studyService.getStudyMemberList(studyIdx);
@@ -139,7 +139,7 @@ public class StudyController {
 
 			int studyIdx = studyService.insertStudy(study);
 
-			Page<Study> studyList = studyService.getStudyList("",pageable);
+			Page<Study> studyList = studyService.getStudyList("", pageable);
 
 			insertStudyMember(userId, studyIdx, 1);
 
@@ -233,32 +233,51 @@ public class StudyController {
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 
+			// 로그인 중인 유저 엔티티 가져오기
 			User user = getUser(userId);
 
+			// 로그인 된 유저가 idx에 해당하는 스터디에 있는지 확인 후 있으면 해당 스터디 반환
+			// 없으면 새로운 Apply 객체 생성 (new StudyApply 반환)
 			StudyApply studyApply = studyService.getStudyApply(studyIdx, userId);
 
+			// 스터디에 가입되어 있지 않은 경우
 			if (studyApply.getStudyApplyIdx() == 0) {
-				studyApply = new StudyApply();
+//				studyApply = new StudyApply();
+				// 현재 스터디 idx 설정
 				studyApply.setStudyApplyIdx(studyService.getStudyApplyIdx(studyIdx));
+				// 가입 신청할 유저 설정
 				studyApply.setUser(user);
+				// 신청한 스터디 idx 설정
 				studyApply.setStudyIdx(studyIdx);
 			}
+			// 스터디 미가입일 때 : 0
+			// 스터디 가입신청일 때 : 1
 			studyApply.setAcceptYn(acceptYn);
 
+			// 스터디 멤버 리스트 업데이트
+			List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
+
+			// 현재 스터디 가져오기
 			Study study = studyService.getStudy(studyIdx);
-
-			if (studyApply.getAcceptYn() == 1)
+			System.out.println(study.getStudyMemberCnt() + "= 신청 수락 전 멤버 수");
+			// 가입 신청 상태인 경우 현재 멤버 수에 +1 해서 저장
+			if (studyApply.getAcceptYn() == 1) {
 				study.setStudyMemberCnt(study.getStudyMemberCnt() + 1);
+				System.out.println(study.getStudyMemberCnt() + "= 신청 수락 후 멤버 +1");
+			}
 
+			// 현재 멤버 수가 최대 멤버 수와 같아지면 스터디 마감
 			if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
 				study.setStudyYn("N");
 			}
 
+			// 업데이트 된 스터디 저장
 			studyService.insertStudy(study);
 
+			// 업데이트 된 스터디 다시 가져오기
 			study = studyService.getStudy(studyIdx);
-
-			List<StudyApply> studyMemberList = studyService.insertStudyMember(studyApply);
+			
+			System.out.println(study.getStudyMemberCnt() + "= 스터디 업데이트 후 멤버 수");
 
 			resultMap.put("studyMemberList", studyMemberList);
 			resultMap.put("study", study);

@@ -26,6 +26,10 @@ button.studyRegBtn {
   background: #8cbf75;
 }
 
+button.studyRegBtn:hover {
+  background: #8cbf75;
+}
+
 .pageBtnContainer {
   /* background-color: blueviolet; */
   width: 100%;

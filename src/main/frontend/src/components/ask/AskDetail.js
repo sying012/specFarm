@@ -70,7 +70,6 @@ const AskDetail = () => {
     axios
       .get(API_BASE_URL + "/community/ask/reply/" + askIdx)
       .then((response) => {
-        console.log(response.data);
         setAskReply(response.data.data);
       });
 
@@ -121,7 +120,6 @@ const AskDetail = () => {
   // 유저 프로필 모달
   const [infoVisible, setInfoVisible] = useState(false);
   const userSmallInfo = (e) => {
-    console.log(infoVisible);
     if (!infoVisible) {
       setInfoVisible(true);
     } else {

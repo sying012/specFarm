@@ -1,5 +1,7 @@
 package com.spring.specfarm.service.skills;
 
+import java.util.List;
+import java.util.Map;
 
 public interface JobCafeService {
 

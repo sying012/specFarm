@@ -50,7 +50,7 @@ const Share = () => {
         ></Route>
         <Route path="/:shareIdx" element={<ShareDetail />}></Route>
         <Route
-          path="/:shareIdx/edit"
+          path="/edit/:shareIdx"
           element={<ShareEdit insertShare={insertShare} />}
         ></Route>
       </Routes>

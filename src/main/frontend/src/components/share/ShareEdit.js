@@ -21,8 +21,9 @@ const ShareEdit = ({ insertShare }) => {
     axios
       .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
       .then((response) => {
-        setShare(response.data.share);
-        setFileNameInput(response.data.shareFileNameList);
+        if (response.data.share) setShare(response.data.share);
+        if (response.data.shareFileList)
+          setFileNameInput(response.data.shareFileList);
         console.log(response);
       });
   }, [shareIdx]);
@@ -41,12 +42,14 @@ const ShareEdit = ({ insertShare }) => {
           },
         })
         .then((response) => {
-          if (response.data.share.user === null) {
-            alert("로그인 후 수정할 수 있습니다.");
-            navigate("/login");
-          } else if (response.data.share.user.userId !== share.user.userId) {
-            alert("본인이 작성한 글만 수정할 수 있습니다.");
-            navigate(-1);
+          if (response.data.share) {
+            if (response.data.share.user === null) {
+              alert("로그인 후 수정할 수 있습니다.");
+              navigate("/login");
+            } else if (response.data.share.user.userId !== share.user.userId) {
+              alert("본인이 작성한 글만 수정할 수 있습니다.");
+              navigate(-1);
+            }
           }
         });
     }
@@ -56,8 +59,8 @@ const ShareEdit = ({ insertShare }) => {
     setTitleValue(e.target.value);
   };
 
-  const handleContentValue = (value) => {
-    setContentValue(value);
+  const handleContentValue = (e) => {
+    setContentValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -66,13 +69,14 @@ const ShareEdit = ({ insertShare }) => {
     share.set("shareIdx", share.shareIdx);
     share.set("shareRegDate", share.shareRegDate);
 
-    insertShare(share);
+    //insertShare(share);
 
     const formObj = {};
 
     // key 설정
     share.forEach((value, key) => {
-      if (key === "shareTitle" || key === "shareContent") formObj[key] = value;
+      if (key === "shareTitle" || key === "shareContent" || key === "shareIdx")
+        formObj[key] = value;
     });
     //console.log(singleImage);
     fileList.push(singleImage);
@@ -127,7 +131,8 @@ const ShareEdit = ({ insertShare }) => {
   useEffect(() => {
     if (fileNameInput.length > 0) {
       fileNameInput.forEach((fileInput, index) => {
-        document.getElementById(`uploadFileName${index}`).innerText = fileInput;
+        document.getElementById(`uploadFileName${index}`).innerText =
+          fileInput.originalFileName;
       });
     }
   }, [fileNameInput]);
@@ -177,7 +182,7 @@ const ShareEdit = ({ insertShare }) => {
                         id={`uploadFileName${index}`}
                         key={index}
                       >
-                        {fileName}
+                        {fileName.originalFileName}
                       </div>
                     ))
                   ) : (

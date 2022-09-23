@@ -23,13 +23,11 @@
 	</select>
 	
 	<select id="getCertSList" parameterType="string" resultType="camelHashMap">
-		SELECT DISTINCT MDOBLIGFLDNM,
-			   MDOBLIGFLDCD,
+		SELECT DISTINCT JMFLDNM,
 			   JMCD
 			FROM T_CERT
 			WHERE MDOBLIGFLDCD IS NOT NULL
-			  AND MDOBLIGFLDCD != ''
-			  AND OBLIGFLDNM = #{mdobligfldnm}
-			ORDER BY MDOBLIGFLDCD
+			  AND MDOBLIGFLDNM = #{mdobligfldnm}
+			ORDER BY JMCD
 	</select>
 </mapper>

@@ -13,7 +13,7 @@ import { API_BASE_URL } from "../app-config";
 import axios from "axios";
 // import CertFind from "../components/cert/CertFind";
 // import { Route, Routes } from "react-router";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 const CertMain = () => {
   const [certLList, setCertLList] = useState([]);
@@ -62,20 +62,11 @@ const CertMain = () => {
         method: "get",
         params: { mdobligfldnm: certM },
       }).then((response) => {
+        console.log(response.data);
         setCertSList(response.data.certSList);
       });
     }
   }, [certM]);
-
-  //const handleClick = (e) => {
-  //   axios({
-  //     url: API_BASE_URL + "/cert/getCertList",
-  //     method: "get",
-  //     params: { jmcd: e.target.value },
-  //   }).then((response) => {
-  //     setTestList((prev) => response.data.testList);
-  //   });
-  // };
 
   useEffect(() => {
     axios({
@@ -225,35 +216,17 @@ const CertMain = () => {
       <div className={styles.certMainCard}>
         <div className={styles.certMainBody}>
           <div>
-            <Link to="/cert/certfind">
-              <button type="button" className={styles.smallcert}>
-                거푸집기능사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축구조기술사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-              <button type="button" className={styles.smallcert}>
-                건축기사
-              </button>
-            </Link>
+            {certSList &&
+              certSList.map((certS) => (
+                <button
+                  type="button"
+                  key={certS.jmcd}
+                  //onClick={() => handleClick(certS)}
+                  className={styles.smallcert}
+                >
+                  {certS.jmfldnm}
+                </button>
+              ))}
           </div>
         </div>
       </div>

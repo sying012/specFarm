@@ -64,13 +64,13 @@ public class ShareController {
 	// Insert Share
 	@PostMapping("/newShare")
 	public Map<String, Object> insertShare(MultipartHttpServletRequest multipartServletRequest,
-			HttpServletRequest request, Share share, @AuthenticationPrincipal String userId /*@RequestParam Boolean hasImg*/) {
+			HttpServletRequest request, Share share, @AuthenticationPrincipal String userId, @RequestParam Boolean hasImg) {
 		try {
 			User user = new User();
 			user.setUserId(userId);
 			share.setUser(user);
 			int shareIdx = 0;
-			//System.out.println("조유미"+hasImg);
+			System.out.println("조유미"+hasImg);
 			// Share File List
 			List<ShareFile> shareFileList = new ArrayList<>();
 
@@ -78,9 +78,9 @@ public class ShareController {
 			Iterator<String> i = multipartServletRequest.getFileNames();
 			
 			// file data list
-//			if (!hasImg) {
-//				share.setShareImgName("shareImg.png");
-//			}
+			if (!hasImg) {
+				share.setShareImgName("shareImg.png");
+			}
 
 			while (i.hasNext()) {
 				// sigleImg 값 확인
@@ -97,16 +97,16 @@ public class ShareController {
 
 						ShareFile shareFile = new ShareFile();
 
-//						if (hasImg) {
-//							share.setShareImgName(fileInfo.get("FileName"));
-//							hasImg = false;
-//						} else {
+						if (hasImg) {
+							share.setShareImgName(fileInfo.get("FileName"));
+							hasImg = false;
+						} else {
 
 							shareFile.setShare(share);
 							shareFile.setShareFileName(fileInfo.get("FileName"));
 							shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
 							shareFileList.add(shareFile);
-						//}
+						}
 					}
 
 				}
@@ -134,9 +134,16 @@ public class ShareController {
 			
 			Share share = shareService.shareDetail(shareIdx);
 			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
+			List<String> shareFileNameList = new ArrayList<>();
+			if(shareFileList!=null) {
+				for (ShareFile shareFile : shareFileList) {
+					shareFileNameList.add(shareFile.getOriginalFileName());
+				}
+			}
+			System.out.println("////"+share);
 			
 			response.put("share", share);
-			response.put("shareFileList", shareFileList);
+			response.put("shareFileNameList", shareFileNameList);
 			
 			return response;
 		} catch(Exception e) {
@@ -256,6 +263,8 @@ public class ShareController {
 //			return errorMap;
 //		}
 //	}
+	
+
 	// 업데이트 파일, 쉐어가져오기
 	
 }

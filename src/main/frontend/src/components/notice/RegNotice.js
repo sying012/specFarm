@@ -10,6 +10,7 @@ const RegNotice = ({ insertNotice }) => {
 
   const submitNotice = (e) => {
     let noticeForm = new FormData(e.target);
+    sessionStorage.setItem("submit", true);
     e.preventDefault();
     insertNotice(noticeForm);
   };

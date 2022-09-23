@@ -209,7 +209,7 @@ public class AskController {
 			}
 		}
 		
-		//Notice 이미지 업로드
+		//Ask 이미지 업로드
 		@PostMapping("/upload/images")
 		public Map<String, Object> uploadImages(@ModelAttribute MultipartFile image, HttpSession session){
 			try {
@@ -230,7 +230,7 @@ public class AskController {
 			}
 		}
 		
-		// Notice 이미지 업로드
+		//Ask 이미지 삭제
 		@PostMapping("/delete/images")
 		public Map<String, Object> deleteImages(@RequestBody List<String> imagesList, HttpSession session) {
 			try {

@@ -1,6 +1,7 @@
 package com.spring.specfarm.controller.notice;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -135,6 +137,41 @@ public class NoticeController {
 		}
 	}
 	
+	// Notice 이미지 삭제
+	@PostMapping("/notice/delete/images")
+	public Map<String, Object> deleteImages(@RequestBody List<String> imagesList, HttpSession session) {
+		try {
+			System.out.println(imagesList);
+
+			String rootPath = session.getServletContext().getRealPath("/");
+
+			String attachPath = "../frontend/public/upload/cs/notice/";
+			for (String name : imagesList) {
+				File file = new File(rootPath + attachPath + name);
+
+				if (file.exists()) {
+					if (file.delete()) {
+						System.out.println("파일삭제 성공");
+					} else {
+						System.out.println("파일삭제 실패");
+					}
+				} else {
+					System.out.println("파일이 존재하지 않습니다.");
+				}
+			}
+
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("result", "success");
+
+			return response;
+
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
+
 	//Notice 삭제
 	@GetMapping("/delete")
 	public Map<String, Object> deleteNotice(@RequestParam String noticeIdx){

@@ -134,8 +134,13 @@ public class ShareController {
 			
 			Share share = shareService.shareDetail(shareIdx);
 			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
+			List<String> shareFileNameList = new ArrayList<>();
+			for(ShareFile shareFile: shareFileList) {
+				shareFileNameList.add(shareFile.getOriginalFileName());
+			}
+			
 			response.put("share", share);
-			response.put("shareFileList", shareFileList);
+			response.put("shareFileNameList", shareFileNameList);
 			
 			return response;
 		} catch(Exception e) {
@@ -238,31 +243,23 @@ public class ShareController {
 		}
 	}
 
-	
-	// FileDown
-	/** @RequestMapping("/fileDown")
-	 * public ResponseEntity<Resource> fileDown(@RequestParam String fileName, HttpServletRequest request) {
-	 * 		String path = request.getSession().getServletContext().getRealPath(path:"/") + "/upload/";
-	 * 	
-	 * 		Resource resource = new FileSystemResource(path + fileName);
-	 * 
-	 * 		String resourceName = resource.getFilename();
-	 * 
-	 * 		HttpHeaders header = new HttpHeaders();
-	 * 
-	 * 		try{
-	 * 			header.add(headerName:"Content-Disposition", "attachment; filename=" + new String(resourceName.getBytes("UTF-8"),
-					"ISO-8859-1"));
-			} catch(Exception e) {
-			e.printStackTrace();
-			}
-		
-			return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
-		}
-	 *	
-	 * 
-	 * */
-	
+	// Share state
+//	@GetMapping("/state")
+//	public Map<String, Object> shareState(@AuthenticationPrincipal String userId, @RequestParam int shareIdx, @RequestParam int stateYn){
+//		try {
+//			Map<String, Object> resultMap = new HashMap<String, Object>();
+//
+//			User user = new User();
+//			user.setUserId(userId);
+//			
+//			return response;
+//
+//		}catch (Exception e) {
+//			Map<String, Object> errorMap = new HashMap<String, Object>();
+//			errorMap.put("error",e.getMessage());
+//			return errorMap;
+//		}
+//	}
 	
 }
  

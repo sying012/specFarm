@@ -6,24 +6,41 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.common.CommUtils;
+import com.spring.specfarm.entity.JobCafe;
+import com.spring.specfarm.repository.JobCafeRepository;
+import com.spring.specfarm.service.skills.JobCafeService;
+import com.spring.specfarm.service.user.UserService;
 
 @RestController
+@RequestMapping("/skills/jobCafe")
 public class JobCafeController {
+	
+//	@Autowired
+//	private JobCafeService jobCafeService;
+//	
+//	@Autowired
+//	private JobCafeRepository jobCafeRepository;
+//	
+//	@Autowired
+//	private UserService userService;
+//	
 		
-	@GetMapping("/skills/jobCafe")
-	public void test () throws IOException {
+	@GetMapping("")
+	public void getJobCafe () throws IOException {
 		// 1. URL을 만들기 위한 StringBuilder
 		StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
 		// 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키
@@ -70,51 +87,97 @@ public class JobCafeController {
 		// 11. 전달받은 데이터 확인
 		//System.out.println(sb.toString());
 		
-		String apiData = sb.toString();
-		
-		CommUtils commUtils = new CommUtils();
-		
-		Map<String, JSONObject> map = commUtils.paramMap(apiData);
-		
-		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");
-		JSONArray row = jobCafeOpenInfo.getJSONArray("row");
-		System.out.println(row);
-		
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		
-		if(row != null) {
-			
-			int jsonSize = row.length();
-			
-			for (int i = 0; i < jsonSize; i++) {
-
-				Map<String, Object> temp = new HashMap<String, Object>();
-				
-				JSONObject tempobj = row.getJSONObject(i);
-				
-				Iterator it = tempobj.keys();
-				
-				while(it.hasNext()) {
-					String key = it.next().toString();
-					temp.put(key, tempobj.get(key));
-				}
-				
-				list.add(temp);
-			}
-		}
-		
-		
-		/** API DB에 넣기
-		 * for(int i=0;i<infoArr.size();i++){
-			   JSONObject tmp = (JSONObject)infoArr.get(i);
-			   JobCafeInfo infoObj=new JobCafeInfo(i+(long)1,
-			    (String)tmp.get("CAFE_NM"),(String)tmp.get("SMPL_INTRO"),
-			    (String)tmp.get("SPACE_INFRO"),(String)tmp.get("USE_DT"),
-			    (String)tmp.get("HOLI_DD"),(String)tmp.get("FACLT_INFO1"),
-			    (String)tmp.get("RSRV_SGGST1"),(String)tmp.get("BASS_ADRES_CN"),
-			    infoRepository.save(infoObj);
-			}
-					 * */
+		//db에 저장
+//		String apiData = sb.toString();
+//		
+//		CommUtils commUtils = new CommUtils();
+//		
+//		Map<String, JSONObject> map = commUtils.paramMap(apiData);
+//		
+//		//Data Parsing
+//		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");
+//		JSONArray row = jobCafeOpenInfo.getJSONArray("row");
+//		System.out.println(row);
+//		
+//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//		
+//		if(row != null) {
+//			
+//			int jsonSize = row.length();
+//			
+//			for (int i = 0; i < jsonSize; i++) {
+//
+//				Map<String, Object> temp = new HashMap<String, Object>();
+//				
+//				JSONObject tempobj = row.getJSONObject(i);
+//				
+//				JobCafe jobCafe = new JobCafe();
+//				int jobCafeIdx = jobCafeRepository.getNextJobCafeIdx();
+//						
+//				Iterator it = tempobj.keys();
+//				
+//				while(it.hasNext()) {
+//					String key = it.next().toString();
+//					temp.put(key, tempobj.get(key));
+//					
+//					jobCafe.setJobCafeIdx(jobCafeIdx);
+//					jobCafe.setCafeName(list.get(i).get("CAFE_NM").toString());
+//					jobCafe.setSmplIntro(list.get(i).get("SMPL_INTRO").toString());
+//					jobCafe.setSpaceInfo(list.get(i).get("SPACE_INFRO").toString());
+//					jobCafe.setUseDate(list.get(i).get("USE_DT").toString());
+//					jobCafe.setHoliDate(list.get(i).get("HOLI_DD").toString());
+//					jobCafe.setFacltInfo01(list.get(i).get("FACLT_INFO1").toString());
+//					jobCafe.setFacltInfo02(list.get(i).get("FACLT_INFO2").toString());
+//					jobCafe.setFacltInfo03(list.get(i).get("FACLT_INFO3").toString());
+//					jobCafe.setFacltInfo04(list.get(i).get("FACLT_INFO4").toString());
+//					jobCafe.setFacltInfo05(list.get(i).get("FACLT_INFO5").toString());
+//					jobCafe.setFacltInfo06(list.get(i).get("FACLT_INFO6").toString());
+//					jobCafe.setFacltInfo07(list.get(i).get("FACLT_INFO7").toString());
+//					jobCafe.setFacltInfo08(list.get(i).get("FACLT_INFO8").toString());
+//					jobCafe.setFacltInfo09(list.get(i).get("FACLT_INFO9").toString());
+//					jobCafe.setFacltInfo10(list.get(i).get("FACLT_INF10").toString());
+//					jobCafe.setRsrvSggst1(list.get(i).get("RSRV_SGGST1").toString());
+//					jobCafe.setRsrvSggst2(list.get(i).get("RSRV_SGGST2").toString());
+//					jobCafe.setRsrvSggst3(list.get(i).get("RSRV_SGGST3").toString());
+//					jobCafe.setRsrvSggst4(list.get(i).get("RSRV_SGGST4").toString());
+//					jobCafe.setRsrvSggst5(list.get(i).get("RSRV_SGGST5").toString());
+//					jobCafe.setRsrvSggst6(list.get(i).get("RSRV_SGGST6").toString());
+//					jobCafe.setRsrvSggst7(list.get(i).get("RSRV_SGGST7").toString());
+//					jobCafe.setRsrvSggst8(list.get(i).get("RSRV_SGGST8").toString());
+//					jobCafe.setRsrvSggst9(list.get(i).get("RSRV_SGGST9").toString());
+//					jobCafe.setRsrvSggst10(list.get(i).get("RSRV_SGGST10").toString());
+//					jobCafe.setBassAdresCn(list.get(i).get("BASS_ADRES_CN").toString());
+//					jobCafe.setGuGun(list.get(i).get("GUGUN").toString());
+//					jobCafe.setRoadAdresCn(list.get(i).get("ROAD_ADRES2_CN").toString());
+//					jobCafe.setFileName(list.get(i).get("FILE_NM").toString());
+//					jobCafe.setCafeTypeName(list.get(i).get("CAFE_TYPE_NM").toString());
+//					
+//				}
+//				
+//				list.add(temp);
+//			}
+//			
+//			jobCafeRepository.getJobCafe(list);
+//		}
+	
 	}
+	
+//	@GetMapping("/getJobCafeList")
+//	public Map<String, Object> getJobCafeList(){
+//		try {
+//			List<Map<String, Object>> jobCafeList = jobCafeService.getJobCafeList();
+//			
+//			Map<String, Object> response = new HashMap<String, Object>();
+//			
+//			response.put("jobCafeList", jobCafeList);
+//			return response;
+//			
+//		}catch(Exception e){
+//			Map<String, Object> errorMap = new HashMap<String, Object>();
+//			errorMap.put("error",e.getMessage());
+//			return errorMap;
+//		}
+//	}
+	
 }
 

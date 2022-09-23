@@ -11,6 +11,7 @@ import lombok.Data;
 @Table(name="T_JOB_CAFE")
 public class JobCafe {
 	@Id
+	private int jobCafeIdx;
 	private String cafeName;
 	private String smplIntro;
 	private String spaceInfo;
@@ -26,15 +27,15 @@ public class JobCafe {
 	private String facltInfo08;
 	private String facltInfo09;
 	private String facltInfo10;
-	private String rsrvSggst01;
-	private String rsrvSggst02;
-	private String rsrvSggst03;
-	private String rsrvSggst04;
-	private String rsrvSggst05;
-	private String rsrvSggst06;
-	private String rsrvSggst07;
-	private String rsrvSggst08;
-	private String rsrvSggst09;
+	private String rsrvSggst1;
+	private String rsrvSggst2;
+	private String rsrvSggst3;
+	private String rsrvSggst4;
+	private String rsrvSggst5;
+	private String rsrvSggst6;
+	private String rsrvSggst7;
+	private String rsrvSggst8;
+	private String rsrvSggst9;
 	private String rsrvSggst10;
 	private String bassAdresCn;
 	private String guGun;

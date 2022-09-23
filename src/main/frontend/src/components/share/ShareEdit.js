@@ -20,8 +20,10 @@ const ShareEdit = ({ insertShare }) => {
     //share 데이터요청
     axios
       .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
-      .then((responseShare) => {
-        setShare(responseShare.data);
+      .then((response) => {
+        setShare(response.data.share);
+        setFileNameInput(response.data.shareFileNameList);
+        console.log(response);
       });
   }, [shareIdx]);
 
@@ -29,6 +31,7 @@ const ShareEdit = ({ insertShare }) => {
     if (Object.keys(share).length !== 0) {
       setContentValue(share.shareContent);
       setTitleValue(share.shareTitle);
+      setSingleImage(share.shareFileIdx);
 
       //현재 접속 유저정보요청
       axios
@@ -38,10 +41,10 @@ const ShareEdit = ({ insertShare }) => {
           },
         })
         .then((response) => {
-          if (response.data.user === null) {
+          if (response.data.share.user === null) {
             alert("로그인 후 수정할 수 있습니다.");
             navigate("/login");
-          } else if (response.data.user.userId !== share.user.userId) {
+          } else if (response.data.share.user.userId !== share.user.userId) {
             alert("본인이 작성한 글만 수정할 수 있습니다.");
             navigate(-1);
           }
@@ -124,7 +127,7 @@ const ShareEdit = ({ insertShare }) => {
   useEffect(() => {
     if (fileNameInput.length > 0) {
       fileNameInput.forEach((fileInput, index) => {
-        document.getElementById(`uploadFileName${index}`).value = fileInput;
+        document.getElementById(`uploadFileName${index}`).innerText = fileInput;
       });
     }
   }, [fileNameInput]);
@@ -136,7 +139,10 @@ const ShareEdit = ({ insertShare }) => {
           <img
             style={{ cursor: "pointer" }}
             className={styles.itemImg}
-            src={`/upload/share/newShareImg.png`}
+            src={
+              `/upload/share/${share.shareImgName}` ||
+              `/upload/share/newShareImg.png`
+            }
             alt="img"
             id="shareImgPreview"
             title="사진을 추가하려면 클릭하세요."
@@ -165,13 +171,14 @@ const ShareEdit = ({ insertShare }) => {
                 <div>
                   {fileNameInput.length !== 0 ? (
                     fileNameInput.map((fileName, index) => (
-                      <input
+                      <div
                         className={styles.uploadFileName}
-                        defaultValue={fileName}
                         placeholder="첨부파일"
                         id={`uploadFileName${index}`}
                         key={index}
-                      />
+                      >
+                        {fileName}
+                      </div>
                     ))
                   ) : (
                     <input

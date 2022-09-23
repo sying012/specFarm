@@ -17,5 +17,6 @@ public class CertContents {
 	@Column(name="contents", columnDefinition = "varchar(4000)") //시험 정보
 	private String contents;
 
-	
+	@Column(name="jmfldnm", columnDefinition = "varchar(255)") //시험 정보
+	private String jmfldnm;
 }

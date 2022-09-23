@@ -173,7 +173,7 @@ public class CertController {
 			urlBuilder.append("?" + URLEncoder.encode("jmCd", "UTF-8") + "="
 					+ URLEncoder.encode(jmcdList.get(i), "UTF-8")); /* 종목코드 */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ "ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*
+					+ "uFezCoycg2tzO%2F3YbMtuevHdoqHsYNVyZFxo7m7%2FzxR4d9UKxEotUcHCaaawwmChdB%2B1ZL%2B8oMzqnVKrz4C2dQ%3D%3D"); /*
 																																 * Service
 																																 * Key
 																																 */
@@ -209,43 +209,49 @@ public class CertController {
 
 			JSONObject jObj = map.get("response");
 			System.out.println(jObj.toString());
-			JSONObject body = jObj.getJSONObject("body");
-			System.out.println(body.isEmpty());
-			System.out.println("!1111111111111111111111111111111");
-			System.out.println(body.getJSONObject("items").isEmpty());
-			System.out.println("!2222222222222222222222222222222");
-			JSONObject items = body.getJSONObject("items");
-			System.out.println("!3333333333333333333333333333333");
 			
-			if (items.toString().indexOf("[") != -1) {
-				JSONArray item = items.getJSONArray("item");
-
-				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-				if (item != null) {
-
-					int jsonSize = item.length();
-
-					for (int t = 0; t < jsonSize; t++) {
-
-						Map<String, Object> temp = new HashMap<String, Object>();
-
-						JSONObject tempobj = item.getJSONObject(t);
-
-						Iterator it = tempobj.keys();
-
-						while (it.hasNext()) {
-							String key = it.next().toString();
-							// if(key.equals("contents"))
-							temp.put(key, tempobj.get(key));
+			if(!jObj.get("body").equals("")) {
+				JSONObject body = jObj.getJSONObject("body");
+				
+				
+				if(!body.get("items").equals("")) {
+					JSONObject items = body.getJSONObject("items");
+					
+					if (items.toString().indexOf("[") != -1) {
+						JSONArray item = items.getJSONArray("item");
+		
+						List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+						if (item != null) {
+		
+							int jsonSize = item.length();
+		
+							for (int t = 0; t < jsonSize; t++) {
+		
+								Map<String, Object> temp = new HashMap<String, Object>();
+		
+								JSONObject tempobj = item.getJSONObject(t);
+		
+								Iterator it = tempobj.keys();
+		
+								while (it.hasNext()) {
+									String key = it.next().toString();
+									// if(key.equals("contents"))
+									temp.put(key, tempobj.get(key));
+								}
+		
+								list.add(temp);
+							}
 						}
-
-						list.add(temp);
+						certService.setCertTestList(list);
+					} else {
+						JSONObject item = items.getJSONObject("item");
 					}
+				} else {
+					continue;
 				}
-				certService.setCertTestList(list);
 			} else {
-				JSONObject item = items.getJSONObject("item");
+				continue;
 			}
 		}
 
@@ -296,37 +302,52 @@ public class CertController {
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			JSONObject jObj = map.get("response");
-			JSONObject body = jObj.getJSONObject("body");
-			JSONObject items = body.getJSONObject("items");
-			if (items.toString().indexOf("[") != -1) {
-				JSONArray item = items.getJSONArray("item");
-
-				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-				if (item != null) {
-
-					int jsonSize = item.length();
-
-					for (int t = 0; t < jsonSize; t++) {
-
-						Map<String, Object> temp = new HashMap<String, Object>();
-
-						JSONObject tempobj = item.getJSONObject(t);
-
-						Iterator it = tempobj.keys();
-
-						while (it.hasNext()) {
-							String key = it.next().toString();
-							if (key.equals("contents"))
-								temp.put(key, tempobj.get(key));
+			
+			if(!jObj.get("body").equals("")) {
+				JSONObject body = jObj.getJSONObject("body");
+				
+				
+				if(!body.get("items").equals("")) {
+					JSONObject items = body.getJSONObject("items");
+					
+					if (items.toString().indexOf("[") != -1) {
+						JSONArray item = items.getJSONArray("item");
+		
+						List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+						if (item != null) {
+		
+							int jsonSize = item.length();
+		
+							for (int t = 0; t < jsonSize; t++) {
+		
+								Map<String, Object> temp = new HashMap<String, Object>();
+		
+								JSONObject tempobj = item.getJSONObject(t);
+		
+								Iterator it = tempobj.keys();
+		
+								while (it.hasNext()) {
+									String key = it.next().toString();
+									
+									if(key.equals("contents"))
+										temp.put(key, tempobj.get(key));
+									else if(key.equals("jmfldnm"))
+										temp.put(key, tempobj.get(key));
+								}
+		
+								list.add(temp);
+							}
 						}
-
-						list.add(temp);
+						certService.setCertContents(list);
+					} else {
+						JSONObject item = items.getJSONObject("item");
 					}
+				} else {
+					continue;
 				}
-				certService.setCertContents(list);
 			} else {
-				JSONObject item = items.getJSONObject("item");
+				continue;
 			}
 		}
 	}

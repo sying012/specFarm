@@ -5,29 +5,43 @@
 <mapper namespace="com.spring.specfarm.mapper.CertMapper">
 	<select id="getCertLList" resultType="camelHashMap">
 		SELECT DISTINCT OBLIGFLDNM,
-			   OBLIGFLDCD
-			FROM T_CERT
-			WHERE OBLIGFLDCD IS NOT NULL
-			  AND OBLIGFLDCD != ''
-			ORDER BY OBLIGFLDCD
+		OBLIGFLDCD
+		FROM T_CERT
+		WHERE OBLIGFLDCD IS NOT NULL
+		AND OBLIGFLDCD != ''
+		ORDER BY OBLIGFLDCD
 	</select>
-	
-	<select id="getCertMList" parameterType="string" resultType="camelHashMap">
+
+	<select id="getCertMList" parameterType="string"
+		resultType="camelHashMap">
 		SELECT DISTINCT MDOBLIGFLDNM,
-			   MDOBLIGFLDCD
-			FROM T_CERT
-			WHERE MDOBLIGFLDCD IS NOT NULL
-			  AND MDOBLIGFLDCD != ''
-			  AND OBLIGFLDNM = #{obligfldnm}
-			ORDER BY MDOBLIGFLDCD
+		MDOBLIGFLDCD
+		FROM T_CERT
+		WHERE MDOBLIGFLDCD IS NOT NULL
+		AND MDOBLIGFLDCD != ''
+		AND OBLIGFLDNM = #{obligfldnm}
+		ORDER BY MDOBLIGFLDCD
+	</select>
+
+	<select id="getCertSList" parameterType="string"
+		resultType="camelHashMap">
+		SELECT DISTINCT JMFLDNM,
+		JMCD
+		FROM T_CERT
+		WHERE MDOBLIGFLDCD IS NOT NULL
+		AND MDOBLIGFLDNM = #{mdobligfldnm}
+		ORDER BY JMCD
+	</select>
+
+	<select id="getTestList" parameterType="string"
+		resultType="camelHashMap">
+		SELECT 
 	</select>
 	
-	<select id="getCertSList" parameterType="string" resultType="camelHashMap">
-		SELECT DISTINCT JMFLDNM,
-			   JMCD
-			FROM T_CERT
-			WHERE MDOBLIGFLDCD IS NOT NULL
-			  AND MDOBLIGFLDNM = #{mdobligfldnm}
-			ORDER BY JMCD
-	</select>
+	<select id="getCertList" resultType="camelHashMap">
+      SELECT DISTINCT JMFLDNM,
+            CERT_IDX
+         FROM T_CERT
+         ORDER BY CERT_IDX
+   </select>
 </mapper>

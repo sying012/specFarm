@@ -13,7 +13,7 @@ import { API_BASE_URL } from "../app-config";
 import axios from "axios";
 // import CertFind from "../components/cert/CertFind";
 // import { Route, Routes } from "react-router";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CertMain = () => {
   const [certLList, setCertLList] = useState([]);
@@ -21,16 +21,17 @@ const CertMain = () => {
   const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
   const [certSList, setCertSList] = useState([]);
+  const [testList, setTestList] = useState([]);
 
-  // const handleClick = (e) => {
-  //   axios({
-  //     url: getjmtestlist,
-  //     method: "get",
-  //     params: { jmcd: e.target.value },
-  //   }).then((response) => {
-  //     setTestList((prev) => response.data.testList);
-  //   });
-  // };
+  const handleClick = (e) => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertTest",
+      method: "get",
+      params: { jmcd: e.target.value },
+    }).then((response) => {
+      setTestList(response.data.testList);
+    });
+  };
 
   const certLCatChange = (e) => {
     setCertL((prev) => e.target.value);
@@ -67,6 +68,16 @@ const CertMain = () => {
       });
     }
   }, [certM]);
+
+  //const handleClick = (e) => {
+  //   axios({
+  //     url: API_BASE_URL + "/cert/getCertList",
+  //     method: "get",
+  //     params: { jmcd: e.target.value },
+  //   }).then((response) => {
+  //     setTestList((prev) => response.data.testList);
+  //   });
+  // };
 
   useEffect(() => {
     axios({
@@ -167,8 +178,7 @@ const CertMain = () => {
         <Grid
           xs={1}
           style={{
-            paddingLeft: "15px",
-            paddingTop: "15px",
+            padding: "15px 50px",
             display: "flex",
             justifyContent: "center",
           }}
@@ -221,7 +231,7 @@ const CertMain = () => {
                 <button
                   type="button"
                   key={certS.jmcd}
-                  //onClick={() => handleClick(certS)}
+                  onClick={() => handleClick(certS)}
                   className={styles.smallcert}
                 >
                   {certS.jmfldnm}

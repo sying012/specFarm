@@ -16,7 +16,7 @@ public interface CertTestRepository extends JpaRepository<CertTest, Integer> {
 	
 	@Query(value="select ifnull(max(a.cert_test_idx), 0) + 1 from t_cert_test a", nativeQuery=true)
 	int getNextCertTestIndex();
-	
+
 
 
 

@@ -129,7 +129,7 @@ public class CertServiceImpl implements CertService {
 			} else {
 				certtest.setJmfldnm(null);
 			}
-			certTestRepository.save(certtest);
+			//certTestRepository.save(certtest);
 		}
 	}
 
@@ -155,7 +155,7 @@ public class CertServiceImpl implements CertService {
 				certcontents.setJmfldnm(null);
 			}
 
-			 certContentsRepository.save(certcontents);
+			 //certContentsRepository.save(certcontents);
 
 		}
 	}
@@ -178,4 +178,14 @@ public class CertServiceImpl implements CertService {
 	public List<Map<String, Object>> getCertSList(String mdobligfldnm) {
 		return certMapper.getCertSList(mdobligfldnm);
 	}
+	
+	@Override
+	public List<Map<String, Object>>getTestList(String jmcd) {
+		return certMapper.getTestList(jmcd);
+	}
+	
+	@Override
+	   public List<Map<String, Object>> getCertList() {
+	      return certMapper.getCertList();
+	   }
 }

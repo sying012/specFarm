@@ -55,6 +55,17 @@ const CertFind = () => {
   const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
   const [certSList, setCertSList] = useState([]);
+  const [testList, setTestList] = useState([]);
+
+  const handleClick = (e) => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertTest",
+      method: "get",
+      params: { jmcd: e.target.value },
+    }).then((response) => {
+      setTestList(response.data.testList);
+    });
+  };
 
   useEffect(() => {
     axios({
@@ -96,6 +107,20 @@ const CertFind = () => {
         method: "get",
         params: { mdobligfldnm: certM },
       }).then((response) => {
+        setCertSList(response.data.certSList);
+      });
+    }
+  }, [certM]);
+
+  useEffect(() => {
+    console.log(certM);
+    if (certM !== "" && typeof certM !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSList",
+        method: "get",
+        params: { mdobligfldnm: certM },
+      }).then((response) => {
+        console.log(response.data);
         setCertSList(response.data.certSList);
       });
     }
@@ -235,36 +260,17 @@ const CertFind = () => {
             </FormControl>
           </Grid>
           <div style={{ margin: "20px" }}>
-            <button type="button" className={styles.smallFindCert}>
-              거푸집기능사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축구조기술사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              건축기사
-            </button>
-            <button type="button" className={styles.smallFindCert}>
-              길게하면 어디까지 나올까 정말 궁금
-            </button>
+            {certSList &&
+              certSList.map((certS) => (
+                <button
+                  type="button"
+                  key={certS.jmcd}
+                  //onClick={() => handleClick(certS)}
+                  className={styles.smallFindCert}
+                >
+                  {certS.jmfldnm}
+                </button>
+              ))}
           </div>
         </div>
         <div className={styles.certFind}>

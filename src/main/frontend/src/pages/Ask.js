@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import "../styles/ask/ask.css";
 import AskContent from "../components/ask/AskContent";
 import AskReg from "../components/ask/AskReg";
@@ -27,27 +27,19 @@ const Ask = () => {
     });
   };
 
-  const [certNames, setcertNames] = useState([
-    { certIdx: 1, certName: "화공기사" },
-    { certIdx: 2, certName: "화공기술사" },
-    { certIdx: 3, certName: "정밀화학기사" },
-    { certIdx: 4, certName: "화학분석기사" },
-    { certIdx: 5, certName: "화학분석기능사" },
-    { certIdx: 6, certName: "화약류제조기사" },
-    { certIdx: 7, certName: "화약류제조산업기사" },
-    { certIdx: 8, certName: "바이오화학제품제조기사" },
-    { certIdx: 9, certName: "바이오화학제품제조산업기사" },
-    { certIdx: 10, certName: "정보처리기사" },
-    { certIdx: 11, certName: "화공기사" },
-    { certIdx: 12, certName: "화공기술사" },
-    { certIdx: 13, certName: "정밀화학기사" },
-    { certIdx: 14, certName: "화학분석기사" },
-    { certIdx: 15, certName: "화학분석기능사" },
-    { certIdx: 16, certName: "화약류제조기사" },
-    { certIdx: 17, certName: "화약류제조산업기사" },
-    { certIdx: 18, certName: "바이오화학제품제조기사" },
-    { certIdx: 19, certName: "바이오화학제품제조산업기사" },
-  ]);
+  const [certNames, setcertNames] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/cert/getCertList`).then((response) => {
+      setcertNames(
+        response.data.certList.map((cert) => {
+          let newCert = { ...cert, certName: cert.jmfldnm };
+          delete newCert.jmfldnm;
+          return newCert;
+        })
+      );
+    });
+  }, []);
 
   return (
     <div id="content">

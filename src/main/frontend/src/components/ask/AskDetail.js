@@ -58,16 +58,21 @@ const AskDetail = () => {
   }, [searchType, searchKeyword, page, navigate]);
 
   useEffect(() => {
+    //게시글 데이터 불러오기
     axios
       .get(API_BASE_URL + "/community/ask/getAsk?askIdx=" + askIdx)
       .then((response) => {
         setAsk(response.data);
       });
+
+    //댓글 데이터 불러오기
     axios
       .get(API_BASE_URL + "/community/ask/reply/" + askIdx)
       .then((response) => {
+        console.log(response.data);
         setAskReply(response.data.data);
       });
+
     //현재 접속 유저정보요청
     axios
       .get(API_BASE_URL + "/user/getUser", {

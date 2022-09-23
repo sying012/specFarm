@@ -12,6 +12,7 @@ const AskReplyRegBox = ({
   askIdx,
   askReplyIdx,
   insertAskReReply,
+  reply,
 }) => {
   const [user, setUser] = useState({});
   const [askReplyContent, setAskReplyContent] = useState("");
@@ -32,16 +33,13 @@ const AskReplyRegBox = ({
   const handleReplySubmit = (e) => {
     e.preventDefault();
     if (!!user) {
-      if (!askReplyIdx) {
+      if (!!!askReplyIdx) {
         let askReply = { askReplyContent: askReplyContent };
         setAskReplyContent("");
         insertAskReply(askReply, askIdx);
       } else {
         let askReReply = {
-          askReply: {
-            askIdx: askIdx,
-            askReplyIdx: askReplyIdx,
-          },
+          askReply: reply,
           askReReplyContent: askReplyContent,
         };
         setAskReplyContent("");

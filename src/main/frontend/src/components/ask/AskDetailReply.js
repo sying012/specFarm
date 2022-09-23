@@ -49,7 +49,7 @@ const AskDetailReply = ({ reply }) => {
         <img
           id="profileImg"
           src={
-            reply.user.userProfileName
+            reply.user
               ? "/upload/profile/" + reply.user.userProfileName
               : defaultProfile
           }
@@ -57,14 +57,14 @@ const AskDetailReply = ({ reply }) => {
         />
         <div id="replyBox">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {reply.user.userNick}
+            {reply.user && reply.user.userNick}
             <p style={{ fontSize: "0.8rem", color: "rgb(100, 100, 100)" }}>
               {reply.askReplyRegDate}
             </p>
           </div>
           <div className="askReplyContent">{reply.askReplyContent}</div>
           <div className="rereplyOpen">
-            <p onClick={toggleRereply}>답글</p>
+            <p onClick={toggleRereply}>답글 {reply.countReReply || null}</p>
           </div>
         </div>
       </div>
@@ -78,6 +78,7 @@ const AskDetailReply = ({ reply }) => {
             insertAskReReply={insertAskReReply}
             askReplyIdx={reply.askReplyIdx}
             askIdx={reply.askIdx}
+            reply={reply}
           />
         </div>
         {reReplyList.map((reReply) => (

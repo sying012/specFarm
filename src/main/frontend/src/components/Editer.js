@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
@@ -6,12 +6,12 @@ import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 import Loading from "../images/loading.gif";
 import { useLocation } from "react-router";
+import { useCallback } from "react";
 
 Quill.register("modules/imageResize", ImageResize);
 
-const Editer = ({ placeholder, value, place, ...rest }) => {
+const Editer = ({ placeholder, value, place, chkSubmit, ...rest }) => {
   const quillRef = useRef(null);
-  const testUrl = useLocation();
   const toolbarOptions = [
     ["link", "image", "video"],
     [{ header: [1, 2, 3, false] }],
@@ -21,6 +21,7 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
     [{ color: [] }, { background: [] }],
     [{ align: [] }],
   ];
+  const [imagesList, setImagesList] = useState([]);
 
   const modules = {
     toolbar: {
@@ -30,6 +31,8 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
       // },
     },
   };
+
+  console.log(imagesList);
 
   useEffect(() => {
     const handleImage = () => {
@@ -46,13 +49,6 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
 
         // 현재 커서 위치 저장
         const range = quillRef.current?.getEditor().getSelection();
-
-        //컴포넌트 언마운트시 실행될 소스코드
-        // useEffect(() => {
-        //   return () => {
-
-        //   }
-        // }, []);
 
         // 서버에 올려질때까지 표시할 로딩 placeholder 삽입
         quillRef.current
@@ -73,19 +69,39 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
 
             // 사용자 편의를 위해 커서 이미지 오른쪽으로 이동
             quillRef.current?.getEditor().setSelection(range.index + 1);
+
+            setImagesList(() => {
+              let list = imagesList;
+              list.push(response.data.file);
+              return list;
+            });
           });
-        quillRef.current
-          ?.getEditor()
-          .insertEmbed(range.index, "image", testUrl);
       };
     };
-
     if (quillRef.current) {
       const toolbar = quillRef.current.getEditor().getModule("toolbar");
       toolbar.addHandler("image", handleImage);
     }
+
+    //컴포넌트 언마운트시 실행될 소스코드
+    // useEffect(() => {
+    //   return () => {
+
+    //   }
+    // }, []);
+    return () => {
+      deleteImg();
+    };
   }, []);
 
+  const deleteImg = useCallback(() => {
+    console.log(chkSubmit);
+    if (!chkSubmit) {
+      axios
+        .post(API_BASE_URL + `/${place}/delete/images`, imagesList)
+        .then((response) => console.log(response));
+    }
+  }, [chkSubmit]);
   return (
     <ReactQuill
       {...rest}

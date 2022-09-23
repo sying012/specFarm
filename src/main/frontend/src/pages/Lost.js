@@ -46,15 +46,15 @@ const Lost = () => {
     <Container>
       <div id="content">
         <div className={styles.titleContainer}>
-          {/* <div className={styles.titlewrap}>마을소식</div>
-        <NavigateNextIcon style={{ margin: "auto 5px" }} /> */}
-          <img
+          <div className={styles.titlewrap}>마을소식</div>
+          <NavigateNextIcon style={{ margin: "auto 5px" }} />
+          {/* <img
             src={lost}
             style={{ width: "50px", marginRight: "10px" }}
             alt="lostimg"
-          ></img>
+          ></img> */}
           <NavLink to="/cs/lost">
-            <div className={styles.titlewrap}>분실물센터</div>
+            <div className={styles.subtitlewrap}>분실물센터</div>
           </NavLink>
         </div>
         <Routes>

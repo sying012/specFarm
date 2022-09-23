@@ -23,9 +23,10 @@ const buttonTheme = createTheme({
   },
 });
 
-const Plan = ({ favCertList }) => {
+const Plan = () => {
   let isUser = !!sessionStorage.getItem("ACCESS_TOKEN");
-  const [tests, setTests] = useState([]);
+  const [regList, setRegList] = useState([]);
+  const [examList, setExamList] = useState([]);
   const [data, setData] = useState([]);
   const [value, setValue] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
@@ -33,29 +34,35 @@ const Plan = ({ favCertList }) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: API_BASE_URL + "/user/getFavCert",
+      url: API_BASE_URL + "/user/getCertPlan",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
     }).then((response) => {
-      setTests(response.data);
-      setData(response.data.slice(0, 3));
+      setRegList(response.data.regList);
+      setExamList(response.data.examList);
+      setData(response.data.regList.slice(0, 3));
+      setValue(0);
     });
   }, [isUser]);
 
   useEffect(() => {
     setActiveStep(0);
-    setData(tests.slice(0, 3));
+    if (value === 0) {
+      setData(regList.slice(0, 3));
+    } else {
+      setData(examList.slice(0, 3));
+    }
   }, [value]);
 
   // tab content
   function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index, dataList, ...other } = props;
     const theme = useTheme();
     const LAST_STEP =
-      tests.length % 3 === 0
-        ? parseInt(tests.length / 3)
-        : parseInt(tests.length / 3) + 1;
+      dataList.length % 3 === 0
+        ? parseInt(dataList.length / 3)
+        : parseInt(dataList.length / 3) + 1;
 
     const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -68,8 +75,8 @@ const Plan = ({ favCertList }) => {
     };
 
     const handleData = (step) => {
-      if (tests.length !== 0) {
-        setData(tests.slice(3 * step, 3 * step + 3));
+      if (dataList.length !== 0) {
+        setData(dataList.slice(3 * step, 3 * step + 3));
       } else {
         setData([]);
       }
@@ -84,10 +91,10 @@ const Plan = ({ favCertList }) => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ pr: 2.5, pt: 1, pl: 2.5, pb: 1 }}>
+          <Box sx={{ pr: 2.5, pt: 2, pl: 2.5, pb: 1 }}>
             <div
               style={{
-                height: "240px",
+                height: "250px",
               }}
             >
               {children}
@@ -193,22 +200,28 @@ const Plan = ({ favCertList }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
+            dataList={regList}
           >
             {data &&
-              data.map((accept) => (
-                <p key={accept.certTestIdx} className={styles.certPlanP}>
-                  {accept.implplannm} {accept.certName}
+              data.map((reg) => (
+                <p key={reg.idx} className={styles.certPlanP}>
+                  {isUser
+                    ? reg.implplannm &&
+                      reg.implplannm.substr(0, 5) +
+                        reg.implplannm.substr(12, 16)
+                    : reg.implplannm}{" "}
+                  {reg.jmfldnm}
                   <br />
                   <span style={{ fontSize: "14px" }}>
-                    접수 :
-                    {accept.docregstartdt &&
-                      accept.docregstartdt.replace(
+                    {reg.category} :
+                    {reg.startDate &&
+                      reg.startDate.replace(
                         /(\d{4})(\d{2})(\d{2})/,
                         " $1.$2.$3 "
                       )}
                     ~
-                    {accept.docregenddt &&
-                      accept.docregenddt.replace(
+                    {reg.endDate &&
+                      reg.endDate.replace(
                         /(\d{4})(\d{2})(\d{2})/,
                         " $1.$2.$3 "
                       )}
@@ -224,37 +237,32 @@ const Plan = ({ favCertList }) => {
               borderBottomLeftRadius: "10px",
               borderBottomRightRadius: "10px",
             }}
+            dataList={examList}
           >
             {data &&
-              data.map((test) => (
-                <p key={test.certTestIdx} className={styles.certPlanP}>
-                  {test.implplannm} {test.certName}
+              data.map((exam) => (
+                <p key={exam.idx} className={styles.certPlanP}>
+                  {isUser
+                    ? exam.implplannm &&
+                      exam.implplannm.substr(0, 5) +
+                        exam.implplannm.substr(12, 16)
+                    : exam.implplannm}{" "}
+                  {exam.jmfldnm}
                   <br />
                   <span style={{ fontSize: "14px" }}>
-                    필기 :
-                    {test.docregstartdt &&
-                      test.docregstartdt.replace(
+                    {exam.category} :
+                    {exam.startDate &&
+                      exam.startDate.replace(
                         /(\d{4})(\d{2})(\d{2})/,
                         " $1.$2.$3 "
                       )}
-                    ~
-                    {test.docregenddt &&
-                      test.docregenddt.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
-                    / 실기 :
-                    {test.docregstartdt &&
-                      test.docregstartdt.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
-                    ~
-                    {test.docregenddt &&
-                      test.docregenddt.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
+                    {exam.category === "실기시험"
+                      ? exam.endDate &&
+                        exam.endDate.replace(
+                          /(\d{4})(\d{2})(\d{2})/,
+                          "~ $1.$2.$3 "
+                        )
+                      : ""}
                   </span>
                 </p>
               ))}

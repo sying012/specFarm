@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   TextField,
   Grid,
@@ -19,6 +19,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useBeforeRender } from "../utils";
 
 const theme = createTheme({
   status: {
@@ -61,6 +62,10 @@ const CssTextField = styled(TextField)({
 });
 
 const Join = () => {
+  useBeforeRender(() => {
+    document.getElementsByTagName("body")[0].style.overflowY = "auto";
+  }, []);
+
   const navigate = useNavigate();
   const [idError, setIdError] = useState({ error: false, text: "" });
   const [pwValidationError, setPwValidationError] = useState({
@@ -79,9 +84,9 @@ const Join = () => {
   const [emailError, setEmailError] = useState({ error: false, text: "" });
 
   // cert category
-  const [certLCat, setCertLCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certLList, setCertLList] = useState([]);
   const [certL, setCertL] = useState("");
-  const [certMCat, setCertMCat] = useState([{ id: 1, name: "사업관리" }]);
+  const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
 
   const [checked, setChecked] = useState(false);
@@ -259,14 +264,28 @@ const Join = () => {
   });
 
   // Cert Large Category
-  const certLCatChange = (e) => {
-    setCertL(e.target.value);
-  };
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertLList",
+      method: "get",
+    }).then((response) => {
+      setCertLList(response.data.certLList);
+    });
+  }, []);
 
   // Cert Middle Category
-  const certMCatChange = (e) => {
-    setCertM(e.target.value);
-  };
+  useEffect(() => {
+    if (certL !== "" && typeof certL !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertMList",
+        method: "get",
+        params: { obligfldnm: certL },
+      }).then((response) => {
+        setCertMList(response.data.certMList);
+        console.log(response.data.certMList);
+      });
+    }
+  }, [certL]);
 
   // checked
   const checkedCheck = useCallback((e) => {
@@ -610,7 +629,9 @@ const Join = () => {
                   id="certLCatSelect"
                   value={certL}
                   label="관심분야(대분류)"
-                  onChange={certLCatChange}
+                  onChange={(e) => {
+                    setCertL((prev) => e.target.value);
+                  }}
                   name="certLCat"
                   style={{ height: "45px" }}
                   sx={{
@@ -621,24 +642,25 @@ const Join = () => {
                     },
                   }}
                 >
-                  {certLCat.map((certL) => (
-                    <MenuItem
-                      key={certL.id}
-                      value={certL.name}
-                      sx={{
-                        "&.MuiMenuItem-root": {
-                          "&.Mui-selected": {
-                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                  {certLList &&
+                    certLList.map((certL) => (
+                      <MenuItem
+                        key={certL.obligfldcd}
+                        value={certL.obligfldnm}
+                        sx={{
+                          "&.MuiMenuItem-root": {
+                            "&.Mui-selected": {
+                              backgroundColor: "rgba(140, 191, 117, 0.2)",
+                            },
+                            "&.Mui-selected:hover": {
+                              backgroundColor: "rgba(140, 191, 117, 0.3)",
+                            },
                           },
-                          "&.Mui-selected:hover": {
-                            backgroundColor: "rgba(140, 191, 117, 0.3)",
-                          },
-                        },
-                      }}
-                    >
-                      {certL.name}
-                    </MenuItem>
-                  ))}
+                        }}
+                      >
+                        {certL.obligfldnm}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -677,7 +699,9 @@ const Join = () => {
                   id="certMCatSelect"
                   value={certM}
                   label="관심분야(중분류)"
-                  onChange={certMCatChange}
+                  onChange={(e) => {
+                    setCertM(e.target.value);
+                  }}
                   name="certMCat"
                   style={{ height: "45px" }}
                   sx={{
@@ -688,24 +712,25 @@ const Join = () => {
                     },
                   }}
                 >
-                  {certMCat.map((certM) => (
-                    <MenuItem
-                      key={certM.id}
-                      value={certM.name}
-                      sx={{
-                        "&.MuiMenuItem-root": {
-                          "&.Mui-selected": {
-                            backgroundColor: "rgba(140, 191, 117, 0.2)",
+                  {certMList &&
+                    certMList.map((certM) => (
+                      <MenuItem
+                        key={certM.obligfldcd}
+                        value={certM.mdobligfldnm}
+                        sx={{
+                          "&.MuiMenuItem-root": {
+                            "&.Mui-selected": {
+                              backgroundColor: "rgba(140, 191, 117, 0.2)",
+                            },
+                            "&.Mui-selected:hover": {
+                              backgroundColor: "rgba(140, 191, 117, 0.3)",
+                            },
                           },
-                          "&.Mui-selected:hover": {
-                            backgroundColor: "rgba(140, 191, 117, 0.3)",
-                          },
-                        },
-                      }}
-                    >
-                      {certM.name}
-                    </MenuItem>
-                  ))}
+                        }}
+                      >
+                        {certM.mdobligfldnm}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </Grid>

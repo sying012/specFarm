@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,11 +75,9 @@ public class UserController {
 			if (numStr != null || numStr != "") {
 				return numStr;
 			}
-
 		} else {
 			return "exist";
 		}
-
 		return "fail";
 	}
 
@@ -163,148 +162,26 @@ public class UserController {
 		return numStr;
 	}
 	
-	@GetMapping("/getFavCert")
-	public List<Map<String, Object>> getFavCert(@AuthenticationPrincipal String userId) throws ParseException {
+	@GetMapping("/getCertPlan")
+	public Map<String, Object> getCertPlan(@AuthenticationPrincipal String userId) throws ParseException {
+		Map<String, Object> favCertPlanList = new HashMap<>();
 		if (userId == "anonymousUser") {
-			
-			return null;
+			favCertPlanList.put("regList", userService.getCertRegList());
+			favCertPlanList.put("examList", userService.getCertExamList());
 		} else {
-			List<Map<String, Object>> favCertList = userService.getUserFavCert(userId);
-
-			return favCertList;
+			favCertPlanList.put("regList", userService.getFavCertRegList(userId));
+			favCertPlanList.put("examList", userService.getFavCertExamList(userId));
 		}
+
+		return favCertPlanList;
 	}
 	
 	@GetMapping("/getAlerts")
-	public Map<String, Object> getAlerts(@AuthenticationPrincipal String userId) throws ParseException {
+	public List<Map<String, Object>> getAlerts(@AuthenticationPrincipal String userId) throws ParseException {
 		if (userId == "anonymousUser") {
 			return null;
 		} else {
-			List<Map<String, Object>> favCertList = userService.getUserFavCert(userId);
-			List<Map<String, Object>> alertList = new ArrayList<>();
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			
-			// 일정이 오늘 ~ 오늘 + 7 까지의 favCert 구하기
-			
-			// date format
-			SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
-			
-			// today + 7
-			Calendar cal = Calendar.getInstance();
-			String todayy = date.format(cal.getTime());
-			Date today = date.parse(todayy);
-			
-			cal.add(Calendar.DATE, 8);	// +7day
-			String lastdayy = date.format(cal.getTime());
-			Date lastday = date.parse(lastdayy);
-			
-			int index = 0;
-			for (int i = 0; i < favCertList.size(); i++) {
-				// 필기시험 원서접수
-				String docregstartdt = favCertList.get(i).get("docregstartdt").toString();
-		        Date date1 = date.parse(docregstartdt);
-		        
-		        // 필기시험
-				String docexamstartdt = favCertList.get(i).get("docexamstartdt").toString();
-		        Date date2 = date.parse(docexamstartdt);
-		        
-		        // 필기시험 합격자 발표
-				String docpassdt = favCertList.get(i).get("docpassdt").toString();
-		        Date date3 = date.parse(docpassdt);
-		        
-		        // 실기시험 원서접수
-				String pracregstartdt = favCertList.get(i).get("pracregstartdt").toString();
-		        Date date4 = date.parse(pracregstartdt);
-		        
-		        // 실기시험
-				String pracexamstartdt = favCertList.get(i).get("pracexamstartdt").toString();
-		        Date date5 = date.parse(pracexamstartdt);
-		        
-		        // 합격자 발표
-				String pracpassstartdt = favCertList.get(i).get("pracpassstartdt").toString();
-		        Date date6 = date.parse(pracpassstartdt);				
-
-				if (date1.after(today) && date1.before(lastday)) {
-					long calculate = date1.getTime() - today.getTime();
-					int Ddays = (int) (Math.floor(TimeUnit.HOURS.convert(calculate, TimeUnit.MILLISECONDS) / 24f));
-
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "필기시험 원서접수");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				} else if (date2.after(today) && date2.before(lastday)) {
-					System.out.println(date2);
-					long calculate = date2.getTime() - today.getTime();
-					int Ddays = (int) (Math.floor(TimeUnit.HOURS.convert(calculate, TimeUnit.MILLISECONDS) / 24f));
-
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "필기시험");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				} else if (date3.after(today) && date3.before(lastday)) {
-					long calculate = date3.getTime() - today.getTime();
-					int Ddays = (int) (Math.floor(TimeUnit.HOURS.convert(calculate, TimeUnit.MILLISECONDS) / 24f));
-
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "필기시험 합격자 발표");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				} else if (date4.after(today) && date4.before(lastday)) {
-					long calculate = date4.getTime() - today.getTime();
-					int Ddays = (int) (Math.ceil(calculate / (60 * 1000 * 60 * 24)));
-					
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "실기시험 원서접수");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				} else if (date5.after(today) && date5.before(lastday)) {
-					long calculate = date5.getTime() - today.getTime();
-					int Ddays = (int) (Math.floor(TimeUnit.HOURS.convert(calculate, TimeUnit.MILLISECONDS) / 24f));
-
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "실기시험");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				} else if (date6.after(today) && date6.before(lastday)) {
-					long calculate = date6.getTime() - today.getTime();
-					int Ddays = (int) (Math.floor(TimeUnit.HOURS.convert(calculate, TimeUnit.MILLISECONDS) / 24f));
-
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("id", index++);
-					map.put("certName", favCertList.get(i).get("certName"));
-					map.put("cat", "실기시험 합격자 발표");
-					map.put("dDay", Ddays);
-					map.put("open", "true");
-
-					alertList.add(map);
-				}
-
-			}
-			
-			resultMap.put("favCertList", favCertList);
-			resultMap.put("alertList", alertList);
-			
-			return resultMap;
+			return  userService.getFavCertAlert(userId);
 		}
 	}
 }

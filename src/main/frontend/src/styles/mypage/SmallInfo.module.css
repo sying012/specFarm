@@ -1,0 +1,55 @@
+.mainContainer {
+  margin-top: 50px;
+  background-color: rgba(250, 235, 215, 0.956);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.innerContainer {
+  display: flex;
+}
+
+.underContainer {
+  margin-top: 10px;
+}
+
+.innerContainer h1,
+.underContainer h1 {
+  color: #1d5902;
+  margin-right: 20px;
+}
+
+.underContainer h1 {
+    margin-bottom: 7px;
+}
+
+.getCertImg {
+  width: 40px;
+  margin: 2px;
+}
+
+.attactive {
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.attractiveCert {
+  background-color: #8cbf75;
+  height: 20px;
+  padding: 4px;
+  border-radius: 30px;
+  margin: 7px;
+}
+
+.attractiveCert:hover {
+  background-color: #7aac62;
+}
+
+.attractiveCert a {
+  display: inline;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -85,6 +86,43 @@ public class MypageController {
 			return errorMap;
 		}
 	}
+	
+	@PostMapping("/smInfo")
+	public Map<String, Object> getSmallUser(@RequestBody User user) {
+		try {
+			System.out.println(user.getUserId());
+			Map<String, Object> responseMap = new HashMap<String, Object>();
+			
+			String userId = user.getUserId();
+			
+			User loginedUser = mypageService.getUser(userId);
+			responseMap.put("user", loginedUser);
+			
+			List<GetCert> earnedCert = mypageService.getEarnedCert(userId);
+			List<GetCertDTO> earnCertDTOs = new ArrayList<GetCertDTO>();
+			for(int i=0; i < earnedCert.size(); i++) {
+				GetCertDTO getCertDTO = new GetCertDTO();
+				getCertDTO.setGetCertIdx(i);
+				getCertDTO.setUserId(userId);
+				getCertDTO.setCertName(earnedCert.get(i).getCertName());
+				getCertDTO.setGetCertDate(earnedCert.get(i).getGetCertDate());
+				
+				earnCertDTOs.add(getCertDTO);
+			}
+			responseMap.put("earnedCert", earnCertDTOs);
+			
+			List<FavCertDTO> favCerts = mypageService.getFavCerts(userId);
+			responseMap.put("favCerts", favCerts);
+			
+			return responseMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			
+			return errorMap;
+		}
+	}
+	
 	
 	@GetMapping("/modify")
 	public ResponseEntity<?> getUserNickAndProfile(@AuthenticationPrincipal String userId) {

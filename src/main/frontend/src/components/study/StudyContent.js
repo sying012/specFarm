@@ -5,6 +5,7 @@ import styles from "../../styles/study/StudyContent.module.css";
 import { API_BASE_URL } from "../../app-config";
 import defaultStudyImg from "../../images/defalut_study_image.png";
 import StudyJoinList from "./StudyJoinList";
+import SmallInfo from "../mypage/SmallInfo";
 
 const StudyContent = ({
   setStudyList,
@@ -167,6 +168,17 @@ const StudyContent = ({
     }
   };
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     study !== undefined && (
       <div className={styles.studyContent}>
@@ -207,7 +219,7 @@ const StudyContent = ({
               <p className={styles.studyTitle}>{study.studyTitle}</p>
             </div>
             <div className={styles.makerNdate}>
-              <div className={styles.maker}>
+              <div className={styles.maker} onClick={(e) => userSmallInfo(e)}>
                 <img
                   src={
                     study.user.userProfileName !== null
@@ -219,7 +231,12 @@ const StudyContent = ({
                 ></img>
                 <p className={styles.studyMaker}>{study.user.userNick}</p>
               </div>
-
+              <div
+                onClick={(e) => userSmallInfo(e)}
+                style={{ position: "absolute" }}
+              >
+                {infoVisible && <SmallInfo user={study.user} id="smallInfo" />}
+              </div>
               <p className={styles.studyRegDate}>{study.studyRegDate}</p>
             </div>
             <div className={styles.contactWrapper}>

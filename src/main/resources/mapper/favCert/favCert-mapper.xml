@@ -3,15 +3,176 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.specfarm.mapper.FavCertMapper">
-	<select id="getFavCert" parameterType="string" resultType="camelHashMap">
-		SELECT T.*,
-			   C.CERT_NAME
+	<select id="getCertDocreg" resultType="camelHashMap">
+		SELECT DISTINCT IMPLPLANNM, DOCREGSTARTDT, DOCREGENDDT 
+			FROM T_CERT_TEST
+		    WHERE DOCREGENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+		    ORDER BY DOCREGSTARTDT DESC;
+	</select>
+	<select id="getCertPracreg" resultType="camelHashMap">
+		SELECT DISTINCT IMPLPLANNM, PRACREGSTARTDT, PRACREGENDDT
+			FROM T_CERT_TEST 
+		    WHERE PRACREGENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+		    ORDER BY PRACREGSTARTDT DESC;
+	</select>
+	<select id="getCertDocexam" resultType="camelHashMap">
+		SELECT DISTINCT IMPLPLANNM, DOCEXAMSTARTDT
+			FROM T_CERT_TEST 
+		    WHERE DOCEXAMSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+		    ORDER BY DOCEXAMSTARTDT DESC;
+	</select>
+	<select id="getCertPracexam" resultType="camelHashMap">
+		SELECT DISTINCT IMPLPLANNM, PRACEXAMSTARTDT, PRACEXAMENDDT
+			FROM T_CERT_TEST 
+		    WHERE PRACEXAMENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+		    ORDER BY PRACEXAMSTARTDT DESC;
+	</select>
+	
+	<select id="getFavCertDocreg" parameterType="string" resultType="camelHashMap">
+		SELECT A.JMFLDNM,
+			   T.IMPLPLANNM, 
+			   T.DOCREGSTARTDT, 
+		       T.DOCREGENDDT
 			FROM T_CERT_TEST T,
-				 T_CERT C,
-				 (SELECT *
-						FROM T_FAV_CERT
-						WHERE USER_ID = "${userId}") F
-			WHERE F.CERT_IDX = T.CERT_TEST_IDX
-			  AND F.CERT_IDX = C.CERT_IDX
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.DOCREGENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			ORDER BY PRACEXAMSTARTDT DESC;
+
+	</select>
+	<select id="getFavCertPracreg" parameterType="string" resultType="camelHashMap">
+		SELECT A.JMFLDNM,
+			   T.IMPLPLANNM, 
+			   T.PRACREGSTARTDT, 
+		       T.PRACREGENDDT
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.PRACREGENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			ORDER BY PRACREGSTARTDT DESC;
+	</select>
+	<select id="getFavCertDocexam" parameterType="string" resultType="camelHashMap">
+		SELECT A.JMFLDNM,
+			   T.IMPLPLANNM, 
+			   T.DOCEXAMSTARTDT
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.DOCEXAMSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			ORDER BY DOCEXAMSTARTDT DESC;
+	</select>
+	<select id="getFavCertPracexam" parameterType="string" resultType="camelHashMap">		    
+		SELECT A.JMFLDNM,
+			   T.IMPLPLANNM, 
+			   T.PRACEXAMSTARTDT,
+			   T.PRACEXAMENDDT
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.PRACEXAMENDDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			ORDER BY PRACEXAMSTARTDT DESC;
+	</select>
+	
+	<select id="getFavCertDocregDday" parameterType="string" resultType="camelHashMap">
+	<![CDATA[
+		SELECT A.JMFLDNM, 
+		       TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCREGSTARTDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.DOCREGSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.DOCREGSTARTDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			ORDER BY PRACEXAMSTARTDT DESC;
+	]]>
+	</select>
+	<select id="getFavCertDocexamDday" parameterType="string" resultType="camelHashMap">
+	<![CDATA[
+		SELECT A.JMFLDNM,
+			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCEXAMSTARTDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.DOCEXAMSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.DOCEXAMSTARTDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			ORDER BY DOCEXAMSTARTDT DESC;
+	]]>
+	</select>
+	<select id="getFavCertDocpassDday" parameterType="string" resultType="camelHashMap">
+	<![CDATA[
+		SELECT A.JMFLDNM,
+			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCPASSDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.DOCPASSDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.DOCPASSDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			  ORDER BY DOCPASSDT DESC;
+	]]>
+	</select>
+	<select id="getFavCertPracregDday" parameterType="string" resultType="camelHashMap">
+	<![CDATA[
+		SELECT A.JMFLDNM,
+		       TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACREGSTARTDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.PRACREGSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.PRACREGSTARTDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			  ORDER BY PRACREGSTARTDT DESC;
+	]]>
+	</select>
+	<select id="getFavCertPracexamDday" parameterType="string" resultType="camelHashMap">		    
+	<![CDATA[
+		SELECT A.JMFLDNM,
+			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACEXAMSTARTDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.PRACEXAMSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.PRACEXAMSTARTDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			  ORDER BY PRACEXAMSTARTDT DESC;
+	]]>
+	</select>
+	<select id="getFavCertPracpassDday" parameterType="string" resultType="camelHashMap">		    
+	<![CDATA[
+		SELECT A.JMFLDNM, 
+			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACPASSSTARTDT) AS DDAY
+			FROM T_CERT_TEST T,
+				 (SELECT C.JMFLDNM
+						FROM T_FAV_CERT F, T_CERT C
+						WHERE USER_ID = '${userId}'
+						  AND F.CERT_IDX = C.CERT_IDX) A
+			WHERE A.JMFLDNM = T.JMFLDNM
+			  AND T.PRACPASSSTARTDT >= DATE_FORMAT(NOW(), '%Y%m%d')
+			  AND T.PRACPASSSTARTDT <= DATE_FORMAT(NOW() + INTERVAL 7 DAY, '%Y%m%d')
+			  ORDER BY PRACPASSSTARTDT DESC;
+	]]>
 	</select>
 </mapper>

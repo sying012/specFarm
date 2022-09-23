@@ -47,12 +47,32 @@ const Home = () => {
   let scrollInterval;
 
   // body scroll
-  document.getElementsByTagName("body")[0].style.overflowY = "hidden";
+  useEffect(() => {
+    document.getElementById("wheel").onwheel = { wheelEvent };
+    if (window.innerHeight <= 786) {
+      document.getElementsByTagName("body")[0].style.overflowY = "auto";
+      document.getElementById("wheel").removeEventListener("wheel", wheelEvent);
+    } else {
+      document.getElementsByTagName("body")[0].style.overflowY = "hidden";
+      document.getElementById("wheel").addEventListener("wheel", wheelEvent);
+    }
+  }, []);
+
+  window.addEventListener("resize", () => {
+    if (window.innerHeight <= 786) {
+      document.getElementsByTagName("body")[0].style.overflowY = "auto";
+      document.getElementById("wheel").removeEventListener("wheel", wheelEvent);
+    } else {
+      document.getElementsByTagName("body")[0].style.overflowY = "hidden";
+      document.getElementById("wheel").addEventListener("wheel", wheelEvent);
+    }
+  });
 
   const [show, setShow] = useState(true);
   // wheel event
   let count = 1;
   const wheelEvent = (e) => {
+    console.log("이게 아니야?");
     if (e.deltaY >= 0 && count === 1) {
       count++;
       fnScrollInterval();
@@ -118,7 +138,11 @@ const Home = () => {
 
   return (
     <>
-      <div className={styles.outer} onWheel={wheelEvent}>
+      <div
+        className={styles.outer}
+        id="wheel"
+        // onWheel={wheelEvent}
+      >
         <header className={styles.header} style={{ position: "fixed" }}>
           <div className="innerheader">
             <Link to="/">

@@ -25,4 +25,14 @@ public interface UserService {
 	void certifiedPhoneNumber(String phoneNumber, String numStr);
 
 	List<Map<String, Object>> getUserFavCert(String userId);
+
+	List<Map<String, Object>> getCertRegList();
+
+	List<Map<String, Object>> getCertExamList();
+
+	List<Map<String, Object>> getFavCertRegList(String userId);
+
+	List<Map<String, Object>> getFavCertExamList(String userId);
+
+	List<Map<String, Object>> getFavCertAlert(String userId);
 }

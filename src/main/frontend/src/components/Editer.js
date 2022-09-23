@@ -4,13 +4,10 @@ import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
-import Loading from "../images/loading.gif";
-import { useLocation } from "react-router";
-import { useCallback } from "react";
 
 Quill.register("modules/imageResize", ImageResize);
 
-const Editer = ({ placeholder, value, place, chkSubmit, ...rest }) => {
+const Editer = ({ placeholder, value, place, ...rest }) => {
   const quillRef = useRef(null);
   const toolbarOptions = [
     ["link", "image", "video"],
@@ -31,8 +28,6 @@ const Editer = ({ placeholder, value, place, chkSubmit, ...rest }) => {
       // },
     },
   };
-
-  console.log(imagesList);
 
   useEffect(() => {
     const handleImage = () => {
@@ -90,18 +85,15 @@ const Editer = ({ placeholder, value, place, chkSubmit, ...rest }) => {
     //   }
     // }, []);
     return () => {
-      deleteImg();
+      if (!sessionStorage.getItem("submit")) {
+        axios
+          .post(API_BASE_URL + `/${place}/delete/images`, imagesList)
+          .then((response) => console.log(response));
+      }
+      sessionStorage.removeItem("submit");
     };
   }, []);
 
-  const deleteImg = useCallback(() => {
-    console.log(chkSubmit);
-    if (!chkSubmit) {
-      axios
-        .post(API_BASE_URL + `/${place}/delete/images`, imagesList)
-        .then((response) => console.log(response));
-    }
-  }, [chkSubmit]);
   return (
     <ReactQuill
       {...rest}

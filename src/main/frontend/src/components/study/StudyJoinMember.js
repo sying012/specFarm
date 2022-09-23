@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/study/StudyJoinMember.module.css";
+import SmallInfo from "../mypage/SmallInfo";
 
 const StudyJoinMember = ({
   study,
@@ -10,9 +11,20 @@ const StudyJoinMember = ({
 }) => {
   // console.log(loginUserId);
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <div className={styles.member}>
-      <div className={styles.memberInfo}>
+      <div className={styles.memberInfo} onClick={(e) => userSmallInfo(e)}>
         <img
           src={
             studyMember.user.userProfileName !== null
@@ -34,6 +46,12 @@ const StudyJoinMember = ({
         ) : (
           ""
         )}
+      </div>
+      <div
+        onClick={(e) => userSmallInfo(e)}
+        style={{ position: "absolute", marginLeft: "170px", marginTop: "60px" }}
+      >
+        {infoVisible && <SmallInfo user={studyMember.user} id="smallInfo" />}
       </div>
       {study.user.userId !== studyMember.user.userId &&
       loginUserId === study.user.userId ? (

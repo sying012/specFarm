@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import CommentReply from "./CommentReply";
+import SmallInfo from "../mypage/SmallInfo";
 
 const Comment = ({ comment, user }) => {
   //대댓글 출력
@@ -54,6 +55,17 @@ const Comment = ({ comment, user }) => {
     });
   };
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <>
       <div className={styles.commentReply}>
@@ -62,10 +74,23 @@ const Comment = ({ comment, user }) => {
             <img
               src={`/upload/profile/${comment.user.userProfileName}`}
               alt="프로필사진"
+              onClick={(e) => userSmallInfo(e)}
             />
             <div className={styles.commentBox}>
               <span className={styles.commentNick}>
-                <p>{comment.user.userNick}</p>
+                <p onClick={(e) => userSmallInfo(e)}>{comment.user.userNick}</p>
+                <div
+                  onClick={(e) => userSmallInfo(e)}
+                  style={{
+                    position: "absolute",
+                    marginLeft: "105px",
+                    marginTop: "-65px",
+                  }}
+                >
+                  {infoVisible && (
+                    <SmallInfo user={comment.user} id="smallInfo" />
+                  )}
+                </div>
                 <p className={styles.commentRegDate}>
                   {comment.shareReplyRegDate}
                 </p>

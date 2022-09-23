@@ -4,6 +4,7 @@ import AskReReply from "./AskReReply";
 import AskReplyRegBox from "./AskReplyRegBox";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import SmallInfo from "../mypage/SmallInfo";
 
 const AskDetailReply = ({ reply }) => {
   const [reReplyList, setReReplyList] = useState([]);
@@ -43,6 +44,17 @@ const AskDetailReply = ({ reply }) => {
     });
   };
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <>
       <div id="askReplyBox" className="askReplyBox">
@@ -54,10 +66,19 @@ const AskDetailReply = ({ reply }) => {
               : defaultProfile
           }
           alt="프로필사진"
+          onClick={(e) => userSmallInfo(e)}
         />
         <div id="replyBox">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {reply.user && reply.user.userNick}
+            <div onClick={(e) => userSmallInfo(e)}>
+              {reply.user && reply.user.userNick}
+            </div>
+            <div
+              onClick={(e) => userSmallInfo(e)}
+              style={{ position: "absolute", marginLeft: "-65px" }}
+            >
+              {infoVisible && <SmallInfo user={reply.user} id="smallInfo" />}
+            </div>
             <p style={{ fontSize: "0.8rem", color: "rgb(100, 100, 100)" }}>
               {reply.askReplyRegDate}
             </p>

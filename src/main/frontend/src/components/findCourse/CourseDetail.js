@@ -85,7 +85,7 @@ const CourseDetail = ({ searchList }) => {
         <div className={styles.contentRow}>
           <h4>훈련비</h4>
           <p>
-            {course.realMan || "-"}원
+            {course.courseMan || "-"}원
             <span className={styles.priceDesc}>
               (실제 부담하시게 될 훈련비는 표시된 금액과 다를 수 있습니다.)
             </span>

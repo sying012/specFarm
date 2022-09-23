@@ -7,6 +7,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import { useCallback } from "react";
 import { history } from "../../lib/history";
+import SmallInfo from "../mypage/SmallInfo";
 
 const AskDetail = () => {
   const navigate = useNavigate();
@@ -117,6 +118,17 @@ const AskDetail = () => {
   //   }
   // }, [ask]);
 
+  // 유저 프로필 모달
+  const [infoVisible, setInfoVisible] = useState(false);
+  const userSmallInfo = (e) => {
+    console.log(infoVisible);
+    if (!infoVisible) {
+      setInfoVisible(true);
+    } else {
+      setInfoVisible(false);
+    }
+  };
+
   return (
     <div id="askDetailContainer">
       <div id="detailContentBox">
@@ -126,7 +138,7 @@ const AskDetail = () => {
             <> */}
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div className="detailWrite">
+            <div className="detailWrite" onClick={(e) => userSmallInfo(e)}>
               {ask.user !== null && typeof ask.user !== "undefined" ? (
                 <>
                   <img
@@ -141,6 +153,14 @@ const AskDetail = () => {
                   {ask.user.userNick}
                 </>
               ) : null}
+            </div>
+            <div
+              onClick={(e) => userSmallInfo(e)}
+              style={{
+                position: "absolute",
+              }}
+            >
+              {infoVisible && <SmallInfo user={ask.user} id="smallInfo" />}
             </div>
             <div className="detailRegDate">{ask.askRegDate}</div>
           </div>

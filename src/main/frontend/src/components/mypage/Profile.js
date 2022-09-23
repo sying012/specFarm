@@ -5,9 +5,9 @@ import { Edit } from "@mui/icons-material";
 import styles from "../../styles/mypage/Profile.module.css";
 
 function Profile({ certs, user }) {
-  const size = 18;
+  // const size = 18;
   const badgeArr = [];
-  for (let i = 0; i < size; i++) {
+  for (let i = 0; i < 10; i++) {
     badgeArr.push("/upload/badge/" + (i + 1) + ".png");
   }
 

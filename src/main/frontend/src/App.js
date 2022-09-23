@@ -18,12 +18,10 @@ import FAQ from "./pages/FAQ";
 import Lost from "./pages/Lost";
 import MypageMain from "./pages/MypageMain";
 import NotFound from "./pages/NotFound";
-import Deactivate from "./components/mypage/Deactivate";
-import ProfileMdf from "./components/mypage/ProfileMdf";
-import CheckPw from "./components/mypage/CheckPw";
 import CertFind from "./components/cert/CertFind";
 import SocialLogin from "./components/login/SocialLogin";
 import { useEffect, useState } from "react";
+import BigFrame from "./components/mypage/BigFrame";
 
 function App() {
   const location = useLocation();
@@ -64,9 +62,9 @@ function App() {
         <Route path="/cs/lost/*" element={<Lost />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
-        <Route path="/mypage/deactivate" element={<Deactivate />}></Route>
-        <Route path="/mypage/pwcheck" element={<CheckPw />}></Route>
-        <Route path="/mypage/modify" element={<ProfileMdf />}></Route>
+        <Route path="/mypage/modify" element={<BigFrame text="프로필 수정" />}></Route>
+        <Route path="/mypage/deactivate" element={<BigFrame text="회원탈퇴" />}></Route>
+        <Route path="/mypage/pwcheck" element={<BigFrame text="비밀번호 확인" />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

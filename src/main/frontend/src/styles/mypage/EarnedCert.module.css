@@ -6,3 +6,10 @@
     padding: 5px 70px;
     margin-bottom: 5px;
   }
+
+  @media (max-width: 800px) {
+    .certContainer {
+      padding: 5px 10px;
+    }
+  }
+  

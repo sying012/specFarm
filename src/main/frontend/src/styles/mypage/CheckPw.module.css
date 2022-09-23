@@ -1,9 +1,4 @@
-.mdfContainer {
-  width: 700px;
-  min-height: 500px;
-  margin: 3% auto;
-  border-radius: 15px;
-  box-shadow: 5px 6px 22px lightgray;
+.innerContainer {
   padding: 40px 80px;
 }
 

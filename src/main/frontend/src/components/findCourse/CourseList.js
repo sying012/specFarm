@@ -4,8 +4,6 @@ import styles from "../../styles/findcourse/CourseList.module.css";
 import CourseCard from "./CourseCard";
 
 const CourseList = ({ searchList }) => {
-  // console.log(searchList);
-
   const LAST_PAGE =
     searchList.length % 9 === 0
       ? parseInt(searchList.length / 9)
@@ -43,7 +41,7 @@ const CourseList = ({ searchList }) => {
       >
         {data !== undefined ? (
           data.map((card, index) => {
-            return <CourseCard key={index} index={index} card={card} />;
+            return <CourseCard key={index} card={card} />;
           })
         ) : (
           <h1>검색 결과가 없습니다.</h1>

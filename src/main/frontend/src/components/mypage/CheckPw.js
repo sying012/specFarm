@@ -84,61 +84,59 @@ function CheckPw() {
   };
 
   return (
-    <div>
-      <div className={styles.mdfContainer}>
-        <h1 className={styles.mdfTitle}>비밀번호 재확인</h1>
-        <p className={styles.deactivateSub}>
-          정말로 회원탈퇴를 하시겠습니까? 비밀번호를 다시 한 번 입력해주세요.
-        </p>
-        <div className={styles.passwordCheck}>
-          <Grid container spacing={3} className={styles.padding}>
-            <Grid item xs={12}>
-              <TextField
-                name="userPw"
-                type="password"
-                variant="outlined"
-                id="userPw"
-                label="비밀번호"
-                fullWidth
-                error={PwValidationError}
-                helperText={PwValidationErrorText}
-                onChange={checkPw}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
+    <div className={styles.innerContainer}>
+      <h1 className={styles.mdfTitle}>비밀번호 재확인</h1>
+      <p className={styles.deactivateSub}>
+        정말로 회원탈퇴를 하시겠습니까? 비밀번호를 다시 한 번 입력해주세요.
+      </p>
+      <div className={styles.passwordCheck}>
+        <Grid container spacing={3} className={styles.padding}>
+          <Grid item xs={12}>
+            <TextField
+              name="userPw"
+              type="password"
+              variant="outlined"
+              id="userPw"
+              label="비밀번호"
+              fullWidth
+              error={PwValidationError}
+              helperText={PwValidationErrorText}
+              onChange={checkPw}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#8cbf75",
                   },
-                  "& .MuiInputLabel-root": {
-                    "&.Mui-focused": {
-                      color: "#1d5902",
-                    },
+                },
+                "& .MuiInputLabel-root": {
+                  "&.Mui-focused": {
+                    color: "#1d5902",
                   },
-                }}
-              />
-            </Grid>
+                },
+              }}
+            />
           </Grid>
-        </div>
-        <div className={styles.deactivateBtns}>
-          <Button
-            variant="outlined"
-            color="primary"
-            href="/mypage/deactivate"
-            theme={theme}
-            className={styles.profileCancelBtn}
-          >
-            취소
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            theme={theme}
-            className={styles.profileApplyBtn}
-            onClick={deactivate}
-          >
-            탈퇴
-          </Button>
-        </div>
+        </Grid>
+      </div>
+      <div className={styles.deactivateBtns}>
+        <Button
+          variant="outlined"
+          color="primary"
+          href="/mypage/deactivate"
+          theme={theme}
+          className={styles.profileCancelBtn}
+        >
+          취소
+        </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          theme={theme}
+          className={styles.profileApplyBtn}
+          onClick={deactivate}
+        >
+          탈퇴
+        </Button>
       </div>
     </div>
   );

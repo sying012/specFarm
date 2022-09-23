@@ -187,100 +187,98 @@ function ProfileMdf() {
 
   return (
     <div>
-      <form onSubmit={userProfileEdit}>
-        <div className={styles.mdfContainer}>
-          <h1 className={styles.mdfTitle}>프로필 수정</h1>
-          <Avatar
-            alt="profile"
-            src={imageSrc || "/upload/profile/" + user.userProfileName}
-            sx={{ width: 160, height: 160 }}
-            className={styles.avatar}
-          />
+      <form onSubmit={userProfileEdit} className={styles.innerContainer}>
+      <h1 className={styles.mdfTitle}>프로필 수정</h1>
+      <Avatar
+        alt="profile"
+        src={imageSrc || "/upload/profile/" + user.userProfileName}
+        sx={{ width: 160, height: 160 }}
+        className={styles.avatar}
+      />
 
-          <div className={styles.profilePicMdfBtns}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              component="label"
-              theme={theme}
-              startIcon={<PhotoCamera color="action" />}
-            >
-              사진 올리기
-              <input
-                hidden
-                id="userProfileName"
-                name="userProfileName"
-                accept="image/*"
-                type="file"
-                onChange={(e) => {
-                  encodeFileToBase64(e, e.target.files[0]);
-                }}
-              />
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              theme={theme}
-              className={styles.profilePicDeleteBtn}
-              onClick={profilePicDeleteHandler}
-            >
-              삭제
-            </Button>
-          </div>
-
-          <div className={styles.nickname}>
-            <h2 className={styles.nicknameTitle}>닉네임</h2>
-          </div>
-          <OutlinedInput
-            type="text"
-            name="nickname"
-            id="nickname"
+        <div className={styles.profilePicMdfBtns}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            component="label"
             theme={theme}
-            color="lightgreen"
-            value={nicknameValue}
-            onChange={(e) => {
-              setNicknameValue(e.target.value);
-            }}
-            onBlur={nickCheck}
-            onKeyUp={(e) => checkByte(e.target.value)}
-            placeholder="닉네임을 입력해주세요."
-            className={styles.nicknameInput}
-            error={nicknameError}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="delete"
-                  className={styles.nicknameCleanBtn}
-                  onClick={() => {
-                    setNicknameValue("");
-                  }}
-                >
-                  <Close fontSize="small" />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
+            startIcon={<PhotoCamera color="action" />}
+          >
+            사진 올리기
+            <input
+              hidden
+              id="userProfileName"
+              name="userProfileName"
+              accept="image/*"
+              type="file"
+              onChange={(e) => {
+                encodeFileToBase64(e, e.target.files[0]);
+              }}
+            />
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            theme={theme}
+            className={styles.profilePicDeleteBtn}
+            onClick={profilePicDeleteHandler}
+          >
+            삭제
+          </Button>
+        </div>
 
-          <div className={styles.profileMdfBtns}>
-            <Button
-              variant="outlined"
-              color="primary"
-              href="/mypage"
-              theme={theme}
-              className={styles.profileCancelBtn}
-            >
-              취소
-            </Button>
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              theme={theme}
-              className={styles.profileApplyBtn}
-            >
-              수정
-            </Button>
-          </div>
+        <div className={styles.nickname}>
+          <h2 className={styles.nicknameTitle}>닉네임</h2>
+        </div>
+        <OutlinedInput
+          type="text"
+          name="nickname"
+          id="nickname"
+          theme={theme}
+          color="lightgreen"
+          value={nicknameValue}
+          onChange={(e) => {
+            setNicknameValue(e.target.value);
+          }}
+          onBlur={nickCheck}
+          onKeyUp={(e) => checkByte(e.target.value)}
+          placeholder="닉네임을 입력해주세요."
+          className={styles.nicknameInput}
+          error={nicknameError}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="delete"
+                className={styles.nicknameCleanBtn}
+                onClick={() => {
+                  setNicknameValue("");
+                }}
+              >
+                <Close fontSize="small" />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+
+        <div className={styles.profileMdfBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            href="/mypage"
+            theme={theme}
+            className={styles.profileCancelBtn}
+          >
+            취소
+          </Button>
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            theme={theme}
+            className={styles.profileApplyBtn}
+          >
+            수정
+          </Button>
         </div>
       </form>
     </div>

@@ -1,9 +1,8 @@
 import { Avatar, Badge } from "@mui/material";
-
 import { Link } from "react-router-dom";
+import { Edit } from "@mui/icons-material";
 
 import styles from "../../styles/mypage/Profile.module.css";
-import { Edit } from "@mui/icons-material";
 
 function Profile({ certs, user }) {
   const size = 18;
@@ -25,6 +24,7 @@ function Profile({ certs, user }) {
               <Avatar
                 title="프로필 사진을 수정하려면 클릭하세요."
                 alt="profile image"
+                className={styles.avatarImage}
                 src={"/upload/profile/" + user.userProfileName}
                 sx={{ width: 140, height: 140 }}
               />

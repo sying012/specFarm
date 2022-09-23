@@ -58,3 +58,17 @@
   display: flex;
   justify-content: right;
 }
+
+@media (max-width: 720px) {
+  .pwChangeBtn {
+    padding-left: 3px !important;
+  }
+
+  .telAuthGrid {
+    padding-left: 20px !important;
+  }
+
+  .telAuthBtn {
+    padding: 13px 10px !important;
+  }
+}

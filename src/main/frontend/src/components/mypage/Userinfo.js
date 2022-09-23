@@ -72,17 +72,9 @@ function Userinfo({ certs, user }) {
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [emailErrorText, setEmailErrorText] = useState("");
-  const [certLCat, setCertLCat] = useState([
-    { id: 0, name: "사업관리" },
-    { id: 1, name: "사업관리1" },
-    { id: 2, name: "썸띵스페셜1" },
-  ]);
+  const [certLCat, setCertLCat] = useState([]);
   const [certL, setCertL] = useState("");
-  const [certMCat, setCertMCat] = useState([
-    { id: 0, name: "사업관리" },
-    { id: 1, name: "사업관리2" },
-    { id: 2, name: "썸띵스페셜2" },
-  ]);
+  const [certMCat, setCertMCat] = useState([]);
   const [certM, setCertM] = useState("");
 
   // Phone number authentication
@@ -162,10 +154,29 @@ function Userinfo({ certs, user }) {
 
   // Cert Large Category
   const certLCatChange = (e) => {
-    setCertL(e.target.value);
+    setCertL((prev) => e.target.value);
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     setCheckedUserInfoChanged(true);
   };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/getCertLList",
+      method: "get",
+    }).then((response) => {
+      console.log(response.data.certLList);
+      setCertLCat(response.data.certLList);
+    });
+    if (userInfo.favFieldL !== "" && typeof userInfo.favFieldL !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertMList",
+        method: "get",
+        params: { obligfldnm: userInfo.favFieldL },
+      }).then((response) => {
+        setCertMCat(response.data.certMList);
+      });
+    }
+  }, [userInfo.favFieldL]);
 
   // Cert Middle Category
   const certMCatChange = (e) => {
@@ -173,6 +184,19 @@ function Userinfo({ certs, user }) {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
     setCheckedUserInfoChanged(true);
   };
+
+  useEffect(() => {
+    console.log(certL);
+    if (certL !== "" && typeof certL !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertMList",
+        method: "get",
+        params: { obligfldnm: certL },
+      }).then((response) => {
+        setCertMCat(response.data.certMList);
+      });
+    }
+  }, [certL]);
 
   // 수정된 유저정보 보내기
   const userInfoEdit = (e) => {
@@ -331,7 +355,7 @@ function Userinfo({ certs, user }) {
       <div className={styles.editInfo}>
         <form onSubmit={userInfoEdit}>
           <Grid container spacing={3} className={styles.padding}>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <TextField
                 name="userId"
                 variant="outlined"
@@ -342,7 +366,7 @@ function Userinfo({ certs, user }) {
                 disabled
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4} className={styles.pwChangeBtn}>
               <Link to="/mypage/resetpassword">
                 <Button
                   theme={theme}
@@ -352,7 +376,8 @@ function Userinfo({ certs, user }) {
                     fontSize: "1em",
                     color: "#1d5902",
                     fontWeight: 700,
-                    paddingTop: "13px",
+                    marginTop: "9px",
+                    marginLeft: "20px"
                   }}
                 >
                   비밀번호 변경
@@ -370,7 +395,7 @@ function Userinfo({ certs, user }) {
                 disabled
               />
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={8} className={styles.telTextfield}>
               <TextField
                 name="userTel"
                 variant="outlined"
@@ -398,8 +423,9 @@ function Userinfo({ certs, user }) {
             </Grid>
             <Grid
               item
-              xs={3}
-              style={{ paddingLeft: "10px", paddingTop: "28px" }}
+              xs={4}
+              style={{paddingLeft: "40px", paddingTop: "28px" }}
+              className={styles.telAuthGrid}
             >
               <Button
                 variant="contained"
@@ -411,6 +437,7 @@ function Userinfo({ certs, user }) {
                   padding: "14px 20px",
                 }}
                 onClick={telAuth}
+                className={styles.telAuthBtn}
               >
                 인증번호 받기
               </Button>
@@ -506,8 +533,8 @@ function Userinfo({ certs, user }) {
                 >
                   {certLCat.map((certL) => (
                     <MenuItem
-                      key={certL.id}
-                      value={certL.name}
+                      key={certL.obligfldcd}
+                      value={certL.obligfldnm}
                       name="favFieldL"
                       sx={{
                         "&.MuiMenuItem-root": {
@@ -520,7 +547,7 @@ function Userinfo({ certs, user }) {
                         },
                       }}
                     >
-                      {certL.name}
+                      {certL.obligfldnm}
                     </MenuItem>
                   ))}
                 </Select>
@@ -578,8 +605,8 @@ function Userinfo({ certs, user }) {
                 >
                   {certMCat.map((certM) => (
                     <MenuItem
-                      key={certM.id}
-                      value={certM.name}
+                      key={certM.mdobligfldcd}
+                      value={certM.mdobligfldnm}
                       name="favFieldM"
                       sx={{
                         "&.MuiMenuItem-root": {
@@ -592,7 +619,7 @@ function Userinfo({ certs, user }) {
                         },
                       }}
                     >
-                      {certM.name}
+                      {certM.mdobligfldnm}
                     </MenuItem>
                   ))}
                 </Select>

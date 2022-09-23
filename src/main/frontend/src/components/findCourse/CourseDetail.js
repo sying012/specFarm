@@ -129,34 +129,6 @@ const CourseDetail = ({ searchList }) => {
       <Link to="/skills/findcourse" className={styles.detailListBtn}>
         목록 보기
       </Link>
-      {/* <div className={styles.courseDetails}>
-        <div className={styles.courseDetailCard}>
-          <h3>훈련목표</h3>
-          <p>{course.courseAim}</p>
-        </div>
-        <div className={styles.courseDetailCard}>
-          <h3>훈련방법</h3>
-          <p>{course.courseWay}</p>
-        </div>
-
-        <div className={styles.courseDetailCard}>
-          <h3>훈련대상 요건 선수학습</h3>
-          <p>{course.coursePreLearning}</p>
-        </div>
-
-        <div className={styles.courseDetailCard}>
-          <h3>훈련대상 요건 기취득자격</h3>
-          <p>{course.courseQualified}</p>
-        </div>
-        <div className={styles.courseDetailCard}>
-          <h3>신청과정</h3>
-          <p>{course.courseApply}</p>
-        </div>
-        <div className={styles.courseDetailCard}>
-          <h3>과정운영</h3>
-          <p>{course.courseManage}</p>
-        </div>
-      </div> */}
     </div>
   );
 };

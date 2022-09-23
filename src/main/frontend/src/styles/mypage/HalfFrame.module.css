@@ -4,24 +4,25 @@
   border-radius: 15px;
   box-shadow: 5px 6px 22px lightgray;
   margin-bottom: 30px;
+  margin-top: 40px;
 }
 
 .frameTitle {
   height: 45px;
   border-radius: 15px 15px 0 0;
-  margin-top: 40px;
   display: flex;
   align-items: center;
 }
 
 .frameTitle h2 {
+  margin-top: 10px;
   color: #777;
   font-size: 1.5em;
 }
 
 .backBtn {
+  margin: 10px 7px 0;
   color: #1d5902;
-  margin-right: 7px;
 }
 
 .frameContent {
@@ -31,4 +32,18 @@
 .innerContainer {
   width: auto;
   min-height: 500px;
+}
+
+@media (max-width: 800px) {
+  .mypageInnerContainer {
+    width: 98%;
+  }
+
+}
+
+@media (max-width: 660px) {
+  .frameContent {
+    padding: 20px 0;
+  }
+  
 }

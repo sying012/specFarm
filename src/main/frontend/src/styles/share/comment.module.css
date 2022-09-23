@@ -1,0 +1,80 @@
+/* comment */
+.commentReply {
+  width: 90%;
+}
+
+.comment {
+  padding: 20px;
+}
+
+.commentList {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: center;
+}
+
+.commentList img {
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.commentBox {
+  width: 100%;
+}
+
+.commentNick {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.commentRegDate {
+  font-size: 0.8rem;
+  color: rgb(100, 100, 100);
+}
+
+.toggleCommentReply {
+  padding: 5px;
+  display: flex;
+  float: right;
+  font-size: 0.8rem;
+  color: rgb(100, 100, 100);
+}
+
+/* commentReply */
+.commentReplyTop {
+  width: 100%;
+}
+
+.commentReplyBox {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.commentReplyBox img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.commentReplyText {
+  width: 100%;
+  padding: 10px;
+}
+
+.CommentReplyNick {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}

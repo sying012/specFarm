@@ -11,6 +11,7 @@ const AskReg = ({ certNames, insertAsk }) => {
   const [certName, setCertName] = useState("");
   const [askCert, setAskCert] = useState(null);
   const [viewCertNames, setViewCertNames] = useState([]);
+  const [chkSubmit, setChkSubmit] = useState(false);
   const handleContentValue = (value) => {
     setContentValue(value);
   };
@@ -40,6 +41,7 @@ const AskReg = ({ certNames, insertAsk }) => {
 
   const handleSubmit = (e) => {
     let ask = new FormData(e.target);
+    setChkSubmit(true);
     insertAsk(ask);
 
     e.preventDefault();
@@ -167,6 +169,7 @@ const AskReg = ({ certNames, insertAsk }) => {
                 place="community/ask"
                 value={contentValue || ""}
                 onChange={handleContentValue}
+                chkSubmit={chkSubmit}
               ></Editer>
               <div className="askbtnBox">
                 <Button

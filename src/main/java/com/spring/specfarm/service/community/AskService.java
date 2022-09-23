@@ -35,4 +35,6 @@ public interface AskService {
 	List<AskReReply> insertAskReReply(AskReReply askReReply);
 
 	void deleteAsk(int askIdx);
+
+	int getAskReReplyCount(AskReply askReply);
 }

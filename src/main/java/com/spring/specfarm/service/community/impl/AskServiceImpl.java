@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.AskReReply;
 import com.spring.specfarm.entity.AskReply;
+import com.spring.specfarm.entity.AskReplyId;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.repository.AskReReplyRepository;
 import com.spring.specfarm.repository.AskReplyRepository;
@@ -109,16 +110,17 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public List<AskReReply> insertAskReReply(AskReReply askReReply) {
-
+System.out.println("aaaa");
 		askReReplyRepository.save(askReReply);
-
+		System.out.println("bbbb");
 		AskReply askReply = new AskReply();
 
 		askReply.setAskIdx(askReReply.getAskReply().getAskIdx());
 
 		askReply.setAskReplyIdx(askReReply.getAskReply().getAskReplyIdx());
-		
-		return askReReplyRepository.findByAskReply(askReply);
+		List<AskReReply> list =askReReplyRepository.findByAskReply(askReply);
+		System.out.println("ccc");
+		return list;
 	}
 
 	@Override
@@ -126,4 +128,11 @@ public class AskServiceImpl implements AskService {
 		askRepository.deleteById(askIdx);
 		askReplyRepository.deleteByAskIdx(askIdx);
 	}
+
+	@Override
+	public int getAskReReplyCount(AskReply askReply) {
+		
+		return askReReplyRepository.countByAskReply(askReply);
+	}
+
 }

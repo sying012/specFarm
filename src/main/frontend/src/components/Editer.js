@@ -90,6 +90,7 @@ const Editer = ({ placeholder, value, place, ...rest }) => {
           .post(API_BASE_URL + `/${place}/delete/images`, imagesList)
           .then((response) => console.log(response));
       }
+      console.log("ss");
       sessionStorage.removeItem("submit");
     };
   }, []);

@@ -68,7 +68,11 @@ const AskContent = ({ certNames }) => {
 
   useEffect(() => {
     setUpdate(false);
-    if (location.state == null) {
+    if (
+      location.state == null ||
+      location.state.searchType == null ||
+      location.state.page == null
+    ) {
       setSearchType("자격증");
       setSearchKeyword("");
       setPage(1);

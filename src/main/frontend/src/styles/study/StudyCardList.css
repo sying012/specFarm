@@ -1,6 +1,6 @@
 .studyList {
-  width: 100%;
-  min-width: 1200px;
+  width: 1200px;
+  /* min-width: 1200px; */
   height: fit-content;
   margin-bottom: 40px;
   display: grid;
@@ -10,13 +10,14 @@
   row-gap: 20px;
 }
 
-/* @media screen and (min-width: 1200px) {
+@media screen and (max-width: 900px) {
   .studyList {
-    grid-template-columns: repeat(4, minmax(230px, 0.2fr));
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
   }
 }
 
-@media screen and (max-width: 1094px) {
+/* @media screen and (max-width: 1094px) {
   .studyList {
     grid-template-columns: repeat(3, minmax(230px, 0.2fr));
   }

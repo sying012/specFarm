@@ -4,7 +4,24 @@ import { NavLink, Link } from "react-router-dom";
 import { logout } from "../service/ApiService";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
-import { useBeforeRender } from "../utils";
+import {
+  AccordionDetails,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  SwipeableDrawer,
+  Typography,
+} from "@mui/material";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import { styled } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Header = () => {
   const [commHover, setcommHover] = useState(0);
@@ -15,6 +32,187 @@ const Header = () => {
   const [loginedUser, setLoginedUser] = useState({});
 
   const isAuthenticated = !!sessionStorage.getItem("ACCESS_TOKEN");
+
+  const [state, setState] = useState({
+    top: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ state, [anchor]: open });
+  };
+
+  const Accordion = styled((props) => (
+    <MuiAccordion disableGutters elevation={0} square {...props} />
+  ))(({ theme }) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    "&:not(:last-child)": {
+      borderBottom: 0,
+    },
+    "&:before": {
+      display: "none",
+    },
+  }));
+
+  const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+      expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255, 255, 255, .05)"
+        : "rgba(0, 0, 0, .03)",
+    flexDirection: "row-reverse",
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+      transform: "rotate(90deg)",
+    },
+    "& .MuiAccordionSummary-content": {
+      marginLeft: theme.spacing(1),
+    },
+  }));
+
+  const [expanded, setExpanded] = useState("");
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+      }}
+      role="presentation"
+      // onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List sx={{ padding: "0" }}>
+        <Accordion
+          expanded={expanded === "panel1"}
+          // onChange={handleChange("panel1")}
+          sx={{ borderTop: "0" }}
+        >
+          <NavLink to="/cert" onClick={toggleDrawer("right", false)}>
+            <AccordionSummary
+              aria-controls="panel1d-content"
+              id="panel1d-header"
+            >
+              <Typography
+                sx={{ fontFamily: "Pretendard-Regular", color: "#0d0d0d" }}
+              >
+                자격증 찾기
+              </Typography>
+            </AccordionSummary>
+          </NavLink>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel2"}
+          onChange={handleChange("panel2")}
+        >
+          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+            <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+              성장창고
+            </Typography>
+          </AccordionSummary>
+          <NavLink to="/skills/jobcafe" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                일자리 카페
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+          <NavLink
+            to="/skills/findcourse"
+            onClick={toggleDrawer("right", false)}
+          >
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                직업훈련탐색
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel3"}
+          onChange={handleChange("panel3")}
+        >
+          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+            <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+              마을회관
+            </Typography>
+          </AccordionSummary>
+          <NavLink to="/community/study" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                지식 품앗이
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+          <NavLink to="/community/ask" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                물어방
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+          <NavLink to="/community/share" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                나눔장터
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel4"}
+          onChange={handleChange("panel4")}
+        >
+          <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
+            <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+              마을소식
+            </Typography>
+          </AccordionSummary>
+          <NavLink to="/cs" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                이장님 말씀
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+          <NavLink to="/cs/faq" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                FAQ
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+          <NavLink to="/cs/lost" onClick={toggleDrawer("right", false)}>
+            <AccordionDetails>
+              <Typography sx={{ fontFamily: "Pretendard-Regular" }}>
+                분실물센터
+              </Typography>
+            </AccordionDetails>
+          </NavLink>
+        </Accordion>
+      </List>
+      {/* <Divider /> */}
+      <div className="catBtnLogout">
+        <Link to="/" onClick={logout} sx={{ marginTop: "20px" }}>
+          로그아웃
+        </Link>
+      </div>
+    </Box>
+  );
 
   useEffect(() => {
     axios
@@ -201,6 +399,23 @@ const Header = () => {
             }}
           ></div>
         </nav>
+
+        <button
+          className="catBtn"
+          onClick={toggleDrawer("right", !state.right)}
+        >
+          <MenuIcon sx={{ color: "black", fontSize: "xx-large" }} />
+        </button>
+        <SwipeableDrawer
+          anchor={"right"}
+          open={state["right"]}
+          onClose={toggleDrawer("right", false)}
+          onOpen={toggleDrawer("right", true)}
+          sx={{ marginTop: "50px", zIndex: "1" }}
+        >
+          {list("right")}
+        </SwipeableDrawer>
+
         <div className="tailwrap">
           <div className="loginbtn">
             {!isAuthenticated ? (

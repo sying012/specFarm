@@ -4,15 +4,14 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 const InsertItem = ({ selectedItem, deleteItem }) => {
   return selectedItem.map(({ name, code, which }) => (
-    <button
-      key={code}
-      className={styles.selectedItem}
-      onClick={() => {
-        deleteItem(code, which);
-      }}
-    >
+    <button key={code} className={styles.selectedItem}>
       <div>{name}</div>
-      <ClearIcon sx={{ marginLeft: "auto", width: "20px" }} />
+      <ClearIcon
+        sx={{ marginLeft: "auto", width: "20px", cursor: "pointer" }}
+        onClick={() => {
+          deleteItem(code, which);
+        }}
+      />
     </button>
   ));
 };

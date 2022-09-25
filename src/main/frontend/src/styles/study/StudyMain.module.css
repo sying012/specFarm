@@ -5,9 +5,10 @@
 }
 
 .searchFieldWrapper {
-  margin-right: 10px;
-  margin-bottom: 20px;
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 35px;
 }
 
 .regBtnContainer {
@@ -18,18 +19,15 @@
   align-items: center;
 }
 
-.studyRegBtn {
-  width: 60px;
-  height: 40px;
-  margin-left: auto;
-  margin-right: 10px;
-  background-color: #8cbf75;
-  border: none;
-  border-radius: 5px;
+button.studyRegBtn {
+  font-family: Pretendard-Regular;
+  font-size: 1rem;
   color: white;
-  cursor: pointer;
-  text-align: center;
-  line-height: 40px;
+  background: #8cbf75;
+}
+
+button.studyRegBtn:hover {
+  background: #8cbf75;
 }
 
 .pageBtnContainer {

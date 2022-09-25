@@ -44,17 +44,9 @@ public class AskController {
 	@GetMapping("")
 	public Map<String, Object> getAskList(@PageableDefault(page = 0, size = 8, sort="askIdx" ,direction=Direction.DESC) Pageable pageable, @RequestParam String searchType, @RequestParam(required = false) String searchKeyword ) {
 		try {
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			System.out.println(searchType);
-			System.out.println(searchKeyword);
-			
+			Map<String, Object> resultMap = new HashMap<String, Object>();			
 			
 			Page<Ask> askList = askService.getAskList(searchType, searchKeyword, pageable);
-			
-			for(Ask ask: askList) {	
-				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
-			}
-			
 			
 			resultMap.put("askList", askList);
 			
@@ -70,8 +62,7 @@ public class AskController {
 	@PostMapping("/write")
 	public Map<String, Object> insertAsk(@ModelAttribute Ask ask, @AuthenticationPrincipal String userId) {
 		try {
-			
-			System.out.println(userId+"gg");
+	
 			User user = new User();
 			user.setUserId(userId);
 			ask.setUser(user);
@@ -107,14 +98,8 @@ public class AskController {
 	//Ask에 해당하는 댓글 리스트 반환
 	@GetMapping("/reply/{id}")
 	public ResponseEntity<?> getReply(@PathVariable int id) {
-		System.out.println(id);
 		try {
 			List<AskReply> askReplyList = askService.getAskReplyList(id);
-		
-			for(AskReply askReply: askReplyList) {
-				System.out.println(askReply.getUser());
-				askReply.setCountReReply(askService.getAskReReplyCount(askReply));
-			}
 			
 			ResponseDTO<AskReply> response = new ResponseDTO<>();
 			
@@ -131,7 +116,7 @@ public class AskController {
 	//Ask에 해당하는 대댓글 리스트 반환
 	@GetMapping("/{id}/rereply")
 	public ResponseEntity<?> getReReply(@PathVariable int id, @RequestParam int replyIdx) {
-		System.out.println(id);
+
 		try {
 			List<AskReReply> askReReplyList = askService.getAskReReplyList(id, replyIdx);
 
@@ -156,6 +141,10 @@ public class AskController {
 			
 			List<AskReply> askReplyList = askService.insertAskReply(askReply);
 			
+			Ask ask = askService.getAsk(askIdx);
+			ask.setCountReply(ask.getCountReply()+1);
+			askService.insertAsk(ask);
+			
 			Map<String, Object> response = new HashMap<String, Object>();
 			
 			response.put("askReplyList", askReplyList);
@@ -176,10 +165,16 @@ public class AskController {
 				user.setUserId(userId);
 				askReReply.setUser(user);
 			    
-				askReReply.setAskReReplyIdx(askService.getAskReReplyIdx(askIdx,askReReply.getAskReply().getAskReplyIdx()));
+				askReReply.setAskReReplyIdx(askService.getAskReReplyIdx(askIdx,askReReply.getAskReply().getAskReplyIdx())); // 작성될 대댓글의 idx값 반환
+				AskReply newAskReply = askReReply.getAskReply(); // askReply 대댓글 수를 업데이트하기위해 새로운 AskReply객체 생성
+				newAskReply.setCountReReply(askService.getAskReReplyCount(newAskReply)+1); // 대댓글 수 업데이트
+				askReReply.setAskReply(newAskReply); // 대댓글 수 없데이트된객체로 세트
+				
+				
+				Ask ask = askService.getAsk(askIdx);
+				ask.setCountReply(ask.getCountReply()+1);
 				
 				List<AskReReply> askReReplyList = askService.insertAskReReply(askReReply);
-				System.out.println(askReReplyList);
 				Map<String, Object> response = new HashMap<String, Object>();
 				
 				response.put("askReReplyList", askReReplyList);
@@ -234,7 +229,6 @@ public class AskController {
 		@PostMapping("/delete/images")
 		public Map<String, Object> deleteImages(@RequestBody List<String> imagesList, HttpSession session) {
 			try {
-				System.out.println(imagesList);
 				
 				String rootPath = session.getServletContext().getRealPath("/");
 

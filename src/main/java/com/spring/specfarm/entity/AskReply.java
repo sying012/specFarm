@@ -45,7 +45,7 @@ public class AskReply {
 	@Column(columnDefinition = "char(1)")
 	private char askReplyYn = 'Y';
 	
-	@Transient
+	@ColumnDefault("0") // 대댓글 리스트
 	private int countReReply;
 	
 }

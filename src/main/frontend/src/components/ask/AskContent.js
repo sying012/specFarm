@@ -261,4 +261,4 @@ const AskContent = ({ certNames }) => {
   );
 };
 
-export default AskContent;
+export default React.memo(AskContent);

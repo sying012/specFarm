@@ -66,10 +66,16 @@
 
 .table .boardTitle {
     width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
    
 .table .boardWriter {
     width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
   
 .table .boardCount {

@@ -46,7 +46,7 @@ const Study = () => {
   }, [studyMemberList, page]);
 
   return (
-    <>
+    <div className="studyContainer" style={{ padding: "0 20px" }}>
       <div className="titleContainer">
         <div className="titlewrap">마을회관</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
@@ -96,7 +96,7 @@ const Study = () => {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 };
 

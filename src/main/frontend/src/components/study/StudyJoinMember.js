@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/study/StudyJoinMember.module.css";
 import SmallInfo from "../mypage/SmallInfo";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const StudyJoinMember = ({
   study,
@@ -65,11 +67,20 @@ const StudyJoinMember = ({
               cancelJoin(studyMember.user.userId);
             }}
           >
-            잘가
+            <ClearIcon />
           </button>
         ) : (
           // 스터디 참가자에 강퇴버튼 표시
           <div>
+            <button
+              className={styles.welcomebtn}
+              type="button"
+              onClick={() => {
+                studyJoin(studyMember.user.userId, 1);
+              }}
+            >
+              <CheckIcon />
+            </button>
             <button
               className={styles.byebtn}
               type="button"
@@ -77,17 +88,7 @@ const StudyJoinMember = ({
                 cancelJoin(studyMember.user.userId);
               }}
             >
-              잘가
-            </button>
-
-            <button
-              className={styles.byebtn}
-              type="button"
-              onClick={() => {
-                studyJoin(studyMember.user.userId, 1);
-              }}
-            >
-              어서와
+              <ClearIcon />
             </button>
           </div>
         )

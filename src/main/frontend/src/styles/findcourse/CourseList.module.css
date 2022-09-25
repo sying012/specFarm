@@ -1,10 +1,11 @@
 .courseList {
   width: 100%;
+
   height: fit-content;
   margin-bottom: 40px;
   display: grid;
   place-items: center;
-  gap: 20px 0px;
+  gap: 20px 20px;
   margin: 2.5% 0px 20px 0px;
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -23,3 +24,15 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 1000px) {
+  .courseList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* @media screen and (min-width: 950px) {
+  .courseList {
+    width: 812px;
+  }
+} */

@@ -56,7 +56,7 @@ const CourseList = ({ searchList }) => {
           <Pagination
             count={LAST_PAGE}
             defaultPage={1}
-            siblingCount={3}
+            siblingCount={2}
             boundaryCount={1}
             onChange={handlePage}
           />

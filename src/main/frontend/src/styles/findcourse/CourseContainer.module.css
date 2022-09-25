@@ -74,7 +74,7 @@
 }
 
 .selectWrapper {
-  width: 25%;
+  /* width: 25%; */
   height: fit-content;
   margin-right: 50px;
   /* background-color: bisque; */
@@ -82,7 +82,14 @@
 }
 
 .selectBox {
-  width: 70%;
+  /* width: 70%; */
+  min-width: 550px;
   height: fit-content;
   /* background-color: cadetblue; */
+}
+
+@media screen and (max-width: 650px) {
+  .courseSearchBar {
+    width: 100%;
+  }
 }

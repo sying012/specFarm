@@ -1,5 +1,5 @@
 .studyList {
-  width: 1200px;
+  /* width: 1200px; */
   /* min-width: 1200px; */
   height: fit-content;
   margin-bottom: 40px;
@@ -10,10 +10,15 @@
   row-gap: 20px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
   .studyList {
     grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .studyList {
+    grid-template-columns: 1fr 1fr;
   }
 }
 

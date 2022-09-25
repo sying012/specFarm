@@ -6,6 +6,7 @@ import AdminBoardShareList from "./AdminBoardShareList";
 import AdminBoardTotal from "./AdminBoardTotal";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import AdminBoardStudyList from "./AdminBoardStudyList";
 
 const AdminBoard = () => {
   const [boardTotal, setBoardTotal] = useState(0);
@@ -36,6 +37,7 @@ const AdminBoard = () => {
         newBoard={newBoard}
         newReply={newReply}
       />
+      <AdminBoardStudyList style={style} studyTotal={studyTotal} />
       <AdminBoardAskList style={style} askTotal={askTotal} />
       <AdminBoardShareList style={style} shareTotal={shareTotal} />
     </div>

@@ -41,9 +41,9 @@ public class Ask {
 	@Column(columnDefinition = "varchar(100)")
 	private String askCert;
 	
-	@ColumnDefault("0")
+	@ColumnDefault("0") //조회수
 	private int askCount;
 	
-	@Transient
+	@ColumnDefault("0") //댓글 개수
 	private int countReply;
 }

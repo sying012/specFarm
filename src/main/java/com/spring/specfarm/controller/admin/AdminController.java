@@ -1,7 +1,6 @@
 package com.spring.specfarm.controller.admin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +13,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.entity.Ask;
+import com.spring.specfarm.entity.Help;
 import com.spring.specfarm.entity.Share;
+import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.admin.AdminService;
 import com.spring.specfarm.service.community.AskService;
 import com.spring.specfarm.service.community.ShareService;
+import com.spring.specfarm.service.community.StudyService;
+import com.spring.specfarm.service.notice.HelpService;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	StudyService studyService; 
 
 	@Autowired
 	AskService askService;
 	
 	@Autowired
 	ShareService shareService;
+	
+	@Autowired
+	HelpService helpService; 
 
-//	User관리
+//	User관리 /////////////////////////////////////////////
 	@GetMapping("/user")
 	public Map<String, Object> getUser(@PageableDefault(page = 0, size = 15, sort="userRegDate" ,direction=Direction.DESC) Pageable pageable){
 		try {
@@ -52,7 +61,8 @@ public class AdminController {
 	}
 	
 	
-//	Board관리
+//	Board관리 /////////////////////////////////////////////
+	//게시판 통합 정보반환
 	@GetMapping("/boardTotal")
 	public Map<String, Object> getBoardTotal(){
 		try {
@@ -74,6 +84,25 @@ public class AdminController {
 		}
 	}
 	
+	//스터디 정보 반환
+	@GetMapping("/study")
+	public Map<String, Object> getAdminStudy(@PageableDefault(page = 0, size = 10, sort="studyIdx" ,direction=Direction.DESC) Pageable pageable){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();			
+			
+			Page<Study> studyList = studyService.getStudyList("", pageable);			
+			
+			resultMap.put("studyList", studyList);
+			
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	//물어방 정보 반환
 	@GetMapping("/ask")
 	public Map<String, Object> getAdminAsk(@PageableDefault(page = 0, size = 10, sort="askIdx" ,direction=Direction.DESC) Pageable pageable){
 		try {
@@ -81,9 +110,9 @@ public class AdminController {
 			
 			Page<Ask> askList = askService.getAskList(null, null, pageable);
 			
-			for(Ask ask: askList) {	
-				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
-			}
+//			for(Ask ask: askList) {	
+//				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
+//			}
 			
 			
 			resultMap.put("askList", askList);
@@ -96,6 +125,7 @@ public class AdminController {
 		}
 	}
 	
+	//나눔 정보 반환
 	@GetMapping("/share")
 	public Map<String, Object> getAdminShare(@PageableDefault(page = 0, size = 10, sort="shareIdx" ,direction=Direction.DESC) Pageable pageable){
 		try {
@@ -108,6 +138,27 @@ public class AdminController {
 //			}
 			
 			resultMap.put("shareList", shareList);
+			
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+//	help관리 /////////////////////////////////////////////
+	
+	@GetMapping("/help")
+	public Map<String, Object> gethelp(@PageableDefault(page = 0, size = 10 ,direction=Direction.DESC) Pageable pageable){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();			
+			
+			Page<Help> helpList = helpService.getNonReplyHelpList(pageable);
+			
+
+			
+			resultMap.put("helpList", helpList);
 			
 			return resultMap;
 		} catch (Exception e) {

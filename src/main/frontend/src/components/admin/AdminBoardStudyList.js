@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Pagination, Stack } from "@mui/material";
-import AdminBoardAsk from "./AdminBoardAsk";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import AdminBoardStudy from "./AdminBoardStudy";
 
-const AdminBoardAskList = ({ style, askTotal }) => {
+const AdminBoardStudyList = ({ style, studyTotal }) => {
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "/admin/ask", {
+      .get(API_BASE_URL + "/admin/study", {
         headers: {
           Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
         },
@@ -20,11 +20,12 @@ const AdminBoardAskList = ({ style, askTotal }) => {
         },
       })
       .then((response) => {
-        setBoardList(response.data.askList.content);
-        setCount(response.data.askList.totalPages);
+        console.log(response);
+        setBoardList(response.data.studyList.content);
+        setCount(response.data.studyList.totalPages);
       })
       .catch((e) => {
-        console.log(e.data.error);
+        console.log(e);
       });
   }, [page]);
   return (
@@ -37,7 +38,7 @@ const AdminBoardAskList = ({ style, askTotal }) => {
           marginBottom: "10px",
         }}
       >
-        <p className={style.adminTitle}>물어방</p>
+        <p className={style.adminTitle}>지식 품앗이</p>
         <div
           style={{
             width: "50%",
@@ -46,9 +47,9 @@ const AdminBoardAskList = ({ style, askTotal }) => {
             justifyContent: "space-between",
           }}
         >
-          <p>총 게시글: {askTotal}</p>
-          <p>신규 게시글: 3</p>
-          <p>신규 댓글: 13</p>
+          <p>총 게시글: {studyTotal}</p>
+          <p>신규 게시글: 9</p>
+          <p>신규 댓글: 53</p>
         </div>
       </div>
       <table className={style.table}>
@@ -63,7 +64,7 @@ const AdminBoardAskList = ({ style, askTotal }) => {
         </thead>
         <tbody>
           {boardList.map((board, index) => (
-            <AdminBoardAsk key={index} board={board} style={style} />
+            <AdminBoardStudy key={index} board={board} style={style} />
           ))}
         </tbody>
       </table>
@@ -80,4 +81,4 @@ const AdminBoardAskList = ({ style, askTotal }) => {
   );
 };
 
-export default AdminBoardAskList;
+export default AdminBoardStudyList;

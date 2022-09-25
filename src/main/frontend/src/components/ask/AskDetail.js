@@ -22,7 +22,8 @@ const AskDetail = () => {
   const { askIdx } = useParams();
   const [user, setUser] = useState({});
 
-  const insertAskReply = (askReply) => {
+  //댓글 등록
+  const insertAskReply = (askReply, askIdx) => {
     axios({
       method: "post",
       url: API_BASE_URL + `/community/ask/${askIdx}/insertReply`,

@@ -30,6 +30,7 @@ const AskDetailReply = ({ reply }) => {
     }
   }
 
+  //대댓글 등록
   const insertAskReReply = (askReReply) => {
     axios({
       method: "post",

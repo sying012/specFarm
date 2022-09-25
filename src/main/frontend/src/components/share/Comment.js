@@ -72,13 +72,17 @@ const Comment = ({ comment, user }) => {
         <div className={styles.comment}>
           <div className={styles.commentList}>
             <img
-              src={`/upload/profile/${comment.user.userProfileName}`}
+              src={`/upload/profile/${
+                comment.user && comment.user.userProfileName
+              }`}
               alt="프로필사진"
               onClick={(e) => userSmallInfo(e)}
             />
             <div className={styles.commentBox}>
               <span className={styles.commentNick}>
-                <p onClick={(e) => userSmallInfo(e)}>{comment.user.userNick}</p>
+                <p onClick={(e) => userSmallInfo(e)}>
+                  {comment.user && comment.user.userNick}
+                </p>
                 <div
                   onClick={(e) => userSmallInfo(e)}
                   style={{

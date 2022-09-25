@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap");
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainContainer h1 {
+  margin: 150px 0 30px;
+  font-family: "Bungee Spice", cursive;
+  font-size: 8em;
+  transition: all 0.2s ease-in-out;
+  text-shadow: #777 1px 0 10px;
+}
+
+.mainContainer p {
+    font-size: 1.3em;
+    color: #777;
+}

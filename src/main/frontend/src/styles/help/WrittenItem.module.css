@@ -1,0 +1,71 @@
+.mainContainer {
+  width: 90%;
+  height: 70px;
+  padding: 10px 10px;
+  margin-bottom: 15px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 15%);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.innerContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.helpListHeader {
+  display: flex;
+  align-items: center;
+}
+
+.helpListHeaderSecond {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.helpTitle,
+.helpContent {
+  margin-top: 5px;
+  color: #131313;
+  font-size: 1.1em;
+  font-weight: 500;
+  line-height: 1.1;
+  /* 긴 텍스트 줄임말 처리 */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.helpContent {
+  font-size: 0.987em;
+  font-weight: 400;
+  color: gray;
+  /* 긴 텍스트 줄임말 처리 */
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.helpRegDate {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.state {
+  margin-top: 7px;
+  margin-right: 10px;
+  width: 70px;
+  height: 25px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

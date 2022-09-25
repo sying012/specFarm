@@ -1,22 +1,25 @@
 import { Close } from "@mui/icons-material";
 import { Autocomplete, IconButton, TextField } from "@mui/material";
+import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/mypage/EarnedCert.module.css";
 
 const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
   const [singleCert, setSingleCert] = useState({});
+  const [certNames, setcertNames] = useState([]);
 
-  const [certNames, setcertNames] = useState([
-    { certIdx: 1, certName: "화공기사" },
-    { certIdx: 2, certName: "화공기술사" },
-    { certIdx: 3, certName: "정밀화학기사" },
-    { certIdx: 4, certName: "화학분석기사" },
-    { certIdx: 5, certName: "화학분석기능사" },
-    { certIdx: 6, certName: "화약류제조기사" },
-    { certIdx: 7, certName: "화약류제조산업기사" },
-    { certIdx: 8, certName: "바이오화학제품제조기사" },
-    { certIdx: 9, certName: "바이오화학제품제조산업기사" },
-  ]);
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/cert/getCertList`).then((response) => {
+      setcertNames(
+        response.data.certList.map((cert) => {
+          let newCert = { ...cert, certName: cert.jmfldnm };
+          delete newCert.jmfldnm;
+          return newCert;
+        })
+      );
+    });
+  }, []);
 
   useEffect(() => {
     if (Object.keys(cert).length !== 0) {

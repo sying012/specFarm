@@ -11,9 +11,12 @@
 }
 
 .innerContainer {
+  height: fit-content;
   margin: 100px auto 0;
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 100px;
 }
 
 .avatar {
@@ -24,12 +27,14 @@
   margin: 20px auto;
   color: #444;
   font-size: 2.6em;
+  transition: all 0.2s ease-in-out;
 }
 
 .email {
   margin: 0 auto;
   color: #777;
   font-size: 1.2rem;
+  transition: all 0.2s ease-in-out;
 }
 
 .badgeLabel {
@@ -57,11 +62,13 @@
   min-height: 70px;
   width: 230px;
   padding: 20px 15px;
+  transition: all 0.2s ease-in-out;
 }
 
 .badges > img {
   width: 53.5px;
   margin: 2px;
+  transition: all 0.2s ease-in-out;
 }
 
 .nothingCerts {

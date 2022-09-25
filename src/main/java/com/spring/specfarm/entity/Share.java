@@ -44,6 +44,9 @@ public class Share {
 	
 	private String shareImgName;	
 	
+	@ColumnDefault("0")
+	private int shareCount;
+	
 	@Transient
 	private int countReply;
 }

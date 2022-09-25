@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
-const ShareEdit = ({ insertShare }) => {
+const ShareEdit = () => {
   const navigate = useNavigate();
   const fileList = []; // 이미지 + 첨부파일
   const [singleImage, setSingleImage] = useState(); //이미지
@@ -55,6 +55,20 @@ const ShareEdit = ({ insertShare }) => {
     }
   }, [share]);
 
+  const editShare = (share) => {
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/community/share/edit",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: share,
+    }).then((response) => {
+      setShare(response.data.share);
+    });
+  };
+
   const handleTitleValue = (e) => {
     setTitleValue(e.target.value);
   };
@@ -89,7 +103,7 @@ const ShareEdit = ({ insertShare }) => {
 
     console.log(formObj);
 
-    insertShare(formObj);
+    editShare(formObj);
   };
 
   const readImage = (file) => {

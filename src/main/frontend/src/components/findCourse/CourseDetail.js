@@ -5,6 +5,10 @@ import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findcourse/CourseDetail.module.css";
 
 const CourseDetail = ({ searchList }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { srchTrprId } = useParams();
   const { srchTrprDegr } = useParams();
   const { srchTorgId } = useParams();

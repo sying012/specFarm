@@ -59,7 +59,12 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = (e) => {
-    setIsVisible((current) => !current);
+    if (e.target.id === "share") {
+      setIsVisible(false);
+    }
+    if (e.target.id === "ask") {
+      setIsVisible(true);
+    }
   };
 
   return (

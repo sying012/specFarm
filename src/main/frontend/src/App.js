@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -22,6 +22,8 @@ import CertFind from "./components/cert/CertFind";
 import SocialLogin from "./components/login/SocialLogin";
 import { useEffect, useState } from "react";
 import BigFrame from "./components/mypage/BigFrame";
+import Admin from "./pages/Admin";
+import Help from "./pages/Help";
 
 function App() {
   const location = useLocation();
@@ -60,11 +62,23 @@ function App() {
         <Route path="/cs/*" element={<NoticeMain />}></Route>
         <Route path="/cs/faq" element={<FAQ />}></Route>
         <Route path="/cs/lost/*" element={<Lost />}></Route>
+        <Route path="/cs/help/*" element={<Help />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
-        <Route path="/mypage/modify" element={<BigFrame text="프로필 수정" />}></Route>
-        <Route path="/mypage/deactivate" element={<BigFrame text="회원탈퇴" />}></Route>
-        <Route path="/mypage/pwcheck" element={<BigFrame text="비밀번호 확인" />}></Route>
+        <Route
+          path="/mypage/modify"
+          element={<BigFrame text="프로필 수정" />}
+        ></Route>
+        <Route
+          path="/mypage/deactivate"
+          element={<BigFrame text="회원탈퇴" />}
+        ></Route>
+        <Route
+          path="/mypage/pwcheck"
+          element={<BigFrame text="비밀번호 확인" />}
+        ></Route>
+
+        <Route path="/admin/*" element={<Admin />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

@@ -68,7 +68,11 @@ const AskContent = ({ certNames }) => {
 
   useEffect(() => {
     setUpdate(false);
-    if (location.state == null) {
+    if (
+      location.state == null ||
+      location.state.searchType == null ||
+      location.state.page == null
+    ) {
       setSearchType("자격증");
       setSearchKeyword("");
       setPage(1);
@@ -215,7 +219,11 @@ const AskContent = ({ certNames }) => {
           </div>
         </div>
         <Link to="./write">
-          <Button className="askRegButton" variant="contained">
+          <Button
+            className="askRegButton"
+            variant="contained"
+            style={{ minWidth: "75px" }}
+          >
             글쓰기
           </Button>
         </Link>

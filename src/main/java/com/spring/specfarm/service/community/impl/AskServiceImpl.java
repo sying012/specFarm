@@ -41,20 +41,22 @@ public class AskServiceImpl implements AskService {
 
 	@Override
 	public Page<Ask> getAskList(String searchType, String searchKeyword, Pageable pageable) {
-		if (searchKeyword != null && !searchKeyword.equals("")) {
+		if (searchKeyword == null || searchKeyword.equals("")) {
+			return askRepository.findAll(pageable);
+		} else {
 			if (searchType.equals("자격증")) {
-				return askRepository.findByAskCertContaining(searchKeyword,pageable);
+				return askRepository.findByAskCertContaining(searchKeyword, pageable);
 			} else if (searchType.equals("제목")) {
-				return askRepository.findByAskTitleContaining(searchKeyword,pageable);
+				return askRepository.findByAskTitleContaining(searchKeyword, pageable);
 			} else if (searchType.equals("내용")) {
-				return askRepository.findByAskContentContaining(searchKeyword,pageable);
+				return askRepository.findByAskContentContaining(searchKeyword, pageable);
 			} else if (searchType.equals("제목+내용")) {
-				return askRepository.findByAskTitleContainingOrAskContentContaining(searchKeyword,searchKeyword,pageable);
+				return askRepository.findByAskTitleContainingOrAskContentContaining(searchKeyword, searchKeyword,
+						pageable);
 			} else {
 				return null;
 			}
-		}else {
-			return askRepository.findAll(pageable);
+
 		}
 	}
 

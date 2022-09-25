@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import styles from "../../styles/share/detail.module.css";
 import { Button } from "@mui/material";
@@ -6,7 +6,6 @@ import CommentContainer from "./CommentContainer";
 import Comment from "./Comment";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
-import { useCallback } from "react";
 import SmallInfo from "../mypage/SmallInfo";
 
 const ShareDetail = () => {
@@ -24,10 +23,10 @@ const ShareDetail = () => {
       .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
       .then((response) => {
         console.log(response);
-        setShare(response.data.share);
-        setFileList(response.data.shareFileNameList);
+        if (response.data.share) setShare(response.data.share);
+        if (response.data.shareFileList)
+          setFileList(response.data.shareFileList);
       });
-
     //share 댓글 반환
     axios
       .get(API_BASE_URL + "/community/share/comment/" + shareIdx)
@@ -67,13 +66,13 @@ const ShareDetail = () => {
     console.log(shareReply);
   };
 
-  //share 나눔 상태
-  const shareYn = (stateYn) => {
-    axios.get(API_BASE_URL + "/state" + share.shareState).then((response) => {
-      console.log(response);
-      setStateYn(response.data.data);
-    });
-  };
+  // //share 나눔 상태
+  // const shareYn = (stateYn) => {
+  //   axios.get(API_BASE_URL + "/state" + share.shareState).then((response) => {
+  //     console.log(response);
+  //     setStateYn(response.data.data);
+  //   });
+  // };
 
   //share 삭제
   const deleteShare = useCallback(() => {
@@ -110,7 +109,7 @@ const ShareDetail = () => {
   return (
     <div className={styles.detailBox}>
       <div className={styles.title}>
-        <a href="/">{share.shareYn === "Y" ? "나눔" : "완료"}</a>
+        <a href="/">{share && share.shareYn === "Y" ? "나눔" : "완료"}</a>
         <h1>{share.shareTitle}</h1>
         <div className={styles.btns}>
           {Object.keys(user).length !== 0 &&
@@ -124,8 +123,7 @@ const ShareDetail = () => {
                 type="submit"
                 color="primary"
                 variant="contained"
-                onClick={() => navigate(`/community/share/${shareIdx}/edit`)}
-                className={styles.mdfBtn}
+                onClick={() => navigate(`/community/share/edit/${shareIdx}`)}
               >
                 수정
               </Button>
@@ -136,7 +134,6 @@ const ShareDetail = () => {
                   height: "38px",
                   marginLeft: "10px",
                 }}
-                className={styles.deleteBtn}
                 onClick={deleteShare}
               >
                 삭제
@@ -159,9 +156,9 @@ const ShareDetail = () => {
             alt="img"
           />
         </div>
-        <div id="askDetailContainer" style={{ width: "800px" }}>
+        <div className={styles.shareDetailContainer}>
           <div
-            id="detailContentBox"
+            className={styles.detailContentBox}
             style={{
               width: "100%",
               minHeight: "355px",
@@ -173,11 +170,11 @@ const ShareDetail = () => {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <div
-                    className="detailWrite"
+                    className={styles.detailWrite}
                     onClick={(e) => userSmallInfo(e)}
                   >
                     <img
-                      id="profileImg"
+                      className={styles.profileImg}
                       src={
                         share.user &&
                         `/upload/profile/${share.user.userProfileName}`
@@ -199,19 +196,19 @@ const ShareDetail = () => {
                 <p>{share.shareRegDate}</p>
               </div>
               <div
-                className="detailContent"
-                style={{
-                  height: "200px",
-                  paddingTop: "15px",
-                }}
+                className={styles.detailContent}
+                style={{ minHeight: "100px", paddingTop: "15px" }}
               >
                 {share.shareContent}
               </div>
               <div className={styles.fileDown}>
                 {fileList !== null &&
                   fileList.map((file) => (
-                    <a href={"/upload/share/" + file}>
-                      {file}
+                    <a
+                      href={"/upload/share/" + file.originalFileName}
+                      className={styles.fileNameDown}
+                    >
+                      {file.originalFileName}
                       <p></p>
                     </a>
                   ))}
@@ -221,7 +218,7 @@ const ShareDetail = () => {
         </div>
       </div>
 
-      <div id="detailReply">
+      <div className={styles.detailReply}>
         <div
           style={{
             padding: "20px",

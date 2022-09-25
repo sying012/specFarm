@@ -17,8 +17,8 @@ const CommentContainer = ({
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    if (user) {
-      if (!shareReplyIdx) {
+    if (!!user.user) {
+      if (!!!shareReplyIdx) {
         let shareReply = { shareReplyContent: shareReplyContent };
         setShareReplyContent("");
         insertShareReply(shareReply, shareIdx);
@@ -45,7 +45,7 @@ const CommentContainer = ({
           <img
             className={styles.profileImg}
             id="profileImg"
-            src={`/upload/profile/${user.userProfileName}`}
+            src={`/upload/profile/${share && share.user.userProfileName}`}
             alt="프로필사진"
             style={{ borderRadius: "50%" }}
           />

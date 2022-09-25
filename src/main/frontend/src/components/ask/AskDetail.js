@@ -12,10 +12,10 @@ import SmallInfo from "../mypage/SmallInfo";
 const AskDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { searchType, searchKeyword, page } =
+  const { searchType, searchKeyword, page, prevUrl } =
     location.state !== null
       ? location.state
-      : { searchType: null, searchKeyword: null, page: null };
+      : { searchType: null, searchKeyword: null, page: null, prevUrl: null };
 
   const [askReply, setAskReply] = useState([]);
   const [ask, setAsk] = useState({});
@@ -39,14 +39,16 @@ const AskDetail = () => {
   //뒤로가기 처리
   useEffect(() => {
     const listenBackEvent = () => {
-      navigate("..", {
-        state: {
-          searchType: searchType,
-          searchKeyword: searchKeyword,
-          page: page,
-        },
-        replace: true,
-      });
+      if (!prevUrl) {
+        navigate("..", {
+          state: {
+            searchType: searchType,
+            searchKeyword: searchKeyword,
+            page: page,
+          },
+          replace: true,
+        });
+      }
     };
 
     const unlistenHistoryEvent = history.listen(({ action }) => {
@@ -91,7 +93,7 @@ const AskDetail = () => {
     if (user.userId === ask.user.userId) {
       axios
         .delete(API_BASE_URL + "/community/ask/delete?askIdx=" + ask.askIdx)
-        .then((response) => {
+        .then(() => {
           navigate("..", {
             state: {
               searchType: searchType,
@@ -174,7 +176,7 @@ const AskDetail = () => {
         </div>
         {Object.keys(user).length !== 0 &&
         Object.keys(ask).length !== 0 &&
-        ask.user.userId === user.userId ? (
+        (ask.user.userId === user.userId || user.role === "ROLE_ADMIN") ? (
           <div className="detailLink">
             <NavLink to={`/community/ask/${askIdx}/edit`}>수정</NavLink>
             <span onClick={deleteAsk}>삭제</span>

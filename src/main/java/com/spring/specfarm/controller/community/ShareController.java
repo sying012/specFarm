@@ -140,7 +140,6 @@ public class ShareController {
 					shareFileNameList.add(shareFile.getOriginalFileName());
 				}
 			}
-			System.out.println("////"+share);
 			
 			response.put("share", share);
 			response.put("shareFileNameList", shareFileNameList);
@@ -178,9 +177,9 @@ public class ShareController {
 	@GetMapping("/{id}/commentReply")
 	public ResponseEntity<?> getShareReReply(@PathVariable int id, @RequestParam int commentIdx){
 		try {
-			System.out.println(1);
+			//System.out.println(1);
 			List<ShareReReply> shareReReplyList = shareService.getShareReReplyList(id, commentIdx);
-			System.out.println(2);
+			//System.out.println(2);
 			ResponseDTO<ShareReReply> response = new ResponseDTO<>();
 			response.setData(shareReReplyList);
 			
@@ -234,7 +233,7 @@ public class ShareController {
 		}
 	}
 	
-	// DeleteShare
+	// Delete Share
 	@DeleteMapping("/delete")
 	public void deleteAsk(@RequestParam int shareIdx){
 		try {
@@ -265,7 +264,69 @@ public class ShareController {
 //	}
 	
 
-	// 업데이트 파일, 쉐어가져오기
+	// Update Share
+	@PostMapping("/edit/{shareIdx}")
+	public Map<String, Object> editShare(MultipartHttpServletRequest multipartServletRequest,
+			HttpServletRequest request, Share share, @AuthenticationPrincipal String userId, @RequestParam Boolean hasImg) {
+		try {
+			User user = new User();
+			user.setUserId(userId);
+			share.setUser(user);
+			int shareIdx = 0;
+			// Share File List
+			List<ShareFile> shareFileList = new ArrayList<>();
+
+			//파일 이름 받기
+			Iterator<String> i = multipartServletRequest.getFileNames();
+			
+			// file data list
+			if (!hasImg) {
+				share.setShareImgName("shareImg.png");
+			}
+
+			while (i.hasNext()) {
+				// sigleImg 값 확인
+
+				List<MultipartFile> fileList = multipartServletRequest.getFiles(i.next());
+
+				System.out.println(fileList);
+				for (MultipartFile file : fileList) {
+					System.out.println(file);
+					if (!file.isEmpty()) {
+
+						FileUtils fileUtils = new FileUtils();
+						Map<String, String> fileInfo = fileUtils.parseFileInfo(request.getSession(), file, "share");
+
+						ShareFile shareFile = new ShareFile();
+
+						if (hasImg) {
+							share.setShareImgName(fileInfo.get("FileName"));
+							hasImg = false;
+						} else {
+
+							shareFile.setShare(share);
+							shareFile.setShareFileName(fileInfo.get("FileName"));
+							shareFile.setOriginalFileName(fileInfo.get("FileOrgName"));
+							shareFileList.add(shareFile);
+						}
+					}
+
+				}
+			}
+
+			shareIdx = shareService.insertShare(share);
+
+			shareService.insertShareFileList(shareFileList);
+
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("share", share);
+			return response;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
 	
 }
  

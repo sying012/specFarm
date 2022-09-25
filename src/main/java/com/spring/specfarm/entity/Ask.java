@@ -36,7 +36,7 @@ public class Ask {
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
-	private String askRegDate =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+	private String askRegDate =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 	
 	@Column(columnDefinition = "varchar(100)")
 	private String askCert;

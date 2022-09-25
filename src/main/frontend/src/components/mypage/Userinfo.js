@@ -164,7 +164,6 @@ function Userinfo({ certs, user }) {
       url: API_BASE_URL + "/cert/getCertLList",
       method: "get",
     }).then((response) => {
-      console.log(response.data.certLList);
       setCertLCat(response.data.certLList);
     });
     if (userInfo.favFieldL !== "" && typeof userInfo.favFieldL !== "undefined") {
@@ -186,7 +185,6 @@ function Userinfo({ certs, user }) {
   };
 
   useEffect(() => {
-    console.log(certL);
     if (certL !== "" && typeof certL !== "undefined") {
       axios({
         url: API_BASE_URL + "/cert/getCertMList",

@@ -219,7 +219,11 @@ const AskContent = ({ certNames }) => {
           </div>
         </div>
         <Link to="./write">
-          <Button className="askRegButton" variant="contained">
+          <Button
+            className="askRegButton"
+            variant="contained"
+            style={{ minWidth: "75px" }}
+          >
             글쓰기
           </Button>
         </Link>

@@ -75,7 +75,7 @@ const AskDetailReply = ({ reply }) => {
             </div>
             <div
               onClick={(e) => userSmallInfo(e)}
-              style={{ position: "absolute", marginLeft: "-65px" }}
+              style={{ position: "absolute", zIndex: "1", marginLeft: "-65px" }}
             >
               {infoVisible && <SmallInfo user={reply.user} id="smallInfo" />}
             </div>
@@ -95,7 +95,7 @@ const AskDetailReply = ({ reply }) => {
       >
         <div>
           <AskReplyRegBox
-            style={{ maxWidth: "450px" }}
+            style={{}}
             insertAskReReply={insertAskReReply}
             askReplyIdx={reply.askReplyIdx}
             askIdx={reply.askIdx}

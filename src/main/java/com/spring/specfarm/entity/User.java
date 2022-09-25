@@ -1,5 +1,8 @@
 package com.spring.specfarm.entity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -45,5 +48,7 @@ public class User {
 
 	@ColumnDefault("'ROLE_USER'")
 	private String role;
+	
+	private String userRegDate =  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 
 }

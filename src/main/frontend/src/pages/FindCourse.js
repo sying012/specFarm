@@ -13,7 +13,7 @@ const FindCourse = () => {
   const [selectedItem, setSelectedItem] = useState([]);
 
   return (
-    <div>
+    <div style={{ padding: "0 20px" }}>
       <div className="titleContainer">
         <div className="titlewrap">Skills</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />

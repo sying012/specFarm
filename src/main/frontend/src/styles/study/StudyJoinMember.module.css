@@ -21,10 +21,40 @@
 .partId {
   font-size: 18px;
 }
-
-.byebtn {
+.welcomebtn {
+  width: 40px;
+  height: 40px;
   margin-left: auto;
   margin-right: 15px;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.welcomebtn > svg {
+  color: rgb(0, 177, 0);
+}
+
+.welcomebtn > svg:hover {
+  color: rgb(0, 116, 0);
+}
+
+.byebtn {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 15px;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.byebtn > svg {
+  color: red;
+}
+
+.byebtn > svg:hover {
+  color: rgb(167, 0, 0);
 }
 
 .badge {

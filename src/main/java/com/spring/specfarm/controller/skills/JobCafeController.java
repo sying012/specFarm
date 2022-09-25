@@ -84,11 +84,11 @@ public class JobCafeController {
 		//System.out.println(sb.toString());
 		
 //		//db에 저장
-//		String apiData = sb.toString();
-//		
-//		CommUtils commUtils = new CommUtils();
-//		
-//		Map<String, JSONObject> map = commUtils.paramMap(apiData);
+		String apiData = sb.toString();
+		
+		CommUtils commUtils = new CommUtils();
+		
+		Map<String, JSONObject> map = commUtils.paramMap(apiData);
 //		
 //		//Data Parsing
 //		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");

@@ -11,6 +11,7 @@ import { API_BASE_URL } from "../app-config";
 
 const Share = () => {
   const navigate = useNavigate();
+
   // share 글 등록
   const insertShare = (share) => {
     console.log(share);

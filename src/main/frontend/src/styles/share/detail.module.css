@@ -2,13 +2,6 @@
   width: 100%;
 }
 
-.detailBoxTop {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
 .title {
   width: 100%;
   margin: 0 auto;
@@ -50,8 +43,10 @@
 }
 
 .detailBoxTop {
-  width: 100%;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
   align-items: center;
 }
 
@@ -60,27 +55,83 @@
   display: flex;
   justify-content: space-between;
 }
+
 .detailImg {
-  width: 90%;
+  width: 95%;
   height: 390px;
   border-radius: 10px;
   box-shadow: 5px 6px 22px lightgray;
 }
 
-.detailContent {
-  width: 100%;
-  min-height: 100px;
-  background-color: yellowgreen;
-  display: flex;
-  padding: 30px 30px 5px 30px;
-  margin-left: 50px;
-  flex-direction: column;
-  border-radius: 10px;
-  box-shadow: 5px 6px 22px lightgray;
+.profileImg {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
-#profileImg {
-  border-radius: 25%;
+.shareDetailContainer {
+  position: relative;
+  width: 65%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailContentBox {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 20px;
+  min-height: 400px;
+  width: 70%;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+  height: fit-content;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detailContent {
+  width: 90%;
+  min-height: 200px;
+  display: flex;
+  padding: 30px 30px 5px 30px;
+  border-radius: 10px;
+}
+
+.detailWrite {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  font-size: 1rem;
+  color: rgb(100, 100, 100);
+}
+
+.detailTitle {
+  margin-top: 20px;
+  word-break: break-all;
+  font-size: 1.1rem;
+}
+
+.detailContent {
+  height: 100%;
+  margin-top: 15px;
+  padding: 0 3px;
+  line-height: 1.2;
+  color: #0d0d0d;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.detailRegDate {
+  display: flex;
+  justify-content: end;
+  margin-top: 15px;
+  color: rgb(100, 100, 100);
+  font-size: 0.8rem;
 }
 
 .fileDown {

@@ -140,6 +140,7 @@ public class ShareServiceImpl implements ShareService {
 		
 	}
 
+	// Share FileList
 	@Override
 	public List<ShareFile> getfileList(int shareIdx) {
 		Share share = new Share();

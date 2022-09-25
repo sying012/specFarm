@@ -37,7 +37,7 @@ const ShareCard = ({ shareItem }) => {
   });
 
   return (
-    <Link to={`/community/share/${share.shareIdx}`}>
+    <>
       <Card theme={theme} className={styles.cardbody} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia
@@ -76,13 +76,13 @@ const ShareCard = ({ shareItem }) => {
                 {share.shareYn ? "나눔" : "완료"}
               </div>
               <p className={styles.writer} theme={theme}>
-                {share.userNick}
+                {share.user && share.user.userNick}
               </p>
             </div>
           </CardContent>
         </CardActionArea>
       </Card>
-    </Link>
+    </>
   );
 };
 

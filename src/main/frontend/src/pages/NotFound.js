@@ -1,9 +1,11 @@
-import React from "react";
+import styles from "../styles/notFound/NotFound.module.css";
 
 const NotFound = () => {
+
   return (
-    <div>
-      <h1> 🚨길을 잃었다 빠빠빰빠바빠밤 어딜가야~하나~~~~~~🚨</h1>
+    <div className={styles.mainContainer}>
+      <h1 id="myAnimation"> 404</h1>
+      <p>요청하신 페이지를 찾을 수 없습니다</p>
     </div>
   );
 };

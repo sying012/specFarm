@@ -1,0 +1,13 @@
+.helpTitle {
+  padding: 15px 0 0 30px;
+  margin: 10px 0 30px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}

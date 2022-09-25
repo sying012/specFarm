@@ -1,0 +1,28 @@
+.helpTitle {
+  padding: 15px 0 0 30px;
+  margin: 10px 0 30px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.mainContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.category {
+  width: 80%;
+}
+
+.submitBtn {
+  width: 80%;
+  text-align: end;
+  margin: 20px;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  justify-content: space-between;
+}

@@ -9,7 +9,12 @@ function Written({ asks, shares }) {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClick = (e) => {
-    setIsVisible((current) => !current);
+    if (e.target.id === "share") {
+      setIsVisible(false);
+    }
+    if (e.target.id === "ask") {
+      setIsVisible(true);
+    }
   };
 
   return (

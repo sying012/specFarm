@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import AskListItem from "../components/ask/AskListItem";
 import "../styles/community/CommunityMain.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -12,6 +12,9 @@ const CommunityMain = () => {
   const [studyList, setStudyList] = useState([]);
   const [askList, setAskList] = useState([]);
   const [shareList, setShareList] = useState([]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     axios({
@@ -41,11 +44,11 @@ const CommunityMain = () => {
         </NavLink>
       </div>
 
-      <NavLink to="study">
-        <div className="commSubtitle">
+      <div className="commSubtitle">
+        <NavLink to="study">
           <p>인기 품앗이👨‍👨‍👧‍👧</p>
-        </div>
-      </NavLink>
+        </NavLink>
+      </div>
       <div className="popStudyContainer">
         {studyList &&
           studyList.map((studyItem) => (
@@ -53,25 +56,34 @@ const CommunityMain = () => {
           ))}
       </div>
 
-      <NavLink to="ask">
-        <div className="commSubtitle">
+      <div className="commSubtitle">
+        <NavLink to="ask">
           <p>물어방 인기글🙋‍♀️</p>
-        </div>
-      </NavLink>
+        </NavLink>
+      </div>
       <div className="popAskContainer">
         {askList &&
           askList.map((ask) => (
-            <Link to={`/community/ask/${ask.askIdx}`} key={ask.askIdx}>
+            <div
+              key={ask.askIdx}
+              onClick={() =>
+                navigate(`/community/ask/${ask.askIdx}`, {
+                  state: {
+                    prevUrl: location.pathname,
+                  },
+                })
+              }
+            >
               <AskListItem ask={ask} />
-            </Link>
+            </div>
           ))}
       </div>
 
-      <NavLink to="share">
-        <div className="commSubtitle">
+      <div className="commSubtitle">
+        <NavLink to="share">
           <p>나눔장터 인기글🧚‍♀️</p>
-        </div>
-      </NavLink>
+        </NavLink>
+      </div>
       <div className="popShareContainer">
         {shareList &&
           shareList.map((shareItem) => (

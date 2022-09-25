@@ -23,6 +23,7 @@ import SocialLogin from "./components/login/SocialLogin";
 import { useEffect, useState } from "react";
 import BigFrame from "./components/mypage/BigFrame";
 import Admin from "./pages/Admin";
+import Help from "./pages/Help";
 
 function App() {
   const location = useLocation();
@@ -61,6 +62,7 @@ function App() {
         <Route path="/cs/*" element={<NoticeMain />}></Route>
         <Route path="/cs/faq" element={<FAQ />}></Route>
         <Route path="/cs/lost/*" element={<Lost />}></Route>
+        <Route path="/cs/help/*" element={<Help />}></Route>
 
         <Route path="/mypage/*" element={<MypageMain />}></Route>
         <Route

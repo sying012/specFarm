@@ -176,7 +176,7 @@ const AskDetail = () => {
         </div>
         {Object.keys(user).length !== 0 &&
         Object.keys(ask).length !== 0 &&
-        ask.user.userId === user.userId ? (
+        (ask.user.userId === user.userId || user.role === "ROLE_ADMIN") ? (
           <div className="detailLink">
             <NavLink to={`/community/ask/${askIdx}/edit`}>수정</NavLink>
             <span onClick={deleteAsk}>삭제</span>

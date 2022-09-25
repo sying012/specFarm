@@ -1,0 +1,97 @@
+.boardBox{ 
+    width: 100%;
+    box-shadow: 5px 6px 22px lightgray;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.adminTitle{
+    font-size: 1.2rem;
+}
+
+/* AdminBoardTotal */
+.boardTotal{
+    display: flex;
+    height: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+/* AdminBoardTotal end */
+
+/* AdminBoardList */
+.boardList{
+    margin-top: 40px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.table {
+    width: 100%;
+    margin: 0 auto;
+    table-layout: fixed;
+    white-space: nowrap;
+    height: max-content;
+    border-collapse: collapse;
+    border-radius: 10px;
+    border-style: hidden;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.table > thead > tr > th {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 15px 5px;
+
+}
+  
+.table > tbody > tr > td {
+    margin-left: 100px;
+    border-top: 1px solid rgba(150, 150, 150, 0.3);
+    padding: 10px;
+}
+  
+.table > tbody > tr:hover {
+    background-color: rgba(140, 191, 117, 0.1);
+    border-radius: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+  
+
+.table .boardNo {
+    width: 20px;
+}
+
+.table .boardTitle {
+    width: 150px;
+}
+   
+.table .boardWriter {
+    width: 100px;
+}
+  
+.table .boardCount {
+    width: 50px;
+}
+
+.table .boardRegDate {
+    width: 150px;
+}
+
+@media (max-width: 1100px) {
+    .boardBox{ 
+        box-sizing: border-box;
+        width: 94%;
+        margin: 40px 3%;
+    }
+
+}
+
+@media (max-width: 650px) {
+    .table .boardRegDate {
+        display: none;
+    }
+}
+/* AdminBoardList end*/

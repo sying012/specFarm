@@ -13,6 +13,7 @@ const AskReReply = ({ reReply }) => {
       setInfoVisible(false);
     }
   };
+
   return (
     <div id="askReReplyBox" className="askReplyBox">
       <img
@@ -30,7 +31,7 @@ const AskReReply = ({ reReply }) => {
           <div onClick={(e) => userSmallInfo(e)}>{reReply.user.userNick}</div>
           <div
             onClick={(e) => userSmallInfo(e)}
-            style={{ position: "absolute", marginLeft: "-65px" }}
+            style={{ position: "absolute", zIndex: "1", marginLeft: "-65px" }}
           >
             {infoVisible && <SmallInfo user={reReply.user} id="smallInfo" />}
           </div>

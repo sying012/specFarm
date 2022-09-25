@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Data;
 
 @Entity
@@ -45,4 +47,7 @@ public class Study {
 	
 	@Column(columnDefinition = "varchar(200)")
 	private String studyImgName;
+	
+	@ColumnDefault("0")
+	private int studyCount;
 }

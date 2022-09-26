@@ -72,11 +72,13 @@ public class KakaoOauth implements SocialOauth {
 			user.setUserEmail(profile.getKakao_account().getEmail());
 			user.setUserId("K" + profile.getId().toString());
 			user.setUserName(profile.getId().toString());
-			user.setUserNick(profile.getKakao_account().getProfile().getNickname());
-			user.setUserProfileName(profile.getKakao_account().getProfile().getProfile_image_url());
+			user.setUserNick("K" + profile.getId().toString());
 			user.setUserTel(null);
 
 			userRepository.save(user);
+		} else {
+			user = userRepository.findById("K" + profile.getId().toString()).get();
+			System.out.println("이미가입되어있음");
 		}
 
 		return jwtTokenProvider.create(user); // (2)

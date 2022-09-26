@@ -1,6 +1,6 @@
 import { Button, createTheme, Grid, styled, TextField } from "@mui/material";
 import axios from "axios";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findUser/FindUser.module.css";
@@ -50,6 +50,16 @@ const PwReset = () => {
   const [pwError, setPwError] = useState({ error: false, text: "" });
   const [identifyCheck, setIdentifyCheck] = useState(false);
   const [userInfo, setUserInfo] = useState("");
+
+  // telAuthNumber timer 3min
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setTelAuthNumber(null);
+    }, 300000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [telAuthNumber]);
 
   // Id Check
   const idCheck = useCallback((e) => {
@@ -424,7 +434,7 @@ const PwReset = () => {
             }}
             hidden
           >
-            인증번호를 발송했습니다. (유효시간 30분)
+            인증번호를 발송했습니다. (유효시간 3분)
             <br />
             인증번호가 오지않으면 입력하신 정보가 정확한지 확인하여 주세요.
           </p>

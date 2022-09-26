@@ -27,8 +27,7 @@ const SocialLogin = () => {
           if (response.data !== null || response.data !== "") {
             console.log(response.data);
             window.sessionStorage.setItem("ACCESS_TOKEN", response.data);
-
-            navigate(-2);
+            navigate("/");
           }
         });
       })();

@@ -1,6 +1,7 @@
 import { createTheme, Grid, TextField, Button, styled } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useState } from "react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/findUser/FindUser.module.css";
@@ -43,6 +44,16 @@ const FindId = () => {
   });
   const [telAuthNumberDisabled, setTelAuthNumberDisabled] = useState(true);
   const [telAuthNumber, setTelAuthNumber] = useState("");
+
+  // telAuthNumber timer 3min
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setTelAuthNumber(null);
+    }, 300000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [telAuthNumber]);
 
   // UserName Null Check
   const nameCheck = useCallback((e) => {
@@ -285,7 +296,7 @@ const FindId = () => {
             }}
             hidden
           >
-            인증번호를 발송했습니다. (유효시간 30분)
+            인증번호를 발송했습니다. (유효시간 3분)
             <br />
             인증번호가 오지않으면 입력하신 정보가 정확한지 확인하여 주세요.
           </p>

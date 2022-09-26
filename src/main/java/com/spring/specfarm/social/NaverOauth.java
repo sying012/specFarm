@@ -72,10 +72,12 @@ public class NaverOauth implements SocialOauth {
 			user.setUserEmail(profile.getResponse().getEmail());
 			user.setUserId("N" + profile.getResponse().getId());
 			user.setUserName(profile.getResponse().getName());
-			user.setUserNick(profile.getResponse().getNickname());
-			user.setUserProfileName(profile.getResponse().getProfile_image());
+			user.setUserNick("N" + profile.getResponse().getId());
 
 			userRepository.save(user);
+		} else {
+			user = userRepository.findById("N" + profile.getResponse().getId()).get();
+			System.out.println("이미가입되어있음");
 		}
 
 		return jwtTokenProvider.create(user); // (2)

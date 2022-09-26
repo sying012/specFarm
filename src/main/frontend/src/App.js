@@ -25,6 +25,7 @@ import BigFrame from "./components/mypage/BigFrame";
 import Admin from "./pages/Admin";
 import Help from "./pages/Help";
 import PrivateRoute from "./lib/PrivateRoute";
+import AdminRoute from "./lib/AdminRoute";
 
 function App() {
   const location = useLocation();
@@ -85,7 +86,10 @@ function App() {
           element={<PrivateRoute component={BigFrame} text="비밀번호 확인" />}
         ></Route>
 
-        <Route path="/admin/*" element={<Admin />}></Route>
+        <Route
+          path="/admin/*"
+          element={<AdminRoute component={Admin} />}
+        ></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>

@@ -93,6 +93,11 @@
   align-items: center;
 }
 
+#adminLink {
+  display: flex;
+  align-items: center;
+}
+
 .tailwrap > div > a {
   color: black;
 

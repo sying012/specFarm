@@ -201,9 +201,15 @@ const Header = () => {
       </List>
       {/* <Divider /> */}
       <div className="catBtnLogout">
-        <Link to="/" onClick={logout} sx={{ marginTop: "20px" }}>
-          로그아웃
-        </Link>
+        {!isAuthenticated ? (
+          <Link to="/join" id="joinLink">
+            회원가입
+          </Link>
+        ) : (
+          <Link to="/" id="logoutLink" onClick={logout}>
+            로그아웃
+          </Link>
+        )}
       </div>
     </Box>
   );

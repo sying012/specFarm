@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router";
-import { API_BASE_URL } from "../../app-config";
+import { useNavigate } from "react-router";
+import { API_BASE_URL } from "../app-config";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   const [loginUser, setLoginUser] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -14,7 +15,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
         },
       })
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data.user);
         setLoginUser(response.data.user);
       })
       .catch((e) => {
@@ -23,11 +24,12 @@ const AdminRoute = ({ component: Component, ...rest }) => {
   }, []);
 
   const isAdmin = () => {
-    !!(loginUser.role === "ROLE_ADMIN") ||
-      alert("관리자 계정으로 로그인해주세요.");
+    !!(loginUser.role === "ROLE_ADMIN") || alert("접근 불가");
     return !!(loginUser.role === "ROLE_ADMIN");
   };
-  return isAdmin() ? <Component {...rest} /> : <Navigate replace to="/login" />;
+  return (
+    loginUser?.role && (isAdmin() ? <Component {...rest} /> : navigate(-1))
+  );
 };
 
 export default AdminRoute;

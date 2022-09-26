@@ -155,6 +155,10 @@
   align-items: center;
 }
 
+.adminLink {
+  font-size: 17px;
+}
+
 /* alerts */
 .alert {
   position: absolute;
@@ -185,6 +189,9 @@
     max-width: none;
     right: 0;
     padding-right: 24px;
+  }
+  .adminLink {
+    margin-right: 20px;
   }
 }
 

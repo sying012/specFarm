@@ -85,6 +85,22 @@
   width: 120px;
 }
 
+.smContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.smContainer a {
+  color: black;
+  text-decoration: underline;
+}
+
+.attachedFile {
+  font-weight: 600;
+  width: 90px;
+}
+
 .answerContainer {
   margin-top: 20px;
   display: flex;

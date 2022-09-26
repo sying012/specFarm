@@ -38,6 +38,14 @@ const AdminHelpReplyItem = ({
               {help.helpTitle}
             </div>
             <div>{help.helpContent}</div>
+            {help.attachedFile ? (
+              <div className={style.smContainer}>
+                <p className={style.attachedFile}>첨부 파일</p>
+                <a href={"/upload/cs/help/" + help.attachedFile}>{help.attachedRealName}</a>
+              </div>
+            ) : (
+              <></>
+            )}
             {help.reply ? (
               <div className={style.adminContainer}>
                 <div className={style.answerBox}>

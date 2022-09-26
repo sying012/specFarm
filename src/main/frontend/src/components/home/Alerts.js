@@ -17,7 +17,8 @@ const Alerts = ({ alerts, onCloseAlert }) => {
             <strong
               style={{ color: "rgb(240, 99 ,96)", textDecoration: "underline" }}
             >
-              D-{alert.startDate}
+              D-
+              {alert.startDate === "0" ? "day" : alert.startDate}
             </strong>{" "}
             {alert.cat}
           </Alert>

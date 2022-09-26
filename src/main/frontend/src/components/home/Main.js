@@ -45,7 +45,7 @@ const Main = () => {
 
   return (
     <>
-      <div className={styles.homeBackground}>
+      <div>
         <Container
         // style={{ position: "relative", boxSizing: "content-box" }}
         >

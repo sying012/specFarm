@@ -34,7 +34,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-top: 15%;
+  padding-top: 10%;
 }
 
 /* main left content - plan */
@@ -157,7 +157,6 @@
 
 /* alerts */
 .alert {
-  padding-top: 70px;
   position: absolute;
   z-index: 2;
   display: flex;
@@ -169,7 +168,7 @@
   .homeContent {
     flex-direction: column;
     align-items: center;
-    padding-top: 60px;
+    padding-top: 40px;
   }
 
   .homeP {
@@ -212,5 +211,35 @@
   }
   .homeBackground {
     height: fit-content;
+  }
+}
+
+.scrollDiv {
+  margin: 70px;
+  width: 65px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 85%;
+  animation: motion 0.5s linear 0s infinite alternate;
+}
+
+.scrollIcon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes motion {
+  0% {
+    margin-top: 70px;
+  }
+  100% {
+    margin-top: 80px;
   }
 }

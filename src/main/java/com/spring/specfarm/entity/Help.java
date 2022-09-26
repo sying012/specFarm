@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -17,6 +18,7 @@ import lombok.Data;
 @Table(name="T_HELP")
 @Entity
 @Data
+@SequenceGenerator(name = "T_HELP_SEQ_GENERATOR", sequenceName = "T_HELP_SEQ", initialValue = 1, allocationSize = 1)
 public class Help {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "T_HELP_SEQ_GENERATOR")
@@ -30,6 +32,8 @@ public class Help {
 	private String helpContent;
 	
 	private String attachedFile;
+	
+	private String attachedRealName;
 	
 	private String userId;
 	

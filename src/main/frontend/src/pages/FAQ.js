@@ -1,4 +1,5 @@
 import {
+  Button,
   createTheme,
   Pagination,
   Stack,
@@ -17,6 +18,12 @@ const FAQ = () => {
     typography: {
       fontFamily: ["Pretendard-Regular"],
     },
+    palette: {
+      green: {
+        main: "#8cbf75",
+        contrastText: "#fff",
+      },
+    },
   });
 
   return (
@@ -30,6 +37,14 @@ const FAQ = () => {
       </div>
       <div className={styles.faqcontainer}>
         <div className={styles.searchFieldWrapper}>
+          <Button
+            theme={theme}
+            color="green"
+            variant="contained"
+            onClick={() => (window.location = "./help")}
+          >
+            1:1 문의 작성
+          </Button>
           {/* <form>
             <ThemeProvider theme={theme}>
               <TextField

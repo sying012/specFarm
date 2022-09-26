@@ -8,9 +8,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +34,7 @@ public class HelpController {
 			
 			List<Help> helpList = helpService.getHelpList(userId);
 			
-			System.out.println(helpList);
+//			System.out.println(helpList);
 			
 			responseMap.put("helpList", helpList);
 			
@@ -53,7 +55,9 @@ public class HelpController {
 			
 			if (!attached.isEmpty()) {				
 				FileUtils fileUtils = new FileUtils();
-				help.setAttachedFile(fileUtils.parseFileInfo(session, attached, "cs/help").get("FileName"));
+				Map<String, String> fileInfo = fileUtils.parseFileInfo(session, attached, "cs/help");
+				help.setAttachedFile(fileInfo.get("FileName"));
+				help.setAttachedRealName(fileInfo.get("FileOrgName"));
 			}
 			
 			System.out.println(help);
@@ -62,6 +66,24 @@ public class HelpController {
 			return "success";
 		} catch (Exception e) {
 			return "error";
+		}
+	}
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> deleteHelp(@RequestBody Help help) {
+		try {
+			Map<String, Object> responseMap = new HashMap<String, Object>();
+			
+			helpService.deleteHelp(help.getHelpIdx());
+			
+			responseMap.put("helpList", helpService.getHelpList(help.getUserId()));
+			
+			return responseMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			
+			return errorMap;
 		}
 	}
 }

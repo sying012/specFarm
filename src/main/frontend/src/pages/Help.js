@@ -20,10 +20,12 @@ const Help = () => {
     <div>
       <div className={styles.mainContainer}>
         <div className={styles.subContainer1}>
-          <h1 className={styles.helpTitle}>1:1 문의</h1>
-          <p className={styles.helpSubTitle}>
-            스펙팜에 대해 궁금한 점을 질문해 주세요.
-          </p>
+          <div>
+            <h1 className={styles.helpTitle}>1:1 문의</h1>
+            <p className={styles.helpSubTitle}>
+              스펙팜에 대해 궁금한 점을 질문해 주세요.
+            </p>
+          </div>
           <div className={styles.helpSmallBtn}>
             <li className={styles.helpBtns}>
               <input

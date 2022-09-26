@@ -9,7 +9,7 @@ import styles from "../../styles/help/WrittenHelp.module.css";
 const WrittenHelp = () => {
   const [helpList, setHelpList] = useState([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     axios({
       method: "get",
       url: API_BASE_URL + "/cs/help",
@@ -27,7 +27,13 @@ const WrittenHelp = () => {
         console.log("catch문 " + e);
         window.location.href = "/login";
       });
-  }, [])
+  }, []);
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <div>
@@ -35,7 +41,13 @@ const WrittenHelp = () => {
       <div className={styles.mainContainer}>
         {helpList &&
           helpList.map((help) => (
-            <WrittenItem key={help.helpIdx} help={help} />
+            <WrittenItem
+              key={help.helpIdx}
+              help={help}
+              expanded={expanded}
+              handleChange={handleChange}
+              setHelpList={setHelpList}
+            />
           ))}
       </div>
     </div>

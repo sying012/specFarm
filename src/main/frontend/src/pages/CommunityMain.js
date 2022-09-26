@@ -87,7 +87,18 @@ const CommunityMain = () => {
       <div className="popShareContainer">
         {shareList &&
           shareList.map((shareItem) => (
-            <ShareCard key={shareItem.shareIdx} shareItem={shareItem} />
+            <div
+              key={shareItem.shareIdx}
+              onClick={() =>
+                navigate(`/community/share/${shareItem.shareIdx}`, {
+                  state: {
+                    prevUrl: location.pathname,
+                  },
+                })
+              }
+            >
+              <ShareCard shareItem={shareItem} />
+            </div>
           ))}
       </div>
     </div>

@@ -1,5 +1,8 @@
+import { Button, createTheme, TextField } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { API_BASE_URL } from "../../app-config";
 
 const AdminHelpItem = ({
   style,
@@ -13,6 +16,34 @@ const AdminHelpItem = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = createTheme({
+    palette: {
+      green: {
+        main: "#1d5902",
+        contrastText: "#fff",
+      },
+    },
+  });
+
+  const submitHelpAnswer = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const answer = data.get("answer");
+
+    axios({
+      method: "post",
+      url: API_BASE_URL + "/admin/insertAnswer",
+      data: {
+        ...help,
+        reply: answer,
+      },
+    }).then((response) => {
+      if (response.data === "success") {
+        alert("등록되었습니다.");
+        window.location.replace("/admin/faq");
+      }
+    });
+  };
 
   return (
     <>
@@ -39,6 +70,43 @@ const AdminHelpItem = ({
               {help.helpTitle}
             </div>
             <div>{help.helpContent}</div>
+            <form onSubmit={submitHelpAnswer}>
+              <div className={style.answerContainer}>
+                <TextField
+                  style={{ width: "90%", marginRight: "10px" }}
+                  multiline
+                  rows={3}
+                  name="answer"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#8cbf75",
+                      },
+                    },
+                    "& .MuiInputLabel-root": {
+                      "&.Mui-focused": {
+                        color: "#1d5902",
+                      },
+                    },
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  type="submit"
+                  theme={theme}
+                  color="green"
+                  className={style.buttonMiddle}
+                  style={{
+                    fontSize: "15px",
+                    lineHeight: "18px",
+                    padding: "14px 16px",
+                    height: "40px",
+                  }}
+                >
+                  등록
+                </Button>
+              </div>
+            </form>
           </AccordionDetails>
         </Accordion>
       ) : null}

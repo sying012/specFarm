@@ -13,9 +13,9 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../app-config";
+import EarnedCert from "./EarnedCert";
 
 import styles from "../../styles/mypage/Userinfo.module.css";
-import EarnedCert from "./EarnedCert";
 
 function Userinfo({ certs, user }) {
   const theme = createTheme({
@@ -166,7 +166,10 @@ function Userinfo({ certs, user }) {
     }).then((response) => {
       setCertLCat(response.data.certLList);
     });
-    if (userInfo.favFieldL !== "" && typeof userInfo.favFieldL !== "undefined") {
+    if (
+      userInfo.favFieldL !== "" &&
+      typeof userInfo.favFieldL !== "undefined"
+    ) {
       axios({
         url: API_BASE_URL + "/cert/getCertMList",
         method: "get",
@@ -296,6 +299,11 @@ function Userinfo({ certs, user }) {
     e.preventDefault();
     let blankError = false;
     let existedCertName = false;
+    let dateError = false;
+
+    const dateCheck = RegExp(
+      /^\d{4}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])$/
+    );
     for (let i = 0; i < countList.length; i++) {
       if (
         countList[i].certName === null ||
@@ -305,6 +313,9 @@ function Userinfo({ certs, user }) {
       ) {
         blankError = true;
       }
+      if (!dateCheck.test(countList[i].getCertDate)) {
+        dateError = true;
+      }
       for (let j = 0; j < i; j++) {
         if (countList[i].certName === countList[j].certName) {
           existedCertName = true;
@@ -312,7 +323,7 @@ function Userinfo({ certs, user }) {
       }
     }
 
-    if (!blankError && !existedCertName) {
+    if (!blankError && !existedCertName && !dateError) {
       axios({
         method: "post",
         url: API_BASE_URL + `/mypage/earnedcert/${user.userId}`,
@@ -331,6 +342,8 @@ function Userinfo({ certs, user }) {
       alert("빈 칸을 입력해주세요.");
     } else if (existedCertName) {
       alert("동일한 자격증은 등록 불가합니다.");
+    } else if (dateError) {
+      alert("수확일자를 확인해주세요.");
     }
   };
 
@@ -375,7 +388,7 @@ function Userinfo({ certs, user }) {
                     color: "#1d5902",
                     fontWeight: 700,
                     marginTop: "9px",
-                    marginLeft: "20px"
+                    marginLeft: "20px",
                   }}
                 >
                   비밀번호 변경
@@ -422,7 +435,7 @@ function Userinfo({ certs, user }) {
             <Grid
               item
               xs={4}
-              style={{paddingLeft: "40px", paddingTop: "28px" }}
+              style={{ paddingLeft: "40px", paddingTop: "28px" }}
               className={styles.telAuthGrid}
             >
               <Button

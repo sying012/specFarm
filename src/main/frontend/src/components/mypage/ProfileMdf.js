@@ -87,8 +87,6 @@ function ProfileMdf() {
     }
   }, [user]);
 
-  useEffect(() => {}, [nicknameValue]);
-
   // 닉네임 유니코드 변환하여 글자수 제한(14byte)
   function checkByte(value) {
     const maxByte = 14; //최대 100바이트
@@ -142,7 +140,7 @@ function ProfileMdf() {
         });
       }
     },
-    [user.userNick]
+    [nicknameValue]
   );
 
   // form submit 시 닉네임 공란이면 에러 창 띄움
@@ -248,7 +246,6 @@ function ProfileMdf() {
             checkByte(e.target.value);
           }}
           onBlur={nickCheck}
-          // onKeyUp={(e) => checkByte(e.target.value)}
           placeholder="닉네임을 입력해주세요."
           className={styles.nicknameInput}
           error={nicknameError}

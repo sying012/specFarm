@@ -410,7 +410,7 @@ const Header = () => {
               <Link to="/admin" id="adminLink">
                 <div
                   style={{
-                    // width: "110px",
+                    maxWidth: "110px",
                     fontSize: "17px",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -435,7 +435,7 @@ const Header = () => {
                 )}
                 <div
                   style={{
-                    // width: "110px",
+                    maxWidth: "110px",
                     fontSize: "17px",
                     overflow: "hidden",
                     textOverflow: "ellipsis",

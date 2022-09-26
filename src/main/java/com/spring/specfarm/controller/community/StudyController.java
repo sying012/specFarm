@@ -74,6 +74,10 @@ public class StudyController {
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 
 			Study study = studyService.getStudy(studyIdx);
+			
+			study.setStudyCount(study.getStudyCount()+1);
+			
+			studyService.insertStudy(study);
 
 			resultMap.put("study", study);
 

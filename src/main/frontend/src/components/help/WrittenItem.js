@@ -70,7 +70,7 @@ const WrittenItem = ({ help, expanded, handleChange, setHelpList }) => {
                   {help.attachedFile ? (
                     <div className={styles.smContainer}>
                       <p className={styles.attachedFile}>첨부 파일</p>
-                      <p>{help.attachedRealName}</p>
+                      <a href={"/upload/cs/help/" + help.attachedFile}>{help.attachedRealName}</a>
                     </div>
                   ) : (
                     <></>

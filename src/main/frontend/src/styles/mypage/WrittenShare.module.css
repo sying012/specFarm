@@ -49,6 +49,10 @@
   white-space: nowrap;
 }
 
+.writtenTitle {
+  max-width: 400px;
+}
+
 .shareContent {
   font-size: 0.987em;
   font-weight: 400;

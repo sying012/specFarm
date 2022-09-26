@@ -35,7 +35,9 @@ const Share = () => {
   return (
     <div>
       <div className="titleContainer">
-        <div className="titlewrap">마을회관</div>
+        <NavLink to="/community">
+          <div className="titlewrap">마을회관</div>
+        </NavLink>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
         <NavLink to="/community/share">
           <div className="subtitlewrap">나눔 장터</div>

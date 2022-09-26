@@ -8,9 +8,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import styles from "../../styles/share/shareCard.module.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ShareCard = ({ shareItem }) => {
   const [share, setShare] = useState({});
@@ -75,9 +73,12 @@ const ShareCard = ({ shareItem }) => {
               >
                 {share.shareYn ? "나눔" : "완료"}
               </div>
-              <p className={styles.writer} theme={theme}>
-                {share.user && share.user.userNick}
-              </p>
+              <div className={styles.aaa}>
+                <p className={styles.writer} theme={theme}>
+                  {share.user && share.user.userNick}
+                </p>
+                <p className={styles.countReply}>{share.countReply}</p>
+              </div>
             </div>
           </CardContent>
         </CardActionArea>

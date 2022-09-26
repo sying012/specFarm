@@ -17,7 +17,7 @@ const CommentContainer = ({
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    if (!!user.user) {
+    if (!!user.userId) {
       if (!!!shareReplyIdx) {
         let shareReply = { shareReplyContent: shareReplyContent };
         setShareReplyContent("");

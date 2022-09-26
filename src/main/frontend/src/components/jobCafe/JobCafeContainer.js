@@ -3,8 +3,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/skills/jobCafeContainer.module.css";
 import JobCafeCard from "./JobCafeCard";
 import { useLocation, useNavigate } from "react-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   const navigate = useNavigate();
@@ -13,6 +15,29 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   const [count, setCount] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
+
+  //jobCafe 리스트
+  const getJobCafeList = useCallback(() => {
+    axios
+      .get(API_BASE_URL + "/skills/jobCafe", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+        params: {
+          page: page - 1,
+          searchKeyword: searchKeyword,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        getJobCafeList(response.data.jobCafeList.content);
+        setCount(response.data.jobCafeList.totalPages);
+        window.scrollTo(0, 0);
+      })
+      .catch((e) => {
+        console.log(e.data.error);
+      });
+  }, [page, searchKeyword]);
 
   //검색
   const handleSearchKeyword = (e) => {
@@ -54,7 +79,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   };
 
   return (
-    <>
+    <form onSubmit={submitSearch}>
       <div className={styles.typeBox}>
         <div className={styles.allTypeBtn} active={true}>
           <a href={"/"} onClick={(e) => onClickCategory("전체", e)}>
@@ -73,6 +98,8 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
         <TextField
           id="outlined-search"
           type="search"
+          value={searchKeyword || ""}
+          onChange={handleSearchKeyword}
           InputProps={{
             startAdornment: <SearchIcon color="action" />,
           }}
@@ -115,7 +142,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
           />
         </Stack>
       </div>
-    </>
+    </form>
   );
 };
 

@@ -13,6 +13,9 @@ public interface ShareReplyRepository extends JpaRepository<ShareReply, ShareRep
 
 	//댓글 리스트
 	List<ShareReply> findByShareIdx(int shareIdx);
+	
+	//댓글 갯수
+	long countByShareIdx(int shareIdx);
 
 	//댓글 idx 부여
 	@Query(value="SELECT IFNULL(MAX(SHARE_REPLY_IDX), 0) + 1 FROM T_SHARE_REPLY WHERE SHARE_IDX = :shareIdx", nativeQuery=true)

@@ -37,3 +37,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.aaa {
+  display: flex;
+  align-items: center;
+}
+
+.countReply {
+  background-color: red;
+  color: rgb(255, 255, 255);
+  padding: 3px 5px;
+  border-radius: 10px;
+}

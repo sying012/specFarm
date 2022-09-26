@@ -76,6 +76,12 @@ public class ShareServiceImpl implements ShareService {
 		}
 	}
 	
+	// Share count reply
+		@Override
+		public int getShareReplyCount(int shareIdx) {
+			return (int)shareReplyRepository.countByShareIdx(shareIdx);
+		}
+	
 
 	// Share Detail
 	@Override
@@ -88,6 +94,12 @@ public class ShareServiceImpl implements ShareService {
 	public List<ShareReply> getShareReplyList(int id) {
 		return shareReplyRepository.findByShareIdx(id);
 	}
+	
+	// Share ReReplyCount
+		@Override
+		public int getShareReReplyCount(ShareReply shareReply) {
+			return 0;
+		}
 
 	// Share ReReply List
 	@Override
@@ -151,6 +163,22 @@ public class ShareServiceImpl implements ShareService {
 			return shareFileRepository.findByShare(share);
 		}
 	}
+
+	
+	@Override
+	public String shareState(Share share) {
+		System.out.println(share.toString());
+		System.out.println(share.getShareIdx());
+		System.out.println(share.getShareYn());
+		
+		int shareIdx = share.getShareIdx();
+		String shareYn = share.getShareYn();
+		
+		shareRepository.shareState(shareIdx, shareYn);
+		
+		return shareRepository.getShareYn(shareIdx);
+	}
+	
 
 	
 

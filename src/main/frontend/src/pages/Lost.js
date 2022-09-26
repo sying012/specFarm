@@ -43,37 +43,35 @@ const Lost = () => {
   };
 
   return (
-    <Container>
-      <div id="content">
-        <div className={styles.titleContainer}>
-          <div className={styles.titlewrap}>마을소식</div>
-          <NavigateNextIcon style={{ margin: "auto 5px" }} />
-          {/* <img
+    <div className={styles.content}>
+      <div className={styles.titleContainer}>
+        <div className={styles.titlewrap}>마을소식</div>
+        <NavigateNextIcon style={{ margin: "auto 5px" }} />
+        {/* <img
             src={lost}
             style={{ width: "50px", marginRight: "10px" }}
             alt="lostimg"
           ></img> */}
-          <NavLink to="/cs/lost">
-            <div className={styles.subtitlewrap}>분실물센터</div>
-          </NavLink>
-        </div>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <LostList
-                searchType={searchType}
-                pageNum={pageNum}
-                onChangePage={onChangePage}
-                searchItem={searchItem}
-                onChangeSearchItem={onChangeSearchItem}
-              />
-            }
-          ></Route>
-          <Route path="/:rownum" element={<LostItem />}></Route>
-        </Routes>
+        <NavLink to="/cs/lost">
+          <div className={styles.subtitlewrap}>분실물센터</div>
+        </NavLink>
       </div>
-    </Container>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LostList
+              searchType={searchType}
+              pageNum={pageNum}
+              onChangePage={onChangePage}
+              searchItem={searchItem}
+              onChangeSearchItem={onChangeSearchItem}
+            />
+          }
+        ></Route>
+        <Route path="/:rownum" element={<LostItem />}></Route>
+      </Routes>
+    </div>
   );
 };
 

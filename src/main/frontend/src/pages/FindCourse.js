@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import CourseContainer from "../components/findCourse/CourseContainer";
 import CourseDetail from "../components/findCourse/CourseDetail";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import styles from "../styles/findcourse/CourseContainer.module.css";
 
 const FindCourse = () => {
   const [searchList, setSearchList] = useState([]);
@@ -13,7 +14,7 @@ const FindCourse = () => {
   const [selectedItem, setSelectedItem] = useState([]);
 
   return (
-    <div style={{ padding: "0 20px" }}>
+    <div className={styles.mainContainer}>
       <div className="titleContainer">
         <div className="titlewrap">Skills</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />

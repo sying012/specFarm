@@ -88,6 +88,12 @@
   /* background-color: cadetblue; */
 }
 
+@media screen and (max-width: 1200px) {
+  .mainContainer {
+    padding: 0 20px;
+  }
+}
+
 @media screen and (max-width: 650px) {
   .courseSearchBar {
     width: 100%;

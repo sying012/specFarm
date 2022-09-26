@@ -1,14 +1,6 @@
-import {
-  Button,
-  createTheme,
-  Pagination,
-  Stack,
-  TextField,
-  ThemeProvider,
-} from "@mui/material";
+import { Button, createTheme, ThemeProvider } from "@mui/material";
 import React from "react";
 import styles from "../styles/faq/FAQ.module.css";
-import SearchIcon from "@mui/icons-material/Search";
 import FaqAccordion from "../components/faq/FaqAccordion";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { NavLink } from "react-router-dom";
@@ -27,7 +19,7 @@ const FAQ = () => {
   });
 
   return (
-    <div style={{ padding: "0 20px" }}>
+    <div>
       <div className="titleContainer">
         <div className="titlewrap">마을소식</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
@@ -45,27 +37,6 @@ const FAQ = () => {
           >
             1:1 문의 작성
           </Button>
-          {/* <form>
-            <ThemeProvider theme={theme}>
-              <TextField
-                id="studySearch"
-                type="search"
-                InputProps={{
-                  startAdornment: <SearchIcon color="inherit" />,
-                }}
-                size="small"
-                style={{ width: "300px" }}
-                fontFamily="Pretendard-Regular"
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#8cbf75",
-                    },
-                  },
-                }}
-              ></TextField>
-            </ThemeProvider>
-          </form> */}
         </div>
         <div className={styles.accordionContainer}>
           <div className={styles.accordionHead}></div>

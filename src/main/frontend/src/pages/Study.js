@@ -9,7 +9,6 @@ import PrivateRoute from "../lib/PrivateRoute";
 import axios from "axios";
 import { API_BASE_URL } from "../app-config";
 import StudyEdit from "../components/study/StudyEdit";
-import { Container } from "@mui/material";
 
 const Study = () => {
   const [studyList, setStudyList] = useState([]);
@@ -46,7 +45,7 @@ const Study = () => {
   }, [studyMemberList, page]);
 
   return (
-    <div className="studyContainer" style={{ padding: "0 20px" }}>
+    <div className="studyContainer">
       <div className="titleContainer">
         <div className="titlewrap">마을회관</div>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />

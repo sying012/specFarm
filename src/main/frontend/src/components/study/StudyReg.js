@@ -23,24 +23,6 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
     },
   };
 
-  // const [loginUser, setLoginUser] = useState({});
-
-  // useEffect(() => {
-  //   axios
-  //     .get(API_BASE_URL + "/community/study/getUser", {
-  //       headers: {
-  //         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-  //       },
-  //     })
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //       setLoginUser(response.data.user);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e.data.error);
-  //     });
-  // }, []);
-
   const navigate = useNavigate();
 
   const insertStudy = (study) => {

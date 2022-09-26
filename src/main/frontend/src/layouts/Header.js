@@ -8,15 +8,9 @@ import {
   AccordionDetails,
   Box,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   SwipeableDrawer,
   Typography,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -400,27 +394,26 @@ const Header = () => {
           ></div>
         </nav>
 
-        <button
-          className="catBtn"
-          onClick={toggleDrawer("right", !state.right)}
-        >
-          <MenuIcon sx={{ color: "black", fontSize: "xx-large" }} />
-        </button>
-        <SwipeableDrawer
-          anchor={"right"}
-          open={state["right"]}
-          onClose={toggleDrawer("right", false)}
-          onOpen={toggleDrawer("right", true)}
-          sx={{ marginTop: "50px", zIndex: "1" }}
-        >
-          {list("right")}
-        </SwipeableDrawer>
-
         <div className="tailwrap">
           <div className="loginbtn">
             {!isAuthenticated ? (
               <Link to="/login" id="loginLink" style={{ fontSize: "14px" }}>
                 로그인
+              </Link>
+            ) : loginedUser.role === "ROLE_ADMIN" ? (
+              <Link to="/admin" id="adminLink">
+                {loginedUser.userProfileName && (
+                  <img
+                    src={
+                      Object.keys(loginedUser).length !== 0
+                        ? "/upload/profile/" + loginedUser.userProfileName
+                        : "/upload/profile/farmer.png"
+                    }
+                    alt=""
+                    className="loginedProfileImg"
+                  ></img>
+                )}
+                <div>{loginedUser.userNick}</div>
               </Link>
             ) : (
               <Link to="/mypage" id="mypageLink">
@@ -451,6 +444,21 @@ const Header = () => {
             )}
           </div>
         </div>
+        <button
+          className="catBtn"
+          onClick={toggleDrawer("right", !state.right)}
+        >
+          <MenuIcon sx={{ color: "black", fontSize: "xx-large" }} />
+        </button>
+        <SwipeableDrawer
+          anchor={"right"}
+          open={state["right"]}
+          onClose={toggleDrawer("right", false)}
+          onOpen={toggleDrawer("right", true)}
+          sx={{ marginTop: "50px", zIndex: "1" }}
+        >
+          {list("right")}
+        </SwipeableDrawer>
       </div>
     </header>
   );

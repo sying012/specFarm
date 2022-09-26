@@ -10,6 +10,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -37,6 +38,9 @@ public class ShareReply {
 	
 	@Column(columnDefinition = "char(1)")
 	private char shareReplyYn = 'Y';
+	
+	@Transient
+	private int countReReply;
 	
 	
 	

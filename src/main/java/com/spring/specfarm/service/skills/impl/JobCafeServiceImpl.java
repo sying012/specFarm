@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.JobCafe;
@@ -223,8 +224,14 @@ public class JobCafeServiceImpl implements JobCafeService{
 //	
 //	//jobCafeList
 //	@Override
-//	public List<Map<String, Object>> getJobCafeList() {
-//		return jobCafeMapper.getJobCafeList();
+//	public List<Map<String, Object>> getJobCafeList(String searchKeyword, Pageable pageable ) {
+//		if(searchKeyword != null && !searchKeyword.equals("")) {
+//	return jobCafeRepository.findBycafeNameContainingOrguGunContainingOruseDateContaining(searchKeyword, searchKeyword, searchKeyword, pageable);
+//}else {
+//	
+//	return jobCafeRepository.findAll(pageable);
+//}
+//}
 //	}
 
 

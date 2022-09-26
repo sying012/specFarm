@@ -51,6 +51,11 @@ public class ShareController {
 			
 			Page<Share> shareList = shareService.getShareList(searchKeyword, pageable);
 			
+			//share 댓글 수
+			for(Share share: shareList) {
+				share.setCountReply(shareService.getShareReplyCount(share.getShareIdx()));
+			}
+			
 			resultMap.put("shareList", shareList);
 		
 			return resultMap;
@@ -134,15 +139,9 @@ public class ShareController {
 			
 			Share share = shareService.shareDetail(shareIdx);
 			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
-			List<String> shareFileNameList = new ArrayList<>();
-			if(shareFileList!=null) {
-				for (ShareFile shareFile : shareFileList) {
-					shareFileNameList.add(shareFile.getOriginalFileName());
-				}
-			}
 			
 			response.put("share", share);
-			response.put("shareFileNameList", shareFileNameList);
+			response.put("shareFileList", shareFileList);
 			
 			return response;
 		} catch(Exception e) {
@@ -159,6 +158,10 @@ public class ShareController {
 		System.out.println(id);
 		try {
 			List<ShareReply> shareReplyList = shareService.getShareReplyList(id);
+			
+			for(ShareReply shareReply: shareReplyList) {
+				shareReply.setCountReReply(shareService.getShareReReplyCount(shareReply));
+			}
 			
 			ResponseDTO<ShareReply> response = new ResponseDTO<>();
 			
@@ -246,22 +249,25 @@ public class ShareController {
 	}
 
 	// Share state
-//	@GetMapping("/state")
-//	public Map<String, Object> shareState(@AuthenticationPrincipal String userId, @RequestParam int shareIdx, @RequestParam int stateYn){
-//		try {
-//			Map<String, Object> resultMap = new HashMap<String, Object>();
-//
-//			User user = new User();
-//			user.setUserId(userId);
-//			
-//			return response;
-//
-//		}catch (Exception e) {
-//			Map<String, Object> errorMap = new HashMap<String, Object>();
-//			errorMap.put("error",e.getMessage());
-//			return errorMap;
-//		}
-//	}
+	@PostMapping("/shareYn")
+	public Map<String, Object> shareState(@AuthenticationPrincipal String userId, @RequestBody Share share){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			
+			String shareYn = shareService.shareState(share);
+			
+			System.out.println(shareYn);
+			
+			resultMap.put("shareYn", shareYn);
+			
+			return resultMap;
+
+		}catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
 	
 
 	// Update Share

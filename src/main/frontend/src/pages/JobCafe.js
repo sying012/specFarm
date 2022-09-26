@@ -18,13 +18,20 @@ const JobCafe = () => {
   useEffect(() => {
     axios({
       url: API_BASE_URL + "/skills/jobCafe/getJobCafeList",
-      method: "get", //토큰 받아서 인증처리
+      method: "get",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      data: JobCafe,
     }).then((response) => {
       setJobCafeList(response.data.jobCafeList);
+      //중복되는 CAFE_TYPE_NM 제거 후 CAFE_TYPE_NM으로 typeArr 생성
       const typeArr = new Set();
       for (let i = 0; i < response.data.jobCafeList.length; i++) {
         typeArr.add(response.data.jobCafeList[i].CAFE_TYPE_NM);
       }
+
       setCategories(Array.from(typeArr));
     });
   }, []);
@@ -42,7 +49,9 @@ const JobCafe = () => {
   return (
     <div>
       <div className="titleContainer">
-        <div className="titlewrap">Skills</div>
+        <NavLink to="/skills">
+          <div className="titlewrap">성장창고</div>
+        </NavLink>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
         <NavLink to="/skills/jobcafe">
           <div className="subtitlewrap">일자리 카페</div>

@@ -3,10 +3,13 @@ package com.spring.specfarm.repository;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.spring.specfarm.entity.JobCafe;
+import com.spring.specfarm.entity.Share;
 
 public interface JobCafeRepository extends JpaRepository<JobCafe, Integer> {
 
@@ -15,6 +18,6 @@ public interface JobCafeRepository extends JpaRepository<JobCafe, Integer> {
 //	int getNextJobCafeIdx();
 
 	//검색
-	
+//	Page<JobCafe> findBycafeNameContainingOrguGunContainingOruseDateContaining(String searchKeyword1,String searchKeyword2,String searchKeyword3, Pageable pageable);
 	
 }

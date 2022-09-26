@@ -42,9 +42,9 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
     if (Object.keys(user).length !== 0)
       setUserInfo({
         ...user,
-        userTel: user.userTel
+        userTel: user.userTel && (user.userTel
           .replace(/-/g, "")
-          .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***"),
+          .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***")),
       });
   }, [user, attrCerts]);
 

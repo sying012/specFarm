@@ -38,6 +38,15 @@ const AdminHelpReplyItem = ({
               {help.helpTitle}
             </div>
             <div>{help.helpContent}</div>
+            {help.reply ? (
+              <div className={style.adminContainer}>
+                <div className={style.answerBox}>
+                  <pre className={style.adminReply}>{help.reply}</pre>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </AccordionDetails>
         </Accordion>
       ) : null}

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Help;
-import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.repository.HelpRepository;
 import com.spring.specfarm.service.notice.HelpService;
 
@@ -26,6 +25,11 @@ public class HelpServiceImpl implements HelpService {
 	@Override
 	public void insertHelp(Help help) {
 		helpRepository.save(help);
+	}
+	
+	@Override
+	public void deleteHelp(int helpIdx) {
+		helpRepository.deleteById(helpIdx);
 	}
 
 	@Override

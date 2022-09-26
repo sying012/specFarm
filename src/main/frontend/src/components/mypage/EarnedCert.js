@@ -41,10 +41,6 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
   };
 
   const handleChange = (getCertIdx, e) => {
-    const dateCheck = /^[0-9]+$/;
-    // if (e.target.name === "getCertDate" && !dateCheck.test(e.target.value)) {
-    // alert("수확일자를 확인해주세요.");
-    // } else {
     const addCert = {
       ...singleCert,
       [e.target.name]: e.target.value,
@@ -64,7 +60,6 @@ const EarnedCert = ({ countList, setCountList, deleteCertDiv, cert }) => {
           : cer
       )
     );
-    // }
   };
 
   return (

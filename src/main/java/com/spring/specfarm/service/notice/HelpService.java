@@ -12,6 +12,8 @@ public interface HelpService {
 	List<Help> getHelpList(String userId);
 	
 	void insertHelp(Help help);
+	
+	void deleteHelp(int helpIdx);
 
 	Page<Help> getNonReplyHelpList(Pageable pageable);
 

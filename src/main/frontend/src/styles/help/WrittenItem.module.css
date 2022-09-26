@@ -1,7 +1,6 @@
 .mainContainer {
   width: 90%;
-  height: 70px;
-  padding: 10px 10px;
+  padding: 0 10px 0;
   margin-bottom: 15px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 15%);
   border-radius: 5px;
@@ -12,7 +11,6 @@
 
 .innerContainer {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -20,6 +18,18 @@
 .helpListHeader {
   display: flex;
   align-items: center;
+  width: 100%;
+}
+
+.state {
+  margin-right: 10px;
+  width: 70px;
+  height: 25px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .helpListHeaderSecond {
@@ -29,28 +39,21 @@
   width: 90%;
 }
 
-.helpTitle,
-.helpContent {
-  margin-top: 5px;
+.helpTitle {
   color: #131313;
   font-size: 1.1em;
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.2;
+  max-width: 330px;
   /* 긴 텍스트 줄임말 처리 */
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.helpContent {
-  font-size: 0.987em;
-  font-weight: 400;
-  color: gray;
-  /* 긴 텍스트 줄임말 처리 */
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+.helpTitleSec {
+  overflow-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 .helpRegDate {
@@ -58,14 +61,57 @@
   color: gray;
 }
 
-.state {
-  margin-top: 7px;
-  margin-right: 10px;
-  width: 70px;
-  height: 25px;
-  border-radius: 5px;
-  color: white;
+.helpContent {
+  font-size: 0.987em;
+  font-weight: 400;
+  line-height: 1.1;
+  color: gray;
+}
+
+.lowerContainer {
+  display: flex;
+  margin-top: 30px;
+  justify-content: space-between;
+}
+
+.smContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+.attachedFile {
+  font-weight: 600;
+  width: 90px;
+}
+
+.contentContainer {
+  margin-bottom: 10px;
+}
+
+.adminContainer {
+  margin: 20px 0 10px;
+}
+
+.adminAnswer {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.answerContainer {
+  margin-top: 15px;
+  background-color: #ddd;
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.helpContent,
+.adminReply {
+  font-family: Pretendard-Regular;
+  white-space: pre-line;
+}
+
+@media (max-width: 660px) {
+  .helpRegDate {
+    display: none;
+  }
 }

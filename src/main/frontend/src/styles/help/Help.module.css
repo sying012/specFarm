@@ -1,8 +1,9 @@
 .mainContainer {
   display: flex;
   justify-content: space-between;
-  padding: 50px 80px;
+  padding: 0 50px;
   margin: auto;
+  height: 85vh;
 }
 
 .subContainer1,
@@ -10,9 +11,9 @@
   border-radius: 14px;
   background-color: white;
   box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
-  width: 40%;
+  width: 35%;
   min-height: 580px;
-  margin: auto 40px;
+  margin: auto 30px;
 }
 
 .subContainer2 {
@@ -38,32 +39,33 @@
   padding: 0 20px;
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start; */
 }
 
 .helpBtns {
   font-size: 13px;
-  margin: 15px;
+  margin: 18px;
   margin-left: 0;
   display: flex;
   align-items: center;
 }
 
 .tabs {
-  height: 10px;
+  height: 7px;
   font-size: 18px;
   font-weight: 700;
   padding: 2px 5px;
   color: #0d0d0d;
+  display: flex;
+  align-items: end;
 }
 
 .tabs:hover {
-  background-color: #7aac62;
+  background-color: #8cbf75;
   cursor: pointer;
 }
 
 .radioBtn:checked + .tabs {
-  background-color: #7aac62;
+  background-color: #8cbf75;
 }
 
 .helpImgBox {
@@ -87,31 +89,48 @@
   .mainContainer {
     padding: 100px 0;
   }
-  .subContainer {
-    margin: auto 10px;
-  }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .mainContainer {
     flex-direction: column;
-    padding: 60px 0 0;
+    padding: 0;
   }
 
-  .subContainer {
-    min-width: 340px;
-    width: 340px;
-    margin: 0 auto 30px;
-    min-height: 200px;
+  .subContainer1 {
+    margin: auto 0;
+    border-radius: 0;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .subContainer2 {
+    margin: 40px auto;
+    width: 90%;
   }
 
   .helpTitle {
     margin: 5px 0 15px;
     padding: 10px 0 0 30px;
+    font-size: 35px;
+  }
+
+  .helpSubTitle {
+    margin-top: 10px;
+    margin-bottom: 7px;
+  }
+
+  .helpSmallBtn {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
   }
 
   .helpImgBox {
-    margin-top: 0;
+    display: none;
   }
 
   .helpImg {

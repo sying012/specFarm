@@ -157,16 +157,17 @@ const HelpWrite = () => {
                   color: "#1d5902",
                 },
               },
-              lineHeight: "100%",
             }}
           />
           <TextField
             // id="helpContentInput"
             required
             label="내용"
+            name="helpContent"
             multiline
             rows={10}
-            name="helpContent"
+            placeholder={`상담 가능한 내용이 아닐 경우, 
+답변을 받지 못할 수 있는 점 양해 부탁드립니다.`}
             style={{ width: "80%" }}
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -179,7 +180,6 @@ const HelpWrite = () => {
                   color: "#1d5902",
                 },
               },
-              lineHeight: "100%",
             }}
           />
           <div className={styles.submitBtn}>

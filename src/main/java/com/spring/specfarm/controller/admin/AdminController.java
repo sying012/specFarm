@@ -148,17 +148,33 @@ public class AdminController {
 	}
 	
 //	help관리 /////////////////////////////////////////////
-	
+	//미답변 1대1 문의 반환
 	@GetMapping("/help")
-	public Map<String, Object> gethelp(@PageableDefault(page = 0, size = 10 ,direction=Direction.DESC) Pageable pageable){
+	public Map<String, Object> getHelp(@PageableDefault(page = 0, size = 10 , sort="helpIdx", direction=Direction.DESC) Pageable pageable){
 		try {
 			Map<String, Object> resultMap = new HashMap<String, Object>();			
 			
 			Page<Help> helpList = helpService.getNonReplyHelpList(pageable);
 			
-
-			
 			resultMap.put("helpList", helpList);
+			
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	//답변 1대1 문의 반환
+	@GetMapping("/replyHelp")
+	public Map<String, Object> getReplyHelp(@PageableDefault(page = 0, size = 10 ,sort="helpIdx",direction=Direction.DESC) Pageable pageable){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();			
+			
+			Page<Help> helpReplyList = helpService.getReplyHelpList(pageable);
+			
+			resultMap.put("helpReplyList", helpReplyList);
 			
 			return resultMap;
 		} catch (Exception e) {

@@ -3,6 +3,7 @@
     box-shadow: 5px 6px 22px lightgray;
     border-radius: 15px;
     box-sizing: border-box;
+
 }
 
 .adminTitle{
@@ -49,7 +50,8 @@
 .table > tbody > tr > td {
     margin-left: 100px;
     border-top: 1px solid rgba(150, 150, 150, 0.3);
-    padding: 10px;
+    padding: 0 5px;
+    vertical-align: middle;
 }
   
 .table > tbody > tr:hover {
@@ -101,3 +103,30 @@
     }
 }
 /* AdminBoardList end*/
+
+/* AdminBoardItem*/
+.detailTable{
+    width: 80%;
+    margin: 0;
+    table-layout: fixed;
+    white-space: nowrap;
+    height: max-content;
+    border-collapse: collapse;
+    border-style: hidden;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+.detailTitle{
+    width: 35px;
+    text-align: right;
+    padding-right: 15px;
+}
+
+.detailValue{
+    width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/* AdminBoardItem end*/

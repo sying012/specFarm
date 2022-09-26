@@ -185,7 +185,15 @@ const Home = () => {
                         className="loginedProfileImg"
                       ></img>
                     )}
-                    <div style={{ fontSize: "17px" }}>
+                    <div
+                      style={{
+                        width: "100px",
+                        fontSize: "17px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       {loginedUser.userNick}
                     </div>
                   </Link>
@@ -213,7 +221,7 @@ const Home = () => {
         <Main className={styles.content} />
       </div>
       {isScroll ? (
-        ""
+        <Footer />
       ) : (
         <div className={styles.homeDiv} id="scroll">
           <div

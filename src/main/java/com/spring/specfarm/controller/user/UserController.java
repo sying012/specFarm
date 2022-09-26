@@ -1,12 +1,6 @@
 package com.spring.specfarm.controller.user;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.dto.UserDTO;
-import com.spring.specfarm.entity.FavCert;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.jwt.JwtTokenProvider;
 import com.spring.specfarm.service.user.UserService;
-
-import edu.emory.mathcs.backport.java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")

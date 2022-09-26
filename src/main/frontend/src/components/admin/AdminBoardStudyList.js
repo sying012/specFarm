@@ -1,8 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { Pagination, Stack } from "@mui/material";
+import AdminBoardStudy from "./AdminBoardStudy";
+import { styled } from "@mui/material/styles";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
-import AdminBoardStudy from "./AdminBoardStudy";
+
+//아코디언 커스터마이즈
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  background: "none",
+  borderTop: `1px solid ${theme.palette.divider}`,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
+  ({ theme }) => ({
+    padding: "0",
+    backgroundColor: "none",
+    "&.MuiAccordionSummary-root": {
+      minHeight: "35px",
+    },
+    "& .MuiAccordionSummary-content": {
+      minHeight: "35px",
+      margin: "0",
+      lineHeight: "1.1",
+    },
+  })
+);
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+//아코디언 커스터마이즈 끝
 
 const AdminBoardStudyList = ({ style, studyTotal }) => {
   const [count, setCount] = useState(1);
@@ -28,6 +68,15 @@ const AdminBoardStudyList = ({ style, studyTotal }) => {
         console.log(e);
       });
   }, [page]);
+
+  //아코디언 핸들러
+  const [expanded, setExpanded] = useState();
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+  //아코디언 핸들러 끝
+
   return (
     <div className={`${style.boardBox} ${style.boardList}`}>
       <div
@@ -62,13 +111,24 @@ const AdminBoardStudyList = ({ style, studyTotal }) => {
             <th className={style.boardRegDate}>작성일</th>
           </tr>
         </thead>
-        <tbody>
-          {boardList.map((board, index) => (
-            <AdminBoardStudy key={index} board={board} style={style} />
-          ))}
-        </tbody>
       </table>
-      <Stack spacing={2}>
+      <div>
+        {" "}
+        {boardList.map((board, index) => (
+          <AdminBoardStudy
+            key={index}
+            index={index}
+            board={board}
+            style={style}
+            expanded={expanded}
+            handleChange={handleChange}
+            Accordion={Accordion}
+            AccordionSummary={AccordionSummary}
+            AccordionDetails={AccordionDetails}
+          />
+        ))}
+      </div>
+      <Stack spacing={2} style={{ marginTop: "15px" }}>
         <Pagination
           count={count} //총 페이지 수
           page={page} //현재 페이지

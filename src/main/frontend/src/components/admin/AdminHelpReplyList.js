@@ -1,12 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { Pagination, Stack } from "@mui/material";
 import AdminHelpReplyItem from "./AdminHelpReplyItem";
+import { styled } from "@mui/material/styles";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+
+//아코디언 커스터마이즈
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  background: "none",
+  borderTop: `1px solid ${theme.palette.divider}`,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
+  ({ theme }) => ({
+    padding: "0",
+    backgroundColor: "none",
+    "&.MuiAccordionSummary-root": {
+      minHeight: "35px",
+    },
+    "& .MuiAccordionSummary-content": {
+      minHeight: "35px",
+      margin: "0",
+      lineHeight: "1.1",
+    },
+  })
+);
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+
+//아코디언 커스터마이즈 끝
 
 const AdminHelpReplyList = ({ style }) => {
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [helpReplyList, setHelpReplyList] = useState([]);
 
   useEffect(() => {
@@ -22,11 +64,21 @@ const AdminHelpReplyList = ({ style }) => {
       .then((response) => {
         setHelpReplyList(response.data.helpReplyList.content);
         setCount(response.data.helpReplyList.totalPages);
+        setTotal(response.data.helpReplyList.totalElements);
       })
       .catch((e) => {
         console.log(e.data.error);
       });
   }, [page]);
+
+  //아코디언 핸들러
+  const [expanded, setExpanded] = useState();
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+  //아코디언 핸들러 끝
+
   return (
     <div className={`${style.helpBox} ${style.helpList}`}>
       <div
@@ -37,37 +89,37 @@ const AdminHelpReplyList = ({ style }) => {
           marginBottom: "10px",
         }}
       >
-        <p className={style.adminTitle}>미답변 문의</p>
-        <div
-          style={{
-            width: "50%",
-            minWidth: "300px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <p>총 게시글: 1</p>
-          <p>신규 게시글: 3</p>
-          <p>신규 댓글: 13</p>
-        </div>
+        <p className={style.adminTitle}>답변 문의</p>
+
+        <p style={{ marginRight: "20px" }}>Count: {total}</p>
       </div>
       <table className={style.table}>
         <thead>
           <tr>
             <th className={style.helpNo}>No</th>
+            <th className={style.helpCategory}>카테고리</th>
             <th className={style.helpTitle}>제목</th>
             <th className={style.helpWriter}>작성자</th>
-            <th className={style.helpCount}>조회수</th>
-            <th className={style.helpRegDate}>작성일</th>
+            <th className={style.helpRegDate}>접수일</th>
           </tr>
         </thead>
-        <tbody>
-          {helpReplyList.map((help, index) => (
-            <AdminHelpReplyItem key={index} help={help} style={style} />
-          ))}
-        </tbody>
       </table>
-      <Stack spacing={2}>
+      <div>
+        {helpReplyList.map((help, index) => (
+          <AdminHelpReplyItem
+            key={index}
+            index={index}
+            help={help}
+            style={style}
+            expanded={expanded}
+            handleChange={handleChange}
+            Accordion={Accordion}
+            AccordionSummary={AccordionSummary}
+            AccordionDetails={AccordionDetails}
+          />
+        ))}
+      </div>
+      <Stack spacing={2} style={{ marginTop: "15px" }}>
         <Pagination
           count={count} //총 페이지 수
           page={page} //현재 페이지

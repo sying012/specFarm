@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.spring.specfarm.entity.Help;
-import com.spring.specfarm.entity.Share;
 
 public interface HelpService {
 	
@@ -15,5 +14,7 @@ public interface HelpService {
 	void insertHelp(Help help);
 
 	Page<Help> getNonReplyHelpList(Pageable pageable);
+
+	Page<Help> getReplyHelpList(Pageable pageable);
 	
 }

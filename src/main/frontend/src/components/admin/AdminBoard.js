@@ -28,7 +28,9 @@ const AdminBoard = () => {
       // setNewBoard(response.data.newBoard);
       // setNewReply(response.data.newReply);
     });
-  });
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={adminStyle.container}>
       <AdminBoardTotal

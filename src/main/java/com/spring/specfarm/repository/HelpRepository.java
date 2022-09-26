@@ -12,6 +12,9 @@ import com.spring.specfarm.entity.Help;
 public interface HelpRepository extends JpaRepository<Help, Integer> {
 	List<Help> findByUserIdOrderByHelpRegDateDesc(String userId);
 
-	@Query(value="SELECT * FROM T_HELP WHERE REPLY IS NULL", nativeQuery = true)
-	Page<Help> findByIsNull(Pageable pageable);
+	//@Query(value="SELECT * FROM T_HELP WHERE REPLY IS NULL", nativeQuery = true)
+	Page<Help> findByReplyIsNull(Pageable pageable);
+
+	//@Query(value="SELECT * FROM T_HELP WHERE REPLY IS NOT NULL", nativeQuery = true)
+	Page<Help> findByReplyIsNotNull(Pageable pageable);
 }

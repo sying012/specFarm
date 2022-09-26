@@ -31,6 +31,11 @@ const AdminUser = () => {
         console.log(e);
       });
   }, [page]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={adminStyle.container}>
       <AdminUserTotal style={style} totalUser={totalUser} />

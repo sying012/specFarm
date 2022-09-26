@@ -30,8 +30,12 @@ public class HelpServiceImpl implements HelpService {
 
 	@Override
 	public Page<Help> getNonReplyHelpList(Pageable pageable) {
-		
-		return helpRepository.findByIsNull(pageable);
+		return helpRepository.findByReplyIsNull(pageable);
+	}
+
+	@Override
+	public Page<Help> getReplyHelpList(Pageable pageable) {
+		return helpRepository.findByReplyIsNotNull(pageable);
 	}
 
 }

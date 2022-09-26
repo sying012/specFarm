@@ -93,6 +93,11 @@
   align-items: center;
 }
 
+#adminLink {
+  display: flex;
+  align-items: center;
+}
+
 .tailwrap > div > a {
   color: black;
 
@@ -224,10 +229,42 @@
 }
 
 .css-x15wq9 {
-  width: 0 !important;
-  height: 69px;
-  box-sizing: border-box;
-  background-color: white;
+  /* height: 69px; */
+  /* box-sizing: border-box; */
+  /* border-bottom: 1px solid rgb(230, 230, 230); */
+  /* background-color: white; */
+}
+
+.catBtnLogout {
+  color: #0d0d0d;
+  font-size: 14px;
+  margin-top: 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: end;
+}
+
+.catBtnLogout > a {
+  color: #0d0d0d;
+}
+.css-1betqn-MuiAccordionSummary-content > p {
+  color: #0d0d0d !important;
+}
+
+.css-19y6wfk-MuiTypography-root {
+  color: #777 !important;
+}
+
+.css-15v22id-MuiAccordionDetails-root {
+  padding: 16px;
+}
+
+.css-15v22id-MuiAccordionDetails-root:hover {
+  background-color: rgba(140, 191, 117, 0.3) !important;
+}
+
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+  height: 70% !important;
 }
 
 @media (max-width: 1200px) {
@@ -242,6 +279,8 @@
   .tailwrap {
     margin: 0 0 0 20px;
     width: fit-content;
+    margin-left: auto;
+    padding-right: 20px;
   }
 
   .joinbtn {
@@ -254,42 +293,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: auto;
+    /* margin-left: auto; */
     border: 0;
     border-radius: 10px;
     cursor: pointer;
   }
-
-  .catBtnLogout {
-    color: #0d0d0d;
-    font-size: 14px;
-    margin-top: 10px;
-    padding-right: 10px;
-    display: flex;
-    justify-content: end;
-  }
-
-  .catBtnLogout > a {
-    color: #0d0d0d;
-  }
-  .css-1betqn-MuiAccordionSummary-content > p {
-    color: #0d0d0d !important;
-  }
-
-  .css-19y6wfk-MuiTypography-root {
-    color: #777 !important;
-  }
-
-  .css-15v22id-MuiAccordionDetails-root {
-    padding: 16px;
-  }
-
-  .css-15v22id-MuiAccordionDetails-root:hover {
-    background-color: rgba(140, 191, 117, 0.3) !important;
-  }
 }
 
 @media (min-width: 1200px) {
+  .css-1mdskcd-MuiModal-root-MuiDrawer-root {
+    display: none;
+  }
+
   .catBtn {
     display: none;
   }

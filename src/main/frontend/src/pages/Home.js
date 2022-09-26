@@ -344,6 +344,14 @@ const Home = () => {
                     >
                       로그인
                     </Link>
+                  ) : loginedUser.role === "ROLE_ADMIN" ? (
+                    <Link
+                      to="/admin"
+                      className={styles.adminLink}
+                      id="leftLink"
+                    >
+                      <div>관리자페이지</div>
+                    </Link>
                   ) : (
                     <Link
                       to="/mypage"
@@ -363,7 +371,7 @@ const Home = () => {
                       )}
                       <div
                         style={{
-                          width: "110px",
+                          maxWidth: "110px",
                           fontSize: "17px",
                           overflow: "hidden",
                           textOverflow: "ellipsis",

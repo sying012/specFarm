@@ -408,18 +408,17 @@ const Header = () => {
               </Link>
             ) : loginedUser.role === "ROLE_ADMIN" ? (
               <Link to="/admin" id="adminLink">
-                {loginedUser.userProfileName && (
-                  <img
-                    src={
-                      Object.keys(loginedUser).length !== 0
-                        ? "/upload/profile/" + loginedUser.userProfileName
-                        : "/upload/profile/farmer.png"
-                    }
-                    alt=""
-                    className="loginedProfileImg"
-                  ></img>
-                )}
-                <div>{loginedUser.userNick}</div>
+                <div
+                  style={{
+                    maxWidth: "110px",
+                    fontSize: "17px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  관리자페이지
+                </div>
               </Link>
             ) : (
               <Link to="/mypage" id="mypageLink">
@@ -434,7 +433,17 @@ const Header = () => {
                     className="loginedProfileImg"
                   ></img>
                 )}
-                <div>{loginedUser.userNick}</div>
+                <div
+                  style={{
+                    maxWidth: "110px",
+                    fontSize: "17px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {loginedUser.userNick}
+                </div>
               </Link>
             )}
           </div>

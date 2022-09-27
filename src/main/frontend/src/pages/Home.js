@@ -75,7 +75,7 @@ const Home = () => {
 
   let innerHeight = function () {
     //console.log(this);
-    if (window.innerHeight <= 845 || window.innerWidth <= 1200) {
+    if (window.innerHeight <= 730 || window.innerWidth <= 1200) {
       setIsScroll(true);
       document.getElementsByTagName("body")[0].style.overflowY = "auto";
       document.getElementById("wheel").removeEventListener("wheel", wheelEvent);

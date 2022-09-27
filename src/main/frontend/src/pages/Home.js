@@ -97,8 +97,8 @@ const Home = () => {
   const wheelEvent = (e) => {
     if (e.deltaY >= 0 && count === 1) {
       count++;
-      // fnScrollInterval();
-      window.scrollTo({ top: window.innerHeight - 70, behavior: "smooth" });
+      fnScrollInterval();
+      // window.scrollTo({ top: window.innerHeight - 70, behavior: "smooth" });
       setShow(false);
     }
   };

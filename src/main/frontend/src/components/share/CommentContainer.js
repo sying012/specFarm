@@ -45,7 +45,7 @@ const CommentContainer = ({
           <img
             className={styles.profileImg}
             id="profileImg"
-            src={`/upload/profile/${share && share.user.userProfileName}`}
+            src={`/upload/profile/${user && user.userProfileName}`}
             alt="프로필사진"
             style={{ borderRadius: "50%" }}
           />

@@ -25,10 +25,12 @@ public interface ShareRepository extends JpaRepository<Share, Integer> {
 	//Community Main 조회수 상위4개 추출
 	List<Share> findTop4ByOrderByShareCountDesc();
 	
+	//share 상태 받아와서 업데이트
 	@Modifying
 	@Query(value = "update t_share a set a.share_yn = :shareYn where a.share_idx = :shareIdx", nativeQuery = true)
 	int shareState(@Param("shareIdx") int shareIdx, @Param("shareYn") String shareYn);
 	
+	//share 상태 변경
 	@Query(value = "select a.share_yn from t_share a where a.share_idx = :shareIdx", nativeQuery = true)
 	String getShareYn(@Param("shareIdx") int shareIdx);
 

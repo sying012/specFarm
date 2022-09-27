@@ -17,4 +17,7 @@ public interface ShareFileRepository extends JpaRepository<ShareFile, ShareFileI
 
 	//첨부파일 반환
 	List<ShareFile> findByShare(Share share);
+	
+//	//첨부파일 삭제
+//	void deleteByShareFileIdxShareShareIdx(ShareFile shareFile);
 }

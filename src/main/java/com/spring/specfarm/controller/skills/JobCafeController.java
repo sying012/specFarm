@@ -15,15 +15,19 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.specfarm.common.CommUtils;
 import com.spring.specfarm.entity.JobCafe;
 import com.spring.specfarm.repository.JobCafeRepository;
 import com.spring.specfarm.service.skills.JobCafeService;
-import com.spring.specfarm.service.user.UserService;
 
 @RestController
 @RequestMapping("/skills/jobCafe")
@@ -89,58 +93,60 @@ public class JobCafeController {
 		CommUtils commUtils = new CommUtils();
 		
 		Map<String, JSONObject> map = commUtils.paramMap(apiData);
-//		
-//		//Data Parsing
-//		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");
-//		JSONArray row = jobCafeOpenInfo.getJSONArray("row");
-//		System.out.println(row);
-//		
-//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-//		
-//		if(row != null) {
-//			
-//			int jsonSize = row.length();
-//			
-//			for (int i = 0; i < jsonSize; i++) {
-//
-//				Map<String, Object> temp = new HashMap<String, Object>();
-//				
-//				JSONObject tempobj = row.getJSONObject(i);
-//				
-//				JobCafe jobCafe = new JobCafe();
-//				int jobCafeIdx = jobCafeRepository.getNextJobCafeIdx();
-//						
-//				Iterator it = tempobj.keys();
-//				
-//				while(it.hasNext()) {
-//					String key = it.next().toString();
-//					temp.put(key, tempobj.get(key));
-//				}
-//				
-//				list.add(temp);
-//			}
-//			
-//			jobCafeService.getJobCafe(list);
-//		}
-//	
-//	}
-//	
-//	@GetMapping("/getJobCafeList")
-//	public Map<String, Object> getJobCafeList(){
-//		try {
-//			List<Map<String, Object>> jobCafeList = jobCafeService.getJobCafeList();
-//			
-//			Map<String, Object> response = new HashMap<String, Object>();
-//			
-//			response.put("jobCafeList", jobCafeList);
-//			return response;
-//			
-//		}catch(Exception e){
-//			Map<String, Object> errorMap = new HashMap<String, Object>();
-//			errorMap.put("error",e.getMessage());
-//			return errorMap;
-//		}
-}
+		
+		//Data Parsing
+		JSONObject jobCafeOpenInfo = map.get("jobCafeOpenInfo");
+		JSONArray row = jobCafeOpenInfo.getJSONArray("row");
+		System.out.println(row);
+		
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+		if(row != null) {
+			
+			int jsonSize = row.length();
+			
+			for (int i = 0; i < jsonSize; i++) {
+
+				Map<String, Object> temp = new HashMap<String, Object>();
+				
+				JSONObject tempobj = row.getJSONObject(i);
+				
+				JobCafe jobCafe = new JobCafe();
+				int jobCafeIdx = jobCafeRepository.getNextJobCafeIdx();
+						
+				Iterator it = tempobj.keys();
+				
+				while(it.hasNext()) {
+					String key = it.next().toString();
+					temp.put(key, tempobj.get(key));
+				}
+				
+				list.add(temp);
+			}
+			
+			jobCafeService.getJobCafe(list);
+		}
+	
+	}
+	
+	@GetMapping("")
+	public Map<String, Object> getJobCafeList(
+			@PageableDefault(page = 0, size = 8, sort="jobCafeIdx", direction = Direction.ASC) Pageable pageable, @RequestParam(required = false) String searchKeyword ) {
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			
+			Page<JobCafe> jobCafeList = jobCafeService.getJobCafeList(searchKeyword, pageable);
+			System.out.println(jobCafeList);
+			
+			resultMap.put("jobCafeList", jobCafeList);
+		
+			return resultMap;
+		} catch(Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error", e.getMessage());
+			return errorMap;
+		}
+	}
 	
 }
 

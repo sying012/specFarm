@@ -1,7 +1,10 @@
 package com.spring.specfarm.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -11,15 +14,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name="T_JOB_CAFE")
+@SequenceGenerator(name = "T_JOB_CAFE_SEQ_GENERATOR", sequenceName = "T_JOB_CAFE_SEQ", initialValue = 1, allocationSize = 1)
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobCafe {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "T_JOB_CAFE_SEQ_GENERATOR")
 	private int jobCafeIdx;
 	private String cafeName;
 	private String smplIntro;
-//	@Column(columnDefinition = "varchar(65534)")
-//	private String spaceInfo;
+	@Column(columnDefinition = "TEXT(65534)")
+	private String spaceInfo;
 	private String useDate;
 	private String holiDate;
 	private String facltInfo01;

@@ -95,14 +95,6 @@
   justify-content: space-between;
 }
 
-.detailContent {
-  width: 90%;
-  min-height: 200px;
-  display: flex;
-  padding: 30px 30px 5px 30px;
-  border-radius: 10px;
-}
-
 .detailWrite {
   display: flex;
   align-items: center;
@@ -118,10 +110,11 @@
 }
 
 .detailContent {
-  height: 100%;
+  width: 90%;
+  height: 200px;
   margin-top: 15px;
   padding: 0 3px;
-  line-height: 1.2;
+  line-height: 15px;
   color: #0d0d0d;
   word-break: break-all;
   white-space: pre-line;
@@ -142,7 +135,8 @@
 .fileNameDown {
   display: block;
   color: rgb(100, 100, 100);
-  font-size: 0.6rem;
+  font-size: 0.8rem;
+  line-height: 16px;
 }
 
 .detailBoxBottom {

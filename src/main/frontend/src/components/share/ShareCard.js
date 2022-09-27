@@ -9,9 +9,14 @@ import {
 } from "@mui/material";
 import styles from "../../styles/share/shareCard.module.css";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { API_BASE_URL } from "../../app-config";
 
 const ShareCard = ({ shareItem }) => {
+  const [user, setUser] = useState({});
   const [share, setShare] = useState({});
+  const [shareYn, setShareYn] = useState("");
+  const [shareYnStyle, setShareYnStyle] = useState({});
 
   useEffect(() => {
     setShare(shareItem);
@@ -33,6 +38,43 @@ const ShareCard = ({ shareItem }) => {
       // fontSize: "15px",
     },
   });
+
+  //share 나눔 상태
+  const shareState = () => {
+    if (share.shareYn === "Y") {
+      share.shareYn = "N";
+    } else {
+      share.shareYn = "Y";
+    }
+
+    if (share.user.userId === user.userId) {
+      axios({
+        method: "post",
+        url: API_BASE_URL + "/community/share/shareYn",
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+        },
+        data: share,
+      })
+        .then((response) => {
+          setShareYn(response.data.shareYn);
+        })
+        .catch((e) => {
+          console.log(e.data.error);
+        });
+    } else {
+      return;
+    }
+  };
+
+  //share 나눔 상태 스타일
+  useEffect(() => {
+    setShareYnStyle(
+      shareYn && shareYn === "Y"
+        ? { background: "#1d5902" }
+        : { background: "rgb(100, 100, 100)" }
+    );
+  }, [shareYn]);
 
   return (
     <>
@@ -63,17 +105,25 @@ const ShareCard = ({ shareItem }) => {
               {share.shareTitle}
             </Typography>
             <div className={styles.bottom}>
-              <div
-                theme={theme}
-                className={styles.state}
-                style={{
-                  color: "white",
-                  background: share.shareYn ? "#1d5902" : "#777",
-                }}
-              >
-                {share.shareYn ? "나눔" : "완료"}
+              <div theme={theme}>
+                <p
+                  className={styles.state}
+                  value={shareYn}
+                  style={{
+                    color: "white",
+                    background: share.shareYn === "Y" ? "#1d5902" : "#777",
+                  }}
+                >
+                  {shareYn
+                    ? shareYn === "Y"
+                      ? "나눔"
+                      : "완료"
+                    : share.shareYn === "Y"
+                    ? "나눔"
+                    : "완료"}
+                </p>
               </div>
-              <div className={styles.aaa}>
+              <div className={styles.cardBottomRight}>
                 <p className={styles.writer} theme={theme}>
                   {share.user && share.user.userNick}
                 </p>

@@ -28,7 +28,6 @@
 }
 
 .state {
-  background-color: rgba(187, 205, 110, 0.8);
   width: 45px;
   height: 25px;
   border-radius: 5px;
@@ -38,7 +37,7 @@
   justify-content: center;
 }
 
-.aaa {
+.cardBottomRight {
   display: flex;
   align-items: center;
 }

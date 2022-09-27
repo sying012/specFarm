@@ -22,12 +22,6 @@
   width: 60px;
 }
 
-/* .typeBox div:active,
-.typeBox a:active {
-  background-color: black;
-  color: white;
-} */
-
 .allTypeBtn:hover,
 .typeBtns:hover {
   background-color: #999;

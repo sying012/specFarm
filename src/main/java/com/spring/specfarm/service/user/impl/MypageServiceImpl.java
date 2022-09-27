@@ -94,6 +94,7 @@ public class MypageServiceImpl implements MypageService {
 			favCertDTO.setUserId(favCert.getUserId());
 			favCertDTO.setFavCertIdx(favCert.getFavCertIdx());
 			favCertDTO.setCertName(getCertName(favCert.getCertIdx()).getJmfldnm());
+			favCertDTO.setJmcd(getCertName(favCert.getCertIdx()).getJmcd());
 			
 			favCertDTOsList.add(favCertDTO);
 		}

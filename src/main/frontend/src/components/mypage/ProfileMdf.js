@@ -157,6 +157,7 @@ function ProfileMdf() {
     } else {
       handleSubmit({
         ...user,
+        userNick: nicknameValue,
         userProfileName:
           imageSrc === "/upload/profile/farmer.png"
             ? null

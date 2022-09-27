@@ -34,8 +34,6 @@ public class HelpController {
 			
 			List<Help> helpList = helpService.getHelpList(userId);
 			
-//			System.out.println(helpList);
-			
 			responseMap.put("helpList", helpList);
 			
 			return responseMap;
@@ -59,8 +57,6 @@ public class HelpController {
 				help.setAttachedFile(fileInfo.get("FileName"));
 				help.setAttachedRealName(fileInfo.get("FileOrgName"));
 			}
-			
-			System.out.println(help);
 			
 			helpService.insertHelp(help);
 			return "success";

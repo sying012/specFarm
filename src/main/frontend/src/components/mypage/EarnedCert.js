@@ -1,7 +1,7 @@
 import { Close } from "@mui/icons-material";
 import { Autocomplete, IconButton, TextField } from "@mui/material";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { API_BASE_URL } from "../../app-config";
 import styles from "../../styles/mypage/EarnedCert.module.css";
 

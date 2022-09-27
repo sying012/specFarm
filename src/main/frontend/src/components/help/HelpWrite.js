@@ -1,4 +1,4 @@
-import { AttachFile, PhotoCamera } from "@mui/icons-material";
+import { AttachFile } from "@mui/icons-material";
 import {
   Button,
   createTheme,
@@ -9,9 +9,8 @@ import {
   TextField,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { API_BASE_URL } from "../../app-config";
-// import { Button } from "react-bootstrap";
 import styles from "../../styles/help/HelpWrite.module.css";
 
 const HelpWrite = () => {
@@ -160,7 +159,6 @@ const HelpWrite = () => {
             }}
           />
           <TextField
-            // id="helpContentInput"
             required
             label="내용"
             name="helpContent"

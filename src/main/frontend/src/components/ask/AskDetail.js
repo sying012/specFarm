@@ -130,6 +130,16 @@ const AskDetail = () => {
     }
   };
 
+  useEffect(() => {
+    infoVisible === true
+      ? document
+          .getElementById("askDetailContainer")
+          .addEventListener("click", () => setInfoVisible(false))
+      : document
+          .getElementById("askDetailContainer")
+          .removeEventListener("click", () => setInfoVisible(false));
+  }, []);
+
   return (
     <div id="askDetailContainer">
       <div id="detailContentBox">

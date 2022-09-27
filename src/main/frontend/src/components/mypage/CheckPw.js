@@ -54,12 +54,6 @@ function CheckPw() {
   const deactivate = (e) => {
     const userPw = document.getElementById("userPw").value;
     e.preventDefault();
-    // if (userPw !== "dd") {
-    //   setPwValidationError(true);
-    //   setPwValidationErrorText("비밀번호가 일치하지 않습니다.");
-    // } else {
-    //   setPwValidationError(false);
-    //   setPwValidationErrorText("");
 
     axios({
       method: "post",

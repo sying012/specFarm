@@ -10,7 +10,6 @@ import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.ShareFile;
 import com.spring.specfarm.entity.ShareReReply;
 import com.spring.specfarm.entity.ShareReply;
-import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 
 public interface ShareService {

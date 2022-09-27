@@ -12,4 +12,6 @@ public class FavCertDTO {
 	private int favCertIdx;
 	
 	private String certName;
+	
+	private String jmcd;
 }

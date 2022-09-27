@@ -42,9 +42,11 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
     if (Object.keys(user).length !== 0)
       setUserInfo({
         ...user,
-        userTel: user.userTel && (user.userTel
-          .replace(/-/g, "")
-          .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***")),
+        userTel:
+          user.userTel &&
+          user.userTel
+            .replace(/-/g, "")
+            .replace(/(\d{3})(\d{1})(\d{3})(\d{1})(\d{3})/, "$1-$2***-$4***"),
       });
   }, [user, attrCerts]);
 
@@ -195,7 +197,9 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
                   key={attrCert.favCertIdx}
                   className={styles.attractiveCert}
                 >
-                  <a href={`/cert/${attrCert.certIdx}`}>{attrCert.certName}</a>
+                  <a href={`/cert/certFind/${attrCert.jmcd}`}>
+                    {attrCert.certName}
+                  </a>
                   <IconButton
                     aria-label="delete"
                     className="deleteBtn"

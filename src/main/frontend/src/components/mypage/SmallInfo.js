@@ -63,7 +63,7 @@ const SmallInfo = ({ user }) => {
                       key={attrCert.favCertIdx}
                       className={styles.attractiveCert}
                     >
-                      <a href={`/cert/${attrCert.certIdx}`}>
+                      <a href={`/cert/certFind/${attrCert.jmcd}`}>
                         {attrCert.certName}
                       </a>
                     </div>

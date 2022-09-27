@@ -47,7 +47,9 @@ const Study = () => {
   return (
     <div className="studyContainer">
       <div className="titleContainer">
-        <div className="titlewrap">마을회관</div>
+        <NavLink to="/community">
+          <div className="titlewrap">마을회관</div>
+        </NavLink>
         <NavigateNextIcon style={{ margin: "auto 5px" }} />
         <NavLink to="/community/study">
           <div className="subtitlewrap">지식 품앗이</div>

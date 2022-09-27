@@ -35,7 +35,7 @@ public class Study {
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
-	private String studyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));;
+	private String studyRegDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
 	
 	private int studyMemberCnt = 0;
 	

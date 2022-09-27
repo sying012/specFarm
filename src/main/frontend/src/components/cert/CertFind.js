@@ -159,14 +159,7 @@ const CertFind = () => {
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
     }).then((response) => {
-      console.log(response.data.heart);
-      let heartYn = response.data.heart;
-      if ("Y" == heartYn) {
-        // 좋아요 활성화
-      } else {
-        //좋아요 해제
-      }
-      return false;
+      console.log(response.data);
     });
   }, []);
 
@@ -192,14 +185,7 @@ const CertFind = () => {
       },
       params: { cert_idx: params.jmcd },
     }).then((response) => {
-      console.log(response.data.heart);
-      let heartYn = response.data.heart;
-      if ("Y" == heartYn) {
-        // 좋아요 활성화
-      } else {
-        //좋아요 해제
-      }
-      return false;
+      console.log(response.data.hear);
     });
   };
 

@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../../app-config";
 
 const AdminUserNew = ({ style }) => {
   const [data, setData] = useState([
-    { id: "7일간신규가입", color: "hsl(89, 70%, 50%)", data: [] },
+    { id: "10일간신규가입", color: "hsl(89, 70%, 50%)", data: [] },
   ]);
   useEffect(() => {
     axios.get(`${API_BASE_URL}/admin/chartUser`).then((response) => {

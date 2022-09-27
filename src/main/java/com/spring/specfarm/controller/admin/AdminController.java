@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.specfarm.entity.Ask;
 import com.spring.specfarm.entity.Help;
 import com.spring.specfarm.entity.Share;
+import com.spring.specfarm.entity.ShareReply;
 import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 import com.spring.specfarm.service.admin.AdminService;
@@ -118,7 +119,7 @@ public class AdminController {
 			
 			String now = dtFormat.format(new Date());
 
-			for(int i =-10; i<=-1; i++) {
+			for(int i =-9; i<=0; i++) {
 				Map<String, Object> userMap = new HashMap<String, Object>();
 				String date = AddDate("yyyy.MM.dd",now, 0, 0, i);
 				int count = adminService.getDayNewUser(date);
@@ -226,9 +227,10 @@ public class AdminController {
 			
 			Page<Share> shareList = shareService.getShareList(null, pageable);
 			
-//			for(Ask ask: shareList) {	
-//				ask.setCountReply(shareService.getAskReplyCount(ask.getAskIdx()));
-//			}
+			//share 댓글 수
+			for(Share share: shareList) {
+				share.setCountReply(shareService.getShareReplyCount(share.getShareIdx()));
+			}
 			
 			resultMap.put("shareList", shareList);
 			

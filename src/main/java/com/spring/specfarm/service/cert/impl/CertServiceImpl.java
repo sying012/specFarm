@@ -225,6 +225,11 @@ public class CertServiceImpl implements CertService {
 		return 1;
     }
 
+	@Override
+	public String getCertIdx(String cert_idx) {
+		return certMapper.getCertIdx(cert_idx);
+	}
+
 
 
 }

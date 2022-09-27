@@ -356,11 +356,11 @@ public class ShareController {
 				}
 			}
 
-			//shareIdx = shareService.insertShare(share);
+			shareIdx = shareService.insertShare(share);
 			
 			shareService.editFileList(editFileList);
 
-			//shareService.insertShareFileList(shareFileList);
+			shareService.insertShareFileList(shareFileList);
 
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("share", share);

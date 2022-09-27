@@ -177,7 +177,6 @@ const AskDetail = () => {
           </div>
 
           <div className="detailTitle">
-            {" "}
             [{ask.askCert}]&nbsp;&nbsp;&nbsp;{ask.askTitle}
           </div>
           <div

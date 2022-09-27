@@ -441,7 +441,7 @@ form#certSearchBar input#searchCert {
   color: #0d0d0d;
   padding-bottom: 10px;
   word-break: break-all;
-  white-space: pre;
+  white-space: pre-line;
 }
 
 .rereplyOpen {

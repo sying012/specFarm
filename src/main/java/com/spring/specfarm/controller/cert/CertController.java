@@ -66,7 +66,7 @@ public class CertController {
 		CommUtils commUtils = new CommUtils();
 		String json = commUtils.xmlToJson(sb.toString());
 
-		// System.out.println(json);
+		System.out.println(json);
 		Map<String, JSONObject> map = commUtils.paramMap(json);
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -101,7 +101,7 @@ public class CertController {
 			}
 		}
 
-		// certService.setCertficationList(list);
+		certService.setCertficationList(list);
 
 	}
 	
@@ -231,7 +231,7 @@ public class CertController {
 			urlBuilder.append("?" + URLEncoder.encode("jmCd", "UTF-8") + "="
 					+ URLEncoder.encode(jmcdList.get(i), "UTF-8")); /* 종목코드 */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ "wh4Py7l30BZA2vDhL6aoNI3Gu83BlbbYyZ5fLacQICLXTz7pC4lek%2BzGuPdPfIVwk6eNwpkB%2BF9p5Oq5x11gJA%3D%3D"); /*
+					+ "ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*
 																																 * Service
 																																 * Key
 																																 */
@@ -260,7 +260,7 @@ public class CertController {
 			CommUtils commUtils = new CommUtils();
 			String json = commUtils.xmlToJson(sb.toString());
 
-			// System.out.println(json);
+			System.out.println(json);
 			Map<String, JSONObject> map = commUtils.paramMap(json);
 
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -268,37 +268,37 @@ public class CertController {
 			JSONObject jObj = map.get("response");
 			System.out.println(jObj.toString());
 
-			if (!jObj.get("body").equals("")) {
+			if (!jObj.get("body").equals("") && !jObj.isEmpty()) {
 				JSONObject body = jObj.getJSONObject("body");
 
 				if (!body.get("items").equals("")) {
 					JSONObject items = body.getJSONObject("items");
 
-					if (items.toString().indexOf("[") != -1) {
-						JSONArray item = items.getJSONArray("item");
+					if (!items.get("item").equals("")) {//JSONArray일 때 조건 [ != -1
+						JSONObject item = items.getJSONObject("item"); //==> 데이터 많을 때는 JSONArray로
 
 						List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 						if (item != null) {
 
-							int jsonSize = item.length();
+//							int jsonSize = item.length();
 
-							for (int t = 0; t < jsonSize; t++) {
+//							for (int t = 0; t < jsonSize; t++) {
 
 								Map<String, Object> temp = new HashMap<String, Object>();
 
-								JSONObject tempobj = item.getJSONObject(t);
+//								JSONObject tempobj = item.getJSONObject(t);
 
-								Iterator it = tempobj.keys();
+								Iterator it = item.keys();
 
 								while (it.hasNext()) {
 									String key = it.next().toString();
 									// if(key.equals("contents"))
-									temp.put(key, tempobj.get(key));
+									temp.put(key, item.get(key));
 								}
 
 								list.add(temp);
-							}
+//							}
 						}
 						certService.setCertTestList(list);
 					} else {

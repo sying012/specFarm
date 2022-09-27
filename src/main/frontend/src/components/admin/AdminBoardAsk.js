@@ -75,8 +75,15 @@ const AdminBoardAsk = ({
                   width: "30px",
                   height: "30px",
                 }}
+                onClick={() =>
+                  navigate(`/community/ask/${board.askIdx}`, {
+                    state: {
+                      prevUrl: location.pathname,
+                    },
+                  })
+                }
               >
-                <ArrowForwardIcon></ArrowForwardIcon>
+                <ArrowForwardIcon />
               </IconButton>
               <IconButton
                 color="error"
@@ -85,7 +92,7 @@ const AdminBoardAsk = ({
                   height: "30px",
                 }}
               >
-                <DeleteForeverIcon></DeleteForeverIcon>
+                <DeleteForeverIcon />
               </IconButton>
             </div>
           </AccordionDetails>

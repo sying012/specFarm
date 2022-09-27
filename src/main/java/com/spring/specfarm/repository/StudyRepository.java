@@ -16,6 +16,8 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
 	Page<Study> findByStudyTitleContainingOrStudyContentContaining(String searchKeyword1, String searchKeyword2,
 			Pageable pageable);
 
+	int countByStudyRegDateGreaterThan(String dateW);
+
 	// Community Main 조회수 상위4개 추출
 //	List<Study> findTop4ByOrderByStudyCountDesc();
 }

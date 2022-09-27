@@ -44,10 +44,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 //아코디언 커스터마이즈 끝
 
-const AdminBoardAskList = ({ style, askTotal }) => {
+const AdminBoardAskList = ({ style, newAsk, newAskReply }) => {
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [boardList, setBoardList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     axios
@@ -62,6 +63,7 @@ const AdminBoardAskList = ({ style, askTotal }) => {
       .then((response) => {
         setBoardList(response.data.askList.content);
         setCount(response.data.askList.totalPages);
+        setTotal(response.data.askList.totalElements);
       })
       .catch((e) => {
         console.log(e.data.error);
@@ -95,9 +97,9 @@ const AdminBoardAskList = ({ style, askTotal }) => {
             justifyContent: "space-between",
           }}
         >
-          <p>총 게시글: {askTotal}</p>
-          <p>신규 게시글: 3</p>
-          <p>신규 댓글: 13</p>
+          <p>총 게시글: {total}</p>
+          <p>7일간 신규 게시글: {newAsk}</p>
+          <p>7일간 신규 댓글: {newAskReply}</p>
         </div>
       </div>
       <table className={style.table}>

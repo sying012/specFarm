@@ -1,4 +1,7 @@
 import React from "react";
+import { IconButton } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useNavigate, useLocation } from "react-router";
 
 const AdminBoardShare = ({
@@ -33,7 +36,62 @@ const AdminBoardShare = ({
               </tbody>
             </table>
           </AccordionSummary>
-          <AccordionDetails>내용</AccordionDetails>
+          <AccordionDetails
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <table className={style.detailTable}>
+              <tbody>
+                <tr>
+                  <td className={style.detailTitle}>제목</td>
+                  <td className={style.detailValue}>{board.shareTitle}</td>
+                </tr>
+                <tr>
+                  <td className={style.detailTitle}>작성자</td>
+                  <td className={style.detailValue}>
+                    {board.user.userNick}
+                    {`(${board.user.userId})`}
+                  </td>
+                </tr>
+                <tr>
+                  <td className={style.detailTitle}>댓글수</td>
+                  <td className={style.detailValue}>{board.countReply}</td>
+                </tr>
+                <tr>
+                  <td className={style.detailTitle}>상태</td>
+                  <td className={style.detailValue}>
+                    {board.shareYn === "Y" ? "나눔" : "나눔완료"}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "0.9rem",
+              }}
+            >
+              <IconButton
+                color="success"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                }}
+                onClick={() => navigate(`/community/share/${board.shareIdx}`)}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
+              <IconButton
+                color="error"
+                style={{
+                  width: "30px",
+                  height: "30px",
+                }}
+              >
+                <DeleteForeverIcon />
+              </IconButton>
+            </div>
+          </AccordionDetails>
         </Accordion>
       ) : null}
     </>

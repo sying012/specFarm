@@ -14,17 +14,7 @@ import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const theme = createTheme({
   typography: {
-    fontFamily: [
-      "Pretendard-Regular",
-      "Segoe UI",
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-    ].join(","),
+    fontFamily: ["Pretendard-Regular", "Segoe UI", "Roboto"].join(","),
     // fontSize: "15px",
   },
 });
@@ -62,7 +52,7 @@ const StudyCard = ({ studyItem }) => {
               image={
                 studyItem.studyImgName !== null
                   ? "/upload/study/" + studyItem.studyImgName
-                  : defaultStudyImg
+                  : "https://cdn.emetro.co.kr/data2/content/image/2020/01/23/0540/20200123000058.jpg"
               }
               alt="스터디 이미지"
               sx={{ objectFit: "unset" }}

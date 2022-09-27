@@ -17,4 +17,6 @@ public interface ShareReReplyRepository extends JpaRepository<ShareReReply, Shar
 	@Query(value="SELECT IFNULL(MAX(SHARE_RE_REPLY_IDX), 0) + 1 FROM T_SHARE_RE_REPLY WHERE SHARE_IDX = :shareIdx AND SHARE_REPLY_IDX = :shareReplyIdx", nativeQuery=true)
 	int getShareReplyIdx(@Param("shareIdx") int shareIdx, @Param("shareReplyIdx") int shareReplyIdx);
 
+	int countByShareReReplyRegDateGreaterThan(String dateW);
+
 }

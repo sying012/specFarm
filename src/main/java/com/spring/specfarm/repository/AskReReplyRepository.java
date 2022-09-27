@@ -18,4 +18,6 @@ public interface AskReReplyRepository extends JpaRepository<AskReReply, AskReRep
 	int getAskReReplyIdx(@Param("askIdx") int askIdx, @Param("askReplyIdx") int askReplyIdx);
 
 	int countByAskReply(AskReply askReply);
+
+	int countByAskReReplyRegDateGreaterThan(String dateW);
 }

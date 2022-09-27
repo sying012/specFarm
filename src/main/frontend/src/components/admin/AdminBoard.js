@@ -10,23 +10,24 @@ import AdminBoardStudyList from "./AdminBoardStudyList";
 
 const AdminBoard = () => {
   const [boardTotal, setBoardTotal] = useState(0);
-  const [studyTotal, setStudyTotal] = useState(0);
-  const [askTotal, setAskTotal] = useState(0);
-  const [shareTotal, setShareTotal] = useState(0);
   const [newBoard, setNewBoard] = useState(0);
   const [newReply, setNewReply] = useState(0);
+  const [newStudy, setNewStudy] = useState(0);
+  const [newAsk, setNewAsk] = useState(0);
+  const [newAskReply, setNewAskReply] = useState(0);
+  const [newShare, setNewShare] = useState(0);
+  const [newShareReply, setNewShareReply] = useState(0);
+
   useEffect(() => {
     axios.get(`${API_BASE_URL}/admin/boardTotal`).then((response) => {
-      setStudyTotal(response.data.studyTotal);
-      setAskTotal(response.data.askTotal);
-      setShareTotal(response.data.shareTotal);
-      setBoardTotal(
-        response.data.studyTotal +
-          response.data.askTotal +
-          response.data.shareTotal
-      );
-      // setNewBoard(response.data.newBoard);
-      // setNewReply(response.data.newReply);
+      setBoardTotal(response.data.boardTotal);
+      setNewBoard(response.data.newTotal);
+      setNewStudy(response.data.newStudy);
+      setNewAsk(response.data.newAsk);
+      setNewShare(response.data.newShare);
+      setNewReply(response.data.newReply);
+      setNewAskReply(response.data.newReplyAsk);
+      setNewShareReply(response.data.newReplyShare);
     });
     window.scrollTo(0, 0);
   }, []);
@@ -39,9 +40,17 @@ const AdminBoard = () => {
         newBoard={newBoard}
         newReply={newReply}
       />
-      <AdminBoardStudyList style={style} studyTotal={studyTotal} />
-      <AdminBoardAskList style={style} askTotal={askTotal} />
-      <AdminBoardShareList style={style} shareTotal={shareTotal} />
+      <AdminBoardStudyList style={style} newStudy={newStudy} />
+      <AdminBoardAskList
+        style={style}
+        newAsk={newAsk}
+        newAskReply={newAskReply}
+      />
+      <AdminBoardShareList
+        style={style}
+        newShare={newShare}
+        newShareReply={newShareReply}
+      />
     </div>
   );
 };

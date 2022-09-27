@@ -26,7 +26,6 @@ const Accordion = styled((props) => (
 const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
   ({ theme }) => ({
     padding: "0",
-    backgroundColor: "none",
     "&.MuiAccordionSummary-root": {
       minHeight: "35px",
     },
@@ -40,14 +39,16 @@ const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
+  background: "white",
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 //아코디언 커스터마이즈 끝
 
-const AdminBoardStudyList = ({ style, studyTotal }) => {
+const AdminBoardStudyList = ({ style, newStudy }) => {
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [boardList, setBoardList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     axios
@@ -63,6 +64,7 @@ const AdminBoardStudyList = ({ style, studyTotal }) => {
         console.log(response);
         setBoardList(response.data.studyList.content);
         setCount(response.data.studyList.totalPages);
+        setTotal(response.data.studyList.totalElements);
       })
       .catch((e) => {
         console.log(e);
@@ -96,9 +98,8 @@ const AdminBoardStudyList = ({ style, studyTotal }) => {
             justifyContent: "space-between",
           }}
         >
-          <p>총 게시글: {studyTotal}</p>
-          <p>신규 게시글: 9</p>
-          <p>신규 댓글: 53</p>
+          <p>총 게시글: {total}</p>
+          <p>7일간 신규 게시글: {newStudy}</p>
         </div>
       </div>
       <table className={style.table}>

@@ -6,8 +6,8 @@ const AdminBoardTotal = ({ style, boardTotal, newBoard, newReply }) => {
   return (
     <div className={`${style.boardBox} ${style.boardTotal}`}>
       <p>총 게시글: {boardTotal}</p>
-      <p>신규 게시글: 9</p>
-      <p>신규 댓글: 53</p>
+      <p>7일간 신규 게시글: {newBoard}</p>
+      <p>7일간 신규 댓글: {newReply}</p>
     </div>
   );
 };

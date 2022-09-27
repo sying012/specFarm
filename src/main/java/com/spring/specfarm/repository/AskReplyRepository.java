@@ -22,4 +22,6 @@ public interface AskReplyRepository extends JpaRepository<AskReply, AskReplyId> 
 	int getAskReplyIdx(@Param("askIdx")int askIdx);
 
 	void deleteByAskIdx(int askIdx);
+
+	int countByAskReplyRegDateGreaterThan(String dateW);
 }

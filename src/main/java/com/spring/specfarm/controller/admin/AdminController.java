@@ -1,6 +1,11 @@
 package com.spring.specfarm.controller.admin;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +47,24 @@ public class AdminController {
 	
 	@Autowired
 	HelpService helpService; 
+	
+	//날짜 계산
+	private static String AddDate(String form, String strDate, int year, int month, int day) throws Exception {
+
+		SimpleDateFormat dtFormat = new SimpleDateFormat(form);
+
+		Calendar cal = Calendar.getInstance();
+
+		Date dt = dtFormat.parse(strDate);
+
+		cal.setTime(dt);
+
+		cal.add(Calendar.YEAR, year);
+		cal.add(Calendar.MONTH, month);
+		cal.add(Calendar.DATE, day);
+
+		return dtFormat.format(cal.getTime());
+	}
 
 //	User관리 /////////////////////////////////////////////
 	@GetMapping("/user")
@@ -53,7 +76,6 @@ public class AdminController {
 			
 			resultMap.put("userList", userList);
 			resultMap.put("totalUser",totalUser);
-			
 			return resultMap;
 		} catch (Exception e) {
 			Map<String, Object> errorMap = new HashMap<String, Object>();
@@ -62,7 +84,59 @@ public class AdminController {
 		}
 	}
 	
+	//7일, 한달 신규가입자 수 반환
+	@GetMapping("/newUser")
+	public Map<String, Object> getNewUser(){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+			String now = dtFormat.format(new Date());
+			String dateW = AddDate("yyyy.MM.dd HH:mm",now, 0, 0, -7);
+			String dateM = AddDate("yyyy.MM.dd HH:mm",now, 0, -1, 0);
+			
+			int newUserW = adminService.getNewUserW(dateW);
+			int newUserM = adminService.getNewUserM(dateM);
 	
+			resultMap.put("newUserW", newUserW);
+			resultMap.put("newUserM",newUserM);
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+	//최근 7일간 일 별로 신규가입자 수 반환
+	@GetMapping("/chartUser")
+	public Map<String, Object> getNewChartUser(){
+		try {
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+
+			List<Map<String, Object>> list = new ArrayList<>();
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd");
+			
+			String now = dtFormat.format(new Date());
+
+			for(int i =-10; i<=-1; i++) {
+				Map<String, Object> userMap = new HashMap<String, Object>();
+				String date = AddDate("yyyy.MM.dd",now, 0, 0, i);
+				int count = adminService.getDayNewUser(date);
+				userMap.put("x", date);
+				userMap.put("y", count);
+				list.add(userMap);
+			}
+			
+			resultMap.put("userList",list);
+			return resultMap;
+		} catch (Exception e) {
+			Map<String, Object> errorMap = new HashMap<String, Object>();
+			errorMap.put("error",e.getMessage());
+			return errorMap;
+		}
+	}
+	
+
 //	Board관리 /////////////////////////////////////////////
 	//게시판 통합 정보반환
 	@GetMapping("/boardTotal")
@@ -74,9 +148,26 @@ public class AdminController {
 			int askTotal= adminService.getAskTotal();//물어방 게시글의 개수 반환
 			int shareTotal= adminService.getShareTotal();//나눔 게시글의 개수 반환
 			
-			resultMap.put("studyTotal", studyTotal);
-			resultMap.put("askTotal", askTotal);
-			resultMap.put("shareTotal", shareTotal);
+			SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+			String now = dtFormat.format(new Date());
+			String dateW = AddDate("yyyy.MM.dd HH:mm",now, 0, 0, -7); //조회일로부터 일주일전 날짜 계산
+			
+			int newStudy = adminService.getNewStudyCount(dateW); //스터디 일주일간 신규 게시물 개수
+			int newAsk = adminService.getNewAskCount(dateW); //물어방 일주일간 신규 게시물 개수
+			int newShare = adminService.getNewShareCount(dateW); //나눔 일주일간 신규 게시물 개수
+			
+			int newReplyAsk = adminService.getNewAskReplyCount(dateW) + adminService.getNewAskReReplyCount(dateW);; //물어방 일주일간 신규 댓글 개수 + 대댓글 개수
+			int newReplyShare = adminService.getNewShareReplyCount(dateW) + adminService.getNewShareReReplyCount(dateW);; //나눔 일주일간 신규 댓글 개수 + 대댓글 개수
+			
+			resultMap.put("boardTotal", studyTotal+askTotal+shareTotal); //총 게시글 수
+			resultMap.put("newStudy", newStudy); //7일간 스터티 신규 글 수
+			resultMap.put("newAsk", newAsk); //7일간 물어방 신규 글 수
+			resultMap.put("newShare", newShare); //7일간 나눔 신규 글 수
+			resultMap.put("newTotal", newStudy+newAsk+newShare); //7일간 총 신규 게시글 수
+			resultMap.put("newReply", newReplyAsk+newReplyShare); //7일간 스터티 신규 댓글 수
+			resultMap.put("newReplyAsk", newReplyAsk); //7일간 물어방 신규 댓글 수
+			resultMap.put("newReplyShare", newReplyShare); //7일간 나눔 신규 댓글 수
+			
 			
 			return resultMap;
 		} catch (Exception e) {

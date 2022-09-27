@@ -40,14 +40,16 @@ const AccordionSummary = styled((props) => <MuiAccordionSummary {...props} />)(
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
+  background: "white",
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 //아코디언 커스터마이즈 끝
 
-const AdminBoardShareList = ({ style, shareTotal }) => {
+const AdminBoardShareList = ({ style, newShare, newShareReply }) => {
   const [count, setCount] = useState(1);
   const [page, setPage] = useState(1);
   const [boardList, setBoardList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     axios
@@ -62,6 +64,7 @@ const AdminBoardShareList = ({ style, shareTotal }) => {
       .then((response) => {
         setBoardList(response.data.shareList.content);
         setCount(response.data.shareList.totalPages);
+        setTotal(response.data.shareList.totalElements);
       })
       .catch((e) => {
         console.log(e);
@@ -95,9 +98,9 @@ const AdminBoardShareList = ({ style, shareTotal }) => {
             justifyContent: "space-between",
           }}
         >
-          <p>총 게시글: {shareTotal}</p>
-          <p>신규 게시글: 9</p>
-          <p>신규 댓글: 53</p>
+          <p>총 게시글: {total}</p>
+          <p>7일간 신규 게시글: {newShare}</p>
+          <p>7일간 신규 댓글: {newShareReply}</p>
         </div>
       </div>
       <table className={style.table}>

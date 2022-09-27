@@ -32,4 +32,7 @@ public interface ShareRepository extends JpaRepository<Share, Integer> {
 	
 	@Query(value = "select a.share_yn from t_share a where a.share_idx = :shareIdx", nativeQuery = true)
 	String getShareYn(@Param("shareIdx") int shareIdx);
+
+	int countByShareRegDateGreaterThan(String dateW);
+
 }

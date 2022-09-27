@@ -23,4 +23,6 @@ public interface ShareReplyRepository extends JpaRepository<ShareReply, ShareRep
 
 	//글 삭제
 	void deleteByShareIdx(int shareIdx);
+
+	int countByShareReplyRegDateGreaterThan(String dateW);
 }

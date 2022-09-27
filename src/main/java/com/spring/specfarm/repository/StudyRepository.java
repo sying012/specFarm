@@ -19,5 +19,5 @@ public interface StudyRepository extends JpaRepository<Study, Integer> {
 	int countByStudyRegDateGreaterThan(String dateW);
 
 	// Community Main 조회수 상위4개 추출
-//	List<Study> findTop4ByOrderByStudyCountDesc();
+	List<Study> findTop4ByOrderByStudyCountDesc();
 }

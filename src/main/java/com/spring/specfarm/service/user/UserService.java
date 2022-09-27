@@ -3,7 +3,6 @@ package com.spring.specfarm.service.user;
 import java.util.List;
 import java.util.Map;
 
-import com.spring.specfarm.entity.FavCert;
 import com.spring.specfarm.entity.User;
 
 public interface UserService {

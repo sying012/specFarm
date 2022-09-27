@@ -97,7 +97,8 @@ const Home = () => {
   const wheelEvent = (e) => {
     if (e.deltaY >= 0 && count === 1) {
       count++;
-      fnScrollInterval();
+      // fnScrollInterval();
+      window.scrollTo({ top: window.innerHeight - 70, behavior: "smooth" });
       setShow(false);
     }
   };
@@ -152,7 +153,7 @@ const Home = () => {
         document.getElementById("leftLink").style.color = "black";
         document.getElementById("rightLink").style.color = "black";
       }
-      if (window.scrollY >= window.innerHeight - 71) {
+      if (window.scrollY >= window.innerHeight - 72) {
         clearInterval(scrollInterval);
         navigate(page);
         window.onscroll = () => {};
@@ -320,7 +321,7 @@ const Home = () => {
 
   return (
     <>
-      <div className={styles.outer} id="wheel">
+      <div className={styles.outer} id="wheel" style={{ position: "relative" }}>
         <div className={styles.homeBackground}>
           <header
             className={styles.header}

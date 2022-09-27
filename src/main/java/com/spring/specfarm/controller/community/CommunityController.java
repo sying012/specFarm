@@ -14,6 +14,7 @@ import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.service.community.AskService;
 import com.spring.specfarm.service.community.CommunityService;
+import com.spring.specfarm.service.community.ShareService;
 
 @RestController
 @RequestMapping("/community")
@@ -23,6 +24,9 @@ public class CommunityController {
 	
 	@Autowired
 	AskService askService;
+	
+	@Autowired
+	ShareService shareService;
 	
 	@GetMapping("")
 	public Map<String, Object> getCommunity() {
@@ -39,6 +43,9 @@ public class CommunityController {
 			responseMap.put("popularAsks", popularAsks);
 			
 			List<Share> popularShares = communityService.getShares();
+			for(Share share: popularShares) {
+				share.setCountReply(shareService.getShareReplyCount(share.getShareIdx()));
+			}
 			responseMap.put("popularShares", popularShares);
 			
 			return responseMap;

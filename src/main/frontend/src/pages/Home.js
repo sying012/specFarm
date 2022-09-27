@@ -403,6 +403,7 @@ const Home = () => {
                 <button
                   className="catBtn"
                   onClick={toggleDrawer("right", !state.right)}
+                  style={{ marginLeft: "20px" }}
                 >
                   <MenuIcon sx={{ color: "black", fontSize: "xx-large" }} />
                 </button>

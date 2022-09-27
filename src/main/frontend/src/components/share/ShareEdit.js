@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/share/newShare.module.css";
-import { Stack, Box, TextField } from "@mui/material";
+import { Stack, Box, TextField, IconButton } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import { Close } from "@mui/icons-material";
+import { useCallback } from "react";
 
 const ShareEdit = () => {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ const ShareEdit = () => {
   const { shareIdx } = useParams();
   const [titleValue, setTitleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
+  const [hasImg, setHasImg] = useState(false);
+  const [originFileList, setOriginFileList] = useState([]);
 
   useEffect(() => {
     //share 데이터요청
@@ -22,9 +26,10 @@ const ShareEdit = () => {
       .get(API_BASE_URL + "/community/share/shareDetail?shareIdx=" + shareIdx)
       .then((response) => {
         if (response.data.share) setShare(response.data.share);
-        if (response.data.shareFileList)
+        if (response.data.shareFileList) {
           setFileNameInput(response.data.shareFileList);
-        console.log(response);
+          setOriginFileList(response.data.shareFileList);
+        }
       });
   }, [shareIdx]);
 
@@ -58,15 +63,19 @@ const ShareEdit = () => {
   const editShare = (share) => {
     axios({
       method: "post",
-      url: API_BASE_URL + "/community/share/edit",
+      url: API_BASE_URL + `/community/share/edit`,
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
       data: share,
-    }).then((response) => {
-      setShare(response.data.share);
-    });
+    })
+      .then((response) => {
+        navigate(`/community/share/${response.data.share.shareIdx}`);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const handleTitleValue = (e) => {
@@ -78,19 +87,14 @@ const ShareEdit = () => {
   };
 
   const handleSubmit = (e) => {
-    let share = new FormData(e.target);
+    let shareFormData = new FormData(e.target);
     e.preventDefault();
-    share.set("shareIdx", share.shareIdx);
-    share.set("shareRegDate", share.shareRegDate);
-
-    //insertShare(share);
 
     const formObj = {};
 
     // key 설정
-    share.forEach((value, key) => {
-      if (key === "shareTitle" || key === "shareContent" || key === "shareIdx")
-        formObj[key] = value;
+    shareFormData.forEach((value, key) => {
+      if (key === "shareTitle" || key === "shareContent") formObj[key] = value;
     });
     //console.log(singleImage);
     fileList.push(singleImage);
@@ -100,7 +104,11 @@ const ShareEdit = () => {
     });
 
     formObj.uploadFiles = fileList;
-
+    formObj.shareIdx = share.shareIdx;
+    formObj.shareRegDate = share.shareRegDate;
+    formObj.hasImg = hasImg;
+    formObj.originFileList = JSON.stringify(originFileList);
+    console.log(originFileList);
     console.log(formObj);
 
     editShare(formObj);
@@ -118,6 +126,8 @@ const ShareEdit = () => {
         preImg.src = e.target.result;
       };
 
+      setHasImg(true);
+
       reader.readAsDataURL(file);
       console.log(file);
       setSingleImage((prev) => file);
@@ -132,13 +142,13 @@ const ShareEdit = () => {
 
     const newFiles = [];
     tempList.forEach((file) => {
-      //console.log(file.name);
-      newFileNameInput.push(file.name);
+      console.log(file.name);
+      newFileNameInput.push({ originalFileName: file.name });
       newFiles.push(file);
       //console.log(newFileNameInput);
     });
-    setFileNameInput((prev) => [...newFileNameInput]);
-    setMultiFiles((prev) => [...newFiles]);
+    setFileNameInput((prev) => [...prev, ...newFileNameInput]);
+    setMultiFiles((prev) => [...prev, ...newFiles]);
   };
 
   //FileNameInput 파일 수 만큼 생성
@@ -150,6 +160,26 @@ const ShareEdit = () => {
       });
     }
   }, [fileNameInput]);
+
+  //Share 글 수정 시 첨부파일 삭제
+  const deleteFile = useCallback(
+    (i) => {
+      let newFileIndxList = fileNameInput.filter(
+        (file) => file.shareFileIdx !== i
+      );
+      setFileNameInput(newFileIndxList);
+
+      // 첨부파일 삭제시 "D", 유지시 "N"
+      setOriginFileList((prev) =>
+        prev.map((file, index) =>
+          i === file.shareFileIdx
+            ? { ...file, status: "D" }
+            : { ...file, status: "N" }
+        )
+      );
+    },
+    [fileNameInput]
+  );
 
   return (
     <form id="insertShareForm" onSubmit={handleSubmit}>
@@ -190,13 +220,22 @@ const ShareEdit = () => {
                 <div>
                   {fileNameInput.length !== 0 ? (
                     fileNameInput.map((fileName, index) => (
-                      <div
-                        className={styles.uploadFileName}
-                        placeholder="첨부파일"
-                        id={`uploadFileName${index}`}
-                        key={index}
-                      >
-                        {fileName.originalFileName}
+                      <div className={styles.mdfyFile}>
+                        <div
+                          className={styles.uploadFileName}
+                          placeholder="첨부파일"
+                          id={`uploadFileName${index}`}
+                          key={index}
+                        >
+                          {fileName.originalFileName}
+                        </div>
+                        <IconButton
+                          aria-label="details"
+                          onClick={() => deleteFile(fileName.shareFileIdx)}
+                          style={{ padding: 0, height: "min-content" }}
+                        >
+                          <Close fontSize="small" style={{ color: "#666" }} />
+                        </IconButton>
                       </div>
                     ))
                   ) : (

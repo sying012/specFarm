@@ -104,3 +104,8 @@
   border-style: none;
   background-color: #1d5902;
 }
+
+/* ShareEdit */
+.mdfyFile {
+  display: flex;
+}

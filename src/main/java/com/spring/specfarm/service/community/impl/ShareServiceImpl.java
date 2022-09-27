@@ -1,7 +1,9 @@
 package com.spring.specfarm.service.community.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -164,12 +166,12 @@ public class ShareServiceImpl implements ShareService {
 		}
 	}
 
-	
+	// Share State
 	@Override
 	public String shareState(Share share) {
-		System.out.println(share.toString());
-		System.out.println(share.getShareIdx());
-		System.out.println(share.getShareYn());
+//		System.out.println(share.toString());
+//		System.out.println(share.getShareIdx());
+//		System.out.println(share.getShareYn());
 		
 		int shareIdx = share.getShareIdx();
 		String shareYn = share.getShareYn();
@@ -179,7 +181,25 @@ public class ShareServiceImpl implements ShareService {
 		return shareRepository.getShareYn(shareIdx);
 	}
 	
-
+	@Override
+	public void editFileList(List<Map<String, Object>> editFileList) {
+		for(int i = 0; i < editFileList.size(); i++) {
+			if(editFileList.get(i).get("status").toString().equals("D")) {
+				JSONObject jsonObj = new JSONObject(editFileList.get(i).get("share").toString());
+				System.out.println(jsonObj);
+				int shareIdx = Integer.parseInt(jsonObj.get("shareIdx").toString());
+				
+				ShareFile shareFile = new ShareFile();
+				Share share = new Share();
+				
+				share.setShareIdx(shareIdx);
+				shareFile.setShareFileIdx(Integer.parseInt(editFileList.get(i).get("shareFileIdx").toString()));
+				shareFile.setShare(share);
+				
+				shareFileRepository.delete(shareFile);
+			}
+		}
+	}
 	
 
 	

@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -138,6 +140,11 @@ public class ShareController {
 			Map<String, Object> response = new HashMap<String, Object>();
 			
 			Share share = shareService.shareDetail(shareIdx);
+			
+			share.setShareCount(share.getShareCount()+1);
+			
+			shareService.insertShare(share);
+			
 			List<ShareFile> shareFileList = shareService.getfileList(shareIdx);
 			
 			response.put("share", share);
@@ -271,10 +278,39 @@ public class ShareController {
 	
 
 	// Update Share
-	@PostMapping("/edit/{shareIdx}")
+	@PostMapping("/edit")
 	public Map<String, Object> editShare(MultipartHttpServletRequest multipartServletRequest,
-			HttpServletRequest request, Share share, @AuthenticationPrincipal String userId, @RequestParam Boolean hasImg) {
+			HttpServletRequest request, Share share, @RequestParam String originFileList, @AuthenticationPrincipal String userId, @RequestParam Boolean hasImg) {
 		try {
+			System.out.println(originFileList);
+			
+			JSONArray jsonArray = new JSONArray(originFileList);
+			
+			System.out.println(jsonArray);
+			
+			List<Map<String, Object>> editFileList = new ArrayList<Map<String, Object>>();
+			
+			if(jsonArray != null) {
+				
+				int jsonSize = jsonArray.length();
+				
+				for (int i = 0; i < jsonSize; i++) {
+
+					Map<String, Object> temp = new HashMap<String, Object>();
+					
+					JSONObject tempobj = jsonArray.getJSONObject(i);
+							
+					Iterator it = tempobj.keys();
+					
+					while(it.hasNext()) {
+						String key = it.next().toString();
+						temp.put(key, tempobj.get(key));
+					}
+					
+					editFileList.add(temp);
+				}
+			}
+			
 			User user = new User();
 			user.setUserId(userId);
 			share.setUser(user);
@@ -320,9 +356,11 @@ public class ShareController {
 				}
 			}
 
-			shareIdx = shareService.insertShare(share);
+			//shareIdx = shareService.insertShare(share);
+			
+			shareService.editFileList(editFileList);
 
-			shareService.insertShareFileList(shareFileList);
+			//shareService.insertShareFileList(shareFileList);
 
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("share", share);

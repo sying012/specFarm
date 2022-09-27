@@ -14,9 +14,9 @@ public class CertContents {
 	@Id
 	private int certContentsIdx;
 	
-	@Column(name="contents", columnDefinition = "varchar(4000)") //시험 정보
+	@Column(name="contents", columnDefinition = "varchar(16000)") //시험 정보
 	private String contents;
 
-	@Column(name="jmfldnm", columnDefinition = "varchar(255)") //시험 정보
+	@Column(name="jmfldnm", columnDefinition = "varchar(255)") //자격증 이름
 	private String jmfldnm;
 }

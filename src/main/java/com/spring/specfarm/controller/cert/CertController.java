@@ -15,6 +15,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,8 @@ public class CertController {
 
 	@Autowired
 	private CertService certService;
-
+	
+	//자격증 목록 불러오기
 	@GetMapping("/certList")
 	public void certList(String[] args) throws Exception {
 
@@ -102,7 +104,8 @@ public class CertController {
 		// certService.setCertficationList(list);
 
 	}
-
+	
+	//대분류
 	@GetMapping("/getCertLList")
 	public Map<String, Object> getCertLList() {
 		try {
@@ -120,7 +123,8 @@ public class CertController {
 			return errorMap;
 		}
 	}
-
+	
+	//중분류
 	@GetMapping("/getCertMList")
 	public Map<String, Object> getCertMList(@RequestParam("obligfldnm") String obligfldnm) {
 		try {
@@ -140,13 +144,17 @@ public class CertController {
 			return errorMap;
 		}
 	}
-
+	
+	//소분류
 	@GetMapping("/getCertSList")
-	public Map<String, Object> getCertSList(@RequestParam("mdobligfldnm") String mdobligfldnm) {
+	public Map<String, Object> getCertSList(@RequestParam("mdobligfldnm") String mdobligfldnm ) {
 		try {
 			System.out.println(mdobligfldnm);
+			
 
 			List<Map<String, Object>> certSList = certService.getCertSList(mdobligfldnm);
+			
+			
 
 			Map<String, Object> response = new HashMap<String, Object>();
 
@@ -160,17 +168,45 @@ public class CertController {
 			return errorMap;
 		}
 	}
+	//검색
+	 @GetMapping("/getCertSearch")
+	   public Map<String, Object> getCertSearch(@RequestParam(required=false)  String searchKeyword) {
+	      try {
+	    	  System.out.println(searchKeyword);
+	            
+	         List<Map<String, Object>> certSearchList = certService.getCertSearch(searchKeyword);
+	         
+	         Map<String, Object> response = new HashMap<String, Object>();
+	   
+	         response.put("certSearchList", certSearchList);
+	         //System.out.println(response);
+	         return response;
+	         
+	      } catch(Exception e){
+	         Map<String, Object> errorMap = new HashMap<String, Object>();
+	         errorMap.put("error",e.getMessage());
+	         return errorMap;
+	      }
+	   }
 	
+	
+	
+	//시험일정
 	@GetMapping("/getTestList")
 	public Map<String, Object> getTestList(@RequestParam("jmcd") String jmcd) {
 		try {
-			System.out.println();
+			System.out.println(jmcd);
 
 			List<Map<String, Object>> testList = certService.getTestList(jmcd);
+			
+			List<Map<String, Object>> certLList = certService.getCertLList();
 
 			Map<String, Object> response = new HashMap<String, Object>();
 
 			response.put("getTestList", testList);
+			
+			response.put("certLList", certLList);
+			
 			System.out.println(response);
 			return response;
 
@@ -182,7 +218,7 @@ public class CertController {
 	}
 		
 	
-
+	//시험일정 불러오기
 	@GetMapping("/testList")
 	public void testList(String[] args) throws IOException, InterruptedException {
 
@@ -195,7 +231,7 @@ public class CertController {
 			urlBuilder.append("?" + URLEncoder.encode("jmCd", "UTF-8") + "="
 					+ URLEncoder.encode(jmcdList.get(i), "UTF-8")); /* 종목코드 */
 			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
-					+ "uFezCoycg2tzO%2F3YbMtuevHdoqHsYNVyZFxo7m7%2FzxR4d9UKxEotUcHCaaawwmChdB%2B1ZL%2B8oMzqnVKrz4C2dQ%3D%3D"); /*
+					+ "wh4Py7l30BZA2vDhL6aoNI3Gu83BlbbYyZ5fLacQICLXTz7pC4lek%2BzGuPdPfIVwk6eNwpkB%2BF9p5Oq5x11gJA%3D%3D"); /*
 																																 * Service
 																																 * Key
 																																 */
@@ -277,7 +313,8 @@ public class CertController {
 		}
 
 	}
-
+	
+	//시험내용 불러오기
 	@GetMapping("/testContent")
 	public void testContent(String[] args) throws IOException {
 
@@ -289,8 +326,8 @@ public class CertController {
 					"http://openapi.q-net.or.kr/api/service/rest/InquiryInformationTradeNTQSVC/getList"); /* URL */
 			urlBuilder.append("?" + URLEncoder.encode("jmCd", "UTF-8") + "="
 					+ URLEncoder.encode(jmcdList.get(i), "UTF-8")); /* 종목코드 */
-			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8")
-					+ "=ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*
+			urlBuilder.append("&" + URLEncoder.encode("serviceKey", "UTF-8") + "="
+					+ "ySQ1XKt4a%2BcNW7xeGq2VNZ%2Bjn7X1%2BXoOZBxD6rYtHIULgxkiUXwv0Dg5Rb8Re%2F0JRDLHE3xGSuA0P2ZFIYTpQQ%3D%3D"); /*
 																																 * Service
 																																 * Key
 																																 */
@@ -391,6 +428,49 @@ public class CertController {
 	         return errorMap;
 	      }
 	   }
-
-
+	   
+	   //시험내용 불러오기
+	   @GetMapping("/getContentList")
+	   public Map<String, Object> getContentList() {
+		      try {
+		            
+		         List<Map<String, Object>> contentList = certService.getContentList();
+		         
+		         System.out.println(contentList);
+		         
+		         Map<String, Object> response = new HashMap<String, Object>();
+		   
+		         response.put("contentList", contentList);
+		         System.out.println(response);
+		         return response;
+		         
+		      } catch(Exception e){
+		         Map<String, Object> errorMap = new HashMap<String, Object>();
+		         errorMap.put("error",e.getMessage());
+		         return errorMap;
+		      }
+		   }
+	   
+	   // 페이지 진입시 좋아요 여부 확인
+	   @GetMapping("/getHeartState")
+	   public Map<String, Object> getHeartState(@RequestParam String cert_idx) {
+		   //System.out.println("mp : " + cert_idx);
+	         return null;
+	   } 
+	   
+	   // 좋아요 클릭시 Y,N 업데이트 처리
+	   @GetMapping("/setHeart")
+	   public String setHeart(@RequestParam String cert_idx, @AuthenticationPrincipal String userId) {
+		   System.out.println("mp : " + cert_idx);
+		   System.out.println(userId);
+		   certService.setHeart(cert_idx, userId);
+		   return "success";
+	   }
+	   
+	   @GetMapping("/putHeart")
+	   public int putHeart(@RequestParam String cert_idx, @AuthenticationPrincipal String userId) {
+		   System.out.println("mp : " + cert_idx);
+		   return certService.putHeart(cert_idx, userId);
+	   }
+	  
 }

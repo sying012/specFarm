@@ -105,4 +105,11 @@
 		WHERE CERT_IDX = #{cert_idx}
 		  AND USER_ID LIKE '#{userId}'
    </delete>
+   
+   	<select id="getCertIdx" parameterType="String" resultType="String">
+      SELECT CERT_IDX
+         FROM T_CERT
+         WHERE JMCD = #{cert_idx}
+   </select>
+   
 </mapper>

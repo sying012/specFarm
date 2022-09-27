@@ -28,6 +28,6 @@ public interface CertMapper {
 	 
 	 int putHeart(@Param("cert_idx")String cert_idx,@Param("userId") String userId);
 	 
-	 int getFavCertIdx(String userId);
+	 String getCertIdx(String cert_idx);
 	 
 }

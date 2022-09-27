@@ -37,5 +37,7 @@ public interface CertService {
 	int setHeart(String cert_idx, String userId);
 	
 	int putHeart(String cert_idx, String userId);
+
+	String getCertIdx(String cert_idx);
 	
 }

@@ -51,7 +51,7 @@ const Help = () => {
                 onClick={handleClick}
               />
               <label className={styles.tabs} htmlFor="written">
-                작성한 글
+                문의 내역
               </label>
             </li>
           </div>

@@ -462,6 +462,7 @@ public class CertController {
 	   @GetMapping("/setHeart")
 	   public String setHeart(@RequestParam String cert_idx, @AuthenticationPrincipal String userId) {
 		   System.out.println("mp : " + cert_idx);
+		   cert_idx = certService.getCertIdx(cert_idx);
 		   System.out.println(userId);
 		   certService.setHeart(cert_idx, userId);
 		   return "success";
@@ -469,6 +470,7 @@ public class CertController {
 	   
 	   @GetMapping("/putHeart")
 	   public int putHeart(@RequestParam String cert_idx, @AuthenticationPrincipal String userId) {
+		   cert_idx = certService.getCertIdx(cert_idx);
 		   System.out.println("mp : " + cert_idx);
 		   return certService.putHeart(cert_idx, userId);
 	   }

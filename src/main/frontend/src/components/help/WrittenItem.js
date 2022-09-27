@@ -1,6 +1,6 @@
-import { createTheme, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { DeleteForever } from "@mui/icons-material";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -70,7 +70,9 @@ const WrittenItem = ({ help, expanded, handleChange, setHelpList }) => {
                   {help.attachedFile ? (
                     <div className={styles.smContainer}>
                       <p className={styles.attachedFile}>첨부 파일</p>
-                      <a href={"/upload/cs/help/" + help.attachedFile}>{help.attachedRealName}</a>
+                      <a href={"/upload/cs/help/" + help.attachedFile}>
+                        {help.attachedRealName}
+                      </a>
                     </div>
                   ) : (
                     <></>

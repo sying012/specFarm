@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../app-config";
 import WrittenItem from "../../components/help/WrittenItem";
 

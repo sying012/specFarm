@@ -26,8 +26,7 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	@Override
 	public List<Study> getStudys() {
-//		return studyRepository.findTop4ByOrderByStudyCountDesc();
-		return studyRepository.findTop4ByOrderByStudyMemberCnt();
+		return studyRepository.findTop4ByOrderByStudyCountDesc();
 	}
 	
 	@Override
@@ -37,8 +36,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public List<Share> getShares() {
-//		return shareRepository.findTop4ByOrderByShareCountDesc();
-		return shareRepository.findTop4ByOrderByShareRegDateDesc();
+		return shareRepository.findTop4ByOrderByShareCountDesc();
 	}
 
 }

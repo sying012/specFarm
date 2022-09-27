@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AskListItem from "../components/ask/AskListItem";
 import "../styles/community/CommunityMain.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -30,7 +30,6 @@ const CommunityMain = () => {
       })
       .catch((e) => {
         console.log("catch문 " + e);
-        // window.location.href = "/login";
       });
   }, []);
 

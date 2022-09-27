@@ -113,10 +113,6 @@ function ProfileMdf() {
     setNicknameValue(value);
   }
 
-  useEffect(() => {
-    console.log(user.userNick);
-  }, [user]);
-
   // 닉네임 중복체크
   const nickCheck = useCallback(
     (e) => {

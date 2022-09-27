@@ -252,7 +252,7 @@ const StudyContent = ({
               )}
             </div>
             <div className={styles.contentWrapper}>
-              <pre className={styles.content}>{study.studyContent}</pre>
+              <div className={styles.content}>{study.studyContent}</div>
             </div>
 
             <div className={styles.btnWrapper}>

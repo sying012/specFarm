@@ -407,7 +407,7 @@ const Header = () => {
                 로그인
               </Link>
             ) : loginedUser.role === "ROLE_ADMIN" ? (
-              <Link to="/admin" id="adminLink">
+              <Link to="/admin/user" id="adminLink">
                 <div
                   style={{
                     maxWidth: "110px",

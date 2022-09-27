@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
-import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const StudyReg = ({ setStudyList, setStudyMemberList }) => {
   const ITEM_HEIGHT = 48;
@@ -109,7 +108,7 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
         <div className={styles.leftContainer}>
           <img
             className={styles.studyImgPreview}
-            src={defaultStudyImg}
+            src="https://cdn.emetro.co.kr/data2/content/image/2020/01/23/0540/20200123000058.jpg"
             alt="미리보기"
             id="studyImgPreview"
             title="사진을 추가하려면 클릭하세요."

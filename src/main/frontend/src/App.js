@@ -50,7 +50,7 @@ function App() {
 
       <Route element={<Layout />}>
         <Route path="/cert" element={<CertMain />}></Route>
-        <Route path="/cert/certfind/*" element={<CertFind />}></Route>
+        <Route path="/cert/certfind/:jmcd" element={<CertFind />}></Route>
 
         <Route path="/skills" element={<SkillsMain />}></Route>
         <Route path="/skills/jobcafe/*" element={<JobCafe />}></Route>

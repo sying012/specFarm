@@ -35,7 +35,32 @@
 
 	<select id="getTestList" parameterType="string"
 		resultType="camelHashMap">
-		SELECT 
+		SELECT IMPLPLANNM 
+			 , DATE_FORMAT(DOCREGSTARTDT, '%Y.%m.%d')
+			   DOCREGSTARTDT
+			 , DATE_FORMAT(DOCREGENDDT, '%Y.%m.%d')
+			   DOCREGENDDT
+			 , DATE_FORMAT(DOCEXAMSTARTDT, '%Y.%m.%d')
+			   DOCEXAMSTARTDT
+			 , DATE_FORMAT(DOCPASSDT, '%Y.%m.%d')
+               DOCPASSDT
+			 , DATE_FORMAT(PRACREGSTARTDT, '%Y.%m.%d')
+			   PRACREGSTARTDT
+			 , DATE_FORMAT(PRACREGENDDT, '%Y.%m.%d')
+			   PRACREGENDDT
+			 , DATE_FORMAT(PRACEXAMSTARTDT, '%Y.%m.%d')
+			   PRACEXAMSTARTDT
+			 , DATE_FORMAT(PRACEXAMENDDT, '%Y.%m.%d')
+			   PRACEXAMENDDT
+			 , DATE_FORMAT(PRACPASSSTARTDT, '%Y.%m.%d')
+               PRACPASSSTARTDT
+			 ,
+			   JMCD,
+               JMFLDNM,
+               CERT_TEST_IDX
+		   FROM T_CERT_TEST
+           WHERE JMCD = #{jmcd} 
+			ORDER BY IMPLPLANNM, JMCD
 	</select>
 	
 	<select id="getCertList" resultType="camelHashMap">
@@ -44,4 +69,40 @@
          FROM T_CERT
          ORDER BY CERT_IDX
    </select>
+   
+   <select id="getCertSearch" parameterType="String" resultType="camelHashMap">
+      SELECT DISTINCT JMFLDNM,
+			 JMCD
+	  	FROM T_CERT
+		WHERE MDOBLIGFLDCD IS NOT NULL
+		<if test='searchKeyword != null and !("").equals(searchKeyword)'>
+			AND JMCD IN (
+							SELECT A.JMCD
+								FROM T_CERT A
+								WHERE A.JMFLDNM LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+		</if>
+		ORDER BY JMCD
+   </select>
+   
+   <select id="getContentList"  resultType="camelHashMap">
+   	SELECT CONTENT_IDX, 
+   			CONTENT 
+   		FORM T_CERT_CONTENTS
+   </select>
+   
+   <select id="getHeartState" parameterType="String" resultType="camelHashMap">
+		SELECT HEART FROM T_FAV_CERT WHERE CERT_IDX = #{cert_idx}	  
+   </select>
+   
+   <insert id="setHeart" parameterType="String" >
+		INSERT INTO T_FAV_CERT (CERT_IDX, USER_ID,FAV_CERT_IDX)
+		VALUES(#{cert_idx}, #{userId},(SELECT IFNULL(MAX(FAV_CERT_IDX), 0) + 1 FROM T_FAV_CERT a WHERE USER_ID = #{userId}))
+   </insert>
+   
+   <delete id="putHeart" parameterType="String" >
+		DELETE FORM T_FAV_CERT
+		WHERE CERT_IDX = #{cert_idx}
+		  AND USER_ID LIKE '#{userId}'
+   </delete>
 </mapper>

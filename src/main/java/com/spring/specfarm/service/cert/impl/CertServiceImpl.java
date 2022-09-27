@@ -3,16 +3,21 @@ package com.spring.specfarm.service.cert.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Arg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spring.specfarm.entity.Cert;
 import com.spring.specfarm.entity.CertContents;
 import com.spring.specfarm.entity.CertTest;
+import com.spring.specfarm.entity.FavCertId;
 import com.spring.specfarm.mapper.CertMapper;
 import com.spring.specfarm.repository.CertContentsRepository;
 import com.spring.specfarm.repository.CertRepository;
 import com.spring.specfarm.repository.CertTestRepository;
+import com.spring.specfarm.repository.FavCertRepository;
 import com.spring.specfarm.service.cert.CertService;
 
 @Service
@@ -20,6 +25,9 @@ public class CertServiceImpl implements CertService {
 
 	@Autowired
 	CertRepository certRepository;
+	
+	@Autowired
+	FavCertRepository favCertRepository;
 
 	@Autowired
 	private CertTestRepository certTestRepository;
@@ -135,7 +143,7 @@ public class CertServiceImpl implements CertService {
 
 
 	public void setCertContents(List<Map<String, Object>> list) {
-		// System.out.println("////////////////////////////////////////////////"+list.size());
+		 System.out.println("////////////////////////////////////////////////"+list.size());
 
 		for (int i = 0; i < list.size(); i++) {
 			CertContents certcontents = new CertContents();
@@ -155,7 +163,7 @@ public class CertServiceImpl implements CertService {
 				certcontents.setJmfldnm(null);
 			}
 
-			 //certContentsRepository.save(certcontents);
+			//certContentsRepository.save(certcontents);
 
 		}
 	}
@@ -164,7 +172,6 @@ public class CertServiceImpl implements CertService {
 
 	@Override
 	public List<Map<String, Object>> getCertLList() {
-		System.out.println("11111111111111111" + "getCertList");
 		return certMapper.getCertLList();
 	}
 	
@@ -188,4 +195,37 @@ public class CertServiceImpl implements CertService {
 	   public List<Map<String, Object>> getCertList() {
 	      return certMapper.getCertList();
 	   }
+	
+	@Override
+	public List<Map<String, Object>> getCertSearch(String searchKeyword) {
+		return certMapper.getCertSearch(searchKeyword);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getContentList() {
+	      return certMapper.getContentList();
+	}
+	
+	@Override
+    public Map<String, Object> getHeartState(String cert_idx) {
+		return certMapper.getHeartState(cert_idx);
+    }
+	
+	@Override
+    public int setHeart(String cert_idx, String userId) {
+		return certMapper.setHeart(cert_idx, userId);
+    }
+	
+	@Override
+    public int putHeart(String cert_idx, String userId) {
+		FavCertId favCertId = new FavCertId();
+		favCertId.setCertIdx(Integer.parseInt(cert_idx));
+		favCertId.setUserId(userId);
+		favCertRepository.deleteById(favCertId);
+		return 1;
+    }
+
+
+
 }
+

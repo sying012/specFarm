@@ -21,7 +21,10 @@ const CertMain = () => {
   const [certMList, setCertMList] = useState([]);
   const [certM, setCertM] = useState("");
   const [certSList, setCertSList] = useState([]);
+  const [certS, setCertS] = useState("");
   const [testList, setTestList] = useState([]);
+  const [certSearchList, setCertSearchList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleClick = (e) => {
     axios({
@@ -51,7 +54,6 @@ const CertMain = () => {
   }, [certL]);
 
   const certMCatChange = (e) => {
-    console.log(e.target.value);
     setCertM(e.target.value);
   };
 
@@ -63,11 +65,23 @@ const CertMain = () => {
         method: "get",
         params: { mdobligfldnm: certM },
       }).then((response) => {
-        console.log(response.data);
         setCertSList(response.data.certSList);
       });
     }
   }, [certM]);
+
+  useEffect(() => {
+    console.log(certS);
+    if (certS !== "" && typeof certS !== "undefined") {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSList",
+        method: "get",
+        params: { mdobligfldnm: certS },
+      }).then((response) => {
+        setCertSList(response.data.certSList);
+      });
+    }
+  }, [certS]);
 
   //const handleClick = (e) => {
   //   axios({
@@ -84,10 +98,26 @@ const CertMain = () => {
       url: API_BASE_URL + "/cert/getCertLList",
       method: "get",
     }).then((response) => {
-      console.log(response.data.certLList);
       setCertLList(response.data.certLList);
     });
   }, []);
+
+  const searchTest = (e) => {
+    if (e.keyCode === 13) {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSearch",
+        method: "get",
+        params: { searchKeyword: searchKeyword },
+      }).then((response) => {
+        console.log(response.data);
+        setCertSList(response.data.certSearchList);
+      });
+    }
+  };
+
+  const handleSearchKeyword = (e) => {
+    setSearchKeyword(e.target.value);
+  };
 
   return (
     <div
@@ -105,8 +135,11 @@ const CertMain = () => {
 
       <div className={styles.certSearchBar}>
         <TextField
-          id="outlined-search"
+          id="certSearch"
           type="search"
+          value={searchKeyword}
+          onChange={handleSearchKeyword}
+          onKeyDown={searchTest}
           InputProps={{
             startAdornment: <SearchIcon color="action" fontSize="large" />,
             style: {
@@ -127,7 +160,12 @@ const CertMain = () => {
               },
             },
           }}
-        ></TextField>
+        >
+          {certSearchList &&
+            certSearchList.map((item) => (
+              <MenuItem key={item.jmcd}>{item.jmfldnm}</MenuItem>
+            ))}
+        </TextField>
       </div>
       <Grid
         container
@@ -225,17 +263,19 @@ const CertMain = () => {
 
       <div className={styles.certMainCard}>
         <div className={styles.certMainBody}>
-          <div>
+          <div style={{ display: "inline-block", width: "100%" }}>
             {certSList &&
               certSList.map((certS) => (
-                <button
-                  type="button"
-                  key={certS.jmcd}
-                  onClick={() => handleClick(certS)}
-                  className={styles.smallcert}
-                >
-                  {certS.jmfldnm}
-                </button>
+                <Link to={`/cert/certFind/${certS.jmcd}`} key={certS.jmcd}>
+                  <button
+                    type="button"
+                    key={certS.jmcd}
+                    // onClick={() => handleClick(certS.jmcd)}
+                    className={styles.smallcert}
+                  >
+                    {certS.jmfldnm}
+                  </button>
+                </Link>
               ))}
           </div>
         </div>

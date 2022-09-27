@@ -20,9 +20,4 @@ public interface CertTestRepository extends JpaRepository<CertTest, Integer> {
 
 
 
-	
-
-
-
-
 }

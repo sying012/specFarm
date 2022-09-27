@@ -23,6 +23,7 @@
     line-height: 20px;
     border: none;
     cursor: pointer;
+   
   }
 
   .smallFindCert:hover {
@@ -49,7 +50,10 @@
   }
 
   .infoHead {
-  padding: 10px
+  padding: 10px;
+  font-size: 15px;
+ 
+  
  
   }
 
@@ -74,7 +78,7 @@
   .infoTable > thead > tr > th {
     background-color: rgba(150, 150, 150, 0.3);
     border-top: 1px solid rgba(150, 150, 150, 0.3);
-    padding: 15px 5px;
+    padding: 10px 5px;
     text-align: center;
   }
 
@@ -109,6 +113,7 @@
 
   .testInfo {
     padding: 10px;
+    line-height: 25px;
   }
 
   .certFindSearchBar {

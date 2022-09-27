@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface CertMapper {
@@ -16,4 +17,17 @@ public interface CertMapper {
 	 List<Map<String, Object>> getTestList(String jmcd);
 	 
 	 List<Map<String, Object>> getCertList();
+	 
+	 List<Map<String, Object>> getCertSearch(String searchKeyword);
+	 
+	 List<Map<String, Object>> getContentList();
+	 
+	 Map<String, Object> getHeartState(String cert_idx);
+	 
+	 int setHeart(@Param("cert_idx")String cert_idx,@Param("userId") String userId);
+	 
+	 int putHeart(@Param("cert_idx")String cert_idx,@Param("userId") String userId);
+	 
+	 int getFavCertIdx(String userId);
+	 
 }

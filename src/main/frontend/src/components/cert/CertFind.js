@@ -20,6 +20,8 @@ import TextField from "@mui/material/TextField";
 import "../../styles/cert/info.css";
 import { API_BASE_URL } from "../../app-config";
 import axios from "axios";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,26 +58,27 @@ const CertFind = () => {
   const [certM, setCertM] = useState("");
   const [certSList, setCertSList] = useState([]);
   const [testList, setTestList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [certSearchList, setCertSearchList] = useState([]);
 
-  const handleClick = (e) => {
-    axios({
-      url: API_BASE_URL + "/cert/getCertTest",
-      method: "get",
-      params: { jmcd: e.target.value },
-    }).then((response) => {
-      setTestList(response.data.testList);
-    });
-  };
+  const params = useParams();
 
   useEffect(() => {
+    console.log(params.jmcd);
+    axiosTestList(params.jmcd);
+  }, []);
+
+  const axiosTestList = (jmcd) => {
     axios({
-      url: API_BASE_URL + "/cert/getCertLList",
+      url: API_BASE_URL + "/cert/getTestList",
       method: "get",
+      params: { jmcd: jmcd },
     }).then((response) => {
-      console.log(response.data.certLList);
+      console.log(response.data);
+      setTestList(response.data.getTestList);
       setCertLList(response.data.certLList);
     });
-  }, []);
+  };
 
   const certLCatChange = (e) => {
     setCertL((prev) => e.target.value);
@@ -96,6 +99,7 @@ const CertFind = () => {
 
   const certMCatChange = (e) => {
     console.log(e.target.value);
+
     setCertM(e.target.value);
   };
 
@@ -130,25 +134,89 @@ const CertFind = () => {
     setValue(newValue);
   };
 
+  const searchTest = (e) => {
+    if (e.keyCode === 13) {
+      axios({
+        url: API_BASE_URL + "/cert/getCertSearch",
+        method: "get",
+        params: { searchKeyword: searchKeyword },
+      }).then((response) => {
+        setCertSList(response.data.certSearchList);
+      });
+    }
+  };
+
+  const handleSearchKeyword = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  useEffect(() => {
+    axios({
+      url: API_BASE_URL + "/cert/getHeartState",
+      method: "get",
+      params: { cert_idx: params.jmcd },
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+    }).then((response) => {
+      console.log(response.data.heart);
+      let heartYn = response.data.heart;
+      if ("Y" == heartYn) {
+        // 좋아요 활성화
+      } else {
+        //좋아요 해제
+      }
+      return false;
+    });
+  }, []);
+
+  const heartInsert = () => {
+    axios({
+      url: API_BASE_URL + "/cert/setHeart",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      params: { cert_idx: params.jmcd },
+    }).then((response) => {
+      console.log(response.data);
+    });
+  };
+
+  const heartDelete = () => {
+    axios({
+      url: API_BASE_URL + "/cert/putHeart",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
+      },
+      params: { cert_idx: params.jmcd },
+    }).then((response) => {
+      console.log(response.data.heart);
+      let heartYn = response.data.heart;
+      if ("Y" == heartYn) {
+        // 좋아요 활성화
+      } else {
+        //좋아요 해제
+      }
+      return false;
+    });
+  };
+
+  const handleChangeHeart = (e) => {
+    console.log("click!!");
+    if (e.target.checked === true) {
+      heartInsert();
+    } else {
+      heartDelete();
+    }
+  };
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-  // useEffect(() => {
-  //   axios({
-  //     url: API_BASE_URL + "/cert/testList",
-  //     method: "get",
-  //   }).then((response) => {
-  //     console.log(response.data);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios({
-  //     url: API_BASE_URL + "/cert/testContent",
-  //     method: "get",
-  //   }).then((response) => {
-  //     console.log(response.data);
-  //   });
-  // }, []);
+  const handleClick = (certS) => {
+    axiosTestList(certS.jmcd);
+  };
 
   return (
     <div>
@@ -156,8 +224,11 @@ const CertFind = () => {
         <div className={styles.certContainer}>
           <div className={styles.certfindSearch}>
             <TextField
-              id="outlined-search"
+              id="certSearch"
               type="search"
+              value={searchKeyword}
+              onChange={handleSearchKeyword}
+              onKeyDown={searchTest}
               InputProps={{
                 startAdornment: <SearchIcon color="action" />,
 
@@ -178,7 +249,12 @@ const CertFind = () => {
                 },
               }}
               size="small"
-            ></TextField>
+            >
+              {certSearchList &&
+                certSearchList.map((item) => (
+                  <MenuItem key={item.jmcd}>{item.jmfldnm}</MenuItem>
+                ))}
+            </TextField>
           </div>
           <Grid xs={6} style={{ padding: "5px 10px" }}>
             <FormControl sx={{ minWidth: 280 }} style={{ fontSize: "10px" }}>
@@ -265,7 +341,7 @@ const CertFind = () => {
                 <button
                   type="button"
                   key={certS.jmcd}
-                  //onClick={() => handleClick(certS)}
+                  onClick={() => handleClick(certS)}
                   className={styles.smallFindCert}
                 >
                   {certS.jmfldnm}
@@ -276,13 +352,17 @@ const CertFind = () => {
         <div className={styles.certFind}>
           <div className={styles.certFindName}>관심등록</div>
           <div className={styles.certFindTitle}>
-            사회조사분석사1급
+            {testList.map(
+              (item, index) =>
+                index == 0 && <div key={item.jmcd}>{item.jmfldnm}</div>
+            )}
             <Checkbox
               {...label}
               icon={<FavoriteBorder />}
               checkedIcon={<Favorite />}
               classes={{ root: "custom-checkbox-root" }}
-              style={{ float: "right", marginTop: "-10px" }}
+              style={{ float: "right", marginTop: "-50px" }}
+              onChange={handleChangeHeart}
             />
           </div>
           <Box sx={{ width: "100%" }}>
@@ -309,9 +389,13 @@ const CertFind = () => {
             <TabPanel
               value={value}
               index={0}
-              style={{ background: "rgba(255, 255, 255, 0.05)" }}
+              style={{
+                background: "rgba(255, 255, 255, 0.05)",
+                height: "450px",
+                overflowy: "auto",
+              }}
             >
-              <TestSchedule />
+              <TestSchedule testList={testList} />
             </TabPanel>
             <TabPanel
               value={value}

@@ -2,6 +2,7 @@ package com.spring.specfarm.service.community;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,6 @@ import com.spring.specfarm.entity.Share;
 import com.spring.specfarm.entity.ShareFile;
 import com.spring.specfarm.entity.ShareReReply;
 import com.spring.specfarm.entity.ShareReply;
-import com.spring.specfarm.entity.Study;
 import com.spring.specfarm.entity.User;
 
 public interface ShareService {
@@ -59,8 +59,9 @@ public interface ShareService {
 	//share 대댓글 count
 	int getShareReReplyCount(ShareReply shareReply);
 
+	// share 상태
 	String shareState(Share share);
 
-	
-	
+	// 기존 첨부파일 삭제
+	void editFileList(List<Map<String, Object>> editFileList);
 }

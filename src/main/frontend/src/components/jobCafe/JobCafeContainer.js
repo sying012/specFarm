@@ -8,36 +8,53 @@ import { useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
-const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
+const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [update, setUpdate] = useState(false);
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [count, setCount] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [page, setPage] = useState(1);
 
-  //jobCafe 리스트
+  const onSelectCategory = (cate) => {
+    setCategory(cate);
+  };
+
   const getJobCafeList = useCallback(() => {
-    axios
-      .get(API_BASE_URL + "/skills/jobCafe", {
-        headers: {
-          Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
-        },
-        params: {
-          page: page - 1,
-          searchKeyword: searchKeyword,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        getJobCafeList(response.data.jobCafeList.content);
-        setCount(response.data.jobCafeList.totalPages);
-        window.scrollTo(0, 0);
-      })
-      .catch((e) => {
-        console.log(e.data.error);
-      });
+    axios({
+      url: API_BASE_URL + "/skills/jobCafe",
+      method: "get",
+      params: {
+        page: page - 1,
+        searchKeyword: searchKeyword,
+      },
+    }).then((response) => {
+      console.log(response.data);
+      setJobCafeList(response.data.jobCafeList.content);
+      setCount(response.data.jobCafeList.totalPages);
+      //중복되는 CAFE_TYPE_NM 제거 후 CAFE_TYPE_NM으로 typeArr 생성
+      const typeArr = new Set();
+      for (let i = 0; i < response.data.jobCafeList.content.length; i++) {
+        console.log(response.data.jobCafeList.content.length);
+        typeArr.add(response.data.jobCafeList.content[i].cafeTypeName);
+      }
+      setCategories(Array.from(typeArr));
+      window.scrollTo(0, 0);
+      console.log(categories);
+    });
   }, [page, searchKeyword]);
+
+  useEffect(() => {
+    if (category !== "") {
+      const newJobCafeList = jobCafeList.filter(
+        (jobCafeItem) => jobCafeItem.CAFE_TYPE_NM === category
+      );
+
+      setJobCafeList(newJobCafeList);
+    }
+  }, [category]);
 
   //검색
   const handleSearchKeyword = (e) => {
@@ -46,7 +63,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
 
   //페이징 업데이트
   useEffect(() => {
-    //if (update === true) //jobCafeList;
+    if (update === true) getJobCafeList();
   }, [page, update]);
 
   useEffect(() => {
@@ -68,7 +85,7 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   const submitSearch = (e) => {
     setPage(1);
     e.preventDefault();
-    //jobCafeList();
+    getJobCafeList();
   };
 
   //onSelectCategory: 카테고리별로 분류된 리스트 반환
@@ -81,16 +98,18 @@ const JobCafeContainer = ({ jobCafeList, categories, onSelectCategory }) => {
   return (
     <form onSubmit={submitSearch}>
       <div className={styles.typeBox}>
-        <div className={styles.allTypeBtn} active={true}>
+        {/* <div className={styles.allTypeBtn}>
           <a href={"/"} onClick={(e) => onClickCategory("전체", e)}>
             전체
           </a>
-        </div>
+        </div> */}
         {categories.map((category, index) => (
-          <div key={category + index} className={styles.typeBtns}>
-            <a href={"/"} onClick={() => onClickCategory(category)}>
-              {category}
-            </a>
+          <div
+            key={category + index}
+            className={styles.typeBtns}
+            onClick={() => onClickCategory(category)}
+          >
+            {category}
           </div>
         ))}
       </div>

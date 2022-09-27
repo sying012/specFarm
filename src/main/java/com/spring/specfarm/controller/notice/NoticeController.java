@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.specfarm.common.CommUtils;
 import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.entity.Brch;
@@ -97,11 +96,8 @@ public class NoticeController {
 	public Map<String, Object> getNotice(@PathVariable int noticeId, @RequestParam String searchKeyword){
 		try {
 			Notice notice = noticeService.getNotice(noticeId);
-			System.out.println("1");
 			Notice prev = noticeService.getPrev(searchKeyword, noticeId);
-			System.out.println("prev");
 			Notice next = noticeService.getNext(searchKeyword, noticeId);
-			System.out.println("next");
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("notice", notice);
 			response.put("prev", prev);
@@ -141,8 +137,6 @@ public class NoticeController {
 	@PostMapping("/notice/delete/images")
 	public Map<String, Object> deleteImages(@RequestBody List<String> imagesList, HttpSession session) {
 		try {
-			System.out.println(imagesList);
-
 			String rootPath = session.getServletContext().getRealPath("/");
 
 			String attachPath = "../frontend/public/upload/cs/notice/";
@@ -232,8 +226,6 @@ public class NoticeController {
 	        String json = commUtils.xmlToJson(sb.toString());
 	        
 	        Map<String, JSONObject> map = commUtils.paramMap(json);
-	        
-	        ObjectMapper objectMapper= new ObjectMapper();
 	        
 	        JSONObject jObj = map.get("response");
 	        JSONObject body = jObj.getJSONObject("body");
@@ -338,8 +330,6 @@ public class NoticeController {
 		String json = commUtils.xmlToJson(sb.toString());
 
 		Map<String, JSONObject> map = commUtils.paramMap(json);
-
-		ObjectMapper objectMapper = new ObjectMapper();
 
 		JSONObject jObj = map.get("response");
 		JSONObject body = jObj.getJSONObject("body");

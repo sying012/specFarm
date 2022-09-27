@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -90,7 +88,6 @@ public class MypageController {
 	@PostMapping("/smInfo")
 	public Map<String, Object> getSmallUser(@RequestBody User user) {
 		try {
-			System.out.println(user.getUserId());
 			Map<String, Object> responseMap = new HashMap<String, Object>();
 			
 			String userId = user.getUserId();
@@ -178,7 +175,6 @@ public class MypageController {
 	@PostMapping("/editUserInfo")
 	public ResponseEntity<?> editUserInfo(@RequestBody User user) {
 		try {
-			System.out.println(user);
 			mypageService.editUserMdf(user);
 			
 			return ResponseEntity.ok().body("수정 완");

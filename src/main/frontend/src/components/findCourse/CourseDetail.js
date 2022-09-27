@@ -20,8 +20,6 @@ const CourseDetail = ({ searchList }) => {
     for (let i = 0; i < searchList.length; i++) {
       if (baseInfo.trprId === searchList[i].trprId) {
         setCourse(searchList[i]);
-        // setCourse({...course, realMan: course.realMan.replace(/\B(?=(\d{3})+(?!\d))/g, ","),})
-        console.log(course);
       }
     }
   }, [baseInfo.trprId, searchList]);
@@ -34,13 +32,11 @@ const CourseDetail = ({ searchList }) => {
         `/skills/findcourse/srchTrprId=${srchTrprId}&srchTrprDegr=${srchTrprDegr}&srchTorgId=${srchTorgId}`,
     })
       .then((response) => {
-        console.log(response.data.HRDNet);
         setBaseInfo(response.data.HRDNet.inst_base_info);
         setDetailInfo(response.data.HRDNet.inst_detail_info);
       })
       .catch((e) => {
         console.log("catch문 " + e);
-        // window.location.href = "/login";
       });
   }, []);
 

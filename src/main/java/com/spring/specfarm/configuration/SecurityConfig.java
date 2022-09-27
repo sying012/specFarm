@@ -37,7 +37,7 @@ public class SecurityConfig{
 			//토큰 방식을 사용하므로 세션방식을 사용하지 않도록 설정
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
-			.authorizeRequests().antMatchers("/**", "/user/**").permitAll()
+			.authorizeRequests().antMatchers("/**", "/user/**","/skills/**").permitAll()
 								.anyRequest().authenticated();
 		
 		//filter 등록

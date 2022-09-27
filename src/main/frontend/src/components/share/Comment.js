@@ -103,9 +103,8 @@ const Comment = ({ comment, user }) => {
             </div>
           </div>
           <div className={styles.toggleCommentReply}>
-            <p onClick={toggleCommentReply}>
-              답글{comment.countReReply || null}
-            </p>
+            <p onClick={toggleCommentReply}>답글</p>
+            <p>{comment.countReReply || null}</p>
           </div>
         </div>
 

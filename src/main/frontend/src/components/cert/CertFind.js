@@ -389,7 +389,6 @@ const CertFind = () => {
               index={0}
               style={{
                 background: "rgba(255, 255, 255, 0.05)",
-                height: "450px",
                 overflowy: "auto",
               }}
             >

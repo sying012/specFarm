@@ -23,7 +23,7 @@ const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
 
   const getJobCafeList = useCallback(() => {
     axios({
-      url: API_BASE_URL + "/skills/jobCafe",
+      url: API_BASE_URL + "/skills/jobcafe",
       method: "get",
       params: {
         page: page - 1,
@@ -133,11 +133,11 @@ const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
         ></TextField>
       </div>
       <div className={styles.jobCafeList}>
-        {jobCafeList.map((jobCafe, index) => (
+        {jobCafeList.map((jobCafe) => (
           <div
             key={jobCafe.jobCafeIdx}
             onClick={() =>
-              navigate(`/skills/jobCafe/${jobCafe.jobCafeIdx}`, {
+              navigate(`/skills/jobcafe/${jobCafe.jobCafeIdx}`, {
                 state: {
                   searchKeyword: searchKeyword,
                   page: page,
@@ -145,7 +145,7 @@ const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
               })
             }
           >
-            <JobCafeCard key={index} index={index} jobCafeItem={jobCafe} />
+            <JobCafeCard key={jobCafe.jobCafeIdx} jobCafeItem={jobCafe} />
           </div>
         ))}
       </div>

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import styles from "../../styles/skills/jobCafeCard.module.css";
 import { Link } from "react-router-dom";
 
-const JobCafeCard = ({ index, jobCafeItem }) => {
+const JobCafeCard = ({ jobCafeItem }) => {
   return (
     <>
-      <Link to={`/skills/jobCafe/${index}`}>
+      <Link to={`/skills/jobcafe/${jobCafeItem.jobCafeIdx}`}>
         <div className={styles.cards}>
           <div className={styles.cardBody}>
             <div className={styles.cardTop}>

@@ -6,6 +6,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const JobCafe = () => {
   const [jobCafeList, setJobCafeList] = useState([]);
+  console.log(jobCafeList);
   return (
     <div>
       <div className="titleContainer">

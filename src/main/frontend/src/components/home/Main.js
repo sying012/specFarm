@@ -37,7 +37,7 @@ const Main = () => {
       setAlerts(
         alerts.map((item) => (item.id ? { ...item, open: false } : item))
       );
-    }, 100000);
+    }, 5000);
     return () => {
       clearTimeout(timer);
     };

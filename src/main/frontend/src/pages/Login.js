@@ -4,6 +4,7 @@ import {
   createTheme,
   FormControlLabel,
   Grid,
+  rgbToHex,
   styled,
   TextField,
 } from "@mui/material";
@@ -130,7 +131,7 @@ const Login = ({ pathname }) => {
   };
 
   return (
-    <div className={styles.center}>
+    <div className={styles.center} style={{ background: "rgb(250, 250, 250)" }}>
       <div className={styles.form}>
         <div className={styles.logo}>
           <NavLink to="/">specFarm</NavLink>

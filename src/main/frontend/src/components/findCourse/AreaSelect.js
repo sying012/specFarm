@@ -89,7 +89,7 @@ const AreaSelect = ({ selectedItem, getSelectedItem, active, setActive }) => {
                       which: "area",
                     });
                   } else {
-                    alert("이미 있음");
+                    alert("이미 선택되었습니다.");
                   }
                 }
               }}

@@ -162,7 +162,7 @@ const JobSelect = ({ selectedItem, getSelectedItem, active, setActive }) => {
                       which: "job",
                     });
                   } else {
-                    alert("이미 있음");
+                    alert("이미 선택되었습니다.");
                   }
                 }
               }}

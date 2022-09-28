@@ -191,10 +191,7 @@ public class StudyController {
 				File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
 
 				multipartFile.transferTo(file);
-			} else {
-				study.setStudyImgName("defalut_study_image.png");
-			}
-			
+			} 			
 			
 			int studyIdx = studyService.insertStudy(study);
 

@@ -29,7 +29,7 @@ const CourseSelector = ({
         setJobItems(jobItems.concat(item));
       }
     } else {
-      alert("그만");
+      alert("검색조건은 6개까지만 설정 가능합니다.");
     }
   };
 

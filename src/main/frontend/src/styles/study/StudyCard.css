@@ -4,7 +4,7 @@
 }
 
 .studyImage {
-  object-fit: cover !important;
+  object-fit: fill !important;
 }
 
 .studyState {

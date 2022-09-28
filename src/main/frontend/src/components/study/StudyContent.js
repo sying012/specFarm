@@ -238,7 +238,11 @@ const StudyContent = ({
               {currentMember && currentMember.acceptYn === 1 ? (
                 <>
                   <p>연락수단 👉</p>
-                  <a href={study.studyTel} className={styles.contact}>
+                  <a
+                    href={study.studyTel}
+                    className={styles.contact}
+                    target="_blank"
+                  >
                     {study.studyTel}
                   </a>
                 </>

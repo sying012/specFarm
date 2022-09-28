@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const theme = createTheme({
   typography: {
@@ -39,6 +38,7 @@ const StudyCard = ({ studyItem }) => {
         >
           <CardActionArea
             sx={{
+              width: 280,
               height: 350,
               display: "flex",
               flexDirection: "column",
@@ -49,11 +49,7 @@ const StudyCard = ({ studyItem }) => {
               className="studyImage"
               component="img"
               height="240"
-              image={
-                studyItem.studyImgName !== null
-                  ? "/upload/study/" + studyItem.studyImgName
-                  : "https://cdn.emetro.co.kr/data2/content/image/2020/01/23/0540/20200123000058.jpg"
-              }
+              image={"/upload/study/" + studyItem.studyImgName}
               alt="스터디 이미지"
               sx={{ objectFit: "unset" }}
             />

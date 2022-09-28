@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import defaultStudyImg from "../../images/defalut_study_image.png";
 
 const StudyReg = ({ setStudyList, setStudyMemberList }) => {
   const ITEM_HEIGHT = 48;
@@ -21,6 +22,10 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
       },
     },
   };
+
+  const File = defaultStudyImg;
+
+  console.log(File);
 
   const navigate = useNavigate();
 
@@ -99,6 +104,7 @@ const StudyReg = ({ setStudyList, setStudyMemberList }) => {
       };
 
       reader.readAsDataURL(file);
+      console.log(file);
     }
   };
 

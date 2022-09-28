@@ -3,6 +3,10 @@
   height: fit-content;
 }
 
+.studyImage {
+  object-fit: cover !important;
+}
+
 .studyState {
   width: 45px;
   height: 25px;

@@ -138,6 +138,8 @@ public class JobCafeController {
 			Page<JobCafe> jobCafeList = jobCafeService.getJobCafeList(searchKeyword, pageable);
 			System.out.println(jobCafeList);
 			
+			//searchKeyword null 이거나"" 일때 전체 All 처리
+			
 			resultMap.put("jobCafeList", jobCafeList);
 		
 			return resultMap;

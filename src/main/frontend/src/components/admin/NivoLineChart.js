@@ -11,7 +11,7 @@ const NivoLineChart = ({ data }) => (
       yScale={{
         type: "linear",
         min: "0",
-        max: "5",
+        max: "10",
         stacked: true,
         reverse: false,
       }}

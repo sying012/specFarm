@@ -95,7 +95,9 @@ const CourseDetail = ({ searchList }) => {
         <div className={styles.applyCard}>
           <h1>수업 들으러 갈까요?</h1>
           <div className={styles.applyCardBtn}>
-            <a href={course.titleLink}>수강신청 하러가기</a>
+            <a href={course.titleLink} target="_blank" rel="noreferrer">
+              수강신청 하러가기
+            </a>
           </div>
         </div>
 

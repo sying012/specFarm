@@ -206,7 +206,10 @@ const Plan = () => {
           >
             {data &&
               data.map((reg) => (
-                <Link key={reg.idx} to={`/cert/certFind/${reg.jmcd}`}>
+                <Link
+                  key={reg.idx}
+                  to={reg.jmcd === null ? `/` : `/cert/certFind/${reg.jmcd}`}
+                >
                   <p className={styles.certPlanP}>
                     {isUser
                       ? reg.implplannm &&
@@ -245,7 +248,10 @@ const Plan = () => {
           >
             {data &&
               data.map((exam) => (
-                <Link key={exam.idx} to={`/cert/certFind/${exam.jmcd}`}>
+                <Link
+                  key={exam.idx}
+                  to={exam.jmcd === null ? `/` : `/cert/certFind/${exam.jmcd}`}
+                >
                   <p key={exam.idx} className={styles.certPlanP}>
                     {isUser
                       ? exam.implplannm &&

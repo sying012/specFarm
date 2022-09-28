@@ -47,7 +47,7 @@ function JobCafeDetail({ jobCafeList }) {
             <h1>일자리 카페 갈까요?</h1>
             <div className={styles.rsrvCardBtn}>
               <a
-                href="https://job.seoul.go.kr/www/jobCafe/jobCafe.do?method=getCafeMain"
+                href="https://job.seoul.go.kr/www/jobCafe/jobCafe.do?method=getCafeView"
                 target="_blank"
                 rel="noreferrer"
               >

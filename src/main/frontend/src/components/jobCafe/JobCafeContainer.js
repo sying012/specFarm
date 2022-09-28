@@ -3,8 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import styles from "../../styles/skills/jobCafeContainer.module.css";
 import JobCafeCard from "./JobCafeCard";
 import { useLocation, useNavigate } from "react-router";
-import { useCallback, useState } from "react";
-import { useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 
@@ -49,7 +48,7 @@ const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
   useEffect(() => {
     if (category !== "") {
       const newJobCafeList = jobCafeList.filter(
-        (jobCafeItem) => jobCafeItem.CAFE_TYPE_NM === category
+        (jobCafeItem) => jobCafeItem.cafeTypeName === category
       );
 
       setJobCafeList(newJobCafeList);

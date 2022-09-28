@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "../../styles/cert/CertFind.module.css";
 import Grid from "@mui/system/Unstable_Grid";
 import FormControl from "@mui/material/FormControl";
@@ -60,13 +60,15 @@ const CertFind = () => {
   const [testList, setTestList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [certSearchList, setCertSearchList] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const chkBox = useRef();
 
   const params = useParams();
 
   useEffect(() => {
     console.log(params.jmcd);
     axiosTestList(params.jmcd);
-  }, []);
+  }, [params.jmcd]);
 
   const axiosTestList = (jmcd) => {
     axios({
@@ -160,8 +162,14 @@ const CertFind = () => {
       },
     }).then((response) => {
       console.log(response.data);
+      console.log(chkBox.current.children[0].checked);
+      if (response.data) {
+        setChecked(true);
+      } else {
+        setChecked(false);
+      }
     });
-  }, []);
+  }, [params.jmcd]);
 
   const heartInsert = () => {
     axios({
@@ -190,6 +198,7 @@ const CertFind = () => {
   };
 
   const handleChangeHeart = (e) => {
+    checked = e.target.checked;
     console.log("click!!");
     if (e.target.checked === true) {
       heartInsert();
@@ -324,14 +333,15 @@ const CertFind = () => {
           <div style={{ margin: "20px" }}>
             {certSList &&
               certSList.map((certS) => (
-                <button
-                  type="button"
-                  key={certS.jmcd}
-                  onClick={() => handleClick(certS)}
-                  className={styles.smallFindCert}
-                >
-                  {certS.jmfldnm}
-                </button>
+                <Link to={`/cert/certFind/${certS.jmcd}`}>
+                  <button
+                    type="button"
+                    key={certS.jmcd}
+                    className={styles.smallFindCert}
+                  >
+                    {certS.jmfldnm}
+                  </button>
+                </Link>
               ))}
           </div>
         </div>
@@ -349,6 +359,8 @@ const CertFind = () => {
               classes={{ root: "custom-checkbox-root" }}
               style={{ float: "right", marginTop: "-50px" }}
               onChange={handleChangeHeart}
+              ref={chkBox}
+              checked={checked}
             />
           </div>
           <Box sx={{ width: "100%" }}>

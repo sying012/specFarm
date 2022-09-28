@@ -453,9 +453,10 @@ public class CertController {
 	   
 	   // 페이지 진입시 좋아요 여부 확인
 	   @GetMapping("/getHeartState")
-	   public Map<String, Object> getHeartState(@RequestParam String cert_idx) {
-		   //System.out.println("mp : " + cert_idx);
-	         return null;
+	   public boolean getHeartState(@RequestParam String cert_idx,@AuthenticationPrincipal String userId) {
+		   cert_idx = certService.getCertIdx(cert_idx);
+		   boolean result = certService.getHeart(cert_idx, userId);
+	       return result;
 	   } 
 	   
 	   // 좋아요 클릭시 Y,N 업데이트 처리

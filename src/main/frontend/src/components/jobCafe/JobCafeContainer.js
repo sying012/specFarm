@@ -98,11 +98,11 @@ const JobCafeContainer = ({ jobCafeList, setJobCafeList }) => {
   return (
     <form onSubmit={submitSearch}>
       <div className={styles.typeBox}>
-        {/* <div className={styles.allTypeBtn}>
+        <div className={styles.allTypeBtn}>
           <a href={"/"} onClick={(e) => onClickCategory("전체", e)}>
             전체
           </a>
-        </div> */}
+        </div>
         {categories.map((category, index) => (
           <div
             key={category + index}

@@ -6,8 +6,9 @@ function JobCafeDetail({ jobCafeList }) {
   const { index } = useParams();
   const [jobCafeItem, setjobCafeItem] = useState({});
   useEffect(() => {
-    setjobCafeItem(jobCafeList[index]);
-  }, []);
+    //카드 선택시 주소가 jobCafeItem.jobCafeIdx(1)이라 -1
+    setjobCafeItem(jobCafeList[index - 1]);
+  }, [index, jobCafeList]);
 
   return (
     <>
@@ -56,7 +57,7 @@ function JobCafeDetail({ jobCafeList }) {
             </div>
           </div>
         </div>
-        <Link to="/skills/jobCafe">
+        <Link to="/skills/jobcafe">
           <div className={styles.detailListBtn}>
             <p>목록 보기</p>
           </div>

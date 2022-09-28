@@ -14,8 +14,8 @@ import com.spring.specfarm.entity.Share;
 public interface JobCafeRepository extends JpaRepository<JobCafe, Integer> {
 
 	//API DB저장
-	@Query(value="select ifnull(max(a.job_cafe_idx), 0) + 1 from t_job_cafe a", nativeQuery=true)
-	int getNextJobCafeIdx();
+//	@Query(value="select ifnull(max(a.job_cafe_idx), 0) + 1 from t_job_cafe a", nativeQuery=true)
+//	int getNextJobCafeIdx();
 
 	//검색
 	Page<JobCafe> findByCafeNameContainingOrGuGunContaining(String searchKeyword1,String searchKeyword2, Pageable pageable);

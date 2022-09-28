@@ -230,6 +230,15 @@ public class CertServiceImpl implements CertService {
 		return certMapper.getCertIdx(cert_idx);
 	}
 
+	@Override
+	public boolean getHeart(String cert_idx, String userId) {
+		FavCertId favCertId = new FavCertId();
+		favCertId.setCertIdx(Integer.parseInt(cert_idx));
+		favCertId.setUserId(userId);
+		
+		return favCertRepository.findById(favCertId).isPresent();
+	}
+
 
 
 }

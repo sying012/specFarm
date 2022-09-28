@@ -1,12 +1,15 @@
 import { useState } from "react";
 import AskListItem from "../ask/AskListItem";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import WrittenShare from "./WrittenShare";
 
 import styles from "../../styles/mypage/Written.module.css";
 
 function Written({ asks, shares }) {
   const [isVisible, setIsVisible] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClick = (e) => {
     if (e.target.id === "share") {
@@ -56,9 +59,18 @@ function Written({ asks, shares }) {
           ? isVisible && (
               <div className={styles.askList}>
                 {asks.map((ask) => (
-                  <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                  <div
+                    key={ask.askIdx}
+                    onClick={() =>
+                      navigate(`/community/ask/${ask.askIdx}`, {
+                        state: {
+                          prevUrl: location.pathname,
+                        },
+                      })
+                    }
+                  >
                     <AskListItem ask={ask} />
-                  </NavLink>
+                  </div>
                 ))}
               </div>
             )
@@ -72,12 +84,18 @@ function Written({ asks, shares }) {
           ? !isVisible && (
               <div>
                 {shares.map((share) => (
-                  <NavLink
+                  <div
                     key={share.shareIdx}
-                    to={`/community/share/${share.shareIdx}`}
+                    onClick={() =>
+                      navigate(`/community/share/${share.shareIdx}`, {
+                        state: {
+                          prevUrl: location.pathname,
+                        },
+                      })
+                    }
                   >
                     <WrittenShare share={share} />
-                  </NavLink>
+                  </div>
                 ))}
               </div>
             )

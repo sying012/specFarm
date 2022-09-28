@@ -1,16 +1,12 @@
 package com.spring.specfarm.controller.community;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,6 +195,7 @@ public class StudyController {
 				study.setStudyImgName("defalut_study_image.png");
 			}
 			
+			
 			int studyIdx = studyService.insertStudy(study);
 
 			Page<Study> studyList = studyService.getStudyList("", pageable);
@@ -278,12 +275,12 @@ public class StudyController {
 			if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
 				study.setStudyYn("N");
 				
-				// 신청 목록 초기화
-				for (StudyApply studyMember : studyMemberList) {
-					if(studyMember.getAcceptYn() == 0) {
-						studyMemberList = studyService.cancelJoin(studyIdx, studyMember.getUser().getUserId());
-					}
-				}
+//				// 신청 목록 초기화
+//				for (StudyApply studyMember : studyMemberList) {
+//					if(studyMember.getAcceptYn() == 0) {
+//						studyMemberList = studyService.cancelJoin(studyIdx, studyMember.getUser().getUserId());
+//					}
+//				}
 				
 			}
 

@@ -63,8 +63,8 @@
   border-radius: 2px;
   color: rgb(225, 225, 225);
 }
-.certPlanDiv:hover {
-  background-color: rgba(187, 205, 110, 0.5);
+.certPlanP:hover {
+  background-color: rgba(140, 191, 117, 0.4);
 }
 
 .fontSize16 {

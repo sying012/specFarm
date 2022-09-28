@@ -204,6 +204,7 @@ public class UserServiceImpl implements UserService {
 			docregmap.put("category", "필기시험 원서접수");
 			docregmap.put("implplannm", docregList.get(i).get("implplannm"));
 			docregmap.put("jmfldnm", docregList.get(i).get("jmfldnm"));
+			docregmap.put("jmcd", docregList.get(i).get("jmcd"));
 			docregmap.put("startDate", docregList.get(i).get("docregstartdt"));
 			docregmap.put("endDate", docregList.get(i).get("docregenddt"));
 
@@ -220,6 +221,7 @@ public class UserServiceImpl implements UserService {
 			pracmap.put("category", "실기시험 원서접수");
 			pracmap.put("implplannm", pracregList.get(i).get("implplannm"));
 			pracmap.put("jmfldnm", pracregList.get(i).get("jmfldnm"));
+			pracmap.put("jmcd", pracregList.get(i).get("jmcd"));
 			pracmap.put("startDate", pracregList.get(i).get("pracregstartdt"));
 			pracmap.put("endDate", pracregList.get(i).get("pracregenddt"));
 
@@ -235,6 +237,7 @@ public class UserServiceImpl implements UserService {
 			docregmap.put("idx", index++);
 			docregmap.put("category", "필기시험");
 			docregmap.put("implplannm", docexamList.get(i).get("implplannm"));
+			docregmap.put("jmcd", docexamList.get(i).get("jmcd"));
 			docregmap.put("jmfldnm", docexamList.get(i).get("jmfldnm"));
 			docregmap.put("startDate", docexamList.get(i).get("docexamstartdt"));
 			docregmap.put("endDate", docexamList.get(i).get("docexamenddt"));
@@ -253,6 +256,7 @@ public class UserServiceImpl implements UserService {
 			pracmap.put("category", "실기시험");
 			pracmap.put("implplannm", pracexamList.get(i).get("implplannm"));
 			pracmap.put("jmfldnm", pracexamList.get(i).get("jmfldnm"));
+			pracmap.put("jmcd", pracexamList.get(i).get("jmcd"));
 			pracmap.put("startDate", pracexamList.get(i).get("pracexamstartdt"));
 			pracmap.put("endDate", pracexamList.get(i).get("pracexamenddt"));
 			

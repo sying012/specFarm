@@ -13,6 +13,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
+import { Link } from "react-router-dom";
 
 // mui theme
 const buttonTheme = createTheme({
@@ -39,6 +40,7 @@ const Plan = () => {
         Authorization: "Bearer " + sessionStorage.getItem("ACCESS_TOKEN"),
       },
     }).then((response) => {
+      console.log(response.data.regList);
       setRegList(response.data.regList);
       setExamList(response.data.examList);
       setData(response.data.regList.slice(0, 3));
@@ -204,29 +206,31 @@ const Plan = () => {
           >
             {data &&
               data.map((reg) => (
-                <p key={reg.idx} className={styles.certPlanP}>
-                  {isUser
-                    ? reg.implplannm &&
-                      reg.implplannm.substr(0, 5) +
-                        reg.implplannm.substr(12, 16)
-                    : reg.implplannm}{" "}
-                  {reg.jmfldnm}
-                  <br />
-                  <span style={{ fontSize: "14px" }}>
-                    {reg.category} :
-                    {reg.startDate &&
-                      reg.startDate.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
-                    ~
-                    {reg.endDate &&
-                      reg.endDate.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
-                  </span>
-                </p>
+                <Link key={reg.idx} to={`/cert/certFind/${reg.jmcd}`}>
+                  <p className={styles.certPlanP}>
+                    {isUser
+                      ? reg.implplannm &&
+                        reg.implplannm.substr(0, 5) +
+                          reg.implplannm.substr(12, 16)
+                      : reg.implplannm}{" "}
+                    {reg.jmfldnm}
+                    <br />
+                    <span style={{ fontSize: "14px" }}>
+                      {reg.category} :
+                      {reg.startDate &&
+                        reg.startDate.replace(
+                          /(\d{4})(\d{2})(\d{2})/,
+                          " $1.$2.$3 "
+                        )}
+                      ~
+                      {reg.endDate &&
+                        reg.endDate.replace(
+                          /(\d{4})(\d{2})(\d{2})/,
+                          " $1.$2.$3 "
+                        )}
+                    </span>
+                  </p>
+                </Link>
               ))}
           </TabPanel>
           <TabPanel
@@ -241,30 +245,32 @@ const Plan = () => {
           >
             {data &&
               data.map((exam) => (
-                <p key={exam.idx} className={styles.certPlanP}>
-                  {isUser
-                    ? exam.implplannm &&
-                      exam.implplannm.substr(0, 5) +
-                        exam.implplannm.substr(12, 16)
-                    : exam.implplannm}{" "}
-                  {exam.jmfldnm}
-                  <br />
-                  <span style={{ fontSize: "14px" }}>
-                    {exam.category} :
-                    {exam.startDate &&
-                      exam.startDate.replace(
-                        /(\d{4})(\d{2})(\d{2})/,
-                        " $1.$2.$3 "
-                      )}
-                    {exam.category === "실기시험"
-                      ? exam.endDate &&
-                        exam.endDate.replace(
+                <Link key={exam.idx} to={`/cert/certFind/${exam.jmcd}`}>
+                  <p key={exam.idx} className={styles.certPlanP}>
+                    {isUser
+                      ? exam.implplannm &&
+                        exam.implplannm.substr(0, 5) +
+                          exam.implplannm.substr(12, 16)
+                      : exam.implplannm}{" "}
+                    {exam.jmfldnm}
+                    <br />
+                    <span style={{ fontSize: "14px" }}>
+                      {exam.category} :
+                      {exam.startDate &&
+                        exam.startDate.replace(
                           /(\d{4})(\d{2})(\d{2})/,
-                          "~ $1.$2.$3 "
-                        )
-                      : ""}
-                  </span>
-                </p>
+                          " $1.$2.$3 "
+                        )}
+                      {exam.category === "실기시험"
+                        ? exam.endDate &&
+                          exam.endDate.replace(
+                            /(\d{4})(\d{2})(\d{2})/,
+                            "~ $1.$2.$3 "
+                          )
+                        : ""}
+                    </span>
+                  </p>
+                </Link>
               ))}
           </TabPanel>
         </Box>

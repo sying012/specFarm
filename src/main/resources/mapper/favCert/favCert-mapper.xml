@@ -30,6 +30,7 @@
 	
 	<select id="getFavCertDocreg" parameterType="string" resultType="camelHashMap">
 		SELECT A.JMFLDNM,
+			   A.JMCD,
 			   T.IMPLPLANNM, 
 			   T.DOCREGSTARTDT, 
 		       T.DOCREGENDDT
@@ -46,6 +47,7 @@
 	</select>
 	<select id="getFavCertPracreg" parameterType="string" resultType="camelHashMap">
 		SELECT A.JMFLDNM,
+			   A.JMCD,
 			   T.IMPLPLANNM, 
 			   T.PRACREGSTARTDT, 
 		       T.PRACREGENDDT
@@ -61,6 +63,7 @@
 	</select>
 	<select id="getFavCertDocexam" parameterType="string" resultType="camelHashMap">
 		SELECT A.JMFLDNM,
+			   A.JMCD,
 			   T.IMPLPLANNM, 
 			   T.DOCEXAMSTARTDT
 			FROM T_CERT_TEST T,
@@ -75,6 +78,7 @@
 	</select>
 	<select id="getFavCertPracexam" parameterType="string" resultType="camelHashMap">		    
 		SELECT A.JMFLDNM,
+			   A.JMCD,
 			   T.IMPLPLANNM, 
 			   T.PRACEXAMSTARTDT,
 			   T.PRACEXAMENDDT
@@ -92,6 +96,7 @@
 	<select id="getFavCertDocregDday" parameterType="string" resultType="camelHashMap">
 	<![CDATA[
 		SELECT A.JMFLDNM, 
+		       A.JMCD, 
 		       TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCREGSTARTDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,
@@ -108,6 +113,7 @@
 	<select id="getFavCertDocexamDday" parameterType="string" resultType="camelHashMap">
 	<![CDATA[
 		SELECT A.JMFLDNM,
+		       A.JMCD, 
 			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCEXAMSTARTDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,
@@ -124,6 +130,7 @@
 	<select id="getFavCertDocpassDday" parameterType="string" resultType="camelHashMap">
 	<![CDATA[
 		SELECT A.JMFLDNM,
+		       A.JMCD, 
 			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.DOCPASSDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,
@@ -140,6 +147,7 @@
 	<select id="getFavCertPracregDday" parameterType="string" resultType="camelHashMap">
 	<![CDATA[
 		SELECT A.JMFLDNM,
+		       A.JMCD, 
 		       TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACREGSTARTDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,
@@ -156,6 +164,7 @@
 	<select id="getFavCertPracexamDday" parameterType="string" resultType="camelHashMap">		    
 	<![CDATA[
 		SELECT A.JMFLDNM,
+		       A.JMCD, 
 			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACEXAMSTARTDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,
@@ -172,6 +181,7 @@
 	<select id="getFavCertPracpassDday" parameterType="string" resultType="camelHashMap">		    
 	<![CDATA[
 		SELECT A.JMFLDNM, 
+			   A.JMCD, 
 			   TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(), '%Y%m%d'), T.PRACPASSSTARTDT) AS DDAY
 			FROM T_CERT_TEST T,
 				 (SELECT C.JMFLDNM,

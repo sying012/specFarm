@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import AskListItem from "../ask/AskListItem";
 
 import styles from "../../styles/mypage/Frames.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../../app-config";
 import WrittenShare from "./WrittenShare";
@@ -19,6 +19,9 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
   const [userInfo, setUserInfo] = useState({});
   const [ask, setAsk] = useState({});
   const [share, setShare] = useState({});
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   function deleteHandler(certIdx, userId) {
     // DB에서 날리기
@@ -155,9 +158,18 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
           {Object.keys(ask).length !== 0
             ? isVisible && (
                 <div className={styles.askList}>
-                  <NavLink key={ask.askIdx} to={`/community/ask/${ask.askIdx}`}>
+                  <div
+                    key={ask.askIdx}
+                    onClick={() =>
+                      navigate(`/community/ask/${ask.askIdx}`, {
+                        state: {
+                          prevUrl: location.pathname,
+                        },
+                      })
+                    }
+                  >
                     <AskListItem ask={ask} />
-                  </NavLink>
+                  </div>
                 </div>
               )
             : isVisible && (
@@ -169,12 +181,18 @@ function Frames({ certs, asks, shares, user, attrCerts, setAttrCerts }) {
           {Object.keys(share).length !== 0
             ? !isVisible && (
                 <div>
-                  <NavLink
+                  <div
                     key={share.shareIdx}
-                    to={`/community/share/${share.shareIdx}`}
+                    onClick={() =>
+                      navigate(`/community/share/${share.shareIdx}`, {
+                        state: {
+                          prevUrl: location.pathname,
+                        },
+                      })
+                    }
                   >
                     <WrittenShare share={share} />
-                  </NavLink>
+                  </div>
                 </div>
               )
             : !isVisible && (

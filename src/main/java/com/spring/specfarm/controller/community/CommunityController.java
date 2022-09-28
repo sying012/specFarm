@@ -37,9 +37,6 @@ public class CommunityController {
 			responseMap.put("popularStudys", popularStudys);
 			
 			List<Ask> popularAsks = communityService.getAsks();
-			for(Ask ask: popularAsks) {
-				ask.setCountReply(askService.getAskReplyCount(ask.getAskIdx()));
-			}
 			responseMap.put("popularAsks", popularAsks);
 			
 			List<Share> popularShares = communityService.getShares();

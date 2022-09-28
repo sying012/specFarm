@@ -115,11 +115,7 @@ const StudyEdit = ({ setStudyList }) => {
           <div className={styles.leftContainer}>
             <img
               className={styles.studyImgPreview}
-              src={
-                currentStudy.studyImgName !== null
-                  ? "/upload/study/" + currentStudy.studyImgName
-                  : defaultStudyImg
-              }
+              src={"/upload/study/" + currentStudy.studyImgName}
               alt="미리보기"
               id="studyImgPreview"
               title="사진을 추가하려면 클릭하세요."

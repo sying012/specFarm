@@ -139,6 +139,8 @@ public class StudyController {
 				File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
 
 				multipartFile.transferTo(file);
+			} else {
+				study.setStudyImgName("defalut_study_image.png");
 			}
 
 			int studyIdx = studyService.insertStudy(study);
@@ -193,8 +195,10 @@ public class StudyController {
 				File file = new File(rootPath + attachPath + uuid + rmSpaceFileName);
 
 				multipartFile.transferTo(file);
+			} else {
+				study.setStudyImgName("defalut_study_image.png");
 			}
-
+			
 			int studyIdx = studyService.insertStudy(study);
 
 			Page<Study> studyList = studyService.getStudyList("", pageable);
@@ -273,6 +277,14 @@ public class StudyController {
 			// 현재 멤버 수가 최대 멤버 수와 같아지면 스터디 마감
 			if (study.getStudyMaxMember() == study.getStudyMemberCnt()) {
 				study.setStudyYn("N");
+				
+				// 신청 목록 초기화
+				for (StudyApply studyMember : studyMemberList) {
+					if(studyMember.getAcceptYn() == 0) {
+						studyMemberList = studyService.cancelJoin(studyIdx, studyMember.getUser().getUserId());
+					}
+				}
+				
 			}
 
 			// 업데이트 된 스터디 저장

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import styles from "../../styles/study/StudyContent.module.css";
 import { API_BASE_URL } from "../../app-config";
-import defaultStudyImg from "../../images/defalut_study_image.png";
 import StudyJoinList from "./StudyJoinList";
 import SmallInfo from "../mypage/SmallInfo";
 
@@ -186,11 +185,7 @@ const StudyContent = ({
           <div className={styles.contentLeft}>
             <img
               className={styles.studyBanner}
-              src={
-                study.studyImgName !== null
-                  ? "/upload/study/" + study.studyImgName
-                  : defaultStudyImg
-              }
+              src={"/upload/study/" + study.studyImgName}
               alt="스터디 배너"
             ></img>
             <StudyJoinList
@@ -278,7 +273,7 @@ const StudyContent = ({
                     삭제
                   </button>
                 </>
-              ) : (
+              ) : loginUserId !== undefined ? (
                 <button
                   type="button"
                   onClick={() => {
@@ -296,6 +291,8 @@ const StudyContent = ({
                     ? "취소"
                     : "탈퇴"}
                 </button>
+              ) : (
+                ""
               )}
             </div>
           </div>

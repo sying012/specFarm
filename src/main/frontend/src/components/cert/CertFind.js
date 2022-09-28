@@ -106,6 +106,7 @@ const CertFind = () => {
   };
 
   useEffect(() => {
+    console.log(certM);
     if (certM !== "" && typeof certM !== "undefined") {
       axios({
         url: API_BASE_URL + "/cert/getCertSList",
@@ -125,6 +126,7 @@ const CertFind = () => {
         method: "get",
         params: { mdobligfldnm: certM },
       }).then((response) => {
+        console.log(response.data);
         setCertSList(response.data.certSList);
       });
     }
@@ -196,7 +198,7 @@ const CertFind = () => {
   };
 
   const handleChangeHeart = (e) => {
-    checked = e.target.checked;
+    setChecked(e.target.checked);
     console.log("click!!");
     if (e.target.checked === true) {
       heartInsert();

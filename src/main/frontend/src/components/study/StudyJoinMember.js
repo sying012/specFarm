@@ -70,18 +70,21 @@ const StudyJoinMember = ({
             <ClearIcon />
           </button>
         ) : (
-          // 스터디 참가자에 강퇴버튼 표시
           <div>
             <button
+              // 스터디 신청자에 수락버튼 표시
               className={styles.welcomebtn}
               type="button"
               onClick={() => {
-                studyJoin(studyMember.user.userId, 1);
+                study.studyYn === "Y"
+                  ? studyJoin(studyMember.user.userId, 1)
+                  : alert("정원초과 입니다.");
               }}
             >
               <CheckIcon />
             </button>
             <button
+              // 스터디 신청자에 강퇴버튼 표시
               className={styles.byebtn}
               type="button"
               onClick={() => {

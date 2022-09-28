@@ -259,7 +259,7 @@
   padding: 16px;
 }
 
-.css-15v22id-MuiAccordionDetails-root:hover {
+a > .css-15v22id-MuiAccordionDetails-root:hover {
   background-color: rgba(140, 191, 117, 0.3) !important;
 }
 

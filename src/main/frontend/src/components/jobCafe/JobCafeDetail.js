@@ -13,35 +13,35 @@ function JobCafeDetail({ jobCafeList }) {
     <>
       <div className={styles.detailContainer}>
         <div className={styles.detailHeader}>
-          <p className={styles.cafeType}>{jobCafeItem.CAFE_TYPE_NM}</p>
-          <h1 className={styles.cafeName}>{jobCafeItem.CAFE_NM}</h1>
+          <p className={styles.cafeType}>{jobCafeItem.cafeTypeName}</p>
+          <h1 className={styles.cafeName}>{jobCafeItem.cafeName}</h1>
         </div>
         <div className={styles.cafeImg}>
-          <img src={jobCafeItem.FILE_NM} alt="itemImg" />
+          <img src={jobCafeItem.fileName} alt="itemImg" />
         </div>
-        <p className={styles.smplIntro}>{jobCafeItem.SMPL_INTRO}</p>
+        <p className={styles.smplIntro}>{jobCafeItem.smplIntro}</p>
         <div className={styles.detailContent}>
           <div className={styles.contentRow}>
             <div className={styles.spaceInfo}>
               <h4>소개</h4>
-              <p>{jobCafeItem.SPACE_INFRO}</p>
+              <p>{jobCafeItem.spaceInfo}</p>
             </div>
           </div>
           <div className={styles.contentRow}>
             <h4>이용 시간</h4>
-            <p>{jobCafeItem.USE_DT}</p>
+            <p>{jobCafeItem.useDate}</p>
           </div>
           <div className={styles.contentRow}>
             <h4>휴무일</h4>
-            <p>{jobCafeItem.HOLI_DD}</p>
+            <p>{jobCafeItem.holiDate}</p>
           </div>
           <div className={styles.contentRow}>
             <h4>주소</h4>
-            <p>{jobCafeItem.BASS_ADRES_CN}</p>
+            <p>{jobCafeItem.bassAdresCn}</p>
           </div>
           <div className={styles.contentRow}>
             <h4></h4>
-            <p>{jobCafeItem.ROAD_ADRES2_CN}</p>
+            <p>{jobCafeItem.roadAdresCn}</p>
           </div>
           <div className={styles.rsrvCard}>
             <h1>일자리 카페 갈까요?</h1>
@@ -64,29 +64,29 @@ function JobCafeDetail({ jobCafeList }) {
         <div className={styles.cafeDetails}>
           <div className={styles.cafeDetailCard}>
             <h3>시설안내</h3>
-            <p> {jobCafeItem.FACLT_INFO1}</p>
-            <p> {jobCafeItem.FACLT_INFO2}</p>
-            <p> {jobCafeItem.FACLT_INFO3}</p>
-            <p> {jobCafeItem.FACLT_INFO4}</p>
-            <p> {jobCafeItem.FACLT_INFO5}</p>
-            <p> {jobCafeItem.FACLT_INFO6}</p>
-            <p> {jobCafeItem.FACLT_INFO7}</p>
-            <p> {jobCafeItem.FACLT_INFO8}</p>
-            <p> {jobCafeItem.FACLT_INFO9}</p>
-            <p> {jobCafeItem.FACLT_INF10}</p>
+            <p> {jobCafeItem.facltInfo01}</p>
+            <p> {jobCafeItem.facltInfo02}</p>
+            <p> {jobCafeItem.facltInfo03}</p>
+            <p> {jobCafeItem.facltInfo04}</p>
+            <p> {jobCafeItem.facltInfo05}</p>
+            <p> {jobCafeItem.facltInfo06}</p>
+            <p> {jobCafeItem.facltInfo07}</p>
+            <p> {jobCafeItem.facltInfo08}</p>
+            <p> {jobCafeItem.facltInfo09}</p>
+            <p> {jobCafeItem.facltInfo10}</p>
           </div>
           <div className={styles.cafeDetailCard}>
             <h3>예약시 주의사항</h3>
-            <p> {jobCafeItem.RSRV_SGGST1}</p>
-            <p> {jobCafeItem.RSRV_SGGST2}</p>
-            <p> {jobCafeItem.RSRV_SGGST3}</p>
-            <p> {jobCafeItem.RSRV_SGGST4}</p>
-            <p> {jobCafeItem.RSRV_SGGST5}</p>
-            <p> {jobCafeItem.RSRV_SGGST6}</p>
-            <p> {jobCafeItem.RSRV_SGGST7}</p>
-            <p> {jobCafeItem.RSRV_SGGST8}</p>
-            <p> {jobCafeItem.RSRV_SGGST9}</p>
-            <p> {jobCafeItem.RSRV_SGGST10}</p>
+            <p> {jobCafeItem.rsrvSggst1}</p>
+            <p> {jobCafeItem.rsrvSggst2}</p>
+            <p> {jobCafeItem.rsrvSggst3}</p>
+            <p> {jobCafeItem.rsrvSggst4}</p>
+            <p> {jobCafeItem.rsrvSggst5}</p>
+            <p> {jobCafeItem.rsrvSggst6}</p>
+            <p> {jobCafeItem.rsrvSggst7}</p>
+            <p> {jobCafeItem.rsrvSggst8}</p>
+            <p> {jobCafeItem.rsrvSggst9}</p>
+            <p> {jobCafeItem.rsrvSggst10}</p>
           </div>
         </div>
       </div>

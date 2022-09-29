@@ -28,7 +28,12 @@ const ShareEdit = () => {
         if (response.data.share) setShare(response.data.share);
         if (response.data.shareFileList) {
           setFileNameInput(response.data.shareFileList);
-          setOriginFileList(response.data.shareFileList);
+          setOriginFileList(
+            response.data.shareFileList.map((originFile) => ({
+              ...originFile,
+              status: "N", // 첨부파일 기본 상태는 무조건 N으로
+            }))
+          );
         }
       });
   }, [shareIdx]);
@@ -71,6 +76,7 @@ const ShareEdit = () => {
       data: share,
     })
       .then((response) => {
+        console.log(response.data);
         navigate(`/community/share/${response.data.share.shareIdx}`);
       })
       .catch((e) => {
@@ -107,6 +113,7 @@ const ShareEdit = () => {
     formObj.shareIdx = share.shareIdx;
     formObj.shareRegDate = share.shareRegDate;
     formObj.hasImg = hasImg;
+    // if (deleteYn) 일때만 formObj.originFileList = JSON.stringify(originFileList) 실행
     formObj.originFileList = JSON.stringify(originFileList);
     console.log(originFileList);
     console.log(formObj);
@@ -342,7 +349,6 @@ const ShareEdit = () => {
           <div className={styles.shareBtns}>
             <button
               className={styles.cancelBtn}
-              type="button"
               onClick={() => {
                 navigate(-1);
               }}

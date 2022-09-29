@@ -181,8 +181,10 @@ public class ShareServiceImpl implements ShareService {
 		return shareRepository.getShareYn(shareIdx);
 	}
 	
+	// Edit share
 	@Override
 	public void editFileList(List<Map<String, Object>> editFileList) {
+		System.out.println("!111111111111111111111111111111");
 		for(int i = 0; i < editFileList.size(); i++) {
 			if(editFileList.get(i).get("status").toString().equals("D")) {
 				JSONObject jsonObj = new JSONObject(editFileList.get(i).get("share").toString());

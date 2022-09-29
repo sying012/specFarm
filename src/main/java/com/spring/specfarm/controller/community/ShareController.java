@@ -323,11 +323,10 @@ public class ShareController {
 			
 			// file data list
 			if (!hasImg) {
-				share.setShareImgName("shareImg.png");
+				share.setShareImgName("shareImg.png"); //첨부하는 이미지(sigleImg) 없으면 기본이미지 설정
 			}
 
 			while (i.hasNext()) {
-				// sigleImg 값 확인
 
 				List<MultipartFile> fileList = multipartServletRequest.getFiles(i.next());
 
@@ -358,7 +357,9 @@ public class ShareController {
 
 			shareIdx = shareService.insertShare(share);
 			
-			shareService.editFileList(editFileList);
+			System.out.println("222222222222222222222222222"+editFileList.toString());
+			if(editFileList.size() > 0)
+				shareService.editFileList(editFileList);
 
 			shareService.insertShareFileList(shareFileList);
 

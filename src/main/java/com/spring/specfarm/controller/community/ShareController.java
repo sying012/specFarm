@@ -77,7 +77,6 @@ public class ShareController {
 			user.setUserId(userId);
 			share.setUser(user);
 			int shareIdx = 0;
-			System.out.println("조유미"+hasImg);
 			// Share File List
 			List<ShareFile> shareFileList = new ArrayList<>();
 

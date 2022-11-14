@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Limit;
 import com.spring.specfarm.common.FileUtils;
 import com.spring.specfarm.dto.ResponseDTO;
 import com.spring.specfarm.entity.Ask;
